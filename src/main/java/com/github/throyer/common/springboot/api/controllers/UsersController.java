@@ -12,6 +12,7 @@ import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,7 +38,7 @@ public class UsersController {
     private UsuarioRepository repository;
 
     @GetMapping
-    public ResponseEntity<?> index(Pageable pageable) {
+    public ResponseEntity<Page<Usuario>> index(Pageable pageable) {
         return ok(repository.findAll(pageable));
     }
 
@@ -69,7 +70,7 @@ public class UsersController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> destroy(@PathVariable Long id) {
+    public ResponseEntity<Usuario> destroy(@PathVariable Long id) {
         return repository.findById(id)
             .map((usuario) -> noContent(usuario, repository))
                 .orElseGet(() -> notFound());
