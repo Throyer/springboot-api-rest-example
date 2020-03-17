@@ -48,7 +48,7 @@ public class UsuariosTests {
     private UsuarioRepository repository;
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mock;
 
     /**
      * Salvar um usuarios sem os campos obrigatorios deve retornar 400 Bad Request.
@@ -75,7 +75,7 @@ public class UsuariosTests {
 
         String usuario = "{\"nome\":\"fulaninho\", \"senha\": \"123\"}";
         
-        mockMvc.perform(post("/usuarios")
+        mock.perform(post("/usuarios")
                 .content(usuario)
                 .header(HttpHeaders.AUTHORIZATION, getToken())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
@@ -85,7 +85,6 @@ public class UsuariosTests {
                 .andExpect(jsonPath("$", hasSize(3)));
 
         verify(repository, times(0)).save(any(Usuario.class));
-
     }
 
     private String getToken() {
