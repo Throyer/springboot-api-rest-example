@@ -69,7 +69,7 @@ public class UsersController {
     }
 
     @DeleteMapping("/{id}")
-    public Object destroy(@PathVariable Long id) {
+    public ResponseEntity<?> destroy(@PathVariable Long id) {
         return repository.findById(id)
             .map((usuario) -> noContent(usuario, repository))
                 .orElseGet(() -> notFound());

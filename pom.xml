@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.github.throyer.common.spring-boot</groupId>
 	<artifactId>api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>api</name>
+	<version>1.0.0.RELEASE</version>
+	<name>common-api</name>
 	<description>Common Spring Boot API</description>
 
 	<properties>
