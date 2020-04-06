@@ -35,6 +35,8 @@ mvnw spring-boot:run
 Documentação swagger: http://localhost:8080/api/v1/swagger-ui.html
 
 ## Variaveis de ambiente
+> são definidas em: [**application.properties**](./src/main/resources/application.properties)
+
 
 exemplo de execução da aplicação definindo o valor de alguma variavel de ambiente:
 ```bash
