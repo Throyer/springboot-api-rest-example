@@ -38,16 +38,18 @@ Documentação swagger: http://localhost:8080/api/v1/swagger-ui.html
 > são definidas em: [**application.properties**](./src/main/resources/application.properties)
 
 
-exemplo de execução da aplicação definindo o valor de alguma variavel de ambiente:
-```bash
-java -jar api-1.0.0.RELEASE.jar --port=80
-```
+para definir variaveis de ambiente durante a execução basta passar o parametro:
+
+>  por exemplo mudar a porta use `--port=<porta_desejada>`:
+> ```bash
+> java -jar api-1.0.0.RELEASE.jar --port=80
+> ```
 
 |                 **Descrição**                      |           **parametro**               |              **Valor padrão**             |
 |----------------------------------------------------|---------------------------------------|-------------------------------------------|
 | contexto da aplicação                              | `contexto`                            | api/v1                                    |
 | porta da aplicação                                 | `port`                                | 8080                                      |
-| url do banco                                       | `db-url`                              | localhost:3306/brinquedoteca              |
+| url do banco                                       | `db-url`                              | localhost:3306/common_app              |
 | nome de usuario (banco)                            | `db-username`                         | root                                      |
 | senha do usuario (banco)                           | `db-password`                         | root                                      |
 | mostrar sql na saida                               | `show-sql`                            | false                                     |
