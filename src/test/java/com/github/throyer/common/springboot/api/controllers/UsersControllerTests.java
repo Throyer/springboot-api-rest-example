@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.integration;
+package com.github.throyer.common.springboot.api.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,18 +29,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-/**
- * Testes de integração de usuarios:
- * references: 
- *  https://mkyong.com/spring-boot/spring-rest-integration-test-example/
- *  https://howtodoinjava.com/spring-boot2/testing/spring-integration-testing/
- */
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = Replace.ANY)
 @Sql({ "classpath:usuarios.sql" })
-public class UsuariosTests {
-
+public class UsersControllerTests {
+    
     @Autowired
     private TokenService tokenService;
 
@@ -51,24 +45,24 @@ public class UsuariosTests {
     private MockMvc mock;
 
     /**
-     * Salvar um usuarios sem os campos obrigatorios deve retornar 400 Bad Request.
-     * Body:
-     *  <code>
-     *  [
-     *       {
-     *           "campo": "permissoes",
-     *           "messagem": "não pode ser nulo"
-     *       },
-     *       {
-     *           "campo": "email",
-     *           "messagem": "O e-mail não pode ser NULL."
-     *       },
-     *       {
-     *           "campo": "senha",
-     *           "messagem": "No mínimo 8 caracteres, com no mínimo um número, um caractere especial, uma letra maiúscula e uma letra minúscula."
-     *       }
-     *   ]
-     *  </code>
+     * Salvar um usuarios sem os campos obrigatorios deve retornar 400 Bad Request.Body:
+    <code>
+    [
+        {
+            "campo": "permissoes",
+            "messagem": "não pode ser nulo"
+        },
+        {
+            "campo": "email",
+            "messagem": "O e-mail não pode ser NULL."
+        },
+        {
+            "campo": "senha",
+            "messagem": "No mínimo 8 caracteres, com no mínimo um número, um caractere especial, uma letra maiúscula e uma letra minúscula."
+        }
+    ]
+    </code>
+     * @throws java.lang.Exception
      */
     @Test
     public void salvar_usuario_sem_campos_obrigatorios_deve_retornar_400() throws Exception {
