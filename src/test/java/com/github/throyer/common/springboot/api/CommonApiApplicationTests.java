@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.ANY)
+// @AutoConfigureTestDatabase(replace = Replace.AUTO_CONFIGURED)
 class CommonApiApplicationTests {
 
 	@Test
