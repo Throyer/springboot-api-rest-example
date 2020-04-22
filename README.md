@@ -8,8 +8,6 @@
     documentação automatica com Swagger e token JWT.
 </p>
 
-_______________________
-
 # Requisitos
 
 - MariaDB: `^10.3.11`
