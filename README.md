@@ -2,7 +2,7 @@
   <a href="https://github.com/Throyer" target="blank"><img src="./spring-boot_logo.png" width="120" alt="Spring boot Logo" /></a>
 </p>
 
-<h2 align="center">Spring Boot API CRUD</h2>
+<h1 align="center">Spring Boot API CRUD</h1>
 <p align="center">
     Aplicação em spring boot RESTful, com testes de integração,
     documentação automatica com Swagger e token JWT.
