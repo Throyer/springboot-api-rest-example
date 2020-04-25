@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/Throyer" target="blank"><img src="./spring-boot_logo.png" width="120" alt="Spring boot Logo" /></a>
+  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" alt="Spring boot Logo" /></a>
 </p>
 
 <h1 align="center">Spring Boot API CRUD</h1>
@@ -7,6 +7,25 @@
     Aplicação em spring boot RESTful, com testes de integração,
     documentação automatica com Swagger e token JWT.
 </p>
+
+# Motivação
+<p>
+A ideia desse repositorio é a criação de uma api em spring boot, com o maximo possivel de boas praticas e o mais completa possivel, para servir como uma base para min no futuro, ou para outras pessoas que estiverem buscando um guia para a construição de uma
+api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é bem vinda.
+</p>
+
+# O que foi feito e os proximos passos
+
+- [X] Autenticação com Spring Security e Token JWT.
+- [ ] Crud completo de Usuario e Permissões.
+    - [X] Crud de Usuario
+    - [ ] Crud de Permissões
+- [ ] Testes de Integração de todos controllers
+    - [ ] controller `"/usuarios"`
+        - [X] POST
+    - [ ] controller `"/permissoes"`
+- [X] Swagger
+- [ ] Migrações do banco com Flyway
 
 # Requisitos
 

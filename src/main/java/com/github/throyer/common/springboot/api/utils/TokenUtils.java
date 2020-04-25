@@ -25,8 +25,8 @@ public class TokenUtils {
     /**
      * Verifiva se o token esta vazio ou não é
      * do tipo 'Bearer'.
-     * @param token {String}
-     * @return booleana.
+     * @param token
+     * @return true se o token for fazio ou não for bearer.
      */
     private static boolean tokenIsNull(String token) {
         return Objects.isNull(token) || token.isEmpty() || !token.startsWith(ACEPTED_TOKEN_TYPE);

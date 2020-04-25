@@ -7,6 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * HTTP Responses.
+ * 
+ * Classe util para simplificar a geração
+ * de reponses para status codes comuns
+ * utilizando <code>ResponseEntity</code>.
+ */
 public class Responses {
 
     public static final <T> ResponseEntity<T> ok(T body) {
