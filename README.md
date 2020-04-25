@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" alt="Spring boot Logo" /></a>
+  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Spring boot Logo" /></a>
 </p>
 
 <h1 align="center">Spring Boot API CRUD</h1>
@@ -7,6 +7,8 @@
     Aplicação em spring boot RESTful, com testes de integração,
     documentação automatica com Swagger e token JWT.
 </p>
+<br>
+<br>
 
 # Motivação
 <p>
