@@ -20,13 +20,15 @@ api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é be
 # O que foi feito e os proximos passos
 
 - [X] Autenticação com Spring Security e Token JWT.
+  - [ ] Refresh token
 - [ ] Crud completo de Usuario e Permissões.
   - [X] Crud de Usuario
   - [ ] Crud de Permissões
 - [ ] Testes de Integração de todos controllers
-  - [ ] controller `"/usuarios"`
+  - [ ] `"/usuarios"`
     - [X] POST
-  - [ ] controller `"/permissoes"`
+    - [X] GET
+  - [ ] `"/permissoes"`
 - [X] Swagger
 - [X] Migrações do banco com Flyway
 - [X] Soft Delete e TIMESTAMPS
