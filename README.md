@@ -11,6 +11,7 @@
 <br>
 
 # Motivação
+
 <p>
 A ideia desse repositorio é a criação de uma api em spring boot, com o maximo possivel de boas praticas e o mais completa possivel, para servir como uma base para min no futuro, ou para outras pessoas que estiverem buscando um guia para a construição de uma
 api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é bem vinda.
@@ -19,15 +20,18 @@ api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é be
 # O que foi feito e os proximos passos
 
 - [X] Autenticação com Spring Security e Token JWT.
+  - [ ] Refresh token
 - [ ] Crud completo de Usuario e Permissões.
-    - [X] Crud de Usuario
-    - [ ] Crud de Permissões
+  - [X] Crud de Usuario
+  - [ ] Crud de Permissões
 - [ ] Testes de Integração de todos controllers
-    - [ ] controller `"/usuarios"`
-        - [X] POST
-    - [ ] controller `"/permissoes"`
+  - [ ] `"/usuarios"`
+    - [X] POST
+    - [X] GET
+  - [ ] `"/permissoes"`
 - [X] Swagger
-- [ ] Migrações do banco com Flyway
+- [X] Migrações do banco com Flyway
+- [X] Soft Delete e TIMESTAMPS
 
 # Requisitos
 
@@ -78,15 +82,14 @@ para definir variaveis de ambiente durante a execução basta passar o parametro
 > java -jar api-1.0.0.RELEASE.jar --port=80
 > ```
 
-| **Descrição**                                     | **parametro**                    | **Valor padrão**          |
-| ------------------------------------------------- | -------------------------------- | ------------------------- |
-| contexto da aplicação                             | `contexto`                       | api/v1                    |
-| porta da aplicação                                | `port`                           | 8080                      |
-| url do banco                                      | `db-url`                         | localhost:3306/common_app |
-| nome de usuario (banco)                           | `db-username`                    | root                      |
-| senha do usuario (banco)                          | `db-password`                    | root                      |
-| mostrar sql na saida                              | `show-sql`                       | false                     |
-| `criar`/`atualizar`/`validar` as tabelas no banco | `ddl-auto`                       | update                    |
-| tempo de expiração do token em horas              | `token-expiration-time-in-hours` | 24                        |
-| valor do secret na geração dos tokens             | `token-secret`                   | secret                    |
-| maximo de conexões com o banco                    | `max-connections`                | 10                        |
+| **Descrição**                         | **parametro**                    | **Valor padrão**          |
+| ------------------------------------- | -------------------------------- | ------------------------- |
+| contexto da aplicação                 | `contexto`                       | api/v1                    |
+| porta da aplicação                    | `port`                           | 8080                      |
+| url do banco                          | `db-url`                         | localhost:3306/common_app |
+| nome de usuario (banco)               | `db-username`                    | root                      |
+| senha do usuario (banco)              | `db-password`                    | root                      |
+| mostrar sql na saida                  | `show-sql`                       | false                     |
+| tempo de expiração do token em horas  | `token-expiration-time-in-hours` | 24                        |
+| valor do secret na geração dos tokens | `token-secret`                   | secret                    |
+| maximo de conexões com o banco        | `max-connections`                | 10                        |

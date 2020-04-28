@@ -1,7 +1,6 @@
 package com.github.throyer.common.springboot.api.models.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,26 +14,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
+import com.github.throyer.common.springboot.api.models.validation.constraints.EmailExists;
 
+import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
-public class Usuario implements Serializable {
+@Where(clause = BasicEntity.NON_DELETED_CLAUSE)
+public class Usuario extends BasicEntity implements Serializable {
 
     public static final Integer FORCA_DA_SENHA = 10;
-    public static final String  SENHA_PADRAO = "mudar123";
-    public static final String  SENHA_FORTE = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-    public static final String  MENSAGEM_SENHA_FORTE = "No mínimo 8 caracteres, com no mínimo um número, um caractere especial, uma letra maiúscula e uma letra minúscula.";
+    public static final String SENHA_PADRAO = "mudar123";
+    public static final String SENHA_FORTE = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+    public static final String MENSAGEM_SENHA_FORTE = "No mínimo 8 caracteres, com no mínimo um número, um caractere especial, uma letra maiúscula e uma letra minúscula.";
+    public static final String DELETE_SQL = "UPDATE #{#entityName} SET deleted_email = (SELECT email FROM #{#entityName} WHERE id = ?1), email = NULL, deleted_at = CURRENT_TIMESTAMP, active = 0 WHERE id = ?1";
 
     private static final long serialVersionUID = -8080540494839892473L;
 
@@ -47,10 +49,15 @@ public class Usuario implements Serializable {
     @Column(name = "nome", nullable = false)
     private String nome;
     
+    @EmailExists(message = "Esse email já é utilizado por outro usuario.")
     @NotNull(message = "O e-mail não pode ser NULL.")
     @Email(message = "Por favor, forneça um e-mail valido.")
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email", unique = true)
     private String email;
+
+    @JsonIgnore
+    @Column(name = "deleted_email")
+    private String deletedEmail;
 
     @JsonInclude(Include.NON_NULL)
     @NotEmpty(message = "Por favor, forneça uma senha.")
@@ -58,19 +65,6 @@ public class Usuario implements Serializable {
     @Pattern(regexp = SENHA_FORTE, message = MENSAGEM_SENHA_FORTE)
     @Column(name = "senha", nullable = false)
     private String senha = SENHA_PADRAO;
-
-    @Column(name = "active", nullable = false)
-    private Boolean ativo = true;
-
-    @JsonInclude(Include.NON_NULL)
-    @Column(name = "created_at")
-    @JsonFormat(shape = Shape.STRING)
-    private LocalDateTime createdAt;
-
-    @JsonInclude(Include.NON_NULL)
-    @Column(name = "updated_at")
-    @JsonFormat(shape = Shape.STRING)
-    private LocalDateTime updatedAt;
     
     @NotNull
     @ManyToMany(cascade = CascadeType.DETACH)
@@ -80,6 +74,15 @@ public class Usuario implements Serializable {
             inverseJoinColumns = {
                 @JoinColumn(name = "permissao_id")})
     private List<Permissao> permissoes;
+
+    public Usuario() { }
+
+    public Usuario(String nome, String email, String senha, List<Permissao> permissoes) {
+        setNome(nome);
+        setEmail(email);
+        setSenha(senha);
+        setPermissoes(permissoes);
+    }
 
     public List<Permissao> getPermissoes() {
         return permissoes;
@@ -113,20 +116,16 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public String getDeletedEmail() {
+        return deletedEmail;
+    }
+
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public Boolean isAtivo() {
-        return this.ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
     }
 
     @Override
@@ -151,22 +150,6 @@ public class Usuario implements Serializable {
         return Objects.equals(this.id, other.id);
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public Boolean validarSenha(String senha) {
         var encoder = new BCryptPasswordEncoder(FORCA_DA_SENHA);
         return encoder.matches(senha, this.senha);
@@ -174,14 +157,9 @@ public class Usuario implements Serializable {
 
     @PrePersist
     private void created() {
-        this.senha = new BCryptPasswordEncoder(FORCA_DA_SENHA).encode(senha);
-        this.createdAt = LocalDateTime.now();
+        this.senha = new BCryptPasswordEncoder(FORCA_DA_SENHA)
+            .encode(senha);
     }
-
-    @PreUpdate
-    private void updated() {
-        this.updatedAt = LocalDateTime.now();
-    } 
 
     @Override
     public String toString() {
