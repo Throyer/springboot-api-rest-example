@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,6 +18,7 @@ import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
 import com.github.throyer.common.springboot.api.services.TokenService;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -38,11 +40,16 @@ public class UsersControllerTests {
     @Autowired
     private TokenService tokenService;
 
-    @MockBean
+    @Autowired
     private UsuarioRepository repository;
 
     @Autowired
     private MockMvc mock;
+
+    @BeforeEach
+    public void beforeEach() {
+        // before each
+    }
 
     /**
      * Salvar um usuarios sem os campos obrigatorios deve retornar 400 Bad Request.Body:
@@ -75,10 +82,18 @@ public class UsersControllerTests {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$", hasSize(3)));
-
-        verify(repository, times(0)).save(any(Usuario.class));
+                .andExpect(jsonPath("$").isArray());
+    }   
+    
+    @Test
+    public void deve_listar_todos_os_usuarios() throws Exception {
+        mock.perform(get("/usuarios")
+            .header(HttpHeaders.AUTHORIZATION, getToken())
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.content").isArray())
+            .andExpect(jsonPath("$.content", hasSize(3)));
     }
 
     private String getToken() {

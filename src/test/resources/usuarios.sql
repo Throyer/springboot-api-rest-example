@@ -13,19 +13,19 @@ INSERT INTO usuario_permissao
     (usuario_id, permissao_id)
 VALUES
     (
-	 	(SELECT id FROM usuario     WHERE email = 'usuario_um@email.com'),
-		(SELECT id FROM permissao   WHERE nome = 'ADMINISTRADOR')
+	 	  (SELECT id FROM usuario     WHERE email = 'usuario_um@email.com'),
+		  (SELECT id FROM permissao   WHERE nome = 'ADMINISTRADOR')
     ),
     (
-		(SELECT id FROM usuario     WHERE email = 'usuario_dois@email.com'),
-		(SELECT id FROM permissao   WHERE nome = 'USER')
+		  (SELECT id FROM usuario     WHERE email = 'usuario_dois@email.com'),
+		  (SELECT id FROM permissao   WHERE nome = 'USER')
     ),
     (
-	 	(SELECT id FROM usuario     WHERE email = 'usuario_tres@email.com'),
-		(SELECT id FROM permissao   WHERE nome = 'USER')
+	 	  (SELECT id FROM usuario     WHERE email = 'usuario_tres@email.com'),
+		  (SELECT id FROM permissao   WHERE nome = 'USER')
     ),
     (
-	 	(SELECT id FROM usuario     WHERE email = 'usuario_quatro@email.com'),
+	 	  (SELECT id FROM usuario     WHERE email = 'usuario_quatro@email.com'),
 	    (SELECT id FROM permissao   WHERE nome = 'ADMINISTRADOR')
     ),
     (

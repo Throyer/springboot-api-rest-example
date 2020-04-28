@@ -15,11 +15,11 @@ VALUES
 INSERT INTO usuario_permissao
     (usuario_id, permissao_id)
 VALUES
-   (
+    (
 	 	(SELECT id FROM usuario WHERE email = 'administrador@email.com'),
 		(SELECT id FROM permissao WHERE nome = 'ADMINISTRADOR')
 	),
-   (
+    (
 		(SELECT id FROM usuario WHERE email = 'administrador@email.com'),
 		(SELECT id FROM permissao WHERE nome = 'USER')
 	);

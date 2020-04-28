@@ -5,8 +5,6 @@ import static com.github.throyer.common.springboot.api.utils.Responses.noContent
 import static com.github.throyer.common.springboot.api.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 
-import javax.validation.Valid;
-
 import com.github.throyer.common.springboot.api.models.entity.Usuario;
 import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
 
@@ -50,7 +48,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> save(@RequestBody @Validated Usuario usuario) {
         var novo = repository.save(usuario);
         return created(novo, "usuarios", novo.getId());
     }
