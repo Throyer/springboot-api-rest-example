@@ -19,19 +19,17 @@ api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é be
 
 # O que foi feito e os proximos passos
 
-- [X] Autenticação com Spring Security e Token JWT.
-  - [ ] Refresh token
-- [ ] Crud completo de Usuario e Permissões.
-  - [X] Crud de Usuario
-  - [ ] Crud de Permissões
-- [ ] Testes de Integração de todos controllers
+- [X] *autenticação com **Spring Security** com **JWT***.
+  - [ ] **refresh token**
+- [ ] **cadastro completo de usuarios e permissões**.
+  - [X] *usuarios*
+  - [ ] **permissões**
+- [ ] **testes de integração de todos controllers**
   - [ ] `"/usuarios"`
-    - [X] POST
-    - [X] GET
   - [ ] `"/permissoes"`
-- [X] Swagger
-- [X] Migrações do banco com Flyway
-- [X] Soft Delete e TIMESTAMPS
+- [X] *swagger*
+- [X] *database migration **Flyway***
+- [X] *Soft delete e TIMESTAMPS*
 
 # Requisitos
 
@@ -57,15 +55,17 @@ $ mvnw test
 # Para buildar para produção
 $ mvnw clean package
 ```
-Acesse a documentação no swagger: http://localhost:8080/api/v1/swagger-ui.html
+> Quando a aplicação estiver rodando acesse a documentação em:
+> http://localhost:8080/api/v1/swagger-ui.html
+<br>
+<br>
+
+
+____________________________________________________
+
 
 ## Variaveis de ambiente
 
-> são definidas em: [**application.properties**](./src/main/resources/application.properties)
-> ```shell
-> # para mudar o valor de alguma variavel de ambiente na execução basta colocar como parametro na execução
-> $ java -jar api-1.0.0.RELEASE.jar --port=80
-> ```
 
 | **Descrição**                         | **parametro**                    | **Valor padrão**          |
 | ------------------------------------- | -------------------------------- | ------------------------- |
@@ -78,3 +78,10 @@ Acesse a documentação no swagger: http://localhost:8080/api/v1/swagger-ui.html
 | tempo de expiração do token em horas  | `token-expiration-time-in-hours` | 24                        |
 | valor do secret na geração dos tokens | `token-secret`                   | secret                    |
 | maximo de conexões com o banco        | `max-connections`                | 10                        |
+
+
+> são definidas em: [**application.properties**](./src/main/resources/application.properties)
+> ```shell
+> # para mudar o valor de alguma variavel de ambiente na execução basta colocar como parametro na execução
+> $ java -jar api-1.0.0.RELEASE.jar --port=80
+> ```
