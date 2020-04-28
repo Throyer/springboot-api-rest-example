@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.models.validation;
+package com.github.throyer.common.springboot.api.models.validation.constraints;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

@@ -53,7 +53,6 @@ para definir variaveis de ambiente durante a execução basta passar o parametro
 | nome de usuario (banco)                            | `db-username`                         | root                                      |
 | senha do usuario (banco)                           | `db-password`                         | root                                      |
 | mostrar sql na saida                               | `show-sql`                            | false                                     |
-| `criar`/`atualizar`/`validar` as tabelas no banco  | `ddl-auto`                            | update                                    |
 | tempo de expiração do token em horas               | `token-expiration-time-in-hours`      | 24                                        |
 | valor do secret na geração dos tokens              | `token-secret`                        | secret                                    |
 | maximo de conexões com o banco                     | `max-connections`                     | 10                                        |

@@ -6,12 +6,12 @@ import static com.github.throyer.common.springboot.api.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 
 import com.github.throyer.common.springboot.api.models.entity.Usuario;
+import com.github.throyer.common.springboot.api.models.shared.Pagination;
 import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -36,8 +36,8 @@ public class UsersController {
     private UsuarioRepository repository;
 
     @GetMapping
-    public ResponseEntity<Page<Usuario>> index(Pageable pageable) {
-        return ok(repository.findAll(pageable));
+    public ResponseEntity<Page<Usuario>> index(Pagination pagination) {
+        return ok(repository.findAll(pagination.build()));
     }
 
     @GetMapping("/{id}")
@@ -48,7 +48,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@RequestBody @Validated Usuario usuario) {
+    public ResponseEntity<Usuario> save(@Validated @RequestBody Usuario usuario) {
         var novo = repository.save(usuario);
         return created(novo, "usuarios", novo.getId());
     }
