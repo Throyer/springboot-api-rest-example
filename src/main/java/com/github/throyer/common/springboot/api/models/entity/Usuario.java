@@ -81,6 +81,15 @@ public class Usuario implements Serializable {
                 @JoinColumn(name = "permissao_id")})
     private List<Permissao> permissoes;
 
+    public Usuario() { }
+
+    public Usuario(String nome, String email, String senha, List<Permissao> permissoes) {
+        setNome(nome);
+        setEmail(email);
+        setSenha(senha);
+        setPermissoes(permissoes);
+    }
+
     public List<Permissao> getPermissoes() {
         return permissoes;
     }
