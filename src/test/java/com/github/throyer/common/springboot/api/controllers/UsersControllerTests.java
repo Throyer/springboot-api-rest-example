@@ -1,14 +1,13 @@
 package com.github.throyer.common.springboot.api.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.throyer.common.springboot.api.models.entity.Permissao;
@@ -17,74 +16,73 @@ import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
 import com.github.throyer.common.springboot.api.services.TokenService;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase(replace = Replace.ANY)
-@Sql({ "classpath:usuarios.sql" })
 public class UsersControllerTests {
     
+    private String bearerToken;
+
     @Autowired
     private TokenService tokenService;
 
-    @MockBean
+    @Autowired
     private UsuarioRepository repository;
 
     @Autowired
     private MockMvc mock;
 
-    /**
-     * Salvar um usuarios sem os campos obrigatorios deve retornar 400 Bad Request.Body:
-    <code>
-    [
-        {
-            "campo": "permissoes",
-            "messagem": "não pode ser nulo"
-        },
-        {
-            "campo": "email",
-            "messagem": "O e-mail não pode ser NULL."
-        },
-        {
-            "campo": "senha",
-            "messagem": "No mínimo 8 caracteres, com no mínimo um número, um caractere especial, uma letra maiúscula e uma letra minúscula."
-        }
-    ]
-    </code>
-     * @throws java.lang.Exception
-     */
+    @BeforeEach
+    public void generateToken() {
+        var permissoes = List.of(new Permissao("ADMINISTRADOR"));
+        var user = new Authorized("ADMINISTRADOR", 1L, permissoes);
+        bearerToken = String.format("Bearer %s", tokenService.buildToken(user));
+    }
+
     @Test
     public void salvar_usuario_sem_campos_obrigatorios_deve_retornar_400() throws Exception {
 
-        String usuario = "{\"nome\":\"fulaninho\", \"senha\": \"123\"}";
+        String payload = "{\"nome\":\"fulaninho\", \"senha\": \"123\"}";
         
-        mock.perform(post("/usuarios")
-                .content(usuario)
-                .header(HttpHeaders.AUTHORIZATION, getToken())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$", hasSize(3)));
+        var request = post("/usuarios")
+            .content(payload)
+                .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-        verify(repository, times(0)).save(any(Usuario.class));
+        mock.perform(request)
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$", hasSize(3)));
     }
 
-    private String getToken() {
-        var permissoes = List.of(new Permissao("ADMINISTRADOR"));
-        var user = new Authorized("ADMINISTRADOR", 1L, permissoes);
-        return String.format("Bearer %s", tokenService.buildToken(user));
+    @Test
+    public void deve_listar_os_usuarios() throws Exception {
+
+        repository.saveAll(List.of(
+            new Usuario("Renatinho", "renatinho@email.com", "1232", new ArrayList<>()),
+            new Usuario("fulano", "fulano@email.com", "1232", new ArrayList<>()),
+            new Usuario("cicrano", "cicrano@email.com", "1232", new ArrayList<>())
+        ));
+        
+        var request = get("/usuarios")
+            .header(HttpHeaders.AUTHORIZATION, bearerToken)
+                .queryParam("page", "0")
+                .queryParam("size", "10");
+
+        mock.perform(request).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content", hasSize(4)));
     }
     
 }
