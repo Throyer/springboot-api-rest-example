@@ -31,7 +31,11 @@ api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é be
 - [X] *database migration **Flyway***
 - [X] *Soft delete e TIMESTAMPS*
 
-# Requisitos
+
+_________________________________________
+
+
+## Requisitos
 
 - MariaDB: `^10.3.11`
 - Java: `^11`
