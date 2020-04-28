@@ -41,45 +41,30 @@ api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é be
 Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
 
 ## Instalação
-
-Clone o repositório. [Git](https://git-scm.com/)
-
 ```shell
-git clone git@github.com:Throyer/springboot-api-crud.git # SSH
+# Clone o repositório e acesse o diretorio.
+$ git clone git@github.com:Throyer/springboot-api-crud.git && cd springboot-api-crud
 
-git clone https://github.com/Throyer/springboot-api-crud.git # HTTP
+# Baixe as dependencias
+$ mvnw install
+
+# Rode a aplicação
+$ mvnw spring-boot:run
+
+# Para rodar os testes
+$ mvnw test
+
+# Para buildar para produção
+$ mvnw clean package
 ```
-
-Entre na pasta do projeto
-
-```bash
-cd springboot-api-crud
-```
-
-Baixe as dependencias
-
-```bash
-mvnw install
-```
-
-Rode a aplicação
-
-```bash
-mvnw spring-boot:run
-```
-
-Documentação swagger: http://localhost:8080/api/v1/swagger-ui.html
+Acesse a documentação no swagger: http://localhost:8080/api/v1/swagger-ui.html
 
 ## Variaveis de ambiente
 
 > são definidas em: [**application.properties**](./src/main/resources/application.properties)
-
-para definir variaveis de ambiente durante a execução basta passar o parametro:
-
-> por exemplo mudar a porta use `--port=<porta_desejada>`:
->
-> ```bash
-> java -jar api-1.0.0.RELEASE.jar --port=80
+> ```shell
+> # para mudar o valor de alguma variavel de ambiente na execução basta colocar como parametro na execução
+> $ java -jar api-1.0.0.RELEASE.jar --port=80
 > ```
 
 | **Descrição**                         | **parametro**                    | **Valor padrão**          |
