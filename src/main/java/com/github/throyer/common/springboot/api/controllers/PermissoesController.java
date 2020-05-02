@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 @RequestMapping("/permissoes")
 @PreAuthorize("hasAnyAuthority('ADMINISTRADOR')")
 @Api(tags = "/permissoes", description = "permissoes")
-public class RolesController {
+public class PermissoesController {
 
     @Autowired
     private PermissaoRepository repository;

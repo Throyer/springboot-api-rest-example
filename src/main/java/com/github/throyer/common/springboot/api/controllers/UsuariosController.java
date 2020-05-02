@@ -30,7 +30,7 @@ import io.swagger.annotations.Api;
 @RequestMapping("/usuarios")
 @PreAuthorize("hasAnyAuthority('ADMINISTRADOR')")
 @Api(tags = "/usuarios", description = "usuarios")
-public class UsersController {
+public class UsuariosController {
 
     @Autowired
     private UsuarioRepository repository;
