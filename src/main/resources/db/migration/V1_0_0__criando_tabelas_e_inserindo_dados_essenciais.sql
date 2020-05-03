@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS usuario (
 
 CREATE TABLE IF NOT EXISTS permissao ( 
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(20) NOT NULL UNIQUE,
+    nome VARCHAR(20) UNIQUE,
+    deleted_nome VARCHAR(20),
     descricao VARCHAR(255),
     active BIT DEFAULT 1,
     created_at TIMESTAMP DEFAULT sysdate(),
