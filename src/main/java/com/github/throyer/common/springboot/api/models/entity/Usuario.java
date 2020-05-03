@@ -161,6 +161,6 @@ public class Usuario extends BasicEntity implements Serializable {
 
     @Override
     public String toString() {
-        return this.getNome();
+        return Objects.nonNull(getNome()) ? nome : "null";
     }
 }
