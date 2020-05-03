@@ -1,0 +1,5 @@
+ALTER TABLE permissao
+    MODIFY nome VARCHAR(20) UNIQUE DEFAULT NULL;
+
+ALTER TABLE permissao 
+    ADD COLUMN deleted_nome VARCHAR(20) DEFAULT NULL AFTER nome;

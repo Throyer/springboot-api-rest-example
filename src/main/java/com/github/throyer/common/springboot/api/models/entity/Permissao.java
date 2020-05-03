@@ -26,8 +26,12 @@ public class Permissao extends BasicEntity implements GrantedAuthority {
     private Long id;
 
     @NotEmpty(message = "Por favor, forneça um nome.")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String nome;
+
+    @JsonIgnore
+    @Column(name = "deleted_nome")
+    private String deletedNome;
 
     public Permissao() { }
 
@@ -49,6 +53,10 @@ public class Permissao extends BasicEntity implements GrantedAuthority {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getDeletedNome() {
+        return deletedNome;
     }
 
     @Override
