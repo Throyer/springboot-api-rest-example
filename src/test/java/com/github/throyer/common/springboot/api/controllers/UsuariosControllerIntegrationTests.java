@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class UsersControllerTests {
+public class UsuariosControllerIntegrationTests {
     
     private String bearerToken;
 
