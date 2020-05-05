@@ -13,27 +13,28 @@
 # Motivação
 
 <p>
-A ideia desse repositorio é a criação de uma api em spring boot, com o maximo possivel de boas praticas e o mais completa possivel, para servir como uma base para min no futuro, ou para outras pessoas que estiverem buscando um guia para a construição de uma
-api com spring. Qualquer pessoa que quiser contribuir ou usar esse projeto é bem vinda.
+  A ideia desse repositorio é a criação de uma api em spring boot,
+  com o maximo possivel de boas praticas e o mais completa possivel,
+  para servir como uma base para min no futuro, ou para outras pessoas
+  que estiverem buscando um guia para a construição de uma api com Spring Boot.
+  Qualquer pessoa que quiser contribuir ou usar esse projeto é bem vinda.
 </p>
 
 # O que foi feito e os proximos passos
 
-- [X] *autenticação com **Spring Security** com **JWT***.
+- [x] _autenticação com **Spring Security** com **JWT**_.
   - [ ] **refresh token**
 - [ ] **cadastro completo de usuarios e permissões**.
-  - [X] *usuarios*
+  - [x] _usuarios_
   - [ ] **permissões**
 - [ ] **testes de integração de todos controllers**
   - [ ] `"/usuarios"`
   - [ ] `"/permissoes"`
-- [X] *swagger*
-- [X] *database migration **Flyway***
-- [X] *Soft delete e TIMESTAMPS*
+- [x] _swagger_
+- [x] _database migration **Flyway**_
+- [x] _Soft delete e TIMESTAMPS_
 
-
-_________________________________________
-
+---
 
 ## Requisitos
 
@@ -43,6 +44,7 @@ _________________________________________
 Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
 
 ## Instalação
+
 ```shell
 # Clone o repositório e acesse o diretorio.
 $ git clone git@github.com:Throyer/springboot-api-crud.git && cd springboot-api-crud
@@ -59,17 +61,15 @@ $ mvnw test
 # Para buildar para produção
 $ mvnw clean package
 ```
+
 > Quando a aplicação estiver rodando acesse a documentação em:
 > http://localhost:8080/api/v1/swagger-ui.html
-<br>
-<br>
+> <br>
+> <br>
 
-
-____________________________________________________
-
+---
 
 ## Variaveis de ambiente
-
 
 | **Descrição**                         | **parametro**                    | **Valor padrão**          |
 | ------------------------------------- | -------------------------------- | ------------------------- |
@@ -83,9 +83,14 @@ ____________________________________________________
 | valor do secret na geração dos tokens | `token-secret`                   | secret                    |
 | maximo de conexões com o banco        | `max-connections`                | 10                        |
 
-
 > são definidas em: [**application.properties**](./src/main/resources/application.properties)
+>
 > ```shell
-> # para mudar o valor de alguma variavel de ambiente na execução basta colocar como parametro na execução
+> # para mudar o valor de alguma variavel de ambiente
+> # na execução basta passar ela como parametro. (como --port=80 por exemplo).
 > $ java -jar api-1.0.0.RELEASE.jar --port=80
 > ```
+>
+> > [Todas opções do `aplication.properties` **padrões** dos Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
+> >
+> > [Todas **funcionalidades** do Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html).
