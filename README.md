@@ -6,11 +6,11 @@
 <p align="center">
   Um cadastro de usuarios completo, com permissões de acesso, token JWT testes de integração e unitarios, no padrão API RESTful.
 </p>
+<br>
+<br>
 
+# DER
 <img src="./der/spring_boot_crud_der.png" width="560" alt="DER" />
-
-<br>
-<br>
 
 # Motivação
 
