@@ -10,7 +10,10 @@
 <br>
 
 # DER
+
 <img src="./der/spring_boot_crud_der.png" width="560" alt="DER" />
+
+> arquivo do [draw.io](./der/spring_boot_crud_der.drawio)
 
 # Motivação
 
@@ -69,9 +72,13 @@ $ mvnw clean package
 ```
 
 > Quando a aplicação estiver rodando acesse a documentação em:
-> http://localhost:8080/api/v1/swagger-ui.html
-> <br>
-> <br>
+> [localhost:8080/api/v1/swagger-ui](http://localhost:8080/api/v1/swagger-ui.html)
+>
+> Arquivo com a coleção no [**postman**](./postman/crud_api.postman_collection.json)
+
+
+<br>
+<br>
 
 ---
 
