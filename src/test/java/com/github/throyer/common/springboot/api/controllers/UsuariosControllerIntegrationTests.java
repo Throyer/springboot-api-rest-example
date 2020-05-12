@@ -46,6 +46,12 @@ public class UsuariosControllerIntegrationTests {
         var permissoes = List.of(new Permissao("ADMINISTRADOR"));
         var user = new Authorized("ADMINISTRADOR", 1L, permissoes);
         bearerToken = String.format("Bearer %s", tokenService.buildToken(user));
+
+        repository.saveAll(List.of(
+            new Usuario("Renatinho", "renatinho@email.com", "1232", new ArrayList<>()),
+            new Usuario("fulano", "fulano@email.com", "1232", new ArrayList<>()),
+            new Usuario("cicrano", "cicrano@email.com", "1232", new ArrayList<>())
+        )); 
     }
 
     @Test
@@ -66,14 +72,7 @@ public class UsuariosControllerIntegrationTests {
     }
 
     @Test
-    public void deve_listar_os_usuarios() throws Exception {
-
-        repository.saveAll(List.of(
-            new Usuario("Renatinho", "renatinho@email.com", "1232", new ArrayList<>()),
-            new Usuario("fulano", "fulano@email.com", "1232", new ArrayList<>()),
-            new Usuario("cicrano", "cicrano@email.com", "1232", new ArrayList<>())
-        ));
-        
+    public void deve_listar_os_usuarios() throws Exception {        
         var request = get("/usuarios")
             .header(HttpHeaders.AUTHORIZATION, bearerToken)
                 .queryParam("page", "0")

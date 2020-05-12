@@ -70,7 +70,7 @@ public class UsuariosController {
         
         validarUnicidadeDoEmailParaEdicaoDeUsuario(novo, atual);
 
-        copyProperties(novo, atual, "id", "senha", "createdAt", "updatedAt");
+        copyProperties(novo, atual, "id", "senha", "createdAt", "updatedAt", "deletedAt");
 
         return ok(repository.save(atual));
     }
