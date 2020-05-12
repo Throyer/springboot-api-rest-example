@@ -1,12 +1,14 @@
 <p align="center">
-  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Spring boot Logo" /></a>
+  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
 </p>
 
 <h1 align="center">Spring Boot API CRUD</h1>
 <p align="center">
-    Aplicação em spring boot RESTful, com testes de integração,
-    documentação automatica com Swagger e token JWT.
+  Um cadastro de usuarios completo, com permissões de acesso, token JWT testes de integração e unitarios, no padrão API RESTful.
 </p>
+
+<img src="./der/spring_boot_crud_der.png" width="560" alt="DER" />
+
 <br>
 <br>
 
@@ -24,12 +26,12 @@
 
 - [x] _autenticação com **Spring Security** com **JWT**_.
   - [ ] **refresh token**
-- [ ] **cadastro completo de usuarios e permissões**.
+- [ ] **CRUD completo de usuarios e permissões**.
   - [x] _usuarios_
   - [ ] **permissões**
-- [ ] **testes de integração de todos controllers**
-  - [ ] `"/usuarios"`
-  - [ ] `"/permissoes"`
+- [X] _relatorio de cobertura dos testes_
+- [ ] **testes unitarios**
+- [ ] **testes de integração**
 - [x] _swagger_
 - [x] _database migration **Flyway**_
 - [x] _Soft delete e TIMESTAMPS_
@@ -57,6 +59,10 @@ $ mvnw spring-boot:run
 
 # Para rodar os testes
 $ mvnw test
+
+# Para gerar o relatorio de cobertura apos os testes
+# eles são gerados em: target/site/jacoco/index.html
+$ mvnw jacoco:report
 
 # Para buildar para produção
 $ mvnw clean package
