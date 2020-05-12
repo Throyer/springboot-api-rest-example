@@ -58,8 +58,8 @@ Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
 # Clone o repositório e acesse o diretorio.
 $ git clone git@github.com:Throyer/springboot-api-crud.git && cd springboot-api-crud
 
-# Baixe as dependencias
-$ mvnw install
+# Baixe as dependencias (o parametro -DskipTests pula os testes)
+$ mvnw install -DskipTests
 
 # Rode a aplicação
 $ mvnw spring-boot:run
