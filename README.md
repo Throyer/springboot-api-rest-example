@@ -67,18 +67,29 @@ $ mvnw spring-boot:run
 # Para rodar os testes
 $ mvnw test
 
-# Para gerar o relatorio de cobertura apos os testes
-# eles são gerados em: target/site/jacoco/index.html
+# Para gerar o relatorio de cobertura apos os testes (fica disponivel em: target/site/jacoco/index.html)
 $ mvnw jacoco:report
 
 # Para buildar para produção
 $ mvnw clean package
 ```
 
-> Quando a aplicação estiver rodando acesse a documentação em:
-> [localhost:8080/api/v1/swagger-ui](http://localhost:8080/api/v1/swagger-ui.html)
->
-> Arquivo com a coleção no [**postman**](./postman/crud_api.postman_collection.json)
+
+## Rodando um teste especifico
+use o parametro `-Dtest=<Classe>#<metodo>`
+
+
+por exemplo o teste de integração de usuario:
+```
+$ mvnw test -Dtest=UsuariosControllerIntegrationTests#salvar_usuario_sem_campos_obrigatorios_deve_retornar_400
+```
+
+
+## Documentação do Swagger
+Assim que a aplicação estiver de pé, fica disponivel em: [localhost:8080/api/v1/swagger-ui](http://localhost:8080/api/v1/swagger-ui.html)
+
+## Postman
+Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
 
 
 <br>
@@ -108,6 +119,6 @@ $ mvnw clean package
 > $ java -jar api-1.0.0.RELEASE.jar --port=80
 > ```
 >
-> > [Todas opções do `aplication.properties` **padrões** dos Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
+> > [Todas opções do `aplication.properties` **padrões** no Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 > >
 > > [Todas **funcionalidades** do Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html).
