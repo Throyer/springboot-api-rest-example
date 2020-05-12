@@ -3,6 +3,7 @@ package com.github.throyer.common.springboot.api.configurations;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.github.throyer.common.springboot.api.models.validation.EmailNotUniqueException;
 import com.github.throyer.common.springboot.api.models.validation.SimpleError;
 
 import org.springframework.http.HttpStatus;
@@ -23,5 +24,11 @@ public class ValidationResolver {
                 .stream()
                     .map((error) -> (new SimpleError((FieldError)error)))
                         .collect(Collectors.toList());
+    }    
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EmailNotUniqueException.class)
+    public List<SimpleError> badRequest(EmailNotUniqueException exception) {
+        return exception.getErrors();
     }    
 }

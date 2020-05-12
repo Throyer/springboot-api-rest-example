@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
-import com.github.throyer.common.springboot.api.models.validation.constraints.EmailExists;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,7 +48,6 @@ public class Usuario extends BasicEntity implements Serializable {
     @Column(name = "nome", nullable = false)
     private String nome;
     
-    @EmailExists(message = "Esse email já é utilizado por outro usuario.")
     @NotNull(message = "O e-mail não pode ser NULL.")
     @Email(message = "Por favor, forneça um e-mail valido.")
     @Column(name = "email", unique = true)
@@ -163,6 +161,6 @@ public class Usuario extends BasicEntity implements Serializable {
 
     @Override
     public String toString() {
-        return this.getNome();
+        return Objects.nonNull(getNome()) ? nome : "null";
     }
 }

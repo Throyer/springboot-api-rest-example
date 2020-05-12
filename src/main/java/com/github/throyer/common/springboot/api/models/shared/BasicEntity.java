@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @MappedSuperclass
 public abstract class BasicEntity {
@@ -22,21 +22,18 @@ public abstract class BasicEntity {
 
     public abstract Long getId();
 
-    @CreationTimestamp
     @JsonInclude(Include.NON_NULL)
-    @Column(name = "created_at")
     @JsonFormat(shape = Shape.STRING)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
     @JsonInclude(Include.NON_NULL)
-    @Column(name = "updated_at")
     @JsonFormat(shape = Shape.STRING)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @JsonInclude(Include.NON_NULL)
+    @JsonIgnore
     @Column(name = "deleted_at")
-    @JsonFormat(shape = Shape.STRING)
     private LocalDateTime deletedAt;
 
     @Column(name = "active", nullable = false)
@@ -72,5 +69,15 @@ public abstract class BasicEntity {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    @PrePersist
+    public void save() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void update() {
+        updatedAt = LocalDateTime.now();
     }
 }
