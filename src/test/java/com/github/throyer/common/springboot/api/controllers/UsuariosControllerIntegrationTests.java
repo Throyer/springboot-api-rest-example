@@ -7,13 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.github.throyer.common.springboot.api.models.entity.Permissao;
-import com.github.throyer.common.springboot.api.models.entity.Usuario;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
-import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
 import com.github.throyer.common.springboot.api.services.TokenService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,15 +25,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class UsersControllerTests {
+public class UsuariosControllerIntegrationTests {
     
     private String bearerToken;
 
     @Autowired
     private TokenService tokenService;
-
-    @Autowired
-    private UsuarioRepository repository;
 
     @Autowired
     private MockMvc mock;
@@ -66,14 +60,7 @@ public class UsersControllerTests {
     }
 
     @Test
-    public void deve_listar_os_usuarios() throws Exception {
-
-        repository.saveAll(List.of(
-            new Usuario("Renatinho", "renatinho@email.com", "1232", new ArrayList<>()),
-            new Usuario("fulano", "fulano@email.com", "1232", new ArrayList<>()),
-            new Usuario("cicrano", "cicrano@email.com", "1232", new ArrayList<>())
-        ));
-        
+    public void deve_listar_os_usuarios() throws Exception {        
         var request = get("/usuarios")
             .header(HttpHeaders.AUTHORIZATION, bearerToken)
                 .queryParam("page", "0")
@@ -81,8 +68,7 @@ public class UsersControllerTests {
 
         mock.perform(request).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content", hasSize(4)));
+                .andExpect(jsonPath("$.content").isArray());
     }
     
 }
