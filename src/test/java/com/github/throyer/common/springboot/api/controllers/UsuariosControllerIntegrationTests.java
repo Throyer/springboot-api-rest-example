@@ -7,13 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.github.throyer.common.springboot.api.models.entity.Permissao;
-import com.github.throyer.common.springboot.api.models.entity.Usuario;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
-import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
 import com.github.throyer.common.springboot.api.services.TokenService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -36,9 +33,6 @@ public class UsuariosControllerIntegrationTests {
     private TokenService tokenService;
 
     @Autowired
-    private UsuarioRepository repository;
-
-    @Autowired
     private MockMvc mock;
 
     @BeforeEach
@@ -46,12 +40,6 @@ public class UsuariosControllerIntegrationTests {
         var permissoes = List.of(new Permissao("ADMINISTRADOR"));
         var user = new Authorized("ADMINISTRADOR", 1L, permissoes);
         bearerToken = String.format("Bearer %s", tokenService.buildToken(user));
-
-        repository.saveAll(List.of(
-            new Usuario("Renatinho", "renatinho@email.com", "1232", new ArrayList<>()),
-            new Usuario("fulano", "fulano@email.com", "1232", new ArrayList<>()),
-            new Usuario("cicrano", "cicrano@email.com", "1232", new ArrayList<>())
-        )); 
     }
 
     @Test
@@ -80,8 +68,7 @@ public class UsuariosControllerIntegrationTests {
 
         mock.perform(request).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content", hasSize(4)));
+                .andExpect(jsonPath("$.content").isArray());
     }
     
 }
