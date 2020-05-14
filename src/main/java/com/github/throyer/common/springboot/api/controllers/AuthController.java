@@ -1,6 +1,6 @@
 package com.github.throyer.common.springboot.api.controllers;
 
-import static com.github.throyer.common.springboot.api.utils.Responses.BadRequest;
+import static com.github.throyer.common.springboot.api.utils.Responses.unauthorized;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 
 import javax.validation.Valid;
@@ -32,7 +32,7 @@ public class AuthController {
 
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Token.class),
-        @ApiResponse(code = 400, message = "Bad Request", response = SimpleError.class) 
+        @ApiResponse(code = 401, message = "Unauthorized", response = SimpleError.class) 
     })
     @PostMapping("/token")
     public ResponseEntity<?> getToken(@RequestBody @Valid Login login) {
@@ -43,7 +43,7 @@ public class AuthController {
         } catch (BadCredentialsException exception) {  
 
             /* usuario invalido ou não autorizado */
-            return BadRequest(new SimpleError(null, "Senha ou Usuario invalidos."));
+            return unauthorized(new SimpleError(null, "Senha ou Usuario invalidos."));
         }
     }
 }
