@@ -11,7 +11,7 @@
 
 # DER
 
-<img src="./der/spring_boot_crud_der.png" width="560" alt="DER" />
+<img src="./der/spring_boot_crud_der.png" alt="DER" />
 
 > arquivo do [draw.io](./der/spring_boot_crud_der.drawio)
 
