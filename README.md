@@ -9,13 +9,6 @@
 <br>
 <br>
 
-# DER
-<p align="center">
-  <img src="./der/spring_boot_crud_der.png" alt="DER" />
-</p>
-
-> arquivo do [draw.io](./der/spring_boot_crud_der.drawio)
-
 # Motivação
 
 <p>
@@ -49,6 +42,14 @@
 > recomendo a instalação do maven localmente, mas o projeto tem uma versão portatil nos arquivos [`mvnw`](./mvnw) e [`mvnw.cmd`](./mvnw.cmd)
 
 Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
+
+## Entidades
+
+<p>
+  <img src="./der/spring_boot_crud_der.png" alt="DER" />
+</p>
+
+> arquivo do [draw.io](./der/spring_boot_crud_der.drawio)
 
 ## Instalação
 
