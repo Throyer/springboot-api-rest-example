@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
  */
 public class Responses {
 
+    private Responses() { }
+
     public static final <T> ResponseEntity<T> unauthorized(T body) {
         return ResponseEntity.status(401).body(body);
     }
@@ -34,12 +36,12 @@ public class Responses {
             .build();
     }
 
-    public static final <T> ResponseEntity<T> BadRequest(T body) {
+    public static final <T> ResponseEntity<T> badRequest(T body) {
         return ResponseEntity.badRequest()
             .body(body);
     }
     
-    public static final <T> ResponseEntity<T> BadRequest() {
+    public static final <T> ResponseEntity<T> badRequest() {
         return ResponseEntity.badRequest()
             .build();
     }

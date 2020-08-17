@@ -7,8 +7,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static com.github.throyer.common.springboot.api.utils.JsonUtils.toJson;
+
 import java.util.List;
 
+import com.github.throyer.common.springboot.api.builders.UsuarioBuilder;
 import com.github.throyer.common.springboot.api.models.entity.Permissao;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.services.TokenService;
@@ -26,7 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class UsuariosControllerIntegrationTests {
-    
+
     private String bearerToken;
 
     @Autowired
@@ -37,9 +40,30 @@ public class UsuariosControllerIntegrationTests {
 
     @BeforeEach
     public void generateToken() {
-        var permissoes = List.of(new Permissao("ADMINISTRADOR"));
-        var user = new Authorized("ADMINISTRADOR", 1L, permissoes);
+        final var permissoes = List.of(new Permissao("ADMINISTRADOR"));
+        final var user = new Authorized("ADMINISTRADOR", 1L, permissoes);
         bearerToken = String.format("Bearer %s", tokenService.buildToken(user));
+    }
+
+    @Test
+    public void deve_salvar_um_novo_usuario() throws Exception {
+        var usuario = new UsuarioBuilder("fulano")
+            .setEmail("fulano.dasilva@email.com")
+            .setSenha("senha_do_fulano_123_ABCD_@_strong_pass")
+            .build();
+
+        var json = toJson(usuario);
+
+        var request = post("/usuarios")
+            .content(json)
+            .header(HttpHeaders.AUTHORIZATION, bearerToken)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+
+        mock.perform(request)
+            .andDo(print())
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.id").exists())
+            .andExpect(jsonPath("$.id").isNotEmpty());
     }
 
     @Test
@@ -70,5 +94,4 @@ public class UsuariosControllerIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
     }
-    
 }

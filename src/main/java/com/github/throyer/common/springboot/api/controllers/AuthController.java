@@ -35,11 +35,12 @@ public class AuthController {
         @ApiResponse(code = 401, message = "Unauthorized", response = SimpleError.class) 
     })
     @PostMapping("/token")
-    public ResponseEntity<?> getToken(@RequestBody @Valid Login login) {
+    public ResponseEntity<Object> getToken(@RequestBody @Valid Login login) {
 
         try {            
-            
+        
             return ok(service.buildToken(login));
+
         } catch (BadCredentialsException exception) {  
 
             /* usuario invalido ou não autorizado */
