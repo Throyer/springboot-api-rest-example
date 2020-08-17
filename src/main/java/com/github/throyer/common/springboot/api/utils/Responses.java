@@ -16,6 +16,10 @@ import org.springframework.web.server.ResponseStatusException;
  */
 public class Responses {
 
+    public static final <T> ResponseEntity<T> unauthorized(T body) {
+        return ResponseEntity.status(401).body(body);
+    }
+
     public static final <T> ResponseEntity<T> ok(T body) {
         return ResponseEntity.ok(body);
     }
