@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class CommonApiApplication {
 
 	public static void main(String... args) {
+		System.getProperties().setProperty("org.jooq.no-logo", "true");
 		SpringApplication.run(CommonApiApplication.class, args);
 	}
-
 }

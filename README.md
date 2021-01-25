@@ -19,6 +19,7 @@
 - [Rodando um teste especifico](#rodando-um-teste-especifico)
 - [Documentação do Swagger](#documentação-do-swagger)
 - [Postman](#postman)
+- [Database Migrations](#database-migrations)
 - [Variaveis de ambiente](#variaveis-de-ambiente)
 
 # Motivação
@@ -43,6 +44,7 @@
 - [ ] **testes de integração**
 - [x] _swagger_
 - [x] _database migration **Flyway**_
+  - [X] _java based migrations_
 - [x] _Soft delete e TIMESTAMPS_
 
 ---
@@ -65,7 +67,7 @@ Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
 
 ## Instalação
 
-> Caso tiver o maven instalado localmente subistitua `mvnw` por `mvn`
+> Caso tiver o maven instalado localmente subistitua `mvnw` por `mvn` (_para usuarios do zsh adicione o comando `bash` antes de mvnw_)
 
 
 ```shell
@@ -111,6 +113,24 @@ Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aqu
 
 ---
 
+## Database Migrations
+existem dois scripts `bash` que podem ser usados para criação de arquivos de migração
+
+- Java based migrations
+  ```bash
+    ./migration:create <migration-name>
+    # or zsh users
+    bash migration:create.sh <migration-name>
+  ```
+
+- SQL based migrations
+  ```bash
+    ./sql:create <migration-name>
+    # or zsh users
+    bash sql:create.sh <migration-name>
+  ```
+
+---
 ## Variaveis de ambiente
 
 | **Descrição**                         | **parametro**                    | **Valor padrão**          |
