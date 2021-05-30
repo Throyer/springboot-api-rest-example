@@ -4,7 +4,7 @@
 
 <h1 align="center">Spring Boot API CRUD</h1>
 <p align="center">
-  Um cadastro de usuarios completo, com permissões de acesso, token JWT testes de integração e unitarios, no padrão API RESTful.
+  Um cadastro de usuários completo, com permissões de acesso, token JWT testes de integração e unitários, no padrão API RESTful.
 </p>
 <br>
 <br>
@@ -12,12 +12,12 @@
 ## Sumario
 
 - [Motivação](#motivação)
-- [Proximos passos](#o-que-foi-feito-e-os-proximos-passos)
+- [Próximos passos](#o-que-foi-feito-e-os-proximos-passos)
 - [Requisitos](#requisitos)
 - [Entidades](#entidades)
 - [Instalação](#instalação)
 - [Rodando um teste especifico](#rodando-um-teste-especifico)
-- [Documentação do Swagger](#documentação-do-swagger)
+<!-- - [Documentação do Swagger](#documentação-do-swagger) -->
 - [Postman](#postman)
 - [Database Migrations](#database-migrations)
 - [Variaveis de ambiente](#variaveis-de-ambiente)
@@ -25,24 +25,24 @@
 # Motivação
 
 <p>
-  A ideia desse repositorio é a criação de uma api em spring boot,
-  com o maximo possivel de boas praticas e o mais completa possivel,
+  A ideia desse repositório é a criação de uma api em spring boot,
+  com o máximo possível de boas praticas e o mais completa que eu conseguir,
   para servir como uma base para min no futuro, ou para outras pessoas
-  que estiverem buscando um guia para a construição de uma api com Spring Boot.
+  que estiverem buscando um guia para a construção de uma api com Spring Boot.
   Qualquer pessoa que quiser contribuir ou usar esse projeto é bem vinda.
 </p>
 
-# O que foi feito e os proximos passos
+# O que foi feito e os próximos passos
 
 - [x] _autenticação com **Spring Security** com **JWT**_.
   - [ ] **refresh token**
-- [ ] **CRUD completo de usuarios e permissões**.
-  - [x] _usuarios_
+- [ ] **CRUD completo de usuários e permissões**.
+  - [x] _usuários_
   - [ ] **permissões**
-- [X] _relatorio de cobertura dos testes_
-- [ ] **testes unitarios**
-- [ ] **testes de integração**
-- [x] _swagger_
+- [X] _relatório de cobertura dos testes_
+- [ ] **testes unitários**
+- [X] **testes de integração** _(eu até fiz alguns mas eles são bem simples... C: )_
+- [ ] _swagger_ _(tava funcionando mas quebrou na atualização 2.5.0) :C_
 - [x] _database migration **Flyway**_
   - [X] _java based migrations_
 - [x] _Soft delete e TIMESTAMPS_
@@ -101,8 +101,8 @@ $ mvnw test -Dtest=UsuariosControllerIntegrationTests#salvar_usuario_sem_campos_
 ```
 
 
-## Documentação do Swagger
-Assim que a aplicação estiver de pé, fica disponivel em: [localhost:8080/api/v1/swagger-ui](http://localhost:8080/api/v1/swagger-ui.html)
+<!-- ## Documentação do Swagger
+Assim que a aplicação estiver de pé, fica disponivel em: [localhost:8080/api/v1/swagger-ui](http://localhost:8080/api/v1/swagger-ui.html) -->
 
 ## Postman
 Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
