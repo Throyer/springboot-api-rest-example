@@ -83,11 +83,11 @@ $ mvnw spring-boot:run
 # Para rodar os testes
 $ mvnw test
 
-# Para gerar o relatório de cobertura apos os testes (fica disponível em: target/site/jacoco/index.html)
-$ mvnw jacoco:report
-
 # Para buildar para produção
 $ mvnw clean package
+
+# Para gerar o relatório de cobertura apos os testes (fica disponível em: target/site/jacoco/index.html)
+$ mvnw jacoco:report
 ```
 
 
