@@ -10,13 +10,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import com.github.throyer.common.springboot.api.builders.UserBuilder;
 import com.github.throyer.common.springboot.api.models.entity.Role;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
+import com.github.throyer.common.springboot.api.repositories.UserRepository;
 import com.github.throyer.common.springboot.api.services.TokenService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -28,6 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureDataJpa
 @AutoConfigureMockMvc
 public class UsersControllerIntegrationTests {
 
@@ -35,6 +39,9 @@ public class UsersControllerIntegrationTests {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    UserRepository repository;
 
     @Autowired
     private MockMvc mock;
@@ -109,32 +116,41 @@ public class UsersControllerIntegrationTests {
 
     @Test
     public void should_delete_user() throws Exception {  
-        var json = """
-            {
-                \"name\": \"novo usuário\",
-                \"email\": \"novo.usuario2@email.com\",
-                \"password\": \"uma_senha_123@SEGURA\",
-                \"roles\": [
-                    {
-                        \"id\": 2
-                    }
-                ]
-            }
-        """;
-
-        var postUser = post("/users")
-            .content(json)
-            .header(HttpHeaders.AUTHORIZATION, bearerToken)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-
-        mock.perform(postUser)
-            .andDo(print())
-            .andExpect(status().isCreated());
+        var user = repository.save(
+            new UserBuilder("novo usuário")
+                .setEmail("novo@email.com")
+                .addRole(2L)
+                .setPassword("uma_senha_123@SEGURA")
+                .build()
+            );
         
-        var deleteUser = delete(String.format("/users/%s", 2))
+        var request = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, bearerToken);
 
-        mock.perform(deleteUser).andDo(print())
+        mock.perform(request).andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void should_return_404_after_delete_user() throws Exception {  
+        var user = repository.save(
+            new UserBuilder("novo usuário")
+                .setEmail("novo@email.com")
+                .addRole(2L)
+                .setPassword("uma_senha_123@SEGURA")
+                .build()
+            );
+        
+        var request = delete(String.format("/users/%s", user.getId()))
+            .header(HttpHeaders.AUTHORIZATION, bearerToken);
+
+        mock.perform(request).andDo(print())
+                .andExpect(status().isNoContent());
+
+        var tryAgainRequest = delete(String.format("/users/%s", user.getId()))
+        .header(HttpHeaders.AUTHORIZATION, bearerToken);
+
+        mock.perform(tryAgainRequest).andDo(print())
+                .andExpect(status().isNotFound());
     }
 }

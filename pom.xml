@@ -140,6 +140,11 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>db/migration/**/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

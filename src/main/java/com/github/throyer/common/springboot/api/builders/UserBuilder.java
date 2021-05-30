@@ -41,6 +41,11 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder addRole(Long id) {
+        roles.add(new Role(id));
+        return this;
+    }
+
     public User build() {
         user.setRoles(roles);
         return user;

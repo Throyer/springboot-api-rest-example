@@ -68,6 +68,10 @@ public class Role extends BasicEntity implements GrantedAuthority {
         this.initials = initials;
     }
 
+    public Role(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
