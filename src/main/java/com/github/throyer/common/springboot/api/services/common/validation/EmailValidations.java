@@ -1,8 +1,8 @@
-package com.github.throyer.common.springboot.api.utils;
+package com.github.throyer.common.springboot.api.services.common.validation;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.models.shared.HasEmail;
 import com.github.throyer.common.springboot.api.models.validation.EmailNotUniqueException;
 import com.github.throyer.common.springboot.api.models.validation.SimpleError;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailValidationUtils {
+public class EmailValidations {
 
     private static UserRepository repository;
 
@@ -21,20 +21,20 @@ public class EmailValidationUtils {
     private static final List<SimpleError> EMAIL_ERROR = List.of(new SimpleError(FIELD, MESSAGE));
 
     @Autowired
-    public EmailValidationUtils(UserRepository repository) {
-        EmailValidationUtils.repository = repository;
+    public EmailValidations(UserRepository repository) {
+        EmailValidations.repository = repository;
     }
 
-    public static void validateEmailUniqueness(User user) {
-        if (repository.existsByEmail(user.getEmail())) {
+    public static void validateEmailUniqueness(HasEmail entity) {
+        if (repository.existsByEmail(entity.getEmail())) {
             throw new EmailNotUniqueException(EMAIL_ERROR);
         }
     }
 
-    public static void validateEmailUniquenessEdition(User novo, User atual) {
+    public static void validateEmailUniquenessOnModify(HasEmail newEntity, HasEmail actualEntity) {
 
-        var newEmail = novo.getEmail();
-        var actualEmail = atual.getEmail();
+        var newEmail = newEntity.getEmail();
+        var actualEmail = actualEntity.getEmail();
 
         var changedEmail = !actualEmail.equals(newEmail);
 

@@ -72,6 +72,11 @@ public class Role extends BasicEntity implements GrantedAuthority {
         this.id = id;
     }
 
+    public Role(Long id, String initials) {
+        this.id = id;
+        this.initials = initials;
+    }
+
     public Long getId() {
         return id;
     }
@@ -110,6 +115,15 @@ public class Role extends BasicEntity implements GrantedAuthority {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean compare(String search) {
+        if (Objects.nonNull(search)) {
+            return 
+                getName().toLowerCase().equals(search.toLowerCase()) ||
+                getInitials().toLowerCase().equals(search.toLowerCase());
+        }
+        return false;
     }
 
     @Override

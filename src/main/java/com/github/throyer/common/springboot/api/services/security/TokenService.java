@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.services;
+package com.github.throyer.common.springboot.api.services.security;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

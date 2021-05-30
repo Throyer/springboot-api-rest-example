@@ -1,18 +1,13 @@
 package com.github.throyer.common.springboot.api.controllers;
 
-import static com.github.throyer.common.springboot.api.utils.EmailValidationUtils.validateEmailUniquenessEdition;
-import static com.github.throyer.common.springboot.api.utils.EmailValidationUtils.validateEmailUniqueness;
-import static com.github.throyer.common.springboot.api.utils.Responses.created;
-import static com.github.throyer.common.springboot.api.utils.Responses.noContent;
-import static com.github.throyer.common.springboot.api.utils.Responses.notFound;
-import static com.github.throyer.common.springboot.api.utils.Responses.ok;
-import static org.springframework.beans.BeanUtils.copyProperties;
-
-import java.security.Principal;
-
 import com.github.throyer.common.springboot.api.models.entity.User;
 import com.github.throyer.common.springboot.api.models.shared.Pagination;
-import com.github.throyer.common.springboot.api.repositories.UserRepository;
+import com.github.throyer.common.springboot.api.services.user.CreateUserService;
+import com.github.throyer.common.springboot.api.services.user.FindUserService;
+import com.github.throyer.common.springboot.api.services.user.RemoveUserService;
+import com.github.throyer.common.springboot.api.services.user.UpdateUserService;
+import com.github.throyer.common.springboot.api.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.api.services.user.dto.UpdateUserDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,55 +27,50 @@ import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("/users")
-@PreAuthorize("hasAnyAuthority('ADM')")
 @Api(tags = "/users", description = "users")
 public class UsersController {
-
+    
     @Autowired
-    private UserRepository repository;
-
+    private CreateUserService createService;
+    
+    @Autowired
+    private UpdateUserService updateService;
+    
+    @Autowired
+    private RemoveUserService removeService;
+    
+    @Autowired
+    private FindUserService findService;
+    
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADM')")
     public ResponseEntity<Page<User>> index(Pagination pagination) {
-        return ok(repository.findAll(pagination.build()));
+        return findService.find(pagination);
     }
-
+    
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     public ResponseEntity<User> show(@PathVariable Long id) {
-        return repository.findById(id)
-            .map(user -> ok(user))
-                .orElseGet(() -> notFound());
+        return findService.find(id);
     }
-
+    
     @PostMapping
-    public ResponseEntity<User> save(@Validated @RequestBody User user) {
-        
-        validateEmailUniqueness(user);
-
-        var newUser = repository.save(user);
-
-        return created(newUser, "users", newUser.getId());
+    public ResponseEntity<User> save(@Validated @RequestBody CreateUser body) {
+        return createService.create(body);
     }
-
+    
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     public ResponseEntity<User> update(
         @PathVariable Long id,
-        @RequestBody @Validated User novo
+        @RequestBody @Validated UpdateUserDTO body
     ) {
-
-        var atual = repository.findById(id)
-            .orElseThrow(() -> notFound("Usuário não encontrado"));
-        
-        validateEmailUniquenessEdition(novo, atual);
-
-        copyProperties(novo, atual, "id", "password", "createdAt", "updatedAt", "deletedAt");
-
-        return ok(repository.save(atual));
+        return updateService.update(id, body);
     }
-
+    
+    @PreAuthorize("hasAnyAuthority('ADM')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> destroy(@PathVariable Long id, Principal principal) {
-        return repository.findById(id)
-            .map(user -> noContent(user, repository))
-                .orElseGet(() -> notFound());
+    public ResponseEntity<User> destroy(@PathVariable Long id) {
+        return removeService.remove(id);
     }
 }

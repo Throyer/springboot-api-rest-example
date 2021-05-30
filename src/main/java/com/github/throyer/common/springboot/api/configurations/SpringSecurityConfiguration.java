@@ -1,6 +1,6 @@
 package com.github.throyer.common.springboot.api.configurations;
 
-import com.github.throyer.common.springboot.api.services.SecurityService;
+import com.github.throyer.common.springboot.api.services.security.SecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -49,16 +49,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .csrf()
                 .disable()
+                    .authorizeRequests()
                 
             // rota publica (LOGIN).
-            .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/token")
                     .permitAll()
-            
-            // api de usuários
-                .antMatchers("/users/**")
-                    .hasAuthority("ADM")
-            
+
+            // rota publica de cadastro de usuários.
+                .antMatchers(HttpMethod.GET, "/users")
+                    .permitAll()
+                        
             // todas as outras rotas precisam de autenticação.
             .anyRequest()
                 .fullyAuthenticated()

@@ -38,6 +38,30 @@ public class Authorized extends User {
     public UsernamePasswordAuthenticationToken getAuthentication() {
         return new UsernamePasswordAuthenticationToken(this, null, getAuthorities());
     }
+
+    public Boolean isAdmin() {
+        return getAuthorities()
+            .stream()
+                .anyMatch((role) -> role.getAuthority().equals("ADM"));
+    }
+
+    public Boolean cantModify(Long id) {
+        var admin = isAdmin();
+        var equals = getId().equals(id);
+        if (admin) {
+            return true;
+        }
+        return equals;
+    }
+
+    public Boolean cantRead(Long id) {
+        var admin = isAdmin();
+        var equals = getId().equals(id);
+        if (admin) {
+            return true;
+        }
+        return equals;
+    }
  
     @Override
     public String toString() {

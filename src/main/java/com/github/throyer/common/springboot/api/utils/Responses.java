@@ -2,6 +2,8 @@ package com.github.throyer.common.springboot.api.utils;
 
 import java.net.URI;
 
+import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,10 @@ public class Responses {
 
     public static final <T> ResponseEntity<T> unauthorized(T body) {
         return ResponseEntity.status(401).body(body);
+    }
+
+    public static final <T> ResponseEntity<T> unauthorized() {
+        return ResponseEntity.status(401).build();
     }
 
     public static final <T> ResponseEntity<T> ok(T body) {
@@ -57,7 +63,12 @@ public class Responses {
                 .build();
     }
 
-    public static final <T> ResponseEntity<T> created(T body, String location, Object id) {
+    public static final <T extends BasicEntity> ResponseEntity<T> created(T entity, String location) {
+        return ResponseEntity.created(URI.create(String.format("/%s/%s", location, entity.getId())))
+            .body(entity);
+    }
+
+    public static final <T> ResponseEntity<T> created(T body, String location, Long id) {
         return ResponseEntity.created(URI.create(String.format("/%s/%s", location, id)))
             .body(body);
     }
@@ -65,6 +76,10 @@ public class Responses {
     public static final <T> ResponseEntity<T> created(T body) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(body);
+    }
+
+    public static final ResponseStatusException unauthorized(String reason) {
+        return new ResponseStatusException(HttpStatus.UNAUTHORIZED, reason);
     }
 
     public static final ResponseStatusException notFound(String reason) {

@@ -14,7 +14,7 @@ import com.github.throyer.common.springboot.api.builders.UserBuilder;
 import com.github.throyer.common.springboot.api.models.entity.Role;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
-import com.github.throyer.common.springboot.api.services.TokenService;
+import com.github.throyer.common.springboot.api.services.security.TokenService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -139,7 +139,7 @@ public class UsersControllerIntegrationTests {
                 .addRole(2L)
                 .setPassword("uma_senha_123@SEGURA")
                 .build()
-            );
+        );
         
         var request = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, bearerToken);

@@ -4,6 +4,9 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+### docker ###
+.volumes/
+
 ### STS ###
 .apt_generated
 .classpath

@@ -1,6 +1,7 @@
 package com.github.throyer.common.springboot.api.models.entity;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,14 +23,17 @@ import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
+import com.github.throyer.common.springboot.api.models.shared.HasEmail;
+import com.github.throyer.common.springboot.api.services.user.dto.UpdateUserDTO;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity(name = "user")
 @Where(clause = BasicEntity.NON_DELETED_CLAUSE)
-public class User extends BasicEntity implements Serializable {
+public class User extends BasicEntity implements Serializable, HasEmail {
 
     public static final Integer PASSWORD_STRENGTH = 10;
     
@@ -80,17 +84,21 @@ public class User extends BasicEntity implements Serializable {
     @Pattern(regexp = STRONG_PASSWORD, message = STRONG_PASSWORD_MESSAGE)
     @Column(name = "password", nullable = false)
     private String password = DEFAULT_PASSWORD;
-    
-    @NotNull
+
+    @NotNull(message = "Informe as permissões")
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "user_role",
         joinColumns = {
             @JoinColumn(name = "user_id")},
         inverseJoinColumns = {
             @JoinColumn(name = "role_id")})
-    private List<Role> roles = List.of();
+    private List<Role> roles;
 
     public User() { }
+
+    public User(Long id) {
+        setId(id);
+    }
 
     public User(String name, String email, String password, List<Role> roles) {
         setName(name);
@@ -143,6 +151,19 @@ public class User extends BasicEntity implements Serializable {
         this.password = password;
     }
 
+    public Boolean contains(String search) {
+        if (Objects.nonNull(getRoles())) {
+            return roles.stream()
+                .anyMatch(role -> role.compare(search));
+        }
+        return false;
+    }
+
+    public void merge(UpdateUserDTO dto) {
+        setName(dto.getName());
+        setEmail(dto.getEmail());
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -163,6 +184,20 @@ public class User extends BasicEntity implements Serializable {
         }
         final User other = (User) obj;
         return Objects.equals(this.id, other.id);
+    }
+
+    public boolean isPrincipal(Principal principal) {
+        if (Objects.nonNull(principal) && principal instanceof Authorized authorized) {
+            return getId().equals(authorized.getId());
+        }
+        return false;
+    }
+
+    public boolean isPrincipal(Authorized authorized) {
+        if (Objects.nonNull(authorized)) {
+            return getId().equals(authorized.getId());
+        }
+        return false;
     }
 
     public Boolean validatePassword(String password) {

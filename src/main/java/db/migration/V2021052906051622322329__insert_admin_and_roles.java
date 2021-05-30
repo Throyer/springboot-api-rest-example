@@ -6,6 +6,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 
 import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.services.user.dto.CreateUser;
 
 import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;
@@ -15,6 +16,9 @@ public class V2021052906051622322329__insert_admin_and_roles extends BaseJavaMig
     public void migrate(Context context) throws Exception {
         var create = using(context.getConnection());
         create.transaction(configuration -> {
+
+            var admin = new CreateUser("admin", "admin@email.com", "admin")
+                .toUser();
 
             var encoder = new BCryptPasswordEncoder(User.PASSWORD_STRENGTH);
 
@@ -26,17 +30,26 @@ public class V2021052906051622322329__insert_admin_and_roles extends BaseJavaMig
                     field("email"),
                     field("password")
                 )
-                .values("ADMIN", "admin@email.com", encoder.encode("admin"))
+                .values(admin.getName(), admin.getEmail(), encoder.encode(admin.getPassword()))
             .execute();
-    
+
             dsl.insertInto(
                 table("role"),
                     field("name"),
                     field("initials"),
-                    field("description")
+                    field("description"),
+                    field("created_by")
                 )
-                .values("ADMINISTRADOR", "ADM", "Administrador")
-                .values("USER", "USER", "Usuário")
+                .values("ADMINISTRADOR", "ADM", "Administrador",
+                    findOptionalId(dsl, 
+                        table("user"), 
+                            field("email").equal(admin.getEmail()))
+                    .orElseThrow())
+                .values("USER", "USER", "Usuário",
+                    findOptionalId(dsl,
+                        table("user"),
+                            field("email").equal(admin.getEmail()))
+                    .orElseThrow())
             .execute();
 
             dsl.insertInto(

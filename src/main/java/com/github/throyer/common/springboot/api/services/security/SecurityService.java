@@ -1,5 +1,6 @@
-package com.github.throyer.common.springboot.api.services;
+package com.github.throyer.common.springboot.api.services.security;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import com.github.throyer.common.springboot.api.models.security.Authorized;
@@ -20,7 +21,7 @@ public class SecurityService implements UserDetailsService {
     @Autowired
     UserRepository repository;
 
-    private Logger logger = LoggerFactory.getLogger(SecurityService.class);
+    private static Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
     private static final String INVALID_USERNAME = "Nome de usuário invalido.";
     private static final String NO_SESSION_MESSAGE = "Não existe um usuário logado.";
@@ -31,21 +32,24 @@ public class SecurityService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(INVALID_USERNAME)));
     }
 
-    public Optional<Authorized> getAuthorized() {
+    public static Optional<Authorized> authorized() {
         
         var principal = getPrincipal();
         
-        if (principal instanceof Authorized) {
-            return Optional.of((Authorized) principal);
+        if (Objects.nonNull(principal) && principal instanceof Authorized authorized) {
+            return Optional.of(authorized);
         }
 
         logger.error(NO_SESSION_MESSAGE);
         return Optional.empty();
     }
 
-    private Object getPrincipal() {
-        return SecurityContextHolder.getContext()
-            .getAuthentication()
-                .getPrincipal();
+    private static Object getPrincipal() {
+        var authentication = SecurityContextHolder.getContext()
+            .getAuthentication();
+        if (Objects.nonNull(authentication)) {
+            return authentication.getPrincipal();
+        }
+        return null;
     } 
 }

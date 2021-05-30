@@ -11,9 +11,15 @@ public class UserBuilder {
     private User user;
     private List<Role> roles = new ArrayList<>(); 
 
-    public UserBuilder(String nome) {
-        user = new User();
-        user.setName(nome);
+    public UserBuilder(String name) {
+        this.user = new User();
+        this.user.setName(name);
+    }
+
+    public UserBuilder(String name, List<Role> roles) {
+        this.user = new User();
+        this.roles = roles;
+        this.user.setName(name);
     }
 
     public UserBuilder setEmail(String email) {
@@ -26,13 +32,13 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setAtivo(Boolean ativo) {
-        user.setActive(ativo);
+    public UserBuilder setAtivo(Boolean active) {
+        user.setActive(active);
         return this;
     }
 
-    public UserBuilder setPassword(String senha) {
-        user.setPassword(senha);
+    public UserBuilder setPassword(String password) {
+        user.setPassword(password);
         return this;
     }
 

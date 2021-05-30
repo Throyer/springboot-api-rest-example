@@ -8,4 +8,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: "common_app"
+    volumes:
+      - ./.volumes/database:/var/lib/mysql
 
