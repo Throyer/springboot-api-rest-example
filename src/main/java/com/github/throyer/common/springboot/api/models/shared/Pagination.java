@@ -7,13 +7,13 @@ import org.springframework.data.domain.Pageable;
 
 public class Pagination {
 
-    private static final int FIST_PAGE = 0;
+    private static final int FIRST_PAGE = 0;
     
     private static final int DEFAULT_SIZE = 10;
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 500;
 
-    private int page = FIST_PAGE;    
+    private int page = FIRST_PAGE;    
     private int size = DEFAULT_SIZE;
 
     public int getPage() {
@@ -21,10 +21,10 @@ public class Pagination {
     }
 
     public void setPage(int page) {
-        if (Objects.nonNull(page) && page >= FIST_PAGE) {
+        if (Objects.nonNull(page) && page >= FIRST_PAGE) {
             this.page = page;
         } else {
-            page = FIST_PAGE;
+            page = FIRST_PAGE;
         }
     }
 
