@@ -67,11 +67,11 @@ Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
 
 ## Instalação
 
-> Caso tiver o maven instalado localmente subistitua `mvnw` por `mvn` (_para usuarios do zsh adicione o comando `bash` antes de mvnw_)
+> Caso tiver o maven instalado localmente substitua `mvnw` por `mvn` (_para usuários do zsh adicione o comando `bash` antes de mvnw_)
 
 
 ```shell
-# Clone o repositório e acesse o diretorio.
+# Clone o repositório e acesse o diretório.
 $ git clone git@github.com:Throyer/springboot-api-crud.git && cd springboot-api-crud
 
 # Baixe as dependencias (o parametro -DskipTests pula os testes)
@@ -83,7 +83,7 @@ $ mvnw spring-boot:run
 # Para rodar os testes
 $ mvnw test
 
-# Para gerar o relatorio de cobertura apos os testes (fica disponivel em: target/site/jacoco/index.html)
+# Para gerar o relatório de cobertura apos os testes (fica disponível em: target/site/jacoco/index.html)
 $ mvnw jacoco:report
 
 # Para buildar para produção
@@ -92,12 +92,12 @@ $ mvnw clean package
 
 
 ## Rodando um teste especifico
-use o parametro `-Dtest=<Classe>#<metodo>`
+use o parâmetro `-Dtest=<Classe>#<metodo>`
 
 
-por exemplo o teste de integração de usuario:
+por exemplo o teste de integração de criação usuário:
 ```
-$ mvnw test -Dtest=UsuariosControllerIntegrationTests#salvar_usuario_sem_campos_obrigatorios_deve_retornar_400
+$ mvnw test -Dtest=UsuariosControllerIntegrationTests#should_save_a_new_user
 ```
 
 
@@ -118,38 +118,38 @@ existem dois scripts `bash` que podem ser usados para criação de arquivos de m
 
 - Java based migrations
   ```bash
-    ./migration:create <migration-name>
+    ./migration_create <migration-name>
     # or zsh users
-    bash migration:create.sh <migration-name>
+    bash migration_create.sh <migration-name>
   ```
 
 - SQL based migrations
   ```bash
-    ./sql:create <migration-name>
+    ./sql_create <migration-name>
     # or zsh users
-    bash sql:create.sh <migration-name>
+    bash sql_:_create.sh <migration-name>
   ```
 
 ---
-## Variaveis de ambiente
+## Variáveis de ambiente
 
-| **Descrição**                         | **parametro**                    | **Valor padrão**          |
+| **Descrição**                         | **parâmetro**                    | **Valor padrão**          |
 | ------------------------------------- | -------------------------------- | ------------------------- |
 | contexto da aplicação                 | `contexto`                       | api/v1                    |
 | porta da aplicação                    | `port`                           | 8080                      |
 | url do banco                          | `db-url`                         | localhost:3306/common_app |
-| nome de usuario (banco)               | `db-username`                    | root                      |
-| senha do usuario (banco)              | `db-password`                    | root                      |
+| nome de usuário (banco)               | `db-username`                    | root                      |
+| senha do usuário (banco)              | `db-password`                    | root                      |
 | mostrar sql na saida                  | `show-sql`                       | false                     |
 | tempo de expiração do token em horas  | `token-expiration-time-in-hours` | 24                        |
 | valor do secret na geração dos tokens | `token-secret`                   | secret                    |
-| maximo de conexões com o banco        | `max-connections`                | 10                        |
+| máximo de conexões com o banco        | `max-connections`                | 10                        |
 
 > são definidas em: [**application.properties**](./src/main/resources/application.properties)
 >
 > ```shell
-> # para mudar o valor de alguma variavel de ambiente
-> # na execução basta passar ela como parametro. (como --port=80 por exemplo).
+> # para mudar o valor de alguma variável de ambiente
+> # na execução basta passar ela como parâmetro. (como --port=80 por exemplo).
 > $ java -jar api-1.0.0.RELEASE.jar --port=80
 > ```
 >
