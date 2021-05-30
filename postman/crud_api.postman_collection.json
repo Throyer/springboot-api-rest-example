@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "88003a0e-0598-483a-b902-c955d20be977",
+		"_postman_id": "920f552b-6f0d-423b-a128-32489d3c9ad1",
 		"name": "Spring Boot CRUD",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,7 @@
 			"name": "usuarios",
 			"item": [
 				{
-					"name": "usuarios",
+					"name": "users/",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -24,19 +24,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/usuarios",
+							"raw": "{{API_URL}}/users",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"usuarios"
+								"users"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "usuarios/{id}",
+					"name": "users/{id}",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -51,18 +51,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/usuarios/:id",
+							"raw": "{{API_URL}}/users/:id",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"usuarios",
+								"users",
 								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -70,7 +70,7 @@
 					"response": []
 				},
 				{
-					"name": "usuarios",
+					"name": "users/",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -86,7 +86,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nome\": \"novo usuario\",\n    \"email\": \"novo.usuario@email.com\",\n    \"senha\": \"uma_senha_123@SEGURA\",\n    \"permissoes\": [\n        {\n            \"id\": 2\n        }\n    ]\n}",
+							"raw": "{\n    \"name\": \"novo usuario\",\n    \"email\": \"novo.usuario@email.com\",\n    \"password\": \"uma_senha_123@SEGURA\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -94,19 +94,19 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_URL}}/usuarios",
+							"raw": "{{API_URL}}/users",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"usuarios"
+								"users"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "usuarios/{id}",
+					"name": "users/{id}",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -130,12 +130,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{API_URL}}/usuarios/:id",
+							"raw": "{{API_URL}}/users/:id",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"usuarios",
+								"users",
 								":id"
 							],
 							"variable": [
@@ -149,7 +149,7 @@
 					"response": []
 				},
 				{
-					"name": "usuarios/{id}",
+					"name": "users/{id}",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -164,12 +164,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/usuarios/:id",
+							"raw": "{{API_URL}}/users/:id",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
-								"usuarios",
+								"users",
 								":id"
 							],
 							"variable": [
@@ -182,8 +182,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Auth",
@@ -192,7 +191,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"administrador@email.com\",\n\t\"senha\": \"senha\"\n}",
+					"raw": "{\n\t\"email\": \"admin@email.com\",\n\t\"password\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -213,5 +212,44 @@
 			"response": []
 		}
 	],
-	"protocolProfileBehavior": {}
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": ""
+		},
+		{
+			"key": "TOKEN",
+			"value": ""
+		}
+	]
 }
