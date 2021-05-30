@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
@@ -43,7 +42,6 @@ public class Role extends BasicEntity implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Por favor, forneça um nome.")
     @Column(name = "name", nullable = true, unique = true)
     private String name;
 
@@ -51,7 +49,6 @@ public class Role extends BasicEntity implements GrantedAuthority {
     @Column(name = "deleted_name")
     private String deletedName;
 
-    @NotEmpty(message = "Por favor, forneça as iniciais da permissão.")
     @Column(name = "initials", nullable = true, unique = true)
     private String initials;
 

@@ -14,6 +14,9 @@ public class SimpleError {
     @JsonInclude(Include.NON_NULL)
     private String message;
 
+    @JsonInclude(Include.NON_NULL)
+    private Integer status;
+
     public SimpleError(FieldError error) {
         this.field = error.getField();
         this.message = error.getDefaultMessage();
@@ -26,6 +29,11 @@ public class SimpleError {
     public SimpleError(String filed, String message) {
         this.field = filed;
         this.message = message;
+    }
+
+    public SimpleError(String message, Integer status) {
+        this.message = message;
+        this.status = status;
     }
 
     public void setField(String field) {
@@ -42,5 +50,13 @@ public class SimpleError {
 
     public String getMessage() {
         return message;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

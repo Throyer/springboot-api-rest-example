@@ -15,10 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,11 +32,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class User extends BasicEntity implements Serializable, HasEmail {
 
     public static final Integer PASSWORD_STRENGTH = 10;
-    
-    public static final String DEFAULT_PASSWORD = "mudar123";
-    public static final String STRONG_PASSWORD = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$";
-    public static final String STRONG_PASSWORD_MESSAGE = "No mínimo 8 caracteres, com no mínimo um número, um caractere especial, uma letra maiúscula e uma letra minúscula.";
-
     public static final String DELETE_SQL = """
         UPDATE
             #{#entityName}
@@ -64,13 +55,9 @@ public class User extends BasicEntity implements Serializable, HasEmail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "O nome não pode ser NULL.")
-    @NotEmpty(message = "Por favor, forneça um nome.")
     @Column(name = "name", nullable = false)
     private String name;
-    
-    @NotNull(message = "O e-mail não pode ser NULL.")
-    @Email(message = "Por favor, forneça um e-mail valido.")
+
     @Column(name = "email", unique = true)
     private String email;
 
@@ -79,13 +66,9 @@ public class User extends BasicEntity implements Serializable, HasEmail {
     private String deletedEmail;
 
     @JsonProperty(access = Access.WRITE_ONLY)
-    @NotEmpty(message = "Por favor, forneça uma senha.")
-    @NotNull(message = "A senha não pode ser NULL.")
-    @Pattern(regexp = STRONG_PASSWORD, message = STRONG_PASSWORD_MESSAGE)
     @Column(name = "password", nullable = false)
-    private String password = DEFAULT_PASSWORD;
+    private String password;
 
-    @NotNull(message = "Informe as permissões")
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "user_role",
         joinColumns = {
