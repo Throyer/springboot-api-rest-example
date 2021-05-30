@@ -2,6 +2,7 @@ package com.github.throyer.common.springboot.api.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -21,9 +22,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 public class UsersControllerIntegrationTests {
 
@@ -43,10 +47,10 @@ public class UsersControllerIntegrationTests {
     }
 
     @Test
-    public void deve_salvar_um_novo_usuario() throws Exception {
+    public void should_save_a_new_user() throws Exception {
         var json = """
             {
-                \"name\": \"novo usuario\",
+                \"name\": \"novo usuário\",
                 \"email\": \"novo.usuario2@email.com\",
                 \"password\": \"uma_senha_123@SEGURA\",
                 \"roles\": [
@@ -68,9 +72,9 @@ public class UsersControllerIntegrationTests {
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.id").isNotEmpty());
     }
-
+    
     @Test
-    public void salvar_usuario_sem_campos_obrigatorios_deve_retornar_400() throws Exception {
+    public void should_return_400_saving_user_without_required_fields() throws Exception {
 
         String payload = """
             {
@@ -92,7 +96,7 @@ public class UsersControllerIntegrationTests {
     }
 
     @Test
-    public void deve_listar_os_usuarios() throws Exception {        
+    public void should_list_users() throws Exception {        
         var request = get("/users")
             .header(HttpHeaders.AUTHORIZATION, bearerToken)
                 .queryParam("page", "0")
@@ -101,5 +105,36 @@ public class UsersControllerIntegrationTests {
         mock.perform(request).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
+    }
+
+    @Test
+    public void should_delete_user() throws Exception {  
+        var json = """
+            {
+                \"name\": \"novo usuário\",
+                \"email\": \"novo.usuario2@email.com\",
+                \"password\": \"uma_senha_123@SEGURA\",
+                \"roles\": [
+                    {
+                        \"id\": 2
+                    }
+                ]
+            }
+        """;
+
+        var postUser = post("/users")
+            .content(json)
+            .header(HttpHeaders.AUTHORIZATION, bearerToken)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+
+        mock.perform(postUser)
+            .andDo(print())
+            .andExpect(status().isCreated());
+        
+        var deleteUser = delete(String.format("/users/%s", 2))
+            .header(HttpHeaders.AUTHORIZATION, bearerToken);
+
+        mock.perform(deleteUser).andDo(print())
+                .andExpect(status().isNoContent());
     }
 }
