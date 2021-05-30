@@ -1,7 +1,7 @@
 package com.github.throyer.common.springboot.api.controllers;
 
-import static com.github.throyer.common.springboot.api.utils.Responses.unauthorized;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
+import static com.github.throyer.common.springboot.api.utils.Responses.unauthorized;
 
 import javax.validation.Valid;
 
@@ -43,8 +43,8 @@ public class AuthController {
 
         } catch (BadCredentialsException exception) {  
 
-            /* usuario invalido ou não autorizado */
-            return unauthorized(new SimpleError(null, "Senha ou Usuario invalidos."));
+            /* usuário invalido ou não autorizado */
+            return unauthorized(new SimpleError(null, "Senha ou Usuário inválidos."));
         }
     }
 }

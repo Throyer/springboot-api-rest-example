@@ -2,7 +2,6 @@ package com.github.throyer.common.springboot.api.models.validation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -10,11 +9,9 @@ import org.springframework.validation.ObjectError;
 public class SimpleError {
 
     @JsonInclude(Include.NON_NULL)
-    @JsonProperty("campo")
     private String field;
 
     @JsonInclude(Include.NON_NULL)
-    @JsonProperty("messagem")
     private String message;
 
     public SimpleError(FieldError error) {

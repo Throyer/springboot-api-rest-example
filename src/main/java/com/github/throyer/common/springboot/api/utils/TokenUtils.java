@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 public class TokenUtils {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String ACEPTED_TOKEN_TYPE = "Bearer ";
+    private static final String ACCEPTABLE_TOKEN_TYPE = "Bearer ";
 
     /**
      * Recupera o token de dentro do cabeçalho da request.
@@ -23,12 +23,12 @@ public class TokenUtils {
     }
 
     /**
-     * Verifiva se o token esta vazio ou não é
+     * Verifica se o token esta vazio ou não é
      * do tipo 'Bearer'.
      * @param token
-     * @return true se o token for fazio ou não for bearer.
+     * @return true se o token for vazio ou não for bearer.
      */
     private static boolean tokenIsNull(String token) {
-        return Objects.isNull(token) || token.isEmpty() || !token.startsWith(ACEPTED_TOKEN_TYPE);
+        return Objects.isNull(token) || token.isEmpty() || !token.startsWith(ACCEPTABLE_TOKEN_TYPE);
     }
 }

@@ -2,10 +2,10 @@ package com.github.throyer.common.springboot.api.utils;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.models.entity.Usuario;
+import com.github.throyer.common.springboot.api.models.entity.User;
 import com.github.throyer.common.springboot.api.models.validation.EmailNotUniqueException;
 import com.github.throyer.common.springboot.api.models.validation.SimpleError;
-import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
+import com.github.throyer.common.springboot.api.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,35 +13,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailValidationUtils {
 
-    private static UsuarioRepository repository;
+    private static UserRepository repository;
 
-    private static String CAMPO = "email";
-    private static String MENSAGEM = "Este email já foi utilizado por outro usuario. Por favor utilize um email diferente.";
+    private static String FIELD = "email";
+    private static String MESSAGE = "Este email já foi utilizado por outro usuário. Por favor utilize um email diferente.";
 
-    private static final List<SimpleError> ERRO_EMAIL = List.of(new SimpleError(CAMPO, MENSAGEM));
+    private static final List<SimpleError> EMAIL_ERROR = List.of(new SimpleError(FIELD, MESSAGE));
 
     @Autowired
-    public EmailValidationUtils(UsuarioRepository repository) {
+    public EmailValidationUtils(UserRepository repository) {
         EmailValidationUtils.repository = repository;
     }
 
-    public static void validarUnicidadeDoEmailparaNovoUsuario(Usuario usuario) {
-        if (repository.existsByEmail(usuario.getEmail())) {
-            throw new EmailNotUniqueException(ERRO_EMAIL);
+    public static void validateEmailUniqueness(User user) {
+        if (repository.existsByEmail(user.getEmail())) {
+            throw new EmailNotUniqueException(EMAIL_ERROR);
         }
     }
 
-    public static void validarUnicidadeDoEmailParaEdicaoDeUsuario(Usuario novo, Usuario atual) {
+    public static void validateEmailUniquenessEdition(User novo, User atual) {
 
-        var novoEmail = novo.getEmail();
-        var emailAtual = atual.getEmail();
+        var newEmail = novo.getEmail();
+        var actualEmail = atual.getEmail();
 
-        var mudouDeEmail = !emailAtual.equals(novoEmail);
+        var changedEmail = !actualEmail.equals(newEmail);
 
-        var jaEhUsadoPorOutroUsuario = repository.existsByEmail(novoEmail);
+        var emailAlreadyUsed = repository.existsByEmail(newEmail);
 
-        if (mudouDeEmail && jaEhUsadoPorOutroUsuario) {
-            throw new EmailNotUniqueException(ERRO_EMAIL);
+        if (changedEmail && emailAlreadyUsed) {
+            throw new EmailNotUniqueException(EMAIL_ERROR);
         }
     }
 }

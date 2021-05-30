@@ -1,16 +1,18 @@
 package com.github.throyer.common.springboot.api.controllers;
 
-import static com.github.throyer.common.springboot.api.utils.EmailValidationUtils.validarUnicidadeDoEmailParaEdicaoDeUsuario;
-import static com.github.throyer.common.springboot.api.utils.EmailValidationUtils.validarUnicidadeDoEmailparaNovoUsuario;
+import static com.github.throyer.common.springboot.api.utils.EmailValidationUtils.validateEmailUniquenessEdition;
+import static com.github.throyer.common.springboot.api.utils.EmailValidationUtils.validateEmailUniqueness;
 import static com.github.throyer.common.springboot.api.utils.Responses.created;
 import static com.github.throyer.common.springboot.api.utils.Responses.noContent;
 import static com.github.throyer.common.springboot.api.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 import static org.springframework.beans.BeanUtils.copyProperties;
 
-import com.github.throyer.common.springboot.api.models.entity.Usuario;
+import java.security.Principal;
+
+import com.github.throyer.common.springboot.api.models.entity.User;
 import com.github.throyer.common.springboot.api.models.shared.Pagination;
-import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
+import com.github.throyer.common.springboot.api.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,56 +31,56 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping("/usuarios")
-@PreAuthorize("hasAnyAuthority('ADMINISTRADOR')")
-@Api(tags = "/usuarios", description = "usuarios")
-public class UsuariosController {
+@RequestMapping("/users")
+@PreAuthorize("hasAnyAuthority('ADM')")
+@Api(tags = "/users", description = "users")
+public class UsersController {
 
     @Autowired
-    private UsuarioRepository repository;
+    private UserRepository repository;
 
     @GetMapping
-    public ResponseEntity<Page<Usuario>> index(Pagination pagination) {
+    public ResponseEntity<Page<User>> index(Pagination pagination) {
         return ok(repository.findAll(pagination.build()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> show(@PathVariable Long id) {
+    public ResponseEntity<User> show(@PathVariable Long id) {
         return repository.findById(id)
-            .map(usuario -> ok(usuario))
+            .map(user -> ok(user))
                 .orElseGet(() -> notFound());
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@Validated @RequestBody Usuario usuario) {
+    public ResponseEntity<User> save(@Validated @RequestBody User user) {
         
-        validarUnicidadeDoEmailparaNovoUsuario(usuario);
+        validateEmailUniqueness(user);
 
-        var novo = repository.save(usuario);
+        var newUser = repository.save(user);
 
-        return created(novo, "usuarios", novo.getId());
+        return created(newUser, "users", newUser.getId());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(
+    public ResponseEntity<User> update(
         @PathVariable Long id,
-        @RequestBody @Validated Usuario novo
+        @RequestBody @Validated User novo
     ) {
 
         var atual = repository.findById(id)
-            .orElseThrow(() -> notFound("Usuario não encontrado"));
+            .orElseThrow(() -> notFound("Usuário não encontrado"));
         
-        validarUnicidadeDoEmailParaEdicaoDeUsuario(novo, atual);
+        validateEmailUniquenessEdition(novo, atual);
 
-        copyProperties(novo, atual, "id", "senha", "createdAt", "updatedAt", "deletedAt");
+        copyProperties(novo, atual, "id", "password", "createdAt", "updatedAt", "deletedAt");
 
         return ok(repository.save(atual));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> destroy(@PathVariable Long id) {
+    public ResponseEntity<User> destroy(@PathVariable Long id, Principal principal) {
         return repository.findById(id)
-            .map(usuario -> noContent(usuario, repository))
+            .map(user -> noContent(user, repository))
                 .orElseGet(() -> notFound());
     }
 }

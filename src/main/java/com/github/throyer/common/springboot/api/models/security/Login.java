@@ -13,17 +13,17 @@ public class Login {
 
     @NotNull(message = "A Senha não pode ser NULA.")
     @NotEmpty(message = "Senha invalida.")
-    private String senha;
+    private String password;
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UsernamePasswordAuthenticationToken toAuthenticationToken() {
-        return new UsernamePasswordAuthenticationToken(this.email, this.senha);
+        return new UsernamePasswordAuthenticationToken(this.email, this.password);
     }
 }

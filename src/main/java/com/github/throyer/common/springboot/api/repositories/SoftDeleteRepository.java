@@ -27,7 +27,7 @@ public interface SoftDeleteRepository <T extends BasicEntity> extends JpaReposit
     @Override
     @Transactional
     default void deleteAll(Iterable<? extends T> entities) {
-        entities.forEach(entitiy -> deleteById(entitiy.getId()));
+        entities.forEach(entity -> deleteById(entity.getId()));
     }
   
     @Override

@@ -1,5 +1,6 @@
 package com.github.throyer.common.springboot.api.models.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Token {
@@ -11,12 +12,12 @@ public class Token {
     private Long expiresIn;
 
     @JsonProperty("token_type")
-    private String tipo;
+    private String type;
 
-    public Token(String token, Long expiresIn, String tipo) {
+    public Token(String token, Long expiresIn, String type) {
         this.token = token;
         this.expiresIn = expiresIn;
-        this.tipo = tipo;
+        this.type = type;
     }
 
     public String getToken() {
@@ -27,7 +28,8 @@ public class Token {
         return expiresIn;
     }
 
-    public String getTipo() {
-        return tipo;
+    @JsonIgnore()
+    public String getTokenType() {
+        return type;
     }
 }

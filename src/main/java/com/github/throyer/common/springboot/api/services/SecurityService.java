@@ -3,7 +3,7 @@ package com.github.throyer.common.springboot.api.services;
 import java.util.Optional;
 
 import com.github.throyer.common.springboot.api.models.security.Authorized;
-import com.github.throyer.common.springboot.api.repositories.UsuarioRepository;
+import com.github.throyer.common.springboot.api.repositories.UserRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 public class SecurityService implements UserDetailsService {
 
     @Autowired
-    UsuarioRepository repository;
+    UserRepository repository;
 
     private Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
-    private static final String NOME_USUARIO_IVALIDO = "Nome de usuario invalido.";
-    private static final String NAO_EXISTE_USUARIO_LOGADO = "Não existe um usuario logado.";
+    private static final String INVALID_USERNAME = "Nome de usuário invalido.";
+    private static final String NO_SESSION_MESSAGE = "Não existe um usuário logado.";
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return new Authorized(repository.findOptionalByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(NOME_USUARIO_IVALIDO)));
+                .orElseThrow(() -> new UsernameNotFoundException(INVALID_USERNAME)));
     }
 
     public Optional<Authorized> getAuthorized() {
@@ -39,7 +39,7 @@ public class SecurityService implements UserDetailsService {
             return Optional.of((Authorized) principal);
         }
 
-        logger.error(NAO_EXISTE_USUARIO_LOGADO);
+        logger.error(NO_SESSION_MESSAGE);
         return Optional.empty();
     }
 

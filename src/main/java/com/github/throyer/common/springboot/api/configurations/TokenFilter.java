@@ -42,8 +42,8 @@ public class TokenFilter extends OncePerRequestFilter {
             
             try {
 
-                var usuarioNoToken = service.toAuthorized(accessToken);
-                fazerLogin(usuarioNoToken);
+                var session = service.toAuthorized(accessToken);
+                fazerLogin(session);
                 
             } catch (Exception exception) {                
                 logger.error(exception.getMessage());
@@ -53,9 +53,9 @@ public class TokenFilter extends OncePerRequestFilter {
         filter.doFilter(req, res);
     }
 
-    private void fazerLogin(Authorized usuario) {
+    private void fazerLogin(Authorized session) {
         SecurityContextHolder
             .getContext()
-                .setAuthentication(usuario.getAuthentication());
+                .setAuthentication(session.getAuthentication());
     }
 }
