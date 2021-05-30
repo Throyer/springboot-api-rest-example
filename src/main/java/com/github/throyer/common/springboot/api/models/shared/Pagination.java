@@ -7,24 +7,24 @@ import org.springframework.data.domain.Pageable;
 
 public class Pagination {
 
-    private static final int PRIMEIRA_PAGINA = 0;
+    private static final int FIST_PAGE = 0;
     
-    private static final int TAMANHO_PADRAO = 10;
-    private static final int TAMANHO_MINIMO = 1;
-    private static final int TAMANHO_MAXIMO = 500;
+    private static final int DEFAULT_SIZE = 10;
+    private static final int MIN_SIZE = 1;
+    private static final int MAX_SIZE = 500;
 
-    private int page = PRIMEIRA_PAGINA;    
-    private int size = TAMANHO_PADRAO;
+    private int page = FIST_PAGE;    
+    private int size = DEFAULT_SIZE;
 
     public int getPage() {
         return page;
     }
 
     public void setPage(int page) {
-        if (Objects.nonNull(page) && page >= PRIMEIRA_PAGINA) {
+        if (Objects.nonNull(page) && page >= FIST_PAGE) {
             this.page = page;
         } else {
-            page = PRIMEIRA_PAGINA;
+            page = FIST_PAGE;
         }
     }
 
@@ -33,10 +33,10 @@ public class Pagination {
     }
 
     public void setSize(int size) {
-        if (Objects.nonNull(size) && size >= TAMANHO_MINIMO && size <= TAMANHO_MAXIMO) {
+        if (Objects.nonNull(size) && size >= MIN_SIZE && size <= MAX_SIZE) {
             this.size = size;
         } else {
-            this.size = TAMANHO_PADRAO;
+            this.size = DEFAULT_SIZE;
         }
     }
 

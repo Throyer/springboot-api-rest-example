@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import com.github.throyer.common.springboot.api.models.entity.Permissao;
+import com.github.throyer.common.springboot.api.models.entity.Role;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.models.security.Login;
 import com.github.throyer.common.springboot.api.models.security.Token;
@@ -40,7 +40,7 @@ public class TokenService {
 
     private static final String ISSUER = "com.github.common.springboot.api";
 
-    private static final String PERMISSOES_KEY = "roles";
+    private static final String ROLES_KEY = "roles";
     private static String TIPO_TOKEN = "Bearer";
 
     public Long getExpirationTimeInSeconds() {
@@ -48,9 +48,9 @@ public class TokenService {
     }
 
     /**
-     * Transformar um token JWT em um usuario autenticado.
+     * Transformar um token JWT em um usuário autenticado.
      * @param accessToken token de acesso.
-     * @return usuario autenticado.
+     * @return usuário autenticado.
      */
     public Authorized toAuthorized(String accessToken) {
 
@@ -60,8 +60,8 @@ public class TokenService {
 
         var username = token.getBody().getSubject();
 
-        var authorities = Arrays.stream(token.getBody().get(PERMISSOES_KEY).toString().split(","))
-            .map(Permissao::new)
+        var authorities = Arrays.stream(token.getBody().get(ROLES_KEY).toString().split(","))
+            .map(Role::new)
                 .collect(Collectors.toList());
 
         return new Authorized(username, id, authorities);
@@ -69,17 +69,17 @@ public class TokenService {
 
     public Token buildToken(Login login) {
         
-        /* autenticar usuario */
-        var usuarioAutenticado = (Authorized) authManager
+        /* autenticar usuário */
+        var session = (Authorized) authManager
             .authenticate(login.toAuthenticationToken())
                 .getPrincipal();
         
-        /* contruir token */
-        return new Token(buildToken(usuarioAutenticado), getExpirationTimeInSeconds(), TIPO_TOKEN);
+        /* construir token */
+        return new Token(buildToken(session), getExpirationTimeInSeconds(), TIPO_TOKEN);
     }
 
     /**
-     * Contruir Token.
+     * Construir Token.
      * @param authorized
      * @return {String} token
      */
@@ -91,7 +91,7 @@ public class TokenService {
             .setIssuer(ISSUER)
             .setSubject(authorized.getUsername())
             .setId(authorized.getId().toString())
-            .claim(PERMISSOES_KEY, formatarPermissoes(authorized.getAuthorities()))
+            .claim(ROLES_KEY, roleFormatter(authorized.getAuthorities()))
             .setIssuedAt(HOJE)
             .setExpiration(getExpirationDate())
             .signWith(SignatureAlgorithm.HS256, SECRET)
@@ -125,9 +125,9 @@ public class TokenService {
                 .parseClaimsJws(token);
     }
 
-    private String formatarPermissoes(Collection<GrantedAuthority> authorities) {
+    private String roleFormatter(Collection<GrantedAuthority> authorities) {
         return authorities.stream()
-            .map(permissao -> permissao.getAuthority())
+            .map(role -> role.getAuthority())
                 .collect(Collectors.joining(","));
     }
 }

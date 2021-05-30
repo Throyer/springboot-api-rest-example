@@ -6,17 +6,17 @@ import static org.jooq.impl.SQLDataType.*;
 import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;
 
-public class V2021012410361611538611__teste_java_based_migration extends BaseJavaMigration {
+public class V2021052906011622322101__create_table_userRole extends BaseJavaMigration {
     public void migrate(Context context) throws Exception {
         var create = using(context.getConnection());
         create.transaction(configuration -> {
             using(configuration)
-                .createTable("my_new_table")
-                    .column("id", BIGINT.identity(true))
-                    .column("name", VARCHAR(255).nullable(false))
+                .createTableIfNotExists("user_role")
+                    .column("user_id", BIGINT.nullable(true))
+                    .column("role_id", BIGINT.nullable(true))
                 .constraints(
-                    primaryKey("id"),
-                    unique("name"))
+                    foreignKey("user_id").references("user", "id"),
+                    foreignKey("role_id").references("role", "id"))
                 .execute();
         });
     }

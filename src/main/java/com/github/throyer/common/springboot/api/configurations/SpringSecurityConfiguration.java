@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -22,14 +23,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private static final String QUALQUER_HTML = "/**.html";
+    private static final String EVERY_HTML = "/**.html";
     private static final String SWAGGER_DOCS = "/v2/api-docs";
-    private static final String WEB_JARS = "/webjars/**";
+    private static final String WEBJARS = "/webjars/**";
     private static final String CONFIGURATIONS = "/configuration/**";
     private static final String SWAGGER_RESOURCES = "/swagger-resources/**";
 
     @Autowired
-    private SecurityService autenticacaoService;
+    private SecurityService authService;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -39,7 +40,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(autenticacaoService)
+        auth.userDetailsService(authService)
             .passwordEncoder(encoder);
     }
 
@@ -54,13 +55,13 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth/token")
                     .permitAll()
             
-            // api de usuarios
-                .antMatchers("/usuarios/**")
-                    .hasAuthority("ADMINISTRADOR")
+            // api de usuários
+                .antMatchers("/users/**")
+                    .hasAuthority("ADM")
             
             // todas as outras rotas precisam de autenticação.
             .anyRequest()
-                .authenticated()
+                .fullyAuthenticated()
             
             // configuração de acesso.
             .and()
@@ -82,12 +83,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web
             .ignoring()
                 .antMatchers(
-                    QUALQUER_HTML,
+                    EVERY_HTML,
                     SWAGGER_DOCS,
-                    WEB_JARS,
+                    WEBJARS,
                     CONFIGURATIONS,
                     SWAGGER_RESOURCES
             );
     }
 
+    @Bean
+    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
+    }
 }

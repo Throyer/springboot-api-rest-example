@@ -7,12 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static com.github.throyer.common.springboot.api.utils.JsonUtils.toJson;
-
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.builders.UsuarioBuilder;
-import com.github.throyer.common.springboot.api.models.entity.Permissao;
+import com.github.throyer.common.springboot.api.models.entity.Role;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.services.TokenService;
 
@@ -28,7 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class UsuariosControllerIntegrationTests {
+public class UsersControllerIntegrationTests {
 
     private String bearerToken;
 
@@ -40,21 +37,27 @@ public class UsuariosControllerIntegrationTests {
 
     @BeforeEach
     public void generateToken() {
-        final var permissoes = List.of(new Permissao("ADMINISTRADOR"));
-        final var user = new Authorized("ADMINISTRADOR", 1L, permissoes);
+        final var roles = List.of(new Role("ADM"));
+        final var user = new Authorized("ADM", 1L, roles);
         bearerToken = String.format("Bearer %s", tokenService.buildToken(user));
     }
 
     @Test
     public void deve_salvar_um_novo_usuario() throws Exception {
-        var usuario = new UsuarioBuilder("fulano")
-            .setEmail("fulano.dasilva@email.com")
-            .setSenha("senha_do_fulano_123_ABCD_@_strong_pass")
-            .build();
+        var json = """
+            {
+                \"name\": \"novo usuario\",
+                \"email\": \"novo.usuario2@email.com\",
+                \"password\": \"uma_senha_123@SEGURA\",
+                \"roles\": [
+                    {
+                        \"id\": 2
+                    }
+                ]
+            }
+        """;
 
-        var json = toJson(usuario);
-
-        var request = post("/usuarios")
+        var request = post("/users")
             .content(json)
             .header(HttpHeaders.AUTHORIZATION, bearerToken)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
@@ -69,9 +72,14 @@ public class UsuariosControllerIntegrationTests {
     @Test
     public void salvar_usuario_sem_campos_obrigatorios_deve_retornar_400() throws Exception {
 
-        String payload = "{\"nome\":\"fulaninho\", \"senha\": \"123\"}";
+        String payload = """
+            {
+                \"name\":\"fulaninho\",
+                \"password\": \"123\"
+            }
+        """;
         
-        var request = post("/usuarios")
+        var request = post("/users")
             .content(payload)
                 .header(HttpHeaders.AUTHORIZATION, bearerToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
@@ -80,12 +88,12 @@ public class UsuariosControllerIntegrationTests {
             .andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$", hasSize(3)));
+            .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test
     public void deve_listar_os_usuarios() throws Exception {        
-        var request = get("/usuarios")
+        var request = get("/users")
             .header(HttpHeaders.AUTHORIZATION, bearerToken)
                 .queryParam("page", "0")
                 .queryParam("size", "10");

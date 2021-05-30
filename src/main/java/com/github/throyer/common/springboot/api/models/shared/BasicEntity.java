@@ -63,12 +63,12 @@ public abstract class BasicEntity {
         this.deletedAt = deletedAt;
     }
 
-    public Boolean isAtivo() {
+    public Boolean isActive() {
         return this.ativo;
     }
 
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
+    public void setActive(Boolean active) {
+        this.ativo = active;
     }
 
     @PrePersist
