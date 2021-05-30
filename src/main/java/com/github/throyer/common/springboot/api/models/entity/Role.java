@@ -32,7 +32,8 @@ public class Role extends BasicEntity implements GrantedAuthority {
             ),
             initials = NULL,
             deleted_at = CURRENT_TIMESTAMP,
-            active = 0
+            active = 0,
+            deleted_by = ?#{principal?.id}
         WHERE id = ?1
     """;
 
