@@ -127,7 +127,7 @@ existem dois scripts `bash` que podem ser usados para criação de arquivos de m
   ```bash
     ./sql_create <migration-name>
     # or zsh users
-    bash sql_:_create.sh <migration-name>
+    bash sql_create.sh <migration-name>
   ```
 
 ---
