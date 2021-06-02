@@ -1,16 +1,17 @@
 package com.github.throyer.common.springboot.api.controllers;
 
 import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.models.shared.Page;
 import com.github.throyer.common.springboot.api.models.shared.Pagination;
 import com.github.throyer.common.springboot.api.services.user.CreateUserService;
 import com.github.throyer.common.springboot.api.services.user.FindUserService;
 import com.github.throyer.common.springboot.api.services.user.RemoveUserService;
 import com.github.throyer.common.springboot.api.services.user.UpdateUserService;
 import com.github.throyer.common.springboot.api.services.user.dto.CreateUser;
-import com.github.throyer.common.springboot.api.services.user.dto.UpdateUserDTO;
+import com.github.throyer.common.springboot.api.services.user.dto.UpdateUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -44,8 +45,8 @@ public class UsersController {
     
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADM')")
-    public ResponseEntity<Page<User>> index(Pagination pagination) {
-        return findService.find(pagination);
+    public ResponseEntity<Page<User>> index(Pagination pagination, Sort sort) {
+        return findService.find(pagination, sort);
     }
     
     @GetMapping("/{id}")
@@ -63,7 +64,7 @@ public class UsersController {
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     public ResponseEntity<User> update(
         @PathVariable Long id,
-        @RequestBody @Validated UpdateUserDTO body
+        @RequestBody @Validated UpdateUser body
     ) {
         return updateService.update(id, body);
     }

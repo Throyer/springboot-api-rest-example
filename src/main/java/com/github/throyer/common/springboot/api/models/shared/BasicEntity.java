@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -19,7 +20,14 @@ import com.github.throyer.common.springboot.api.models.entity.User;
 public abstract class BasicEntity {
 
     public static final String NON_DELETED_CLAUSE = "deleted_at IS NULL";
-    public static final String SET_ALL_DELETED_SQL = "UPDATE #{#entityName} SET\ndeleted_at = CURRENT_TIMESTAMP\n";
+    
+    public static final String SET_ALL_DELETED_SQL = """
+        UPDATE
+            #{#entityName}
+        SET
+            deleted_at = CURRENT_TIMESTAMP
+    """;
+
     public static final String SET_DELETED_SQL = SET_ALL_DELETED_SQL + "WHERE id = ?1";
 
     public abstract Long getId();
@@ -37,15 +45,15 @@ public abstract class BasicEntity {
     private LocalDateTime deletedAt;
     
     @JoinColumn(name = "created_by")
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private User createdBy;
     
     @JoinColumn(name = "updated_by")
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private User updatedBy;
     
     @JoinColumn(name = "deleted_by")
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private User deletedBy;
 
     @JsonIgnore

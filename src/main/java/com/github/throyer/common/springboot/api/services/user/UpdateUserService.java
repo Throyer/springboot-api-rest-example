@@ -8,7 +8,7 @@ import static com.github.throyer.common.springboot.api.utils.Responses.unauthori
 
 import com.github.throyer.common.springboot.api.models.entity.User;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
-import com.github.throyer.common.springboot.api.services.user.dto.UpdateUserDTO;
+import com.github.throyer.common.springboot.api.services.user.dto.UpdateUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class UpdateUserService {
     @Autowired
     UserRepository repository;
 
-    public ResponseEntity<User> update(Long id, UpdateUserDTO body) {
+    public ResponseEntity<User> update(Long id, UpdateUser body) {
 
         authorized()
             .filter(authorized -> authorized.cantModify(id))

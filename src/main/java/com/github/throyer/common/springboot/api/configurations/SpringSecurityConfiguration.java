@@ -56,7 +56,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
 
             // rota publica de cadastro de usuários.
-                .antMatchers(HttpMethod.GET, "/users")
+                .antMatchers(HttpMethod.POST, "/users")
                     .permitAll()
                         
             // todas as outras rotas precisam de autenticação.

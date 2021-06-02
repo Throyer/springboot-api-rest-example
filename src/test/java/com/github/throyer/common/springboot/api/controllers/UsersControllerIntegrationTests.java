@@ -1,8 +1,8 @@
 package com.github.throyer.common.springboot.api.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -28,11 +28,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+@Transactional
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UsersControllerIntegrationTests {
 
     private String bearerToken;
@@ -58,19 +60,13 @@ public class UsersControllerIntegrationTests {
         var json = """
             {
                 \"name\": \"novo usuário\",
-                \"email\": \"novo.usuario2@email.com\",
-                \"password\": \"uma_senha_123@SEGURA\",
-                \"roles\": [
-                    {
-                        \"id\": 2
-                    }
-                ]
+                \"email\": \"novo.usuario@email.com\",
+                \"password\": \"uma_senha_123@SEGURA\"
             }
         """;
 
         var request = post("/users")
             .content(json)
-            .header(HttpHeaders.AUTHORIZATION, bearerToken)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
         mock.perform(request)
@@ -92,7 +88,6 @@ public class UsersControllerIntegrationTests {
         
         var request = post("/users")
             .content(payload)
-                .header(HttpHeaders.AUTHORIZATION, bearerToken)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
         mock.perform(request)
@@ -140,17 +135,54 @@ public class UsersControllerIntegrationTests {
                 .setPassword("uma_senha_123@SEGURA")
                 .build()
         );
+
+        var antes = repository.findAll();
+        System.out.println(antes);
         
-        var request = delete(String.format("/users/%s", user.getId()))
+        var fist = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, bearerToken);
 
-        mock.perform(request).andDo(print())
+        mock.perform(fist).andDo(print())
                 .andExpect(status().isNoContent());
 
-        var tryAgainRequest = delete(String.format("/users/%s", user.getId()))
+        var depois = repository.findById(user.getId()).get();
+        System.out.println(depois);
+
+        var second = delete(String.format("/users/%s", user.getId()))
         .header(HttpHeaders.AUTHORIZATION, bearerToken);
 
-        mock.perform(tryAgainRequest).andDo(print())
+        mock.perform(second).andDo(print())
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void should_return_400_after_save_same_email() throws Exception {  
+        var json = """
+            {
+                \"name\": \"novo usuário\",
+                \"email\": \"user@email.com\",
+                \"password\": \"uma_senha_123@SEGURA\"
+            }
+        """;
+
+        var first = post("/users")
+            .content(json)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+
+        mock.perform(first)
+            .andDo(print())
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.id").exists())
+            .andExpect(jsonPath("$.id").isNotEmpty());
+
+        var second = post("/users")
+            .content(json)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+
+        mock.perform(second)
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$", hasSize(1)));
     }
 }

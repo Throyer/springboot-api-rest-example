@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import com.github.throyer.common.springboot.api.models.entity.User;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,8 @@ public interface UserRepository extends SoftDeleteRepository<User> {
     default void deleteAll(Iterable<? extends User> entities) {
         entities.forEach(entity -> deleteById(entity.getId()));
     }
+
+    public Page<User> findDistinctBy(Pageable pageable);
 
     public Boolean existsByEmail(String email);
 

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import com.github.throyer.common.springboot.api.models.shared.HasEmail;
 
-public class UpdateUserDTO implements HasEmail {
+public class UpdateUser implements HasEmail {
     
     @NotNull(message = "O nome não pode ser NULL.")
     @NotEmpty(message = "Por favor, forneça um nome.")

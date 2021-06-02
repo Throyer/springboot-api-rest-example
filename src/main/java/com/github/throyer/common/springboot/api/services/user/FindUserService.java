@@ -6,11 +6,12 @@ import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 import static com.github.throyer.common.springboot.api.utils.Responses.unauthorized;
 
 import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.models.shared.Page;
 import com.github.throyer.common.springboot.api.models.shared.Pagination;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,11 @@ public class FindUserService {
     UserRepository repository;
 
     public ResponseEntity<Page<User>> find(Pagination pagination) {
-        return ok(repository.findAll(pagination.build()));
+        return ok(Page.of(repository.findAll(pagination.build())));
+    }
+
+    public ResponseEntity<Page<User>> find(Pagination pagination, Sort sort) {
+        return ok(Page.of(repository.findDistinctBy(pagination.build(sort, User.class))));
     }
 
     public ResponseEntity<User> find(Long id) {

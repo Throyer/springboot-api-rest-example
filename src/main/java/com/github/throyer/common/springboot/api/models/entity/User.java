@@ -22,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.github.throyer.common.springboot.api.models.security.Authorized;
 import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
 import com.github.throyer.common.springboot.api.models.shared.HasEmail;
-import com.github.throyer.common.springboot.api.services.user.dto.UpdateUserDTO;
+import com.github.throyer.common.springboot.api.models.shared.SortableProperty;
+import com.github.throyer.common.springboot.api.services.user.dto.UpdateUser;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,11 +54,14 @@ public class User extends BasicEntity implements Serializable, HasEmail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SortableProperty(name = "id")
     private Long id;
 
+    @SortableProperty(name = "name")
     @Column(name = "name", nullable = false)
     private String name;
 
+    @SortableProperty(name = "email")
     @Column(name = "email", unique = true)
     private String email;
 
@@ -69,6 +73,7 @@ public class User extends BasicEntity implements Serializable, HasEmail {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @SortableProperty(name = "role", column = "roles_name")
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "user_role",
         joinColumns = {
@@ -142,7 +147,7 @@ public class User extends BasicEntity implements Serializable, HasEmail {
         return false;
     }
 
-    public void merge(UpdateUserDTO dto) {
+    public void merge(UpdateUser dto) {
         setName(dto.getName());
         setEmail(dto.getEmail());
     }

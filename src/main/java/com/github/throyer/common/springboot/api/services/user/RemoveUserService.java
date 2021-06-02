@@ -18,7 +18,7 @@ public class RemoveUserService {
 
     public ResponseEntity<User> remove(Long id) {
         return repository.findById(id)
-        .map(user -> noContent(user, repository))
-            .orElseGet(() -> notFound());
+            .map(user -> noContent(user, repository))
+                .orElseGet(() -> notFound());
     }
 }

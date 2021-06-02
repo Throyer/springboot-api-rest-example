@@ -44,7 +44,7 @@ public class AuthController {
         } catch (BadCredentialsException exception) {  
 
             /* usuário invalido ou não autorizado */
-            return unauthorized(new SimpleError(null, "Senha ou Usuário inválidos."));
+            return unauthorized(new SimpleError("Senha ou Usuário inválidos.", 401));
         }
     }
 }
