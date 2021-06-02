@@ -2,7 +2,7 @@ package com.github.throyer.common.springboot.api.utils;
 
 import java.net.URI;
 
-import com.github.throyer.common.springboot.api.domain.shared.BasicEntity;
+import com.github.throyer.common.springboot.api.domain.models.entity.BasicEntity;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;

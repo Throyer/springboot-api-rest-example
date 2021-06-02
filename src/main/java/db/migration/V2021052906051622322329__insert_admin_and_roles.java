@@ -5,8 +5,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 
-import com.github.throyer.common.springboot.api.domain.entity.User;
-import com.github.throyer.common.springboot.api.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.api.domain.models.entity.User;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.CreateUser;
 
 import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;

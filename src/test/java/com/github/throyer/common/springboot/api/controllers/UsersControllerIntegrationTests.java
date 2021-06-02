@@ -10,11 +10,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.builders.UserBuilder;
-import com.github.throyer.common.springboot.api.domain.entity.Role;
-import com.github.throyer.common.springboot.api.domain.security.Authorized;
-import com.github.throyer.common.springboot.api.repositories.UserRepository;
-import com.github.throyer.common.springboot.api.services.security.TokenService;
+import com.github.throyer.common.springboot.api.domain.builders.UserBuilder;
+import com.github.throyer.common.springboot.api.domain.models.entity.Role;
+import com.github.throyer.common.springboot.api.domain.models.security.Authorized;
+import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
+import com.github.throyer.common.springboot.api.domain.services.security.TokenService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

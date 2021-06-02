@@ -10,8 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.github.throyer.common.springboot.api.domain.security.Authorized;
-import com.github.throyer.common.springboot.api.services.security.TokenService;
+import com.github.throyer.common.springboot.api.domain.models.security.Authorized;
+import com.github.throyer.common.springboot.api.domain.services.security.TokenService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

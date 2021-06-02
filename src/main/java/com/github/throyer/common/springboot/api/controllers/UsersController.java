@@ -1,14 +1,14 @@
 package com.github.throyer.common.springboot.api.controllers;
 
-import com.github.throyer.common.springboot.api.domain.entity.User;
-import com.github.throyer.common.springboot.api.domain.shared.Page;
-import com.github.throyer.common.springboot.api.domain.shared.Pagination;
-import com.github.throyer.common.springboot.api.services.user.CreateUserService;
-import com.github.throyer.common.springboot.api.services.user.FindUserService;
-import com.github.throyer.common.springboot.api.services.user.RemoveUserService;
-import com.github.throyer.common.springboot.api.services.user.UpdateUserService;
-import com.github.throyer.common.springboot.api.services.user.dto.CreateUser;
-import com.github.throyer.common.springboot.api.services.user.dto.UpdateUser;
+import com.github.throyer.common.springboot.api.domain.models.entity.User;
+import com.github.throyer.common.springboot.api.domain.models.pagination.Page;
+import com.github.throyer.common.springboot.api.domain.models.pagination.Pagination;
+import com.github.throyer.common.springboot.api.domain.services.user.CreateUserService;
+import com.github.throyer.common.springboot.api.domain.services.user.FindUserService;
+import com.github.throyer.common.springboot.api.domain.services.user.RemoveUserService;
+import com.github.throyer.common.springboot.api.domain.services.user.UpdateUserService;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.UpdateUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

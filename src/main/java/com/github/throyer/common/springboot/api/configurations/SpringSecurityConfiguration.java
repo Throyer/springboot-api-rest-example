@@ -1,6 +1,6 @@
 package com.github.throyer.common.springboot.api.configurations;
 
-import com.github.throyer.common.springboot.api.services.security.SecurityService;
+import com.github.throyer.common.springboot.api.domain.services.security.SecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
