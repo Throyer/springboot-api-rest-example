@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.models.entity;
+package com.github.throyer.common.springboot.api.domain.entity;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -19,10 +19,10 @@ import javax.persistence.PrePersist;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.github.throyer.common.springboot.api.models.security.Authorized;
-import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
-import com.github.throyer.common.springboot.api.models.shared.HasEmail;
-import com.github.throyer.common.springboot.api.models.shared.SortableProperty;
+import com.github.throyer.common.springboot.api.domain.security.Authorized;
+import com.github.throyer.common.springboot.api.domain.shared.BasicEntity;
+import com.github.throyer.common.springboot.api.domain.shared.HasEmail;
+import com.github.throyer.common.springboot.api.domain.shared.SortableProperty;
 import com.github.throyer.common.springboot.api.services.user.dto.UpdateUser;
 
 import org.hibernate.annotations.Where;

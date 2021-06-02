@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.models.shared;
+package com.github.throyer.common.springboot.api.domain.shared;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 
 import javax.persistence.Entity;
 
-import com.github.throyer.common.springboot.api.models.validation.InvalidSortException;
-import com.github.throyer.common.springboot.api.models.validation.SimpleError;
+import com.github.throyer.common.springboot.api.domain.validation.InvalidSortException;
+import com.github.throyer.common.springboot.api.domain.validation.SimpleError;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

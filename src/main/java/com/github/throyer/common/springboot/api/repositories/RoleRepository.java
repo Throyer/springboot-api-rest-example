@@ -2,7 +2,7 @@ package com.github.throyer.common.springboot.api.repositories;
 
 import java.util.Optional;
 
-import com.github.throyer.common.springboot.api.models.entity.Role;
+import com.github.throyer.common.springboot.api.domain.entity.Role;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

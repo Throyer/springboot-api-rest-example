@@ -7,10 +7,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import com.github.throyer.common.springboot.api.models.entity.Role;
-import com.github.throyer.common.springboot.api.models.security.Authorized;
-import com.github.throyer.common.springboot.api.models.security.Login;
-import com.github.throyer.common.springboot.api.models.security.Token;
+import com.github.throyer.common.springboot.api.domain.entity.Role;
+import com.github.throyer.common.springboot.api.domain.security.Authorized;
+import com.github.throyer.common.springboot.api.domain.security.Login;
+import com.github.throyer.common.springboot.api.domain.security.Token;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

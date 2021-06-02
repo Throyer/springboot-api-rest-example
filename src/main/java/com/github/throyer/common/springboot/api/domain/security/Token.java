@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.models.security;
+package com.github.throyer.common.springboot.api.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.models.shared;
+package com.github.throyer.common.springboot.api.domain.shared;
 
 import static com.github.throyer.common.springboot.api.services.security.SecurityService.authorized;
 
@@ -14,7 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.domain.entity.User;
 
 @MappedSuperclass
 public abstract class BasicEntity {

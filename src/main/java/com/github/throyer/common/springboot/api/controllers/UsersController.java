@@ -1,8 +1,8 @@
 package com.github.throyer.common.springboot.api.controllers;
 
-import com.github.throyer.common.springboot.api.models.entity.User;
-import com.github.throyer.common.springboot.api.models.shared.Page;
-import com.github.throyer.common.springboot.api.models.shared.Pagination;
+import com.github.throyer.common.springboot.api.domain.entity.User;
+import com.github.throyer.common.springboot.api.domain.shared.Page;
+import com.github.throyer.common.springboot.api.domain.shared.Pagination;
 import com.github.throyer.common.springboot.api.services.user.CreateUserService;
 import com.github.throyer.common.springboot.api.services.user.FindUserService;
 import com.github.throyer.common.springboot.api.services.user.RemoveUserService;

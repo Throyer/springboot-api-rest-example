@@ -5,9 +5,9 @@ import static com.github.throyer.common.springboot.api.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 import static com.github.throyer.common.springboot.api.utils.Responses.unauthorized;
 
-import com.github.throyer.common.springboot.api.models.entity.User;
-import com.github.throyer.common.springboot.api.models.shared.Page;
-import com.github.throyer.common.springboot.api.models.shared.Pagination;
+import com.github.throyer.common.springboot.api.domain.entity.User;
+import com.github.throyer.common.springboot.api.domain.shared.Page;
+import com.github.throyer.common.springboot.api.domain.shared.Pagination;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

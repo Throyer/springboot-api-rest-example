@@ -3,7 +3,7 @@ package com.github.throyer.common.springboot.api.services.security;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.github.throyer.common.springboot.api.models.security.Authorized;
+import com.github.throyer.common.springboot.api.domain.security.Authorized;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
 
 import org.slf4j.Logger;

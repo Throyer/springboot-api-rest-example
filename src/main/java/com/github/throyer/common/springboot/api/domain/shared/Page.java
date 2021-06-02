@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.models.shared;
+package com.github.throyer.common.springboot.api.domain.shared;
 
 import java.util.Collection;
 

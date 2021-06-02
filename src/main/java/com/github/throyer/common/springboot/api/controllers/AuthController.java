@@ -5,9 +5,9 @@ import static com.github.throyer.common.springboot.api.utils.Responses.unauthori
 
 import javax.validation.Valid;
 
-import com.github.throyer.common.springboot.api.models.security.Login;
-import com.github.throyer.common.springboot.api.models.security.Token;
-import com.github.throyer.common.springboot.api.models.validation.SimpleError;
+import com.github.throyer.common.springboot.api.domain.security.Login;
+import com.github.throyer.common.springboot.api.domain.security.Token;
+import com.github.throyer.common.springboot.api.domain.validation.SimpleError;
 import com.github.throyer.common.springboot.api.services.security.TokenService;
 
 import org.springframework.beans.factory.annotation.Autowired;

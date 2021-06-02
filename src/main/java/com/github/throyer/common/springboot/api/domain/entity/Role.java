@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.models.entity;
+package com.github.throyer.common.springboot.api.domain.entity;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
+import com.github.throyer.common.springboot.api.domain.shared.BasicEntity;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;

@@ -2,7 +2,7 @@ package com.github.throyer.common.springboot.api.repositories;
 
 import java.util.Optional;
 
-import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.domain.entity.User;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

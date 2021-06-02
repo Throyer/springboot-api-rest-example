@@ -6,8 +6,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.github.throyer.common.springboot.api.builders.UserBuilder;
-import com.github.throyer.common.springboot.api.models.entity.User;
-import com.github.throyer.common.springboot.api.models.shared.HasEmail;
+import com.github.throyer.common.springboot.api.domain.entity.User;
+import com.github.throyer.common.springboot.api.domain.shared.HasEmail;
 
 public class CreateUser implements HasEmail {
 

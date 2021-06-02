@@ -1,6 +1,6 @@
 package com.github.throyer.common.springboot.api.repositories;
 
-import com.github.throyer.common.springboot.api.models.shared.BasicEntity;
+import com.github.throyer.common.springboot.api.domain.shared.BasicEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

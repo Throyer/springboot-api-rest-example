@@ -3,8 +3,8 @@ package com.github.throyer.common.springboot.api.builders;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.models.entity.Role;
-import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.domain.entity.Role;
+import com.github.throyer.common.springboot.api.domain.entity.User;
 
 public class UserBuilder {
     

@@ -2,9 +2,9 @@ package com.github.throyer.common.springboot.api.services.common.validation;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.models.shared.HasEmail;
-import com.github.throyer.common.springboot.api.models.validation.EmailNotUniqueException;
-import com.github.throyer.common.springboot.api.models.validation.SimpleError;
+import com.github.throyer.common.springboot.api.domain.shared.HasEmail;
+import com.github.throyer.common.springboot.api.domain.validation.EmailNotUniqueException;
+import com.github.throyer.common.springboot.api.domain.validation.SimpleError;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

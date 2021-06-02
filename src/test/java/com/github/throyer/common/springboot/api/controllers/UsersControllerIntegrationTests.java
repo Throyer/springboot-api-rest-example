@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import com.github.throyer.common.springboot.api.builders.UserBuilder;
-import com.github.throyer.common.springboot.api.models.entity.Role;
-import com.github.throyer.common.springboot.api.models.security.Authorized;
+import com.github.throyer.common.springboot.api.domain.entity.Role;
+import com.github.throyer.common.springboot.api.domain.security.Authorized;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
 import com.github.throyer.common.springboot.api.services.security.TokenService;
 

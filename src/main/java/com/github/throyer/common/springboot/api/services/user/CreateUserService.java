@@ -5,7 +5,7 @@ import static com.github.throyer.common.springboot.api.utils.Responses.created;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.models.entity.User;
+import com.github.throyer.common.springboot.api.domain.entity.User;
 import com.github.throyer.common.springboot.api.repositories.RoleRepository;
 import com.github.throyer.common.springboot.api.repositories.UserRepository;
 import com.github.throyer.common.springboot.api.services.user.dto.CreateUser;

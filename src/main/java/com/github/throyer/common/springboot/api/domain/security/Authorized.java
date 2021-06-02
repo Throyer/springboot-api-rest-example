@@ -1,8 +1,8 @@
-package com.github.throyer.common.springboot.api.models.security;
+package com.github.throyer.common.springboot.api.domain.security;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.models.entity.Role;
+import com.github.throyer.common.springboot.api.domain.entity.Role;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
@@ -18,7 +18,7 @@ public class Authorized extends User {
         this.id = id;
     }
 
-    public Authorized(com.github.throyer.common.springboot.api.models.entity.User user) {
+    public Authorized(com.github.throyer.common.springboot.api.domain.entity.User user) {
         super(
             user.getEmail(),
             user.getPassword(),

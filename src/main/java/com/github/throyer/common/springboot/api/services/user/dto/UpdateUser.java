@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.github.throyer.common.springboot.api.models.shared.HasEmail;
+import com.github.throyer.common.springboot.api.domain.shared.HasEmail;
 
 public class UpdateUser implements HasEmail {
     

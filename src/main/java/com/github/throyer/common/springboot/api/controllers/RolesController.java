@@ -4,7 +4,7 @@ import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.models.entity.Role;
+import com.github.throyer.common.springboot.api.domain.entity.Role;
 import com.github.throyer.common.springboot.api.repositories.RoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

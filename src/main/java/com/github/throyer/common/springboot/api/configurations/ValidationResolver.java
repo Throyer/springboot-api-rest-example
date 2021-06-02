@@ -3,9 +3,9 @@ package com.github.throyer.common.springboot.api.configurations;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.github.throyer.common.springboot.api.models.validation.EmailNotUniqueException;
-import com.github.throyer.common.springboot.api.models.validation.InvalidSortException;
-import com.github.throyer.common.springboot.api.models.validation.SimpleError;
+import com.github.throyer.common.springboot.api.domain.validation.EmailNotUniqueException;
+import com.github.throyer.common.springboot.api.domain.validation.InvalidSortException;
+import com.github.throyer.common.springboot.api.domain.validation.SimpleError;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
