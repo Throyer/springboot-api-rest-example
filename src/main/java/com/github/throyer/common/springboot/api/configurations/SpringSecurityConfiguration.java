@@ -50,13 +50,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf()
                 .disable()
                     .authorizeRequests()
-
-            // rota publica (LOGIN).
-                .antMatchers(HttpMethod.POST, "/auth/token")
-                    .permitAll()
-
-            // rota publica de cadastro de usuários.
-                .antMatchers(HttpMethod.POST, "/users")
+                .antMatchers("/**")
                     .permitAll()
                         
             // todas as outras rotas precisam de autenticação.
