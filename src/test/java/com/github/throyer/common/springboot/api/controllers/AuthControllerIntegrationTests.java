@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -26,6 +28,9 @@ public class AuthControllerIntegrationTests {
     @Autowired
     private MockMvc mock;
     
+    @Autowired
+    UserRepository repository;
+
     @Test
     public void should_sigh_in_with_correct_password() throws Exception {
         
@@ -36,7 +41,7 @@ public class AuthControllerIntegrationTests {
             }
         """;
 
-        var request = post("/auth")
+        var request = post("/auth/token")
             .content(body)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -55,7 +60,7 @@ public class AuthControllerIntegrationTests {
             }
         """;
 
-        var request = post("/auth")
+        var request = post("/auth/token")
             .content(body)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -71,6 +76,6 @@ public class AuthControllerIntegrationTests {
 
         mock.perform(request)
             .andDo(print())
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isForbidden());
     }
 }

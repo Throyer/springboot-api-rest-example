@@ -129,27 +129,21 @@ public class UsersControllerIntegrationTests {
     @Test
     public void should_return_404_after_delete_user() throws Exception {  
         var user = repository.save(
-            new UserBuilder("novo usuário")
-                .setEmail("novo@email.com")
+            new UserBuilder("edinaldo pereira")
+                .setEmail("edinaldo@email.com")
                 .addRole(2L)
                 .setPassword("uma_senha_123@SEGURA")
                 .build()
         );
 
-        var antes = repository.findAll();
-        System.out.println(antes);
-        
         var fist = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, bearerToken);
 
         mock.perform(fist).andDo(print())
                 .andExpect(status().isNoContent());
 
-        var depois = repository.findById(user.getId()).get();
-        System.out.println(depois);
-
         var second = delete(String.format("/users/%s", user.getId()))
-        .header(HttpHeaders.AUTHORIZATION, bearerToken);
+            .header(HttpHeaders.AUTHORIZATION, bearerToken);
 
         mock.perform(second).andDo(print())
                 .andExpect(status().isNotFound());

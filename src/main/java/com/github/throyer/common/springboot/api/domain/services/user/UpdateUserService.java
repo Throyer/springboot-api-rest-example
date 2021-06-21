@@ -27,7 +27,7 @@ public class UpdateUserService {
                 .orElseThrow(() -> unauthorized("Permissão invalida atualização de recurso"));
 
         var actual = repository
-            .findById(id)
+            .findOptionalByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> notFound("Usuário não encontrado"));
         
         validateEmailUniquenessOnModify(body, actual);

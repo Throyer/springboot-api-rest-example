@@ -35,6 +35,8 @@ public interface UserRepository extends SoftDeleteRepository<User> {
     public Page<User> findDistinctBy(Pageable pageable);
 
     public Boolean existsByEmail(String email);
+    
+    public Optional<User> findOptionalByIdAndDeletedAtIsNull(Long id);
 
     public Optional<User> findOptionalByEmail(String email);
 }

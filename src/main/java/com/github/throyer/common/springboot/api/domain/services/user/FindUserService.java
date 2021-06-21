@@ -34,7 +34,7 @@ public class FindUserService {
             .filter(authorized -> authorized.cantRead(id))
             .map((authorized) -> 
                 repository
-                    .findById(id)
+                    .findOptionalByIdAndDeletedAtIsNull(id)
                         .map(user -> ok(user))
                 .orElseGet(() -> notFound()))
             .orElse(unauthorized());
