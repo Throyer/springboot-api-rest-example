@@ -8,6 +8,7 @@ import com.github.throyer.common.springboot.api.domain.services.user.FindUserSer
 import com.github.throyer.common.springboot.api.domain.services.user.RemoveUserService;
 import com.github.throyer.common.springboot.api.domain.services.user.UpdateUserService;
 import com.github.throyer.common.springboot.api.domain.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.SearchUser;
 import com.github.throyer.common.springboot.api.domain.services.user.dto.UpdateUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,8 @@ public class UsersController {
     
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADM')")
-    public ResponseEntity<Page<User>> index(Pagination pagination, Sort sort) {
-        return findService.find(pagination, sort);
+    public ResponseEntity<Page<User>> index(Pagination pagination, Sort sort, SearchUser search) {
+        return findService.find(pagination, sort, search);
     }
     
     @GetMapping("/{id}")

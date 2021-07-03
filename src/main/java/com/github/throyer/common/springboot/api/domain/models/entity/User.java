@@ -56,7 +56,6 @@ public class User extends BasicEntity implements Serializable, HasEmail {
     @SortableProperty(name = "id")
     private Long id;
 
-    @SortableProperty(name = "name")
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -102,6 +101,7 @@ public class User extends BasicEntity implements Serializable, HasEmail {
         this.roles = roles;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -118,6 +118,7 @@ public class User extends BasicEntity implements Serializable, HasEmail {
         this.name = nome;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }
@@ -141,7 +142,7 @@ public class User extends BasicEntity implements Serializable, HasEmail {
     public Boolean contains(String search) {
         if (Objects.nonNull(getRoles())) {
             return roles.stream()
-                .anyMatch(role -> role.compare(search));
+            .anyMatch(role -> role.compare(search));
         }
         return false;
     }
@@ -194,8 +195,7 @@ public class User extends BasicEntity implements Serializable, HasEmail {
 
     @PrePersist
     private void created() {
-        this.password = new BCryptPasswordEncoder(PASSWORD_STRENGTH)
-            .encode(password);
+        this.password = new BCryptPasswordEncoder(PASSWORD_STRENGTH).encode(password);
     }
 
     @Override

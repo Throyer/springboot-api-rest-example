@@ -13,8 +13,8 @@ public class Authorized extends User {
 
     private Long id;
 
-    public Authorized(String username, Long id, List<Role> authorities) {
-        super(username, "SECRET", authorities);
+    public Authorized(Long id, List<Role> authorities) {
+        super("USERNAME", "SECRET", authorities);
         this.id = id;
     }
 

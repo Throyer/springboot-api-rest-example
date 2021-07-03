@@ -20,6 +20,14 @@ public class Responses {
 
     private Responses() { }
 
+    public static final <T> ResponseEntity<T> forbidden(T body) {
+        return ResponseEntity.status(403).body(body);
+    }
+
+    public static final <T> ResponseEntity<T> forbidden() {
+        return ResponseEntity.status(403).build();
+    }
+
     public static final <T> ResponseEntity<T> unauthorized(T body) {
         return ResponseEntity.status(401).body(body);
     }
@@ -76,6 +84,10 @@ public class Responses {
     public static final <T> ResponseEntity<T> created(T body) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(body);
+    }
+
+    public static final ResponseStatusException forbidden(String reason) {
+        return new ResponseStatusException(HttpStatus.FORBIDDEN, reason);
     }
 
     public static final ResponseStatusException unauthorized(String reason) {

@@ -3,11 +3,11 @@ package com.github.throyer.common.springboot.api.domain.models.pagination;
 import java.util.Collection;
 
 public class Page<T> {
-    private Collection<T> content;
-    private Integer page;
-    private Integer size;  
-    private Integer totalPages;  
-    private Long totalElements;
+    private final Collection<T> content;
+    private final Integer page;
+    private final Integer size;  
+    private final Integer totalPages;  
+    private final Long totalElements;
 
     public Page(org.springframework.data.domain.Page<T> page) {
         this.content = page.getContent();
@@ -38,6 +38,6 @@ public class Page<T> {
     }
 
     public static <T> Page<T> of(org.springframework.data.domain.Page<T> page) {
-        return new Page<T>(page);
+        return new Page<>(page);
     }
 }

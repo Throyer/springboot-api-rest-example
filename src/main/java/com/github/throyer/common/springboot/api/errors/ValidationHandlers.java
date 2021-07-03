@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.api.middlewares;
+package com.github.throyer.common.springboot.api.errors;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,12 +8,14 @@ import com.github.throyer.common.springboot.api.domain.validation.InvalidSortExc
 import com.github.throyer.common.springboot.api.domain.validation.SimpleError;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class ValidationHandlers {
@@ -32,6 +34,13 @@ public class ValidationHandlers {
     @ExceptionHandler(EmailNotUniqueException.class)
     public List<SimpleError> badRequest(EmailNotUniqueException exception) {
         return exception.getErrors();
+    }    
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<SimpleError> statusError(ResponseStatusException exception) {
+        return ResponseEntity
+            .status(exception.getStatus())
+            .body(new SimpleError(exception.getReason(), exception.getStatus().value()));
     }    
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)

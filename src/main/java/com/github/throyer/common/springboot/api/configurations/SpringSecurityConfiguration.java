@@ -1,6 +1,7 @@
 package com.github.throyer.common.springboot.api.configurations;
 
 import com.github.throyer.common.springboot.api.domain.services.security.SecurityService;
+import com.github.throyer.common.springboot.api.middlewares.AuthorizationMiddleware;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +36,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder encoder;
 
     @Autowired
-    private TokenFilter filter;
+    private AuthorizationMiddleware filter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

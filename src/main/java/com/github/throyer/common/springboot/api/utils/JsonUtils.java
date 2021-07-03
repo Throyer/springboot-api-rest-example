@@ -7,8 +7,12 @@ public class JsonUtils {
 
     private JsonUtils() { }
     
-    public static <T> String toJson(final T object) throws JsonProcessingException {
+    public static <T> String toJson(final T object) {
         final var writer = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        return writer.writeValueAsString(object);
+        try {
+            return writer.writeValueAsString(object);
+        } catch (JsonProcessingException exception) {
+            return "";
+        }
     }
 }

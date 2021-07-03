@@ -1,5 +1,6 @@
 package com.github.throyer.common.springboot.api.controllers;
 
+import static com.github.throyer.common.springboot.api.utils.Constants.SECURITY.JWT;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,17 +9,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.github.throyer.common.springboot.api.domain.builders.UserBuilder;
 import com.github.throyer.common.springboot.api.domain.models.entity.Role;
-import com.github.throyer.common.springboot.api.domain.models.security.Authorized;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
-import com.github.throyer.common.springboot.api.domain.services.security.TokenService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,10 +38,13 @@ import org.springframework.transaction.annotation.Transactional;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UsersControllerIntegrationTests {
 
-    private String bearerToken;
+    private String header;
 
-    @Autowired
-    private TokenService tokenService;
+    @Value("${token.secret}")
+    private String TOKEN_SECRET;
+
+    @Value("${token.expiration-in-hours}")
+    private Integer TOKEN_EXPIRATION_IN_HOURS;
 
     @Autowired
     UserRepository repository;
@@ -50,9 +54,9 @@ public class UsersControllerIntegrationTests {
 
     @BeforeEach
     public void generateToken() {
-        final var roles = List.of(new Role("ADM"));
-        final var user = new Authorized("ADM", 1L, roles);
-        bearerToken = String.format("Bearer %s", tokenService.buildToken(user));
+        var expiration = LocalDateTime.now().plusHours(TOKEN_EXPIRATION_IN_HOURS);
+        var token = JWT.encode(1L, List.of(new Role("ADM")), expiration, TOKEN_SECRET);
+        header = String.format("Bearer %s", token);
     }
 
     @Test
@@ -100,7 +104,7 @@ public class UsersControllerIntegrationTests {
     @Test
     public void should_list_users() throws Exception {        
         var request = get("/users")
-            .header(HttpHeaders.AUTHORIZATION, bearerToken)
+            .header(HttpHeaders.AUTHORIZATION, header)
                 .queryParam("page", "0")
                 .queryParam("size", "10");
 
@@ -120,7 +124,7 @@ public class UsersControllerIntegrationTests {
             );
         
         var request = delete(String.format("/users/%s", user.getId()))
-            .header(HttpHeaders.AUTHORIZATION, bearerToken);
+            .header(HttpHeaders.AUTHORIZATION, header);
 
         mock.perform(request).andDo(print())
                 .andExpect(status().isNoContent());
@@ -137,13 +141,13 @@ public class UsersControllerIntegrationTests {
         );
 
         var fist = delete(String.format("/users/%s", user.getId()))
-            .header(HttpHeaders.AUTHORIZATION, bearerToken);
+            .header(HttpHeaders.AUTHORIZATION, header);
 
         mock.perform(fist).andDo(print())
                 .andExpect(status().isNoContent());
 
         var second = delete(String.format("/users/%s", user.getId()))
-            .header(HttpHeaders.AUTHORIZATION, bearerToken);
+            .header(HttpHeaders.AUTHORIZATION, header);
 
         mock.perform(second).andDo(print())
                 .andExpect(status().isNotFound());

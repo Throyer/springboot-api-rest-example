@@ -1,14 +1,16 @@
 package com.github.throyer.common.springboot.api.domain.services.security;
 
+import static com.github.throyer.common.springboot.api.utils.Constants.SECURITY.JWT;
+import static com.github.throyer.common.springboot.api.utils.Constants.SECURITY.INVALID_USERNAME;
+
 import java.util.Objects;
 import java.util.Optional;
 
 import com.github.throyer.common.springboot.api.domain.models.security.Authorized;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,10 +23,11 @@ public class SecurityService implements UserDetailsService {
     @Autowired
     UserRepository repository;
 
-    private static Logger logger = LoggerFactory.getLogger(SecurityService.class);
+    private static String SECRET;
 
-    private static final String INVALID_USERNAME = "Nome de usuário invalido.";
-    private static final String NO_SESSION_MESSAGE = "Não existe um usuário logado.";
+    public SecurityService(@Value("${token.secret}") String secret) {
+        SecurityService.SECRET = secret;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -32,16 +35,25 @@ public class SecurityService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(INVALID_USERNAME)));
     }
 
-    public static Optional<Authorized> authorized() {
-        
-        var principal = getPrincipal();
-        
-        if (Objects.nonNull(principal) && principal instanceof Authorized authorized) {
-            return Optional.of(authorized);
-        }
+    public static void signIn(String token) {
+        var authorized = JWT.decode(token, SECRET);
+        SecurityContextHolder
+            .getContext()
+                .setAuthentication(authorized.getAuthentication());
+    }
 
-        logger.error(NO_SESSION_MESSAGE);
-        return Optional.empty();
+    public static Optional<Authorized> authorized() {
+        try {
+            var principal = getPrincipal();
+            
+            if (Objects.nonNull(principal) && principal instanceof Authorized authorized) {
+                return Optional.of(authorized);
+            }
+            return Optional.empty();
+        } catch (Exception exception) {
+            return Optional.empty();
+        }
+        
     }
 
     private static Object getPrincipal() {

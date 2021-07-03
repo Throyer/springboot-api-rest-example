@@ -33,3 +33,6 @@ build/
 ### VS Code ###
 .vscode/
 /nbproject/
+nbactions.xml
+.gitignore
+nbactions-release-profile.xml

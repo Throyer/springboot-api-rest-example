@@ -41,7 +41,7 @@ public class AuthControllerIntegrationTests {
             }
         """;
 
-        var request = post("/auth/token")
+        var request = post("/sessions")
             .content(body)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -60,7 +60,7 @@ public class AuthControllerIntegrationTests {
             }
         """;
 
-        var request = post("/auth/token")
+        var request = post("/sessions")
             .content(body)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 

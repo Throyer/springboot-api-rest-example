@@ -6,7 +6,7 @@ import static org.jooq.impl.DSL.primaryKey;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.SQLDataType.BIGINT;
-import static org.jooq.impl.SQLDataType.BIT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
@@ -24,7 +24,7 @@ public class V2021052905151622319358__create_table_user extends BaseJavaMigratio
                     .column("email", VARCHAR(100).nullable(true))
                     .column("deleted_email", VARCHAR(100).nullable(true))
                     .column("password", VARCHAR(100).nullable(false))
-                    .column("active", BIT.defaultValue(true))
+                    .column("active", BOOLEAN.defaultValue(true))
                     .column("created_at", TIMESTAMP.defaultValue(currentTimestamp()))
                     .column("updated_at", TIMESTAMP.nullable(true))
                     .column("deleted_at", TIMESTAMP.nullable(true))
