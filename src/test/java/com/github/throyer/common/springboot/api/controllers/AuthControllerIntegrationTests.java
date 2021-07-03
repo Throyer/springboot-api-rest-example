@@ -66,7 +66,7 @@ public class AuthControllerIntegrationTests {
 
         mock.perform(request)
             .andDo(print())
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isForbidden());
     }
 
     @Test
