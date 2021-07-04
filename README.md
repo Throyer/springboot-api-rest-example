@@ -17,7 +17,7 @@
 - [Entidades](#entidades)
 - [Instalação](#instalação)
 - [Rodando um teste especifico](#rodando-um-teste-especifico)
-<!-- - [Documentação do Swagger](#documentação-do-swagger) -->
+- [Documentação do Swagger](#documentação-do-swagger)
 - [Postman](#postman)
 - [Database Migrations](#database-migrations)
 - [Variaveis de ambiente](#variaveis-de-ambiente)
@@ -34,18 +34,15 @@
 
 # O que foi feito e os próximos passos
 
-- [x] _autenticação com **Spring Security** com **JWT**_.
-  - [ ] **refresh token**
-- [ ] **CRUD completo de usuários e permissões**.
-  - [x] _usuários_
-  - [ ] **permissões**
-- [X] _relatório de cobertura dos testes_
-- [ ] **testes unitários**
-- [X] **testes de integração** _(eu até fiz alguns mas eles são bem simples... C: )_
-- [ ] _swagger_ _(tava funcionando mas quebrou na atualização 2.5.0) :C_
-- [x] _database migration **Flyway**_
-  - [X] _java based migrations_
-- [x] _Soft delete e TIMESTAMPS_
+- [X] **JWT**
+- [X] **Refresh token**
+- [X] users **CRUD**
+- [X] _test coverage report **Jacoco report**_
+- [X] _tests **JUnity**_
+- [X] _database migration **Flyway**_
+- [X] _java based migrations_
+- [X] _Soft delete e TIMESTAMPS_
+- [X] _swagger_
 
 ---
 
@@ -101,8 +98,8 @@ $ mvnw test -Dtest=UsuariosControllerIntegrationTests#should_save_a_new_user
 ```
 
 
-<!-- ## Documentação do Swagger
-Assim que a aplicação estiver de pé, fica disponivel em: [localhost:8080/api/v1/swagger-ui](http://localhost:8080/api/v1/swagger-ui.html) -->
+## Documentação do Swagger
+Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/api/v1/swagger-ui](https://throyer-crud-api.herokuapp.com//api/v1/documentation/swagger-ui/#/)
 
 ## Postman
 Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.

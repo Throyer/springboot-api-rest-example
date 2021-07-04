@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 
+@Api(tags = "User role")
 @RestController
 @RequestMapping("/roles")
 @PreAuthorize("hasAnyAuthority('ADM')")
-@Api(tags = "/roles", description = "roles")
 public class RolesController {
 
     @Autowired

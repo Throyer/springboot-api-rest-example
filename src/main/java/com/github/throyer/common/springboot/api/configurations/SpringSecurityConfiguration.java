@@ -10,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,12 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    private static final String EVERY_HTML = "/**.html";
-    private static final String SWAGGER_DOCS = "/v2/api-docs";
-    private static final String WEBJARS = "/webjars/**";
-    private static final String CONFIGURATIONS = "/configuration/**";
-    private static final String SWAGGER_RESOURCES = "/swagger-resources/**";
 
     @Autowired
     private SecurityService authService;
@@ -70,19 +63,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-            .ignoring()
-                .antMatchers(
-                    EVERY_HTML,
-                    SWAGGER_DOCS,
-                    WEBJARS,
-                    CONFIGURATIONS,
-                    SWAGGER_RESOURCES
-            );
     }
 
     @Bean

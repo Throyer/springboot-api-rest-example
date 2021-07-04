@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 
+@Api(tags = "User")
 @RestController
 @RequestMapping("/users")
-@Api(tags = "/users", description = "users")
 public class UsersController {
     
     @Autowired

@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
-@Api(tags = "/sessions")
+@Api(tags = "Session")
 @RestController
 @RequestMapping("/sessions")
 public class SessionsController {
@@ -27,17 +25,11 @@ public class SessionsController {
     @Autowired
     private SessionService service;
 
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Ok", response = SessionResponse.class),
-    })
     @PostMapping
     public ResponseEntity<SessionResponse> create(@RequestBody @Valid SessionRequest request) {
         return service.create(request);
     }
 
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Ok", response = SessionResponse.class),
-    })
     @PostMapping("/refresh")
     public ResponseEntity<RefreshSessionResponse> refresh(@RequestBody @Valid RefreshSessionRequest request) {
         return service.refresh(request);
