@@ -45,8 +45,9 @@ public class SessionService {
                     .orElseThrow(() -> forbidden(CREATE_SESSION_ERROR_MESSAGE));
 
         var now = LocalDateTime.now();
-        
-        var token = JWT.encode(user, now.plusHours(TOKEN_EXPIRATION_IN_HOURS), TOKEN_SECRET);
+        var expiresIn = now.plusHours(TOKEN_EXPIRATION_IN_HOURS);
+
+        var token = JWT.encode(user, expiresIn, TOKEN_SECRET);
         var refresh = new RefreshToken(user, REFRESH_TOKEN_EXPIRATION_IN_DAYS);
 
         refreshTokenRepository.disableOldRefreshTokens(user.getId());
@@ -57,7 +58,7 @@ public class SessionService {
             user,
             token,
             refresh,
-            TOKEN_EXPIRATION_IN_HOURS
+            expiresIn
         );
         
         return ok(response);
@@ -65,12 +66,12 @@ public class SessionService {
 
     public ResponseEntity<RefreshSessionResponse> refresh(RefreshSessionRequest request) {
         var old = refreshTokenRepository.findOptionalByCodeAndAvailableIsTrue(request.getRefresh())
-            .filter(token -> token.expired())
+            .filter(token -> token.nonExpired())
             .orElseThrow(() -> forbidden(REFRESH_SESSION_ERROR_MESSAGE));
         
         var now = LocalDateTime.now();
-        
-        var token = JWT.encode(old.getUser(), now.plusHours(TOKEN_EXPIRATION_IN_HOURS), TOKEN_SECRET);
+        var expiresIn = now.plusHours(TOKEN_EXPIRATION_IN_HOURS);
+        var token = JWT.encode(old.getUser(), expiresIn, TOKEN_SECRET);
         
         refreshTokenRepository.disableOldRefreshTokens(old.getUser().getId());
 
@@ -79,7 +80,7 @@ public class SessionService {
         var response = new RefreshSessionResponse(
             token,
             refresh,
-            TOKEN_EXPIRATION_IN_HOURS
+            expiresIn
         );
         
         return ok(response);

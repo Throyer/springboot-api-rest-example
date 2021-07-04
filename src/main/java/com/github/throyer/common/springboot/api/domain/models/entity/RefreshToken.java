@@ -70,7 +70,7 @@ public class RefreshToken {
         this.user = user;
     }
 
-    public Boolean expired() {
+    public Boolean nonExpired() {
         return expiresIn.isAfter(LocalDateTime.now());
     }
 }

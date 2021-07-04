@@ -86,7 +86,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"novo usuario\",\n    \"email\": \"novo.usuario@email.com\",\n    \"password\": \"uma_senha_123@SEGURA\"\n}",
+							"raw": "{\n    \"name\": \"{{$randomFirstName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"uma_senha_123@SEGURA\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -185,7 +185,92 @@
 			]
 		},
 		{
-			"name": "Auth",
+			"name": "recovery",
+			"item": [
+				{
+					"name": "recoveries/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@email.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/recoveries",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"recoveries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recoveries/confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@email.com\",\n    \"code\": \"0953\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/recoveries/confirm",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"recoveries",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recoveries/update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@email.com\",\n    \"code\": \"5048\",\n    \"password\": \"jubileu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/recoveries/update",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"recoveries",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "token",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -199,13 +284,59 @@
 					}
 				},
 				"url": {
-					"raw": "{{API_URL}}/auth/token",
+					"raw": "{{API_URL}}/sessions",
 					"host": [
 						"{{API_URL}}"
 					],
 					"path": [
-						"auth",
-						"token"
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"refresh_token\": \"42538e13-5596-43c2-beab-8383399c9682\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/sessions/refresh",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"sessions",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "home",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						""
 					]
 				}
 			},

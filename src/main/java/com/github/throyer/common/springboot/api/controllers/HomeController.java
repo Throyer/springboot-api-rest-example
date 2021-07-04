@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class HomeController {
+
     @GetMapping
-    public Map<String, Object> index() {
+    public Map<String, Object> index() {        
         return Map.of("message", "Is a live!");
     }
 }

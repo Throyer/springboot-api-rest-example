@@ -152,6 +152,11 @@ public class User extends BasicEntity implements Serializable, HasEmail {
         setEmail(dto.getEmail());
     }
 
+    public void updatePassword(String newPassword) {
+        this.password = new BCryptPasswordEncoder(PASSWORD_STRENGTH)
+            .encode(newPassword);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

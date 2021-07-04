@@ -106,7 +106,7 @@ public abstract class BasicEntity {
     }
 
     @PrePersist
-    public void save() {
+    private void save() {
         createdAt = LocalDateTime.now();
         createdBy = authorized()
         .map(authorized -> new User(authorized.getId()))
@@ -114,7 +114,7 @@ public abstract class BasicEntity {
     }
 
     @PreUpdate
-    public void update() {
+    private void update() {
         updatedAt = LocalDateTime.now();
         updatedBy = authorized()
         .map(authorized -> new User(authorized.getId()))
