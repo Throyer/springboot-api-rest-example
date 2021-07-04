@@ -36,13 +36,14 @@
 
 - [X] **JWT**
 - [X] **Refresh token**
-- [X] users **CRUD**
+- [X] _users **CRUD**_
 - [X] _test coverage report **Jacoco report**_
 - [X] _tests **JUnity**_
 - [X] _database migration **Flyway**_
 - [X] _java based migrations_
 - [X] _Soft delete e TIMESTAMPS_
 - [X] _swagger_
+- [X] _email templates_
 
 ---
 
