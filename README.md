@@ -58,10 +58,10 @@ Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
 ## Entidades
 
 <p>
-  <img src="./der/spring_boot_crud_der.png" alt="DER" />
+  <img src="./database_diagram/spring_boot_crud_database_diagram.png" alt="database diagram" />
 </p>
 
-> arquivo do [draw.io](./der/spring_boot_crud_der.drawio)
+> arquivo do [draw.io](./der/spring_boot_crud_database_diagram.drawio)
 
 ## Instalação
 
