@@ -20,7 +20,7 @@
 - [Documentação do Swagger](#documentação-do-swagger)
 - [Postman](#postman)
 - [Database Migrations](#database-migrations)
-- [Variaveis de ambiente](#variaveis-de-ambiente)
+- [Variaveis de ambiente](#variáveis-de-ambiente)
 
 # Motivação
 
