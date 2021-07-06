@@ -41,7 +41,8 @@
 - [X] _tests **JUnity**_
 - [X] _database migration **Flyway**_
 - [X] _java based migrations_
-- [X] _Soft delete e TIMESTAMPS_
+- [X] _Soft delete_
+- [X] _Auditoria_
 - [X] _swagger_
 - [X] _email templates_
 
@@ -100,7 +101,7 @@ $ mvnw test -Dtest=UsuariosControllerIntegrationTests#should_save_a_new_user
 
 
 ## Documentação do Swagger
-Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/api/v1/swagger-ui](https://throyer-crud-api.herokuapp.com/api/v1/documentation/swagger-ui/#/)
+Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/api/v1/swagger-ui](https://throyer-crud-api.herokuapp.com/api/documentation/swagger-ui/#/)
 
 ## Postman
 Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
@@ -129,19 +130,25 @@ existem dois scripts `bash` que podem ser usados para criação de arquivos de m
   ```
 
 ---
+
 ## Variáveis de ambiente
 
-| **Descrição**                         | **parâmetro**                    | **Valor padrão**          |
-| ------------------------------------- | -------------------------------- | ------------------------- |
-| contexto da aplicação                 | `contexto`                       | api/v1                    |
-| porta da aplicação                    | `port`                           | 8080                      |
-| url do banco                          | `db-url`                         | localhost:3306/common_app |
-| nome de usuário (banco)               | `db-username`                    | root                      |
-| senha do usuário (banco)              | `db-password`                    | root                      |
-| mostrar sql na saida                  | `show-sql`                       | false                     |
-| tempo de expiração do token em horas  | `token-expiration-time-in-hours` | 24                        |
-| valor do secret na geração dos tokens | `token-secret`                   | secret                    |
-| máximo de conexões com o banco        | `max-connections`                | 10                        |
+| **Descrição**                               | **parâmetro**                          | **Valor padrão**          |
+| ------------------------------------------- | -------------------------------------- | ------------------------- |
+| contexto da aplicação                       | `contexto`                             | api/                      |
+| porta da aplicação                          | `port`                                 | 8080                      |
+| url do banco                                | `db-url`                               | localhost:3306/common_app |
+| nome de usuário (banco)                     | `db-username`                          | root                      |
+| senha do usuário (banco)                    | `db-password`                          | root                      |
+| mostrar sql na saida                        | `show-sql`                             | false                     |
+| valor do secret na geração dos tokens       | `token-secret`                         | secret                    |
+| tempo de expiração do token em horas        | `token-expiration-time-in-hours`       | 24                        |
+| tempo de expiração do refresh token em dias | `refresh-token-expiration-time-in-day` | 7                         |
+| máximo de conexões com o banco              | `max-connections`                      | 5                         |
+| endereço do servidor smtp                   | `smtp-host`                            | smtp.gmail.com            |
+| porta do servidor smtp                      | `smtp-port`                            | 587                       |
+| nome de usuário smtp                        | `smtp-username`                        | user                      |
+| senha do servidor smtp                      | `smtp-password`                        | secret                    |
 
 > são definidas em: [**application.properties**](./src/main/resources/application.properties)
 >

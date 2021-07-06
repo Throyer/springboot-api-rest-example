@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = "Password recovery")
+@Api(tags = "Password recovery", produces = "application/json")
 @RestController
 @RequestMapping("/recoveries")
 public class RecoveriesController {
@@ -23,6 +23,7 @@ public class RecoveriesController {
     @Autowired
     private RecoveryPasswordService service;
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping
     public void index(@RequestBody RecoveryRequest request) {        
         service.recovery(request.getEmail());

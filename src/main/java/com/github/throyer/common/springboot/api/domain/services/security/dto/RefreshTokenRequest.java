@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RefreshSessionRequest {
+public class RefreshTokenRequest {
 
     @NotNull(message = "refresh_token não pode NULO.")
     @NotEmpty(message = "refresh_token invalido.")

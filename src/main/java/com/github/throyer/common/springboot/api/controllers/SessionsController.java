@@ -3,10 +3,10 @@ package com.github.throyer.common.springboot.api.controllers;
 import javax.validation.Valid;
 
 import com.github.throyer.common.springboot.api.domain.services.security.SessionService;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshSessionRequest;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshSessionResponse;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.SessionRequest;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.SessionResponse;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshTokenRequest;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshTokenResponse;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.TokenRequest;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.TokenResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +26,12 @@ public class SessionsController {
     private SessionService service;
 
     @PostMapping
-    public ResponseEntity<SessionResponse> create(@RequestBody @Valid SessionRequest request) {
+    public ResponseEntity<TokenResponse> create(@RequestBody @Valid TokenRequest request) {
         return service.create(request);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<RefreshSessionResponse> refresh(@RequestBody @Valid RefreshSessionRequest request) {
+    public ResponseEntity<RefreshTokenResponse> refresh(@RequestBody @Valid RefreshTokenRequest request) {
         return service.refresh(request);
     }
 }

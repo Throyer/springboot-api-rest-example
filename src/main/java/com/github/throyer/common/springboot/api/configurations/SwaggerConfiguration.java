@@ -41,7 +41,7 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
             .useDefaultResponseMessages(false)
             .apiInfo(apiInfo())
             .securityContexts(Arrays.asList( securityContext()))
@@ -55,7 +55,7 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfo(
             "Common API",
-            "Exemplo de api com Spring boot",
+            "Exemplo de api simples com Spring Boot",
             "1.0.0",
             "https://github.com/Throyer",
             new Contact(
@@ -63,8 +63,8 @@ public class SwaggerConfiguration {
                 "https://github.com/Throyer",
                 "throyer.dev@gmail.com"
             ),
-            "License of API",
-            "API license URL",
+            "GNU General Public License v3.0",
+            "https://github.com/Throyer/springboot-api-crud/blob/master/LICENSE",
             Collections.emptyList()
         );
     }

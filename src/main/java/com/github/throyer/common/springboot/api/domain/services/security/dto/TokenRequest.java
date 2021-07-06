@@ -4,7 +4,7 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class SessionRequest {
+public class TokenRequest {
 
     @NotNull(message = "O Email não pode ser NULO.")
     @NotEmpty(message = "Email invalido.")
@@ -48,7 +48,7 @@ public class SessionRequest {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SessionRequest other = (SessionRequest) obj;
+        final TokenRequest other = (TokenRequest) obj;
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }

@@ -7,13 +7,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.github.throyer.common.springboot.api.domain.models.entity.RefreshToken;
 
-public class RefreshSessionResponse {
+public class RefreshTokenResponse {
     private final String token;
     private final RefreshToken refreshToken;
     private final LocalDateTime expiresIn;
     private final String type = "Bearer";
 
-    public RefreshSessionResponse(
+    public RefreshTokenResponse(
         String token,
         RefreshToken refreshToken,
         LocalDateTime expiresIn

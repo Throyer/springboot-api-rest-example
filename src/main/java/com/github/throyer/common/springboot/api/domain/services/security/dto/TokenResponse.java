@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.throyer.common.springboot.api.domain.models.entity.RefreshToken;
 import com.github.throyer.common.springboot.api.domain.models.entity.User;
 
-public class SessionResponse {    
+public class TokenResponse {    
     private final UserDetails user;
     private final String token;
     private final RefreshToken refreshToken;
     private final LocalDateTime expiresIn;
     private final String type = "Bearer";
     
-    public SessionResponse(
+    public TokenResponse(
         User user,
         String token,
         RefreshToken refreshToken,

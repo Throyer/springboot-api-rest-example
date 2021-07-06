@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import com.github.throyer.common.springboot.api.domain.models.entity.RefreshToken;
 import com.github.throyer.common.springboot.api.domain.repositories.RefreshTokenRepository;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshSessionRequest;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshSessionResponse;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.SessionRequest;
-import com.github.throyer.common.springboot.api.domain.services.security.dto.SessionResponse;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshTokenRequest;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.RefreshTokenResponse;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.TokenRequest;
+import com.github.throyer.common.springboot.api.domain.services.security.dto.TokenResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class SessionService {
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;
 
-    public ResponseEntity<SessionResponse> create(SessionRequest request) {
+    public ResponseEntity<TokenResponse> create(TokenRequest request) {
         var user = userRepository.findOptionalByEmail(request.getEmail())
                 .filter(session -> session.validatePassword(request.getPassword()))
                     .orElseThrow(() -> forbidden(CREATE_SESSION_ERROR_MESSAGE));
@@ -54,7 +54,7 @@ public class SessionService {
         
         refreshTokenRepository.save(refresh);
 
-        var response = new SessionResponse(
+        var response = new TokenResponse(
             user,
             token,
             refresh,
@@ -64,7 +64,7 @@ public class SessionService {
         return ok(response);
     }
 
-    public ResponseEntity<RefreshSessionResponse> refresh(RefreshSessionRequest request) {
+    public ResponseEntity<RefreshTokenResponse> refresh(RefreshTokenRequest request) {
         var old = refreshTokenRepository.findOptionalByCodeAndAvailableIsTrue(request.getRefresh())
             .filter(token -> token.nonExpired())
             .orElseThrow(() -> forbidden(REFRESH_SESSION_ERROR_MESSAGE));
@@ -77,7 +77,7 @@ public class SessionService {
 
         var refresh = refreshTokenRepository.save(new RefreshToken(old.getUser(), REFRESH_TOKEN_EXPIRATION_IN_DAYS));
 
-        var response = new RefreshSessionResponse(
+        var response = new RefreshTokenResponse(
             token,
             refresh,
             expiresIn

@@ -13,6 +13,7 @@ import com.github.throyer.common.springboot.api.domain.services.user.dto.UpdateU
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -56,6 +58,7 @@ public class UsersController {
         return findService.find(id);
     }
     
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ResponseEntity<User> save(@Validated @RequestBody CreateUser body) {
         return createService.create(body);
@@ -70,6 +73,7 @@ public class UsersController {
         return updateService.update(id, body);
     }
     
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAnyAuthority('ADM')")
     @DeleteMapping("/{id}")
     public ResponseEntity<User> destroy(@PathVariable Long id) {
