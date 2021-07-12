@@ -12,7 +12,7 @@
 ## Sumario
 
 - [Motivação](#motivação)
-- [Próximos passos](#o-que-foi-feito-e-os-proximos-passos)
+- [Próximos passos](#o-que-foi-feito-e-os-próximos-passos)
 - [Requisitos](#requisitos)
 - [Entidades](#entidades)
 - [Instalação](#instalação)
