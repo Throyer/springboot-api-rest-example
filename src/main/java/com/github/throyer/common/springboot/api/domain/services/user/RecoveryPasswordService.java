@@ -24,30 +24,32 @@ public class RecoveryPasswordService {
     private MailService service;
 
     public void recovery(String email) {
-        var user = users.findOptionalByEmail(email)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
+        var user = users.findOptionalByEmail(email);
+
+        if (user.isEmpty()) {
+            return;
+        }
 
         var minutesToExpire = 20;
 
-        var recovery = new Recovery(user, minutesToExpire);
+        var recovery = new Recovery(user.get(), minutesToExpire);
 
         recoveries.save(recovery);
 
         try {
             var recoveryEmail = new RecoveryEmail(email, "password recovery code", recovery.getCode());
             service.send(recoveryEmail);
-        } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
+        } catch (Exception exception) { }
     }
 
     public void confirm(String email, String code) {
         var user = users.findOptionalByEmail(email)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
-        
-        var recovery = recoveries.findFirstOptionalByUser_IdAndConfirmedIsFalseAndUsedIsFalseOrderByExpiresInDesc(user.getId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
-        
+
+        var recovery = recoveries
+            .findFirstOptionalByUser_IdAndConfirmedIsFalseAndUsedIsFalseOrderByExpiresInDesc(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
+
         if (!recovery.nonExpired() || !recovery.getCode().equals(code)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -62,17 +64,18 @@ public class RecoveryPasswordService {
     public void update(String email, String code, String password) {
         var user = users.findOptionalByEmail(email)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
-        
-        var recovery = recoveries.findFirstOptionalByUser_IdAndConfirmedIsTrueAndUsedIsFalseOrderByExpiresInDesc(user.getId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
-        
+
+        var recovery = recoveries
+            .findFirstOptionalByUser_IdAndConfirmedIsTrueAndUsedIsFalseOrderByExpiresInDesc(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
+
         if (!recovery.nonExpired() || !recovery.getCode().equals(code)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
         user.updatePassword(password);
         users.save(user);
-        
+
         recovery.setUsed(true);
         recoveries.save(recovery);
     }
