@@ -101,7 +101,10 @@ $ mvnw test -Dtest=UsuariosControllerIntegrationTests#should_save_a_new_user
 
 
 ## Documentação do Swagger
-Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/api/swagger-ui/#/](https://throyer-crud-api.herokuapp.com/api/documentation/swagger-ui/#/)
+Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/api/documentation/swagger-ui/#/](localhost:8080/api/documentation/swagger-ui/#/)
+
+
+[exemplo no heroku](https://throyer-crud-api.herokuapp.com/api/documentation/swagger-ui/#/)
 
 ## Postman
 Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
