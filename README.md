@@ -9,6 +9,8 @@
 <br>
 <br>
 
+[**Live demo on heroku**](https://throyer-crud-api.herokuapp.com/api/)
+
 ## Sumario
 
 - [Motivação](#motivação)
