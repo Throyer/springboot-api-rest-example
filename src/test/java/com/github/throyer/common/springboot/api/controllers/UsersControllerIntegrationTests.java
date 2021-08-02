@@ -2,11 +2,7 @@ package com.github.throyer.common.springboot.api.controllers;
 
 import static com.github.throyer.common.springboot.api.utils.JsonUtils.toJson;
 import static com.github.throyer.common.springboot.api.utils.Random.FAKER;
-import static com.github.throyer.common.springboot.api.utils.Random.HAS_DIGITS;
-import static com.github.throyer.common.springboot.api.utils.Random.HAS_SPECIAL_CHARACTERS;
-import static com.github.throyer.common.springboot.api.utils.Random.HAS_UPPERCASE;
-import static com.github.throyer.common.springboot.api.utils.Random.MAXIMUM_PASSWORD_LENGTH;
-import static com.github.throyer.common.springboot.api.utils.Random.MINIMUM_PASSWORD_LENGTH;
+import static com.github.throyer.common.springboot.api.utils.Random.password;
 import static com.github.throyer.common.springboot.api.utils.Random.randomUser;
 import static com.github.throyer.common.springboot.api.utils.TokenUtils.token;
 import static org.hamcrest.Matchers.greaterThan;
@@ -74,13 +70,7 @@ public class UsersControllerIntegrationTests {
         var json = toJson(Map.of(
             "name", FAKER.name().fullName(),
             "email", FAKER.internet().safeEmailAddress(),
-            "password", FAKER.internet().password(
-                MAXIMUM_PASSWORD_LENGTH,
-                MINIMUM_PASSWORD_LENGTH,
-                HAS_UPPERCASE,
-                HAS_SPECIAL_CHARACTERS,
-                HAS_DIGITS
-            )
+            "password", password()
         ));
 
         var request = post("/users")
@@ -169,13 +159,7 @@ public class UsersControllerIntegrationTests {
         var json = toJson(Map.of(
             "name", FAKER.name().fullName(),
             "email", FAKER.internet().safeEmailAddress(),
-            "password", FAKER.internet().password(
-                MAXIMUM_PASSWORD_LENGTH,
-                MINIMUM_PASSWORD_LENGTH,
-                HAS_UPPERCASE,
-                HAS_SPECIAL_CHARACTERS,
-                HAS_DIGITS
-            )
+            "password", password()
         ));
 
         var first = post("/users")

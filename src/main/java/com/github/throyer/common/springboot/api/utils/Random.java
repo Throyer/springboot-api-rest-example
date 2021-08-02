@@ -11,12 +11,6 @@ import com.github.throyer.common.springboot.api.domain.models.entity.User;
 
 public class Random {
         
-    public static final Integer MAXIMUM_PASSWORD_LENGTH = 8;
-    public static final Integer MINIMUM_PASSWORD_LENGTH = 18;
-    public static final Boolean HAS_UPPERCASE = true;
-    public static final Boolean HAS_SPECIAL_CHARACTERS = true;
-    public static final Boolean HAS_DIGITS = true;
-
     private static final java.util.Random RANDOM = new java.util.Random();
     public static final Faker FAKER = new Faker(new Locale("pt", "BR"));
 
@@ -32,6 +26,10 @@ public class Random {
         return String.format("%s%s%s%s", between(0, 9), between(0, 9), between(0, 9), between(0, 9));
     }
 
+    public static String password() {
+        return FAKER.regexify("[a-z]{5,13}[1-9]{1,5}[A-Z]{1,5}[#?!@$ %^&*-]{1,5}");
+    }
+
     public static User randomUser() {
         return randomUser(List.of());
     }
@@ -39,13 +37,7 @@ public class Random {
     public static User randomUser(List<Role> roles) {
         var builder = createUser(FAKER.name().fullName())
             .setEmail(FAKER.internet().safeEmailAddress())
-            .setPassword(FAKER.internet().password(
-                    MAXIMUM_PASSWORD_LENGTH,
-                    MINIMUM_PASSWORD_LENGTH,
-                    HAS_UPPERCASE,
-                    HAS_SPECIAL_CHARACTERS,
-                    HAS_DIGITS
-            ));
+            .setPassword(password());
         
         roles.forEach(builder::addRole);
         
