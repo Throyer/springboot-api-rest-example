@@ -43,6 +43,14 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-data -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>

@@ -3,6 +3,7 @@ package com.github.throyer.common.springboot.api.domain.validation;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
@@ -34,6 +35,11 @@ public class SimpleError {
     public SimpleError(String message, Integer status) {
         this.message = message;
         this.status = status;
+    }
+
+    public SimpleError(String message, HttpStatus status) {
+        this.message = message;
+        this.status = status.value();
     }
 
     public void setField(String field) {

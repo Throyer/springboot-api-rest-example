@@ -9,7 +9,11 @@ import com.github.throyer.common.springboot.api.domain.models.entity.User;
 public class UserBuilder {
     
     private User user;
-    private List<Role> roles = new ArrayList<>(); 
+    private List<Role> roles = new ArrayList<>();
+
+    public static UserBuilder createUser(String name) {
+        return new UserBuilder(name);
+    }
 
     public UserBuilder(String name) {
         this.user = new User();

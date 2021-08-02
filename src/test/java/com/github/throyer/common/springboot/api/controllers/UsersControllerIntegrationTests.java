@@ -1,6 +1,15 @@
 package com.github.throyer.common.springboot.api.controllers;
 
-import static com.github.throyer.common.springboot.api.utils.Constants.SECURITY.JWT;
+import static com.github.throyer.common.springboot.api.utils.JsonUtils.toJson;
+import static com.github.throyer.common.springboot.api.utils.Random.FAKER;
+import static com.github.throyer.common.springboot.api.utils.Random.HAS_DIGITS;
+import static com.github.throyer.common.springboot.api.utils.Random.HAS_SPECIAL_CHARACTERS;
+import static com.github.throyer.common.springboot.api.utils.Random.HAS_UPPERCASE;
+import static com.github.throyer.common.springboot.api.utils.Random.MAXIMUM_PASSWORD_LENGTH;
+import static com.github.throyer.common.springboot.api.utils.Random.MINIMUM_PASSWORD_LENGTH;
+import static com.github.throyer.common.springboot.api.utils.Random.randomUser;
+import static com.github.throyer.common.springboot.api.utils.TokenUtils.token;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,15 +18,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
-import com.github.throyer.common.springboot.api.domain.builders.UserBuilder;
-import com.github.throyer.common.springboot.api.domain.models.entity.Role;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -36,6 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UsersControllerIntegrationTests {
 
     private String header;
@@ -52,22 +62,26 @@ public class UsersControllerIntegrationTests {
     @Autowired
     private MockMvc mock;
 
-    @BeforeEach
+    @BeforeAll
     public void generateToken() {
-        var expiration = LocalDateTime.now().plusHours(TOKEN_EXPIRATION_IN_HOURS);
-        var token = JWT.encode(1L, List.of(new Role("ADM")), expiration, TOKEN_SECRET);
-        header = String.format("Bearer %s", token);
+        this.header = token(TOKEN_EXPIRATION_IN_HOURS, TOKEN_SECRET);
     }
 
     @Test
+    @DisplayName("Deve salvar um novo usuário.")
     public void should_save_a_new_user() throws Exception {
-        var json = """
-            {
-                \"name\": \"novo usuário\",
-                \"email\": \"novo.usuario@email.com\",
-                \"password\": \"uma_senha_123@SEGURA\"
-            }
-        """;
+
+        var json = toJson(Map.of(
+            "name", FAKER.name().fullName(),
+            "email", FAKER.internet().safeEmailAddress(),
+            "password", FAKER.internet().password(
+                MAXIMUM_PASSWORD_LENGTH,
+                MINIMUM_PASSWORD_LENGTH,
+                HAS_UPPERCASE,
+                HAS_SPECIAL_CHARACTERS,
+                HAS_DIGITS
+            )
+        ));
 
         var request = post("/users")
             .content(json)
@@ -81,14 +95,13 @@ public class UsersControllerIntegrationTests {
     }
     
     @Test
+    @DisplayName("Deve retornar status code 400 caso faltar algum campo requerido.")
     public void should_return_400_saving_user_without_required_fields() throws Exception {
 
-        String payload = """
-            {
-                \"name\":\"fulaninho\",
-                \"password\": \"123\"
-            }
-        """;
+        var payload = toJson(Map.of(
+            "name", FAKER.name().fullName(),
+            "password", "123"
+        ));
         
         var request = post("/users")
             .content(payload)
@@ -98,11 +111,15 @@ public class UsersControllerIntegrationTests {
             .andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$", hasSize(2)));
+            .andExpect(jsonPath("$", hasSize(greaterThan(0))));
     }
 
     @Test
-    public void should_list_users() throws Exception {        
+    @DisplayName("Deve listar os usuários.")
+    public void should_list_users() throws Exception {
+
+        repository.saveAll(List.of(randomUser(), randomUser(), randomUser(), randomUser()));
+        
         var request = get("/users")
             .header(HttpHeaders.AUTHORIZATION, header)
                 .queryParam("page", "0")
@@ -110,18 +127,15 @@ public class UsersControllerIntegrationTests {
 
         mock.perform(request).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray());
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content", hasSize(greaterThan(3))));
     }
 
     @Test
-    public void should_delete_user() throws Exception {  
-        var user = repository.save(
-            new UserBuilder("novo usuário")
-                .setEmail("novo@email.com")
-                .addRole(2L)
-                .setPassword("uma_senha_123@SEGURA")
-                .build()
-            );
+    @DisplayName("Deve deletar usuário.")
+    public void should_delete_user() throws Exception {
+
+        var user = repository.save(randomUser());
         
         var request = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
@@ -131,14 +145,9 @@ public class UsersControllerIntegrationTests {
     }
 
     @Test
+    @DisplayName("Deve retornar status code 404 depois de remover o usuário.")
     public void should_return_404_after_delete_user() throws Exception {  
-        var user = repository.save(
-            new UserBuilder("edinaldo pereira")
-                .setEmail("edinaldo@email.com")
-                .addRole(2L)
-                .setPassword("uma_senha_123@SEGURA")
-                .build()
-        );
+        var user = repository.save(randomUser());
 
         var fist = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
@@ -154,14 +163,20 @@ public class UsersControllerIntegrationTests {
     }
 
     @Test
+    @DisplayName("Deve retornar status code 400 quando salvar um usuário com o mesmo email.")
     public void should_return_400_after_save_same_email() throws Exception {  
-        var json = """
-            {
-                \"name\": \"novo usuário\",
-                \"email\": \"user@email.com\",
-                \"password\": \"uma_senha_123@SEGURA\"
-            }
-        """;
+
+        var json = toJson(Map.of(
+            "name", FAKER.name().fullName(),
+            "email", FAKER.internet().safeEmailAddress(),
+            "password", FAKER.internet().password(
+                MAXIMUM_PASSWORD_LENGTH,
+                MINIMUM_PASSWORD_LENGTH,
+                HAS_UPPERCASE,
+                HAS_SPECIAL_CHARACTERS,
+                HAS_DIGITS
+            )
+        ));
 
         var first = post("/users")
             .content(json)

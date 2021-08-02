@@ -1,13 +1,14 @@
 package com.github.throyer.common.springboot.api.domain.services.security;
 
-import static com.github.throyer.common.springboot.api.utils.Constants.SECURITY.JWT;
 import static com.github.throyer.common.springboot.api.utils.Constants.SECURITY.INVALID_USERNAME;
+import static com.github.throyer.common.springboot.api.utils.Constants.SECURITY.JWT;
 
 import java.util.Objects;
 import java.util.Optional;
 
 import com.github.throyer.common.springboot.api.domain.models.security.Authorized;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
+import com.github.throyer.common.springboot.api.domain.validation.TokenExpiredOrInvalidException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,11 +36,15 @@ public class SecurityService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(INVALID_USERNAME)));
     }
 
-    public static void signIn(String token) {
-        var authorized = JWT.decode(token, SECRET);
-        SecurityContextHolder
-            .getContext()
-                .setAuthentication(authorized.getAuthentication());
+    public static void authorize(String token) {
+        try {
+            var authorized = JWT.decode(token, SECRET);
+            SecurityContextHolder
+                .getContext()
+                    .setAuthentication(authorized.getAuthentication());
+        } catch (Exception exception) {
+            throw new TokenExpiredOrInvalidException();
+        }
     }
 
     public static Optional<Authorized> authorized() {
