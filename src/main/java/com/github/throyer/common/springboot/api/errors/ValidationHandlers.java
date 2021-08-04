@@ -3,9 +3,12 @@ package com.github.throyer.common.springboot.api.errors;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.github.throyer.common.springboot.api.domain.validation.EmailNotUniqueException;
 import com.github.throyer.common.springboot.api.domain.validation.InvalidSortException;
 import com.github.throyer.common.springboot.api.domain.validation.SimpleError;
+import static com.github.throyer.common.springboot.api.utils.JsonUtils.toJson;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +20,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @RestControllerAdvice
 public class ValidationHandlers {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ValidationHandlers.class);
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -37,10 +46,10 @@ public class ValidationHandlers {
     }    
 
     @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<SimpleError> statusError(ResponseStatusException exception) {
+    public ResponseEntity<SimpleError> status(ResponseStatusException exception) {
         return ResponseEntity
             .status(exception.getStatus())
-            .body(new SimpleError(exception.getReason(), exception.getStatus().value()));
+                .body(new SimpleError(exception.getReason(), exception.getStatus()));
     }    
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
@@ -49,9 +58,21 @@ public class ValidationHandlers {
         return exception.getErrors();
     }    
 
-    @ResponseStatus(code = HttpStatus.FORBIDDEN)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
-    public SimpleError badRequest(AccessDeniedException exception) {
-        return new SimpleError(exception.getMessage(), 403);
-    }    
+    public SimpleError unauthorized(AccessDeniedException exception) {
+        return new SimpleError(exception.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+    
+    public static void forbidden(HttpServletResponse response) {
+        try {
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType("application/json");
+            response.getWriter().write(toJson(
+                new SimpleError("Can't find token on Authorization header.", HttpStatus.FORBIDDEN)
+            ));
+        } catch (Exception exception) {
+            LOGGER.error("can't write response error on token expired or invalid exception", exception);
+        }
+    }
 }

@@ -1,11 +1,14 @@
 package com.github.throyer.common.springboot.api.configurations;
 
+import static com.github.throyer.common.springboot.api.errors.ValidationHandlers.forbidden;
+
 import com.github.throyer.common.springboot.api.domain.services.security.SecurityService;
 import com.github.throyer.common.springboot.api.middlewares.AuthorizationMiddleware;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -43,20 +46,24 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf()
                 .disable()
                     .authorizeRequests()
-                .antMatchers("/**")
-                    .permitAll()
-                        
-            // todas as outras rotas precisam de autenticação.
-            .anyRequest()
-                .fullyAuthenticated()
-            
-            // configuração de acesso.
+                        .antMatchers(HttpMethod.GET, "/")
+                            .permitAll()
+                        .antMatchers(HttpMethod.POST, "/users")
+                            .permitAll()
+                        .antMatchers(HttpMethod.POST, "/sessions/**")
+                            .permitAll()
+                        .antMatchers(HttpMethod.POST, "/recoveries/**")
+                            .permitAll()
+                        .anyRequest()
+                            .authenticated()
             .and()
-            .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http
-            .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+                .exceptionHandling()
+                    .authenticationEntryPoint((request, response, exception) -> forbidden(response))
+            .and()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

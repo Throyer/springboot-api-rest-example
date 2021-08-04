@@ -19,7 +19,7 @@ public class HomeController {
     }
 
     private StatusCheck status = new StatusCheck();
-
+    
     @GetMapping
     public StatusCheck index() {        
         return status;

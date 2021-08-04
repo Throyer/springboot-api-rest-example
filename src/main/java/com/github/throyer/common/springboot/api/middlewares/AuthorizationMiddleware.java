@@ -11,8 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.github.throyer.common.springboot.api.domain.validation.TokenExpiredOrInvalidException;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -27,12 +25,8 @@ public class AuthorizationMiddleware extends OncePerRequestFilter {
     )
         throws ServletException, IOException {
 
-        try {
-            ofNullable(authorization(request))
-                .ifPresent((token) -> authorize(token));
-        } catch (TokenExpiredOrInvalidException exception) {
-            exception.unauthorized(response);
-        }
+        ofNullable(authorization(request))
+            .ifPresent((token) -> authorize(token));
 
         filter.doFilter(request, response);
     }
