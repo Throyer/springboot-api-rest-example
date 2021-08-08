@@ -31,7 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
 public class SessionsTests {
 
     @Autowired
-    private MockMvc mock;
+    private MockMvc api;
     
     @Autowired
     UserRepository repository;
@@ -58,7 +58,7 @@ public class SessionsTests {
             .content(String.format(body, email, password))
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-        mock.perform(request)
+        api.perform(request)
             .andDo(print())
             .andExpect(status().isOk());
     }
@@ -78,7 +78,7 @@ public class SessionsTests {
             .content(body)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-        mock.perform(request)
+        api.perform(request)
             .andDo(print())
             .andExpect(status().isForbidden());
     }
@@ -89,7 +89,7 @@ public class SessionsTests {
         
         var request = get("/users");
 
-        mock.perform(request)
+        api.perform(request)
             .andDo(print())
             .andExpect(status().isForbidden());
     }

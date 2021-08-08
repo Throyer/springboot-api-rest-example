@@ -56,7 +56,7 @@ public class UsersTests {
     UserRepository repository;
 
     @Autowired
-    private MockMvc mock;
+    private MockMvc api;
 
     @BeforeAll
     public void generateToken() {
@@ -77,7 +77,7 @@ public class UsersTests {
             .content(json)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-        mock.perform(request)
+        api.perform(request)
             .andDo(print())
             .andExpect(status().isCreated())
             .andExpect(jsonPath("$.id").exists())
@@ -97,7 +97,7 @@ public class UsersTests {
             .content(payload)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-        mock.perform(request)
+        api.perform(request)
             .andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").isArray())
@@ -115,7 +115,7 @@ public class UsersTests {
                 .queryParam("page", "0")
                 .queryParam("size", "10");
 
-        mock.perform(request).andDo(print())
+        api.perform(request).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content", hasSize(greaterThan(3))));
@@ -130,7 +130,7 @@ public class UsersTests {
         var request = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
 
-        mock.perform(request).andDo(print())
+        api.perform(request).andDo(print())
                 .andExpect(status().isNoContent());
     }
 
@@ -142,13 +142,13 @@ public class UsersTests {
         var fist = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
 
-        mock.perform(fist).andDo(print())
+        api.perform(fist).andDo(print())
                 .andExpect(status().isNoContent());
 
         var second = delete(String.format("/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
 
-        mock.perform(second).andDo(print())
+        api.perform(second).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -166,7 +166,7 @@ public class UsersTests {
             .content(json)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-        mock.perform(first)
+        api.perform(first)
             .andDo(print())
             .andExpect(status().isCreated())
             .andExpect(jsonPath("$.id").exists())
@@ -176,7 +176,7 @@ public class UsersTests {
             .content(json)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
-        mock.perform(second)
+        api.perform(second)
             .andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").isArray())
