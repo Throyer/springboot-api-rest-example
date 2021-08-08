@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,6 +25,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private static final String EVERY_HTML = "/**.html";
+    private static final String SWAGGER_DOCS = "/documentation/**";
 
     @Autowired
     private SecurityService authService;
@@ -54,7 +58,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                             .permitAll()
                         .antMatchers(HttpMethod.POST, "/recoveries/**")
                             .permitAll()
-                        .antMatchers(HttpMethod.POST, "/documentation/**")
+                        .antMatchers(HttpMethod.GET, "/documentation/**")
                             .permitAll()
                         .anyRequest()
                             .authenticated()
@@ -66,6 +70,13 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+            .ignoring()
+                .antMatchers(EVERY_HTML, SWAGGER_DOCS);
     }
 
     @Override

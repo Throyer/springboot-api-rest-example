@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc
-public class AuthControllerIntegrationTests {
+public class SessionsTests {
 
     @Autowired
     private MockMvc mock;
