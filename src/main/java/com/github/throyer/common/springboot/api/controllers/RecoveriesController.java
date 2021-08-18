@@ -30,13 +30,13 @@ public class RecoveriesController {
     }
 
     @PostMapping("/confirm")
-    public void index(@RequestBody RecoveryConfirm confirm) {        
+    public void confirm(@RequestBody RecoveryConfirm confirm) {        
         service.confirm(confirm.getEmail(), confirm.getCode());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/update")
-    public void index(@RequestBody RecoveryUpdate update) {        
+    public void update(@RequestBody RecoveryUpdate update) {        
         service.update(update.getEmail(), update.getCode(), update.getPassword());
     }
 }
