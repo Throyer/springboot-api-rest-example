@@ -155,6 +155,26 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.1.4</version>
+				<configuration>
+					<from>                           
+						<image>openjdk:16</image>
+					</from>
+					<to>
+						<image>com.github.throyer.common.spring-boot.${project.artifactId}:${project.version}</image>
+					</to>
+					<container>
+						<creationTime>${maven.build.timestamp}</creationTime>
+						<ports>
+							<port>8080</port>
+						</ports>
+					</container>
+					<allowInsecureRegistries>true</allowInsecureRegistries>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

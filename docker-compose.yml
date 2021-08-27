@@ -3,6 +3,7 @@ services:
 
   mariadb:
     image: mariadb:10.6.1
+    network_mode: host
     ports:
       - 3306:3306
     environment:
