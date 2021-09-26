@@ -47,6 +47,7 @@
 - [X] _Auditoria_
 - [X] _swagger_
 - [X] _email templates_
+- [X] _lazy load_
 
 ---
 
