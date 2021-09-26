@@ -5,10 +5,10 @@ import static com.github.throyer.common.springboot.api.utils.Responses.created;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.api.domain.models.entity.User;
 import com.github.throyer.common.springboot.api.domain.repositories.RoleRepository;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
 import com.github.throyer.common.springboot.api.domain.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.UserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class CreateUserService {
     @Autowired
     RoleRepository roles;
 
-    public ResponseEntity<User> create(CreateUser create) {
+    public ResponseEntity<UserDetails> create(CreateUser create) {
         
         validateEmailUniqueness(create);
 
@@ -38,6 +38,6 @@ public class CreateUserService {
 
         var user = userRepository.save(body);
 
-        return created(user, "users");
+        return created(new UserDetails(user), "users");
     }
 }

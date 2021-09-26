@@ -18,7 +18,7 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
     @Modifying
     @Query("""
         UPDATE
-            refresh_token
+            RefreshToken
         SET
             available = 0
         WHERE

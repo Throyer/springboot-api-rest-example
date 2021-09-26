@@ -11,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Entity(name = "recovery")
+@Entity
+@Table(name = "recovery")
 public class Recovery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

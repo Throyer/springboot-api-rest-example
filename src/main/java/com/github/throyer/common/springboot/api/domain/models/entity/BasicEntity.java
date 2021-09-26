@@ -14,9 +14,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.throyer.common.springboot.api.domain.models.shared.Entity;
 
 @MappedSuperclass
-public abstract class BasicEntity {
+public abstract class BasicEntity implements Entity {
 
     public static final String NON_DELETED_CLAUSE = "deleted_at IS NULL";
     
@@ -29,6 +30,7 @@ public abstract class BasicEntity {
 
     public static final String SET_DELETED_SQL = SET_ALL_DELETED_SQL + "WHERE id = ?1";
 
+    @Override
     public abstract Long getId();
 
     @JsonIgnore

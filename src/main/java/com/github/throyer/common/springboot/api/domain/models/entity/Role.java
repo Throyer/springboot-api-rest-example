@@ -7,13 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 
-@Entity(name = "role")
+@Entity
+@Table(name = "role")
 @Where(clause = BasicEntity.NON_DELETED_CLAUSE)
 public class Role extends BasicEntity implements GrantedAuthority {
 

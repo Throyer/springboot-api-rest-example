@@ -2,7 +2,7 @@ package com.github.throyer.common.springboot.api.utils;
 
 import java.net.URI;
 
-import com.github.throyer.common.springboot.api.domain.models.entity.BasicEntity;
+import com.github.throyer.common.springboot.api.domain.models.shared.Entity;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
@@ -71,7 +71,7 @@ public class Responses {
                 .build();
     }
 
-    public static final <T extends BasicEntity> ResponseEntity<T> created(T entity, String location) {
+    public static final <T extends Entity> ResponseEntity<T> created(T entity, String location) {
         return ResponseEntity.created(URI.create(String.format("/%s/%s", location, entity.getId())))
             .body(entity);
     }

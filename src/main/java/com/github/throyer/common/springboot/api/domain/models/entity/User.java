@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,7 +29,8 @@ import com.github.throyer.common.springboot.api.domain.services.user.dto.UpdateU
 import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Entity(name = "user")
+@Entity
+@Table(name = "user")
 @Where(clause = BasicEntity.NON_DELETED_CLAUSE)
 public class User extends BasicEntity implements Serializable, HasEmail {
 
@@ -72,7 +75,7 @@ public class User extends BasicEntity implements Serializable, HasEmail {
     private String password;
 
     @SortableProperty(name = "role", column = "roles_name")
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
         joinColumns = {
             @JoinColumn(name = "user_id")},

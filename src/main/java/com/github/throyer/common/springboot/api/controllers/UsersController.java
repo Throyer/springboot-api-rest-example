@@ -10,6 +10,7 @@ import com.github.throyer.common.springboot.api.domain.services.user.UpdateUserS
 import com.github.throyer.common.springboot.api.domain.services.user.dto.CreateUser;
 import com.github.throyer.common.springboot.api.domain.services.user.dto.SearchUser;
 import com.github.throyer.common.springboot.api.domain.services.user.dto.UpdateUser;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.UserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -48,25 +49,25 @@ public class UsersController {
     
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADM')")
-    public ResponseEntity<Page<User>> index(Pagination pagination, Sort sort, SearchUser search) {
+    public ResponseEntity<Page<UserDetails>> index(Pagination pagination, Sort sort, SearchUser search) {
         return findService.find(pagination, sort, search);
     }
     
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
-    public ResponseEntity<User> show(@PathVariable Long id) {
+    public ResponseEntity<UserDetails> show(@PathVariable Long id) {
         return findService.find(id);
     }
     
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<User> save(@Validated @RequestBody CreateUser body) {
+    public ResponseEntity<UserDetails> save(@Validated @RequestBody CreateUser body) {
         return createService.create(body);
     }
     
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
-    public ResponseEntity<User> update(
+    public ResponseEntity<UserDetails> update(
         @PathVariable Long id,
         @RequestBody @Validated UpdateUser body
     ) {

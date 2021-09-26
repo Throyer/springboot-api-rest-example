@@ -6,9 +6,9 @@ import static com.github.throyer.common.springboot.api.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 import static com.github.throyer.common.springboot.api.utils.Responses.unauthorized;
 
-import com.github.throyer.common.springboot.api.domain.models.entity.User;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
 import com.github.throyer.common.springboot.api.domain.services.user.dto.UpdateUser;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.UserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +20,20 @@ public class UpdateUserService {
     @Autowired
     UserRepository repository;
 
-    public ResponseEntity<User> update(Long id, UpdateUser body) {
+    public ResponseEntity<UserDetails> update(Long id, UpdateUser body) {
 
         authorized()
             .filter(authorized -> authorized.cantModify(id))
                 .orElseThrow(() -> unauthorized("Permissão invalida atualização de recurso"));
 
         var actual = repository
-            .findOptionalByIdAndDeletedAtIsNull(id)
+            .findOptionalByIdAndDeletedAtIsNullFetchRoles(id)
                 .orElseThrow(() -> notFound("Usuário não encontrado"));
         
         validateEmailUniquenessOnModify(body, actual);
 
         actual.merge(body);
 
-        return ok(repository.save(actual));
+        return ok(new UserDetails(repository.save(actual)));
     }
 }

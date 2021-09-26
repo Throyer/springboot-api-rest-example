@@ -38,5 +38,12 @@ public interface UserRepository extends SoftDeleteRepository<User> {
     
     public Optional<User> findOptionalByIdAndDeletedAtIsNull(Long id);
 
+    @Query("""
+        SELECT user FROM User user
+        JOIN FETCH user.roles
+        WHERE user.id = ?1
+    """)
+    public Optional<User> findOptionalByIdAndDeletedAtIsNullFetchRoles(Long id);
+
     public Optional<User> findOptionalByEmail(String email);
 }

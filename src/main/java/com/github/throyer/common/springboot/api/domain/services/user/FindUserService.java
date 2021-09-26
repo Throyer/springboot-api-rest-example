@@ -1,10 +1,12 @@
 package com.github.throyer.common.springboot.api.domain.services.user;
 
+import static com.github.throyer.common.springboot.api.domain.models.pagination.Page.of;
 import static com.github.throyer.common.springboot.api.domain.services.security.SecurityService.authorized;
 import static com.github.throyer.common.springboot.api.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.api.utils.Responses.ok;
 import static com.github.throyer.common.springboot.api.utils.Responses.unauthorized;
 import static com.github.throyer.common.springboot.api.utils.SQLUtils.replace;
+import static javax.persistence.criteria.JoinType.LEFT;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import com.github.throyer.common.springboot.api.domain.models.pagination.Page;
 import com.github.throyer.common.springboot.api.domain.models.pagination.Pagination;
 import com.github.throyer.common.springboot.api.domain.repositories.UserRepository;
 import com.github.throyer.common.springboot.api.domain.services.user.dto.SearchUser;
+import com.github.throyer.common.springboot.api.domain.services.user.dto.UserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -32,20 +35,22 @@ public class FindUserService {
     @Autowired
     UserRepository repository;
 
-    public ResponseEntity<Page<User>> find(Pagination pagination, Sort sort, SearchUser search) {
-        return ok(Page.of(repository.findAll(where(search), pagination.build(sort, User.class))));
+    public ResponseEntity<Page<UserDetails>> find(Pagination pagination, Sort sort, SearchUser search) {
+        var result = repository.findAll(where(search), pagination.build(sort, User.class));
+        return ok(of(result.map(UserDetails::new)));
     }
 
-    public ResponseEntity<User> find(Long id) {
+    public ResponseEntity<UserDetails> find(Long id) {
         return authorized()
                 .filter(authorized -> authorized.cantRead(id)).map((authorized) -> repository
-                        .findOptionalByIdAndDeletedAtIsNull(id).map(user -> ok(user)).orElseGet(() -> notFound()))
+                        .findOptionalByIdAndDeletedAtIsNullFetchRoles(id).map(user -> ok(new UserDetails(user))).orElseGet(() -> notFound()))
                 .orElse(unauthorized());
     }
 
     public static Specification<User> where(SearchUser search) {
         return (user, query, builder) -> {
-
+            user.fetch("roles", LEFT);
+            
             List<Predicate> predicates = new ArrayList<>();
 
             query.distinct(true);
@@ -61,8 +66,7 @@ public class FindUserService {
                         predicates.add(builder.equal(user.get("email"), email)));
 
             if (!search.getRoles().isEmpty()) {
-
-                var role = user.join("roles");
+                var role = user.join("roles", LEFT);
 
                 predicates.add(builder.or(search
                     .getRoles()
@@ -73,10 +77,12 @@ public class FindUserService {
                                 like(builder, role.get("description"), name)
                             ))
                                 .toList()
-                                    .toArray(new Predicate[search.getRoles().size()])));
+                                    .toArray(new Predicate[]{})));
             }
+
+            query.select(query.from(User.class).join("roles"));
             
-            return builder.and(predicates.toArray(new Predicate[predicates.size()]));
+            return builder.and(predicates.toArray(new Predicate[]{}));
         };
     }
 
