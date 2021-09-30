@@ -26,5 +26,11 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
     """)
     public void disableOldRefreshTokens(Long id);
 
+    @Query("""
+        SELECT refresh FROM RefreshToken refresh
+        JOIN FETCH refresh.user user
+        JOIN FETCH user.roles
+        WHERE refresh.code = ?1 AND refresh.available = true
+    """)
     public Optional<RefreshToken> findOptionalByCodeAndAvailableIsTrue(String code);
 }

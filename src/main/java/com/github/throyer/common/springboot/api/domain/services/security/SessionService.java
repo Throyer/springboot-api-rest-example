@@ -40,7 +40,7 @@ public class SessionService {
     private RefreshTokenRepository refreshTokenRepository;
 
     public ResponseEntity<TokenResponse> create(TokenRequest request) {
-        var user = userRepository.findOptionalByEmail(request.getEmail())
+        var user = userRepository.findOptionalByEmailFetchRoles(request.getEmail())
                 .filter(session -> session.validatePassword(request.getPassword()))
                     .orElseThrow(() -> forbidden(CREATE_SESSION_ERROR_MESSAGE));
 
