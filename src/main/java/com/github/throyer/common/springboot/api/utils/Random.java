@@ -27,7 +27,7 @@ public class Random {
     }
 
     public static String password() {
-        return FAKER.regexify("[a-z]{5,13}[1-9]{1,5}[A-Z]{1,5}[#?!@$ %^&*-]{1,5}");
+        return FAKER.regexify("[a-z]{5,13}[1-9]{1,5}[A-Z]{1,5}[#?!@$%^&*-]{1,5}");
     }
 
     public static User randomUser() {
