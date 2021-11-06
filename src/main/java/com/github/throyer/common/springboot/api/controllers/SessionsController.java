@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 
 @Api(tags = "Session")
 @RestController
-@RequestMapping("/sessions")
+@RequestMapping("/api/sessions")
 public class SessionsController {
 
     @Autowired

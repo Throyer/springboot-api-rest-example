@@ -17,7 +17,7 @@ import io.swagger.annotations.Api;
 
 @Api(tags = "Password recovery", produces = "application/json")
 @RestController
-@RequestMapping("/recoveries")
+@RequestMapping("/api/recoveries")
 public class RecoveriesController {
 
     @Autowired

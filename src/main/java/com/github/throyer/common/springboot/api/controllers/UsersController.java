@@ -32,7 +32,7 @@ import io.swagger.annotations.Api;
 
 @Api(tags = "User")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UsersController {
     
     @Autowired

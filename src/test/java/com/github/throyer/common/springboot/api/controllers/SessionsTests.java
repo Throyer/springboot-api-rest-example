@@ -54,7 +54,7 @@ public class SessionsTests {
             }
         """;
 
-        var request = post("/sessions")
+        var request = post("/api/sessions")
             .content(String.format(body, email, password))
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -74,7 +74,7 @@ public class SessionsTests {
             "password", "Írineu! você não sabe, nem eu!"
         ));
 
-        var request = post("/sessions")
+        var request = post("/api/sessions")
             .content(body)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -87,7 +87,7 @@ public class SessionsTests {
     @DisplayName("Não deve aceitar requisições sem o token no cabeçalho quando as rotas forem protegidas.")
     public void dont_should_accept_requests_without_token_on_header_when_authorized_route() throws Exception {
         
-        var request = get("/users");
+        var request = get("/api/users");
 
         api.perform(request)
             .andDo(print())

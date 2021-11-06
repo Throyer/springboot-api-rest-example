@@ -73,7 +73,7 @@ public class UsersTests {
             "password", password()
         ));
 
-        var request = post("/users")
+        var request = post("/api/users")
             .content(json)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -93,7 +93,7 @@ public class UsersTests {
             "password", "123"
         ));
         
-        var request = post("/users")
+        var request = post("/api/users")
             .content(payload)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -110,7 +110,7 @@ public class UsersTests {
 
         repository.saveAll(List.of(randomUser(), randomUser(), randomUser(), randomUser()));
         
-        var request = get("/users")
+        var request = get("/api/users")
             .header(HttpHeaders.AUTHORIZATION, header)
                 .queryParam("page", "0")
                 .queryParam("size", "10");
@@ -127,7 +127,7 @@ public class UsersTests {
 
         var user = repository.save(randomUser());
         
-        var request = delete(String.format("/users/%s", user.getId()))
+        var request = delete(String.format("/api/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
 
         api.perform(request).andDo(print())
@@ -139,13 +139,13 @@ public class UsersTests {
     public void should_return_404_after_delete_user() throws Exception {  
         var user = repository.save(randomUser());
 
-        var fist = delete(String.format("/users/%s", user.getId()))
+        var fist = delete(String.format("/api/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
 
         api.perform(fist).andDo(print())
                 .andExpect(status().isNoContent());
 
-        var second = delete(String.format("/users/%s", user.getId()))
+        var second = delete(String.format("/api/users/%s", user.getId()))
             .header(HttpHeaders.AUTHORIZATION, header);
 
         api.perform(second).andDo(print())
@@ -162,7 +162,7 @@ public class UsersTests {
             "password", password()
         ));
 
-        var first = post("/users")
+        var first = post("/api/users")
             .content(json)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -172,7 +172,7 @@ public class UsersTests {
             .andExpect(jsonPath("$.id").exists())
             .andExpect(jsonPath("$.id").isNotEmpty());
 
-        var second = post("/users")
+        var second = post("/api/users")
             .content(json)
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 

@@ -18,7 +18,7 @@ import io.swagger.annotations.Api;
 
 @Api(tags = "User role")
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/api/roles")
 @PreAuthorize("hasAnyAuthority('ADM')")
 public class RolesController {
 
