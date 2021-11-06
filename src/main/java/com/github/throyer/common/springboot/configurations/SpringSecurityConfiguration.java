@@ -1,10 +1,6 @@
 package com.github.throyer.common.springboot.configurations;
 
 import static com.github.throyer.common.springboot.errors.ValidationHandlers.forbidden;
-import static com.github.throyer.common.springboot.utils.Constants.CONFIGURATIONS.EVERY_HTML;
-import static com.github.throyer.common.springboot.utils.Constants.CONFIGURATIONS.FIRST;
-import static com.github.throyer.common.springboot.utils.Constants.CONFIGURATIONS.SECOND;
-import static com.github.throyer.common.springboot.utils.Constants.CONFIGURATIONS.SWAGGER_DOCS;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.ACESSO_NEGADO_URL;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.DAY_MILLISECONDS;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.HOME_URL;
@@ -45,7 +41,7 @@ import org.springframework.stereotype.Component;
 public class SpringSecurityConfiguration {
     
     @Autowired
-    private SecurityService authService;
+    private SecurityService securityService;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -59,13 +55,13 @@ public class SpringSecurityConfiguration {
         SpringSecurityConfiguration.SECRET = secret;
     }
 
-    @Order(FIRST)
+    @Order(1)
     @Configuration
     public class Api extends WebSecurityConfigurerAdapter {
         
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(authService)
+            auth.userDetailsService(securityService)
                 .passwordEncoder(encoder);
         }
     
@@ -102,7 +98,7 @@ public class SpringSecurityConfiguration {
         public void configure(WebSecurity web) throws Exception {
             web
                 .ignoring()
-                    .antMatchers(EVERY_HTML, SWAGGER_DOCS);
+                    .antMatchers(STATIC_FILES);
         }
     
         @Bean
@@ -112,13 +108,13 @@ public class SpringSecurityConfiguration {
         }
     }
  
-    @Order(SECOND)
+    @Order(2)
     @Configuration
     public class App extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.
-                userDetailsService(authService)
+                userDetailsService(securityService)
                     .passwordEncoder(encoder);
         }
     
@@ -128,38 +124,31 @@ public class SpringSecurityConfiguration {
             http
                 .antMatcher("/app/**")
                     .authorizeRequests()
-                        .antMatchers(GET, /*LOGIN_URL*/ "/app/**")
+                        .antMatchers(GET, LOGIN_URL)
                             .permitAll()
                         .anyRequest()
-                            .authenticated();
-                //                 .and()
-                //                     .csrf()
-                //                         .disable()
-                //     .formLogin()
-                //         .loginPage(LOGIN_URL)
-                //             .failureUrl(LOGIN_ERROR_URL)
-                //             .defaultSuccessUrl(HOME_URL)
-                //         .usernameParameter(USERNAME_PARAMETER)
-                //         .passwordParameter(PASSWORD_PARAMETER)
-                // .and()                    
-                //     .rememberMe()
-                //         .key(SECRET)
-                //             .tokenValiditySeconds(DAY_MILLISECONDS)
-                // .and()                    
-                //     .logout()
-                //         .deleteCookies(SESSION_COOKIE_NAME)
-                //             .logoutRequestMatcher(new AntPathRequestMatcher(LOGOUT_URL))
-                //             .logoutSuccessUrl(LOGIN_URL)
-                // .and()
-                //     .exceptionHandling()
-                //         .accessDeniedPage(ACESSO_NEGADO_URL);
+                            .authenticated()
+                                .and()
+                                    .csrf()
+                                        .disable()
+                    .formLogin()
+                        .loginPage(LOGIN_URL)
+                            .failureUrl(LOGIN_ERROR_URL)
+                            .defaultSuccessUrl(HOME_URL)
+                        .usernameParameter(USERNAME_PARAMETER)
+                        .passwordParameter(PASSWORD_PARAMETER)
+                .and()                    
+                    .rememberMe()
+                        .key(SECRET)
+                            .tokenValiditySeconds(DAY_MILLISECONDS)
+                .and()                    
+                    .logout()
+                        .deleteCookies(SESSION_COOKIE_NAME)
+                            .logoutRequestMatcher(new AntPathRequestMatcher(LOGOUT_URL))
+                            .logoutSuccessUrl("/app")
+                .and()
+                    .exceptionHandling()
+                        .accessDeniedPage(ACESSO_NEGADO_URL);
         }
-        
-        @Override
-        public void configure(WebSecurity web) throws Exception {
-            web
-                .ignoring()
-                    .antMatchers(STATIC_FILES);
-        }    
     }
 }

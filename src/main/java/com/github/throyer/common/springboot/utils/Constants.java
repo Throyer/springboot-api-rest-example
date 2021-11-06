@@ -19,7 +19,7 @@ public class Constants {
         public static final String HOME_URL = "/app";
         public static final String LOGIN_URL = "/app/login";
         public static final String LOGIN_ERROR_URL = LOGIN_URL + "?error=true";
-        public static final String ACESSO_NEGADO_URL = LOGIN_URL + "?negado=true";
+        public static final String ACESSO_NEGADO_URL = LOGIN_URL + "?denied=true";
         public static final String LOGOUT_URL = "/app/logout";
         
         public static final String SESSION_COOKIE_NAME = "JSESSIONID";
@@ -31,15 +31,9 @@ public class Constants {
             "/webjars/**",
             "/webjars/",
             "/js/**",
-            "/favicon.ico"
-        };
-    
-    }
-
-    public class CONFIGURATIONS {
-        public static final int FIRST = 1;
-        public static final int SECOND = 2;
-        public static final String EVERY_HTML = "/**.html";
-        public static final String SWAGGER_DOCS = "/documentation/**";
+            "/favicon.ico",
+            "/**.html",
+            "/documentation/**"
+        };    
     }
 }

@@ -35,7 +35,7 @@ public class SecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return new Authorized(repository.findOptionalByEmail(email)
+        return new Authorized(repository.findOptionalByEmailFetchRoles(email)
                 .orElseThrow(() -> new UsernameNotFoundException(INVALID_USERNAME)));
     }
 
