@@ -1,12 +1,12 @@
 package db.migration;
 
-import static com.github.throyer.common.springboot.api.utils.Migrations.findOptionalId;
+import static com.github.throyer.common.springboot.utils.Migrations.findOptionalId;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 
-import com.github.throyer.common.springboot.api.domain.models.entity.User;
-import com.github.throyer.common.springboot.api.domain.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.domain.models.entity.User;
+import com.github.throyer.common.springboot.domain.services.user.dto.CreateUser;
 
 import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;

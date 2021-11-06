@@ -1,0 +1,43 @@
+package com.github.throyer.common.springboot.domain.services.user;
+
+import static com.github.throyer.common.springboot.domain.validation.EmailValidations.validateEmailUniqueness;
+import static com.github.throyer.common.springboot.utils.Responses.created;
+
+import java.util.List;
+
+import com.github.throyer.common.springboot.domain.repositories.RoleRepository;
+import com.github.throyer.common.springboot.domain.repositories.UserRepository;
+import com.github.throyer.common.springboot.domain.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.domain.services.user.dto.UserDetails;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CreateUserService {
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roles;
+
+    public ResponseEntity<UserDetails> create(CreateUser create) {
+        
+        validateEmailUniqueness(create);
+
+        var body = create.toUser();
+
+        body.setRoles(
+            List.of(
+                roles.findOptionalByInitials("USER")
+                    .orElseThrow()
+            )
+        );
+
+        var user = userRepository.save(body);
+
+        return created(new UserDetails(user), "users");
+    }
+}

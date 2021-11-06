@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.github.throyer.common.spring-boot</groupId>
 	<artifactId>api</artifactId>
-	<version>1.0.0.RELEASE</version>
+	<version>3.0.0.RELEASE</version>
 	<name>common-api</name>
 	<description>Common Spring Boot API</description>
 
