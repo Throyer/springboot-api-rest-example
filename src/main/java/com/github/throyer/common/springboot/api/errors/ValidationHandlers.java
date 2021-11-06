@@ -9,8 +9,10 @@ import com.github.throyer.common.springboot.api.domain.validation.EmailNotUnique
 import com.github.throyer.common.springboot.api.domain.validation.InvalidSortException;
 import com.github.throyer.common.springboot.api.domain.validation.SimpleError;
 import static com.github.throyer.common.springboot.api.utils.JsonUtils.toJson;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
@@ -23,13 +25,12 @@ import org.springframework.web.server.ResponseStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 @RestControllerAdvice
 public class ValidationHandlers {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationHandlers.class);
 
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<SimpleError> badRequest(MethodArgumentNotValidException exception) {
         return exception.getBindingResult()
@@ -39,7 +40,7 @@ public class ValidationHandlers {
                         .collect(Collectors.toList());
     }    
 
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(EmailNotUniqueException.class)
     public List<SimpleError> badRequest(EmailNotUniqueException exception) {
         return exception.getErrors();
@@ -52,24 +53,24 @@ public class ValidationHandlers {
                 .body(new SimpleError(exception.getReason(), exception.getStatus()));
     }    
 
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(InvalidSortException.class)
     public List<SimpleError> badRequest(InvalidSortException exception) {
         return exception.getErrors();
     }    
 
-    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(code = UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
     public SimpleError unauthorized(AccessDeniedException exception) {
-        return new SimpleError(exception.getMessage(), HttpStatus.UNAUTHORIZED);
+        return new SimpleError(exception.getMessage(), UNAUTHORIZED);
     }
     
     public static void forbidden(HttpServletResponse response) {
         try {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setStatus(FORBIDDEN.value());
             response.setContentType("application/json");
             response.getWriter().write(toJson(
-                new SimpleError("Can't find token on Authorization header.", HttpStatus.FORBIDDEN)
+                new SimpleError("Can't find token on Authorization header.", FORBIDDEN)
             ));
         } catch (Exception exception) {
             LOGGER.error("can't write response error on token expired or invalid exception", exception);

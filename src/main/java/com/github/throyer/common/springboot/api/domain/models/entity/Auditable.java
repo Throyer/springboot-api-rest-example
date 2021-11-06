@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.throyer.common.springboot.api.domain.models.shared.Entity;
 
 @MappedSuperclass
-public abstract class BasicEntity implements Entity {
+public abstract class Auditable implements Entity {
 
     public static final String NON_DELETED_CLAUSE = "deleted_at IS NULL";
     

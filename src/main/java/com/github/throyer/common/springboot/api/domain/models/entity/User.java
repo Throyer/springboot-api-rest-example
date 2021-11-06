@@ -31,8 +31,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "user")
-@Where(clause = BasicEntity.NON_DELETED_CLAUSE)
-public class User extends BasicEntity implements Serializable, HasEmail {
+@Where(clause = Auditable.NON_DELETED_CLAUSE)
+public class User extends Auditable implements Serializable, HasEmail {
 
     public static final Integer PASSWORD_STRENGTH = 10;
     public static final String DELETE_SQL = """

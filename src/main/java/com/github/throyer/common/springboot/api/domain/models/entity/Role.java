@@ -16,8 +16,8 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "role")
-@Where(clause = BasicEntity.NON_DELETED_CLAUSE)
-public class Role extends BasicEntity implements GrantedAuthority {
+@Where(clause = Auditable.NON_DELETED_CLAUSE)
+public class Role extends Auditable implements GrantedAuthority {
 
     public static final String DELETE_SQL = """
         UPDATE 
