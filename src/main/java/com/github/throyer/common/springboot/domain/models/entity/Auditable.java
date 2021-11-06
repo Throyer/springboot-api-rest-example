@@ -73,7 +73,7 @@ public abstract class Auditable implements Entity {
     }
 
     @Column(name = "active", nullable = false)
-    private Boolean ativo = true;
+    private Boolean active = true;
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -100,11 +100,11 @@ public abstract class Auditable implements Entity {
     }
 
     public Boolean isActive() {
-        return this.ativo;
+        return this.active;
     }
 
     public void setActive(Boolean active) {
-        this.ativo = active;
+        this.active = active;
     }
 
     @PrePersist
