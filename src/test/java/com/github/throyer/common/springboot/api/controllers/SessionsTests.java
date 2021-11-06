@@ -37,7 +37,7 @@ public class SessionsTests {
     UserRepository repository;
 
     @Test
-    @DisplayName("Deve criar gerar o token quando a senha estiver correta.")
+    @DisplayName("Deve gerar o token quando a senha estiver correta.")
     public void should_sigh_in_with_correct_password() throws Exception {
         
         var user = randomUser();
