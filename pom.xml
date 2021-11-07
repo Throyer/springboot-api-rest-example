@@ -14,7 +14,7 @@
 	<description>Common Spring Boot API</description>
 
 	<properties>
-		<java.version>16</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
