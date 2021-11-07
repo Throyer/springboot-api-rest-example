@@ -31,14 +31,11 @@
         </nav>
         
         <!-- content container -->
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <!-- page content -->            
-                    <th:block th:replace="${content}"></th:block>
-                </div>
-            </div>
-        </div>
+        <th:block th:replace="${content}"></th:block>
+
+        <footer
+            th:replace="~{app/fragments/footer :: footer}">
+        </footer>
         
         <!-- modals section -->
         <th:block

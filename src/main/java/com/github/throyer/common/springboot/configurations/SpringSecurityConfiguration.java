@@ -126,6 +126,8 @@ public class SpringSecurityConfiguration {
                     .authorizeRequests()
                         .antMatchers(GET, LOGIN_URL)
                             .permitAll()
+                        .antMatchers(GET, "/app")
+                            .permitAll()
                         .anyRequest()
                             .authenticated()
                                 .and()
@@ -145,7 +147,7 @@ public class SpringSecurityConfiguration {
                     .logout()
                         .deleteCookies(SESSION_COOKIE_NAME)
                             .logoutRequestMatcher(new AntPathRequestMatcher(LOGOUT_URL))
-                            .logoutSuccessUrl("/app")
+                            .logoutSuccessUrl(LOGIN_URL)
                 .and()
                     .exceptionHandling()
                         .accessDeniedPage(ACESSO_NEGADO_URL);

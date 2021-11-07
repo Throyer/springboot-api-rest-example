@@ -10,13 +10,29 @@
                     Home
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a
+                    th:href="@{/documentation/swagger-ui/#/}"
+                    class="nav-link link-dark px-2 active"
+                    aria-current="page"
+                >
+                    Swagger API
+                </a>
+            </li>
         </ul>
-        <ul class="nav">
+        <ul sec:authorize="isAuthenticated()" class="nav">
             <li class="nav-item">
                 <a th:href="@{/app/logout}" class="nav-link link-dark px-2">
                     Sign out
                 </a>
+            </li>
+        </ul>
+        <ul sec:authorize="!isAuthenticated()" class="nav">
+            <li class="nav-item">
+                <a th:href="@{/app/login}" class="nav-link link-dark px-2">Login</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/app/register}" class="nav-link link-dark px-2">Sign up</a>
             </li>
         </ul>
     </div>

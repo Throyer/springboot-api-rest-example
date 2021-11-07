@@ -3,9 +3,11 @@
     <section>
         <div class="col-lg-8 mx-auto p-3 py-md-5">
             <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-                <a th:href="@{/app}" class="d-flex align-items-center text-dark text-decoration-none">
+                <a th:href="@{/app}" class="d-flex d-flex flex-row container align-items-center justify-content-between text-dark text-decoration-none">
                     <img class="d-inline-block align-top ml-2"
+                    width="500"
                         src="https://github.com/Throyer/springboot-api-crud/raw/master/assets/tecnologias.png">
+                        <span class="fs-1">Simple spring Boot API crud</span>
                 </a>
             </header>
 
@@ -37,7 +39,7 @@
 
                 <div class="mb-5">
                     <a href="https://github.com/Throyer/springboot-api-crud#sumario" target="_blank"
-                        class="btn btn-primary btn-lg px-4">See the repository</a>
+                        class="btn btn-primary btn-lg px-4">Repository <i class="fab fa-github"></i></a>
                 </div>
 
                 <hr class="col-3 col-md-2 mb-5">
@@ -91,12 +93,5 @@
                 </div>
             </main>
         </div>
-        <footer class="pt-5 my-5 text-muted border-top">
-            Throyer &middot; &copy; 2021
-        </footer>
     </section>
-    <!-- <modal 
-        th:replace="~{views/usuario/fragments/modal-usuario :: modal-usuario}">
-    </modal>
-    <script language="javascript" th:src="@{/js/modais/modal-usuario.js}"></script> -->
 </layout>
