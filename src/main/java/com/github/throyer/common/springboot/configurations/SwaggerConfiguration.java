@@ -14,9 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import springfox.documentation.builders.ResponseBuilder;
-import springfox.documentation.builders.ResponseMessageBuilder;
 
+import springfox.documentation.builders.ResponseBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
@@ -33,7 +32,7 @@ public class SwaggerConfiguration {
     BuildProperties build;
 
     private ApiKey apiKey() {
-        return new ApiKey("JWT", "Authorization", "header");
+        return new ApiKey("Authorization", "Authorization", "header");
     }
 
     private SecurityContext securityContext() {
@@ -46,7 +45,7 @@ public class SwaggerConfiguration {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return asList(new SecurityReference("JWT", authorizationScopes));
+        return asList(new SecurityReference("Authorization", authorizationScopes));
     }
 
     @Bean
