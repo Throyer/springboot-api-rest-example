@@ -35,22 +35,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class User extends Auditable implements Serializable, HasEmail {
 
     public static final Integer PASSWORD_STRENGTH = 10;
-    public static final String DELETE_SQL = """
-        UPDATE
-            #{#entityName}
-        SET
-            deleted_email = (
-                SELECT
-                    email
-                FROM
-                    #{#entityName}
-                WHERE id = ?1),
-            email = NULL,
-            deleted_at = CURRENT_TIMESTAMP,
-            active = 0,
-            deleted_by = ?#{principal?.id}
-        WHERE id = ?1
-    """;
 
     private static final long serialVersionUID = -8080540494839892473L;
 

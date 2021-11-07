@@ -5,23 +5,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import com.github.throyer.common.springboot.utils.Hello;
 
-@Api(tags = "Status check")
+@Api(tags = "Status check", produces = "application/json")
 @RestController
 @RequestMapping("/api")
 public class ApiController {
 
-    public class StatusCheck {
-        private final String message = "Is a live!"; 
-        public String getMessage() {
-            return message;
-        }
-    }
-
-    private StatusCheck status = new StatusCheck();
-    
     @GetMapping
-    public StatusCheck index() {        
-        return status;
+    public Hello index() {
+        return () -> "Is a live!";
     }
 }

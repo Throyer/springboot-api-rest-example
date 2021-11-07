@@ -1,8 +1,5 @@
 package com.github.throyer.common.springboot.domain.repositories;
 
-import static com.github.throyer.common.springboot.domain.models.entity.Auditable.SET_ALL_DELETED_SQL;
-import static com.github.throyer.common.springboot.domain.models.entity.Auditable.SET_DELETED_SQL;
-
 import com.github.throyer.common.springboot.domain.models.entity.Auditable;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,9 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SoftDeleteRepository <T extends Auditable> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
     
     @Override
-    @Query(SET_DELETED_SQL)
-    @Transactional
     @Modifying
+    @Transactional
+    @Query("""
+        UPDATE
+            #{#entityName}
+        SET
+            deleted_at = CURRENT_TIMESTAMP
+        WHERE id = ?1
+    """)
     void deleteById(Long id);
   
     @Override
@@ -34,8 +37,13 @@ public interface SoftDeleteRepository <T extends Auditable> extends JpaRepositor
     }
   
     @Override
-    @Query(SET_ALL_DELETED_SQL)
-    @Transactional
     @Modifying
+    @Transactional
+    @Query("""
+        UPDATE
+            #{#entityName}
+        SET
+            deleted_at = CURRENT_TIMESTAMP
+    """)
     void deleteAll();
 }

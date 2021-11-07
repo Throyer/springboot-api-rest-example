@@ -15,9 +15,24 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepository extends SoftDeleteRepository<User> {
 
     @Override
-    @Query(User.DELETE_SQL)
     @Transactional
     @Modifying
+    @Query("""
+        UPDATE
+            #{#entityName}
+        SET
+            deleted_email = (
+                SELECT
+                    email
+                FROM
+                    #{#entityName}
+                WHERE id = ?1),
+            email = NULL,
+            deleted_at = CURRENT_TIMESTAMP,
+            active = 0,
+            deleted_by = ?#{principal?.id}
+        WHERE id = ?1
+    """)
     void deleteById(Long id);
 
     @Override
@@ -39,14 +54,14 @@ public interface UserRepository extends SoftDeleteRepository<User> {
     public Optional<User> findOptionalByIdAndDeletedAtIsNull(Long id);
 
     @Query("""
-        SELECT user FROM User user
+        SELECT user FROM #{#entityName} user
         LEFT JOIN FETCH user.roles
         WHERE user.id = ?1
     """)
     public Optional<User> findOptionalByIdAndDeletedAtIsNullFetchRoles(Long id);
 
     @Query("""
-        SELECT user FROM User user
+        SELECT user FROM #{#entityName} user
         LEFT JOIN FETCH user.roles
         WHERE user.email = ?1
     """)

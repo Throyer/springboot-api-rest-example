@@ -1,12 +1,14 @@
 package com.github.throyer.common.springboot.domain.models.entity;
 
 import static com.github.throyer.common.springboot.domain.services.security.SecurityService.authorized;
+import static java.time.LocalDateTime.now;
+import static java.util.Optional.ofNullable;
+import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -21,15 +23,6 @@ public abstract class Auditable implements Entity {
 
     public static final String NON_DELETED_CLAUSE = "deleted_at IS NULL";
     
-    public static final String SET_ALL_DELETED_SQL = """
-        UPDATE
-            #{#entityName}
-        SET
-            deleted_at = CURRENT_TIMESTAMP
-    """;
-
-    public static final String SET_DELETED_SQL = SET_ALL_DELETED_SQL + "WHERE id = ?1";
-
     @Override
     public abstract Long getId();
 
@@ -46,30 +39,30 @@ public abstract class Auditable implements Entity {
     private LocalDateTime deletedAt;
     
     @JoinColumn(name = "created_by")
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = LAZY)
     private User createdBy;
     
     @JoinColumn(name = "updated_by")
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = LAZY)
     private User updatedBy;
     
     @JoinColumn(name = "deleted_by")
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = LAZY)
     private User deletedBy;
 
     @JsonIgnore
     public Optional<User> getCreatedBy() {
-        return Optional.ofNullable(createdBy);
+        return ofNullable(createdBy);
     }
 
     @JsonIgnore
     public Optional<User> getUpdatedBy() {
-        return Optional.ofNullable(updatedBy);
+        return ofNullable(updatedBy);
     }
 
     @JsonIgnore
     public Optional<User> getDeletedBy() {
-        return Optional.ofNullable(deletedBy);
+        return ofNullable(deletedBy);
     }
 
     @Column(name = "active", nullable = false)
@@ -109,7 +102,7 @@ public abstract class Auditable implements Entity {
 
     @PrePersist
     private void save() {
-        createdAt = LocalDateTime.now();
+        createdAt = now();
         createdBy = authorized()
         .map(authorized -> new User(authorized.getId()))
             .orElse(null);
@@ -117,7 +110,7 @@ public abstract class Auditable implements Entity {
 
     @PreUpdate
     private void update() {
-        updatedAt = LocalDateTime.now();
+        updatedAt = now();
         updatedBy = authorized()
         .map(authorized -> new User(authorized.getId()))
             .orElse(null);

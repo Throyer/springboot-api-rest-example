@@ -20,6 +20,10 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import static java.util.Objects.nonNull;
+import static org.springframework.data.domain.PageRequest.of;
+import static org.springframework.data.domain.Sort.by;
+
 public class Pagination {
 
     private static final int FIRST_PAGE = 0;
@@ -36,7 +40,7 @@ public class Pagination {
     }
 
     public void setPage(int page) {
-        if (Objects.nonNull(page) && page >= FIRST_PAGE) {
+        if (nonNull(page) && page >= FIRST_PAGE) {
             this.page = page;
         } else {
             page = FIRST_PAGE;
@@ -48,7 +52,7 @@ public class Pagination {
     }
 
     public void setSize(int size) {
-        if (Objects.nonNull(size) && size >= MIN_SIZE && size <= MAX_SIZE) {
+        if (nonNull(size) && size >= MIN_SIZE && size <= MAX_SIZE) {
             this.size = size;
         } else {
             this.size = DEFAULT_SIZE;
@@ -56,11 +60,11 @@ public class Pagination {
     }
 
     public Pageable build() {
-        return PageRequest.of(page, size);
+        return of(page, size);
     }
 
     public Pageable build(Sort sort) {
-        return PageRequest.of(page, size, sort);
+        return of(page, size, sort);
     }
 
     public <T> Pageable build(Sort query, Class<T> entity) {
@@ -82,7 +86,7 @@ public class Pagination {
             if (optional.isPresent()) {
                 orders.add(getOrder(order, optional.get()));
             } else {
-                errors.add(new SimpleError(order.getProperty(), "Filtro invalido"));
+                errors.add(new SimpleError(order.getProperty(), "Filtro inválido"));
             }
         }
 
@@ -90,7 +94,7 @@ public class Pagination {
             throw new InvalidSortException("Filtros inválidos", errors);
         }
 
-        return PageRequest.of(page, size, Sort.by(orders));
+        return of(page, size, by(orders));
     }
 
     private static Boolean belongs(Field field, Order order) {

@@ -13,9 +13,25 @@ import org.springframework.transaction.annotation.Transactional;
 public interface RoleRepository extends SoftDeleteRepository<Role> {
 
     @Override
-    @Query(Role.DELETE_SQL)
-    @Transactional
     @Modifying
+    @Transactional
+    @Query("""
+        UPDATE 
+            #{#entityName}
+        SET
+            deleted_name = (
+                SELECT name FROM #{#entityName} WHERE id = ?1
+            ),
+            name = NULL,
+            deleted_initials = (
+                SELECT name FROM #{#entityName} WHERE id = ?1
+            ),
+            initials = NULL,
+            deleted_at = CURRENT_TIMESTAMP,
+            active = 0,
+            deleted_by = ?#{principal?.id}
+        WHERE id = ?1
+    """)
     void deleteById(Long id);
 
     @Override

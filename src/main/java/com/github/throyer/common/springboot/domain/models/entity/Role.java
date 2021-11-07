@@ -19,24 +19,6 @@ import org.springframework.security.core.GrantedAuthority;
 @Where(clause = Auditable.NON_DELETED_CLAUSE)
 public class Role extends Auditable implements GrantedAuthority {
 
-    public static final String DELETE_SQL = """
-        UPDATE 
-            #{#entityName}
-        SET
-            deleted_name = (
-                SELECT name FROM #{#entityName} WHERE id = ?1
-            ),
-            name = NULL,
-            deleted_initials = (
-                SELECT name FROM #{#entityName} WHERE id = ?1
-            ),
-            initials = NULL,
-            deleted_at = CURRENT_TIMESTAMP,
-            active = 0,
-            deleted_by = ?#{principal?.id}
-        WHERE id = ?1
-    """;
-
     private static final long serialVersionUID = -8524505911742593369L;
 
     @Id

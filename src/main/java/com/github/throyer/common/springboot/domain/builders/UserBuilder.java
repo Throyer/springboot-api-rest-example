@@ -8,7 +8,7 @@ import com.github.throyer.common.springboot.domain.models.entity.User;
 
 public class UserBuilder {
     
-    private User user;
+    private final User user;
     private List<Role> roles = new ArrayList<>();
 
     public static UserBuilder createUser(String name) {
@@ -36,7 +36,7 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setAtivo(Boolean active) {
+    public UserBuilder setActive(Boolean active) {
         user.setActive(active);
         return this;
     }

@@ -1,5 +1,8 @@
 package com.github.throyer.common.springboot.controllers.api;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 import com.github.throyer.common.springboot.domain.models.entity.User;
 import com.github.throyer.common.springboot.domain.models.pagination.Page;
 import com.github.throyer.common.springboot.domain.models.pagination.Pagination;
@@ -14,7 +17,6 @@ import com.github.throyer.common.springboot.domain.services.user.dto.UserDetails
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -59,8 +61,8 @@ public class UsersController {
         return findService.find(id);
     }
     
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @ResponseStatus(CREATED)
     public ResponseEntity<UserDetails> save(@Validated @RequestBody CreateUser body) {
         return createService.create(body);
     }
@@ -74,9 +76,9 @@ public class UsersController {
         return updateService.update(id, body);
     }
     
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAnyAuthority('ADM')")
     @DeleteMapping("/{id}")
+    @ResponseStatus(NO_CONTENT)
+    @PreAuthorize("hasAnyAuthority('ADM')")
     public ResponseEntity<User> destroy(@PathVariable Long id) {
         return removeService.remove(id);
     }

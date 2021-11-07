@@ -2,6 +2,9 @@ package com.github.throyer.common.springboot.domain.services.security;
 
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.INVALID_USERNAME;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.JWT;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -54,12 +57,12 @@ public class SecurityService implements UserDetailsService {
         try {
             var principal = getPrincipal();
             
-            if (Objects.nonNull(principal) && principal instanceof Authorized authorized) {
-                return Optional.of(authorized);
+            if (nonNull(principal) && principal instanceof Authorized authorized) {
+                return of(authorized);
             }
-            return Optional.empty();
+            return empty();
         } catch (Exception exception) {
-            return Optional.empty();
+            return empty();
         }
         
     }
@@ -67,7 +70,7 @@ public class SecurityService implements UserDetailsService {
     private static Object getPrincipal() {
         var authentication = SecurityContextHolder.getContext()
             .getAuthentication();
-        if (Objects.nonNull(authentication)) {
+        if (nonNull(authentication)) {
             return authentication.getPrincipal();
         }
         return null;
