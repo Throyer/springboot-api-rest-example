@@ -3,7 +3,7 @@ services:
 
   mariadb:
     image: mariadb:10.6.1
-    network_mode: host
+    container_name: mariadb-container
     restart: always
     ports:
       - 3306:3306
@@ -12,4 +12,18 @@ services:
       MYSQL_DATABASE: "common_app"
     volumes:
       - ./.volumes/database:/var/lib/mysql
+
+  api:
+    build: ./
+    links:
+      - mariadb
+    depends_on:
+      - mariadb
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      DB_URL: "mariadb:3306/common_app"
+      DB_USERNAME: "root"
+      DB_PASSWORD: "root"
 
