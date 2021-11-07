@@ -1,16 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{}, ~{::section}, ~{}, ~{})}">
     <title>Home</title>
-</head>
-<body>
-    <h1>Fumegou!</h1>
-    <a class="dropdown-item" th:href="@{/app/logout}">
-        <i class="fas fa-sign-out-alt"></i>
-        sair
-    </a>
-</body>
-</html>
+    <section>
+        <div class="col-lg-8 mx-auto p-3 py-md-5">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <a th:href="@{/app}" class="d-flex align-items-center text-dark text-decoration-none">
+                    <img class="d-inline-block align-top ml-2"
+                        src="https://github.com/Throyer/springboot-api-crud/raw/master/assets/tecnologias.png">
+                </a>
+            </header>
+
+            <main>
+
+                <h1>Explore the project</h1>
+                <p class="fs-5 col-md-8">
+                    This is a simple API and Web App (MVC)
+                    project with a crud of users with as
+                    many good practices as I can.
+                </p>
+                <ul class="icon-list">
+                    <li>
+                        Swagger
+                    </li>
+                    <li>
+                        Database migrations (java based)
+                    </li>
+                    <li>
+                        JWT and Refresh token
+                    </li>
+                    <li>
+                        Integration with SMTP services (Email)
+                    </li>
+                </ul>
+                <p>
+                    It was meant to be used as a base for larger projects.
+                </p>
+
+                <div class="mb-5">
+                    <a href="https://github.com/Throyer/springboot-api-crud#sumario" target="_blank"
+                        class="btn btn-primary btn-lg px-4">See the repository</a>
+                </div>
+
+                <hr class="col-3 col-md-2 mb-5">
+
+                <div class="row g-5">
+                    <div class="col-md-6">
+                        <h2>Other projects</h2>
+                        <p>There is a project on nodejs with a similar idea.</p>
+                        <ul class="icon-list">
+                            <li>
+                                <a href="https://github.com/Throyer/nodejs-api-crud#table-of-contents" rel="noopener"
+                                    target="_blank">
+                                    NodeJs project
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/Throyer/quarkus-api-crud#quarkus-api-crud" rel="noopener"
+                                    target="_blank">
+                                    Quarkus project
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/Throyer/products#requisitos" rel="noopener" target="_blank">
+                                    Spring boot project but with PostgreSQL
+                                </a>
+                            </li>
+                            <li class="text-muted">.NetCore project (coming soon!)</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h2>Project features</h2>
+                        <p>The idea is to have as many good practices and standards as possible, here are some already
+                            implemented</p>
+                        <ul class="icon-list">
+                            <li>JWT</li>
+                            <li>Refresh token</li>
+                            <li>Tests with JUnity</li>
+                            <li>Test coverage report (Jacoco)</li>
+                            <li>Database migrations</li>
+                            <li><a
+                                    href="https://github.com/Throyer/java-based-flyway-migrations#migra%C3%A7%C3%B5es-de-banco-de-dados-baseadas-em-arquivos-java">Java
+                                    Based migrations</a></li>
+                            <li>Soft delete</li>
+                            <li>Swagger</li>
+                            <li>Email (SMTP)</li>
+                            <li>Lazy load</li>
+                            <li>Audit fields (created_at, updated_at etc)</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="pt-5 my-5 text-muted border-top">
+            Throyer &middot; &copy; 2021
+        </footer>
+    </section>
+    <!-- <modal 
+        th:replace="~{views/usuario/fragments/modal-usuario :: modal-usuario}">
+    </modal>
+    <script language="javascript" th:src="@{/js/modais/modal-usuario.js}"></script> -->
+</layout>

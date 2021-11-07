@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.throyer.common.springboot.domain.services.security.SecurityService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -26,7 +27,7 @@ public class AuthorizationMiddleware extends OncePerRequestFilter {
         throws ServletException, IOException {
 
         ofNullable(authorization(request))
-            .ifPresent((token) -> authorize(token));
+            .ifPresent(SecurityService::authorize);
 
         filter.doFilter(request, response);
     }
