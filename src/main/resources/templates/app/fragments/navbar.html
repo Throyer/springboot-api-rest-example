@@ -1,0 +1,23 @@
+<nav th:fragment="navbar" class="py-2 bg-light border-bottom">
+    <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto">
+            <li class="nav-item">
+                <a
+                    th:href="@{/app}"
+                    class="nav-link link-dark px-2 active"
+                    aria-current="page"
+                >
+                    Home
+                </a>
+            </li>
+
+        </ul>
+        <ul class="nav">
+            <li class="nav-item">
+                <a th:href="@{/app/logout}" class="nav-link link-dark px-2">
+                    Sign out
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,58 @@
+<html th:fragment="layout(title, links, content, scripts, modals)">
+
+    <!-- head -->
+    <head>
+
+        <title th:replace="${title}">
+            Common API
+        </title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <base href="/">
+
+        <!-- default links -->
+        <th:block
+            th:replace="~{app/fragments/imports :: default-css}">
+        </th:block>
+        
+        <!-- custom links -->
+        <th:block
+            th:replace="${links}">
+        </th:block>
+    </head>
+
+    <!-- page body -->
+    <body class="bg-light ">
+        
+        <!-- navbar default -->
+        <nav
+            th:replace="~{app/fragments/navbar :: navbar}">
+        </nav>
+        
+        <!-- content container -->
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <!-- page content -->            
+                    <th:block th:replace="${content}"></th:block>
+                </div>
+            </div>
+        </div>
+        
+        <!-- modals section -->
+        <th:block
+            th:replace="${modals}">
+        </th:block>
+
+        <!-- default scripts -->
+        <script
+            th:replace="~{app/fragments/imports :: default-javascript}">
+        </script>
+
+        <!-- custom scripts -->
+        <th:block
+            th:replace="${scripts}">
+        </th:block>
+    </body>
+</html>

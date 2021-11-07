@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <th:block th:replace="~{app/fragments/imports :: default-css}"></th:block>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    </head>
+    <body>        
+        <form
+            class="form mt-5"
+            th:action="@{/app/login}"
+            method="POST"
+        >
+            <div class="icon">
+                <i class="fas fa-desktop fa-5x"></i>                
+            </div>
+            <h1 class="h3 mb-3 font-weight-light text-center mt-2">Fazer login</h1>
+            
+            <label for="input_email" class="sr-only">Endereço de email</label>
+            <input
+                id="input_email"
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="Email"
+                required
+                autofocus
+            >
+            
+            <label
+                for="input_password"
+                class="sr-only"
+            >
+                Senha
+            </label>
+            <input
+                id="input_password"
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="Senha"
+                required
+            >
+            
+            <div class="d-flex justify-content-center mb-2">
+                <div class="custom-control custom-checkbox">
+                    <input
+                        type="checkbox"
+                        name="remember-me"
+                        class="custom-control-input"
+                        id="input_remember_me"
+                    >
+                    <label
+                        class="custom-control-label"
+                        for="input_remember_me">
+                        Lembrar de mim
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Login</button>
+            </div>
+            
+            <div
+                th:if="${param.error}"
+                class="alert alert-danger alert-dismissible fade show mt-2"
+                role="alert"
+            >
+                <strong>Senha ou usuario invalido!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>        
+            </div>
+            
+            <div
+                th:if="${param.denied}"
+                class="alert alert-warning alert-dismissible fade show mt-3 mb-3"
+                role="alert"
+            >
+                <strong>Acesso negado!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <hr>
+                Por favor faça o login com outro usuario ou entre em
+                <a th:href="@{/contato}" class="">contato</a> com o administrador do sistema.
+            </div>
+        </form>
+        
+        <th:block th:replace="~{app/fragments/imports :: default-javascript}"></th:block>
+    </body>
+</html>
