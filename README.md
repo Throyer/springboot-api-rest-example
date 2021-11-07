@@ -9,7 +9,7 @@
 <br>
 <br>
 
-[**Live demo on heroku**](https://throyer-crud-api.herokuapp.com/api/)
+[**Live demo on heroku**](https://throyer-crud-api.herokuapp.com/app)
 
 ## Sumario
 
