@@ -166,7 +166,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <excludeDevtools>false</excludeDevtools>
+                    <jvmArguments>
+                        -agentlib:jdwp=transport=dt_socket,server=y,address=*:8000,suspend=n
+                    </jvmArguments>
                 </configuration>
                 <executions>
                     <execution>

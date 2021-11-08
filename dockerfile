@@ -1,7 +1,5 @@
-FROM openjdk:16
+FROM maven:3.8.3
 
 WORKDIR /app
 
-COPY /target/api-3.0.0.jar /app/app.jar
-
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+ENTRYPOINT ["mvn", "spring-boot:run"]

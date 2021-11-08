@@ -4,7 +4,6 @@ services:
   mariadb:
     image: mariadb:10.6.1
     container_name: mariadb-container
-    restart: always
     ports:
       - 3306:3306
     environment:
@@ -19,11 +18,13 @@ services:
       - mariadb
     depends_on:
       - mariadb
-    restart: always
     ports:
       - 8080:8080
+      - 8000:8000
     environment:
       DB_URL: "mariadb:3306/common_app"
       DB_USERNAME: "root"
       DB_PASSWORD: "root"
-
+    volumes:
+      - ./:/app
+      - ./.volumes/maven:/root/.m2
