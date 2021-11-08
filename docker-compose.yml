@@ -13,7 +13,7 @@ services:
       - ./.volumes/database:/var/lib/mysql
 
   api:
-    build: ./
+    image: maven:3.8.3
     links:
       - mariadb
     depends_on:
@@ -28,3 +28,5 @@ services:
     volumes:
       - ./:/app
       - ./.volumes/maven:/root/.m2
+    working_dir: /app
+    command: mvn spring-boot:run
