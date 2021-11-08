@@ -141,20 +141,19 @@ existem dois scripts `bash` que podem ser usados para criação de arquivos de m
 
 | **Descrição**                               | **parâmetro**                          | **Valor padrão**          |
 | ------------------------------------------- | -------------------------------------- | ------------------------- |
-| contexto da aplicação                       | `contexto`                             | api/                      |
-| porta da aplicação                          | `port`                                 | 8080                      |
-| url do banco                                | `db-url`                               | localhost:3306/common_app |
-| nome de usuário (banco)                     | `db-username`                          | root                      |
-| senha do usuário (banco)                    | `db-password`                          | root                      |
-| mostrar sql na saida                        | `show-sql`                             | false                     |
-| valor do secret na geração dos tokens       | `token-secret`                         | secret                    |
-| tempo de expiração do token em horas        | `token-expiration-time-in-hours`       | 24                        |
-| tempo de expiração do refresh token em dias | `refresh-token-expiration-time-in-day` | 7                         |
-| máximo de conexões com o banco              | `max-connections`                      | 5                         |
-| endereço do servidor smtp                   | `smtp-host`                            | smtp.gmail.com            |
-| porta do servidor smtp                      | `smtp-port`                            | 587                       |
-| nome de usuário smtp                        | `smtp-username`                        | user                      |
-| senha do servidor smtp                      | `smtp-password`                        | secret                    |
+| porta da aplicação                          | `SERVER_PORT`                          | 8080                      |
+| url do banco                                | `DB_URL`                               | localhost:3306/common_app |
+| nome de usuário (banco)                     | `DB_USERNAME`                          | root                      |
+| senha do usuário (banco)                    | `DB_PASSWORD`                          | root                      |
+| mostrar sql na saida                        | `DB_SHOW_SQL`                          | false                     |
+| máximo de conexões com o banco              | `DB_MAX_CONNECTIONS`                   | 5                         |
+| valor do secret na geração dos tokens       | `TOKEN_SECRET`                         | secret                    |
+| tempo de expiração do token em horas        | `TOKEN_EXPIRATION_IN_HOURS`            | 24                        |
+| tempo de expiração do refresh token em dias | `REFRESH_TOKEN_EXPIRATION_IN_DAYS`     | 7                         |
+| endereço do servidor smtp                   | `SMTP_HOST`                            | smtp.gmail.com            |
+| porta do servidor smtp                      | `SMTP_PORT`                            | 587                       |
+| nome de usuário smtp                        | `SMTP_USERNAME`                        | user                      |
+| senha do servidor smtp                      | `SMTP_PASSWORD`                        | secret                    |
 
 > são definidas em: [**application.properties**](./src/main/resources/application.properties)
 >
