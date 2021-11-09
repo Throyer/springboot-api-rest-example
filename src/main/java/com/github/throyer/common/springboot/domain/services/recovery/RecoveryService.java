@@ -30,7 +30,7 @@ public class RecoveryService {
         if (result.hasErrors()) {
             Toasts.add(model, result);
             model.addAttribute("recovery", recovery);
-            return "/app/recovery/index";
+            return "app/recovery/index";
         }
         
         var email = recovery.getEmail();
@@ -39,7 +39,7 @@ public class RecoveryService {
         
         model.addAttribute("codes", new Codes(email));
         
-        return "/app/recovery/confirm";
+        return "app/recovery/confirm";
     }
     
     public void recovery(String email) {

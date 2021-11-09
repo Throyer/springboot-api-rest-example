@@ -32,7 +32,7 @@ public class RecoveryController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("recovery", new RecoveryRequest());
-        return "/app/recovery/index";
+        return "app/recovery/index";
     }
 
     @PostMapping
@@ -44,12 +44,6 @@ public class RecoveryController {
         return recoveryService.recovery(recovery, result, model);
     }
 
-//    @GetMapping("/confirm")
-//    public String confirm(Model model) {
-//        model.addAttribute("codes", new Codes());
-//        return "/app/recovery/confirm";
-//    }
-
     @PostMapping("/confirm")
     public String confirm(
         @Valid Codes codes,
@@ -59,12 +53,6 @@ public class RecoveryController {
     ) {
         return confirmService.confirm(codes, result, model, redirect);
     }
-
-//    @GetMapping("/update")
-//    public String update(Model model) {
-//        model.addAttribute("update", new Update());
-//        return "/app/recovery/update";
-//    }
 
     @PostMapping("/update")
     public String update(

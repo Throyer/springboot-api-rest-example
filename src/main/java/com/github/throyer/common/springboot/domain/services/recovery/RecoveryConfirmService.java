@@ -28,7 +28,7 @@ public class RecoveryConfirmService {
         if (result.hasErrors()) {
             Toasts.add(model, result);
             model.addAttribute("confirm", codes);
-            return "/app/recovery/confirm";
+            return "app/recovery/confirm";
         }
 
         try {
@@ -43,12 +43,12 @@ public class RecoveryConfirmService {
                 Toasts.add(model, "Código expirado ou invalido.", Type.DANGER);
                 model.addAttribute("confirm", codes);
                 
-                return "/app/recovery/confirm";
+                return "app/recovery/confirm";
             }
             
             model.addAttribute("update", new Update(codes));
             
-            return "/app/recovery/update";
+            return "app/recovery/update";
         }
     }
 

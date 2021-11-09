@@ -34,7 +34,7 @@ public class RecoveryUpdateService {
         if (result.hasErrors()) {
             Toasts.add(model, result);
             model.addAttribute("update", update);
-            return "/app/recovery/update";
+            return "app/recovery/update";
         }
 
         try {
@@ -44,7 +44,7 @@ public class RecoveryUpdateService {
             if (exception.getStatus().equals(HttpStatus.FORBIDDEN)) {
                 Toasts.add(model, "Código expirado ou invalido.", Type.DANGER);
                 model.addAttribute("update", update);
-                return "/app/recovery/update";
+                return "app/recovery/update";
             }
             
             Toasts.add(redirect, "Sua senha foi atualizada com sucesso.", Type.SUCCESS);
