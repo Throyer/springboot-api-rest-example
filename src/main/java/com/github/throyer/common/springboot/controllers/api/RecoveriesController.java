@@ -1,8 +1,10 @@
 package com.github.throyer.common.springboot.controllers.api;
 
+import com.github.throyer.common.springboot.domain.services.recovery.RecoveryConfirmService;
+import com.github.throyer.common.springboot.domain.services.recovery.RecoveryService;
+import com.github.throyer.common.springboot.domain.services.recovery.RecoveryUpdateService;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
-import com.github.throyer.common.springboot.domain.services.user.RecoveryPasswordService;
 import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryConfirm;
 import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryRequest;
 import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryUpdate;
@@ -22,22 +24,28 @@ import io.swagger.annotations.Api;
 public class RecoveriesController {
 
     @Autowired
-    private RecoveryPasswordService service;
+    private RecoveryService recoveryService;
+    
+    @Autowired
+    private RecoveryConfirmService confirmService;
+    
+    @Autowired
+    private RecoveryUpdateService updateService;
 
     @PostMapping
     @ResponseStatus(NO_CONTENT)
     public void index(@RequestBody RecoveryRequest request) {        
-        service.recovery(request.getEmail());
+        recoveryService.recovery(request.getEmail());
     }
 
     @PostMapping("/confirm")
     public void confirm(@RequestBody RecoveryConfirm confirm) {        
-        service.confirm(confirm.getEmail(), confirm.getCode());
+        confirmService.confirm(confirm.getEmail(), confirm.getCode());
     }
 
     @PostMapping("/update")
     @ResponseStatus(NO_CONTENT)
     public void update(@RequestBody RecoveryUpdate update) {        
-        service.update(update.getEmail(), update.getCode(), update.getPassword());
+        updateService.update(update.getEmail(), update.getCode(), update.getPassword());
     }
 }

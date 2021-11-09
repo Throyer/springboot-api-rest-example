@@ -1,0 +1,91 @@
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::link}, ~{::main}, ~{::script}, ~{})}">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/codes.css}">
+    <main class="container">
+        <i class="fas fa-user fa-6x mb-2"></i>
+        <h1>Recovery</h1>
+        <form autocomplete="off" th:object="${update}" class="needs-validation" novalidate th:action="@{/app/recovery/update}" method="POST">
+            <input
+                th:field="*{email}"
+                type="email"
+                hidden
+            >
+            <div class="codes">
+                <div class="code">
+                    <input
+                        th:field="*{first}"
+                        type="number"
+                        hidden
+                        maxlength="1"
+                        required
+                    >
+                </div>
+                <div class="code">
+                    <input
+                        th:field="*{second}"
+                        type="number"
+                        hidden
+                        maxlength="1"
+                        required
+                    >
+                </div>
+                <div class="code">
+                    <input
+                        th:field="*{third}"
+                        type="number"
+                        hidden
+                        maxlength="1"
+                        required
+                    >
+                </div>
+                <div class="code">
+                    <input
+                        th:field="*{fourth}"
+                        type="number"
+                        hidden
+                        maxlength="1"
+                        required
+                    >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-4">
+                    <label for="input_password" class="form-label">Password</label>
+                    <input
+                        th:field="*{password}"
+                        type="password"
+                        autocomplete="new-password"
+                        class="form-control"
+                        id="input_password"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Por favor, informe a senha.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-4">
+                    <label for="input_confirm_password" class="form-label">Confirm password</label>
+                    <input
+                        th:field="*{confirmPassword}"
+                        type="password"
+                        class="form-control"
+                        id="input_confirm_password"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Por favor, confirme a senha.
+                    </div>
+                </div>
+            </div>
+            <div class="submit-container mt-4">
+                <a th:href="@{/app/login}" class="btn btn-primary" role="button">Back</a>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
+    </main>
+    <script language="javascript" th:src="@{/js/forms.js}"></script>
+    <script language="javascript" th:src="@{/js/codes.js}"></script>
+</layout>
