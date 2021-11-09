@@ -1,0 +1,68 @@
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::link}, ~{::main}, ~{::script}, ~{})}">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/codes.css}">
+    <main class="container">
+        <i class="fas fa-user fa-6x mb-2"></i>
+        <h1>Recovery</h1>
+        <form autocomplete="off" th:object="${codes}" class="needs-validation" novalidate th:action="@{/app/register}" method="POST">
+            <div class="row">
+                <div class="col-md-12 mt-4">
+                    <label for="input_email" class="form-label">E-mail</label>
+                    <input
+                        th:field="*{email}"
+                        type="email"
+                        class="form-control"
+                        id="input_name"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Por favor, informe o email.
+                    </div>
+                </div>
+            </div>
+            <label for="input_email" class="form-label mt-4">Recovery code</label>
+            <div class="codes">
+                <div class="code">
+                    <input
+                        th:field="*{first}"
+                        type="number"
+                        class="form-control"
+                        required
+                    >
+                </div>
+                <div class="code">
+                    <input
+                        th:field="*{second}"
+                        type="number"
+                        class="form-control"
+                        required
+                    >
+                </div>
+                <div class="code">
+                    <input
+                        th:field="*{third}"
+                        type="number"
+                        class="form-control"
+                        required
+                    >
+                </div>
+                <div class="code">
+                    <input
+                        th:field="*{fourth}"
+                        type="number"
+                        class="form-control"
+                        required
+                    >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-4 d-grid gap-2">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </main>
+    <script language="javascript" th:src="@{/js/forms.js}"></script>
+    <script language="javascript" th:src="@{/js/codes.js}"></script>
+</layout>

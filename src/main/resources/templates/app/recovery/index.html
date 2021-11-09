@@ -1,0 +1,32 @@
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::link}, ~{::main}, ~{::script}, ~{})}">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+    <main class="container">
+        <i class="fas fa-user fa-6x mb-2"></i>
+        <h1>Recovery</h1>
+        <form th:object="${recovery}" class="needs-validation" novalidate th:action="@{/app/recovery}" method="POST">
+            <div class="row">
+                <div class="col-md-12 mt-4">
+                    <label for="input_email" class="form-label">E-mail</label>
+                    <input
+                        th:field="*{email}"
+                        type="email"
+                        class="form-control"
+                        id="input_name"
+                        autocomplete="email"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Por favor, informe o email.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-4 d-grid gap-2">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </main>
+    <script language="javascript" th:src="@{/js/forms.js}"></script>
+</layout>

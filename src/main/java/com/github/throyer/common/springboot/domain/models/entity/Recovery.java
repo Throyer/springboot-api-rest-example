@@ -44,6 +44,10 @@ public class Recovery {
         this.code = code();
     }
 
+    public Recovery(String email, String password_recovery_code, String code) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public Long getId() {
         return id;
     }

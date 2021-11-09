@@ -5,10 +5,15 @@ import com.github.throyer.common.springboot.domain.models.entity.Recovery;
 import com.github.throyer.common.springboot.domain.repositories.RecoveryRepository;
 import com.github.throyer.common.springboot.domain.repositories.UserRepository;
 import com.github.throyer.common.springboot.domain.services.email.MailService;
+import com.github.throyer.common.springboot.domain.services.user.dto.Codes;
+import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryRequest;
+import com.github.throyer.common.springboot.utils.Toasts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -23,6 +28,19 @@ public class RecoveryPasswordService {
     @Autowired
     private MailService service;
 
+    public String recovery(RecoveryRequest recovery, BindingResult result, Model model) {
+        
+        if (result.hasErrors()) {
+            Toasts.add(model, result);
+            model.addAttribute("recovery", recovery);
+            return "/app/recovery/index";
+        }
+        
+        recovery(recovery.getEmail());
+        
+        return "redirect:/app/recovery/confirm";
+    }
+    
     public void recovery(String email) {
         var user = users.findOptionalByEmail(email);
 
@@ -40,6 +58,21 @@ public class RecoveryPasswordService {
             var recoveryEmail = new RecoveryEmail(email, "password recovery code", recovery.getCode());
             service.send(recoveryEmail);
         } catch (Exception exception) { }
+    }
+    
+    public String confirm(Codes codes, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            Toasts.add(model, result);
+            model.addAttribute("recovery", codes);
+            return "/app/recovery/index";
+        }
+        
+        try {
+            confirm(codes.getEmail(), codes.code());
+            return "redirect:/app/recovery/update";
+        } catch (Exception exception) {
+            return "redirect:/app/recovery/update";
+        }
     }
 
     public void confirm(String email, String code) {

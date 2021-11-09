@@ -6,10 +6,19 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class RecoveryRequest {
-
+public class Codes {
+    
+    private String first;
+    private String second;
+    private String third;
+    private String fourth;
+    
     @Email
     @NotNull
     @NotEmpty
     private String email;
+    
+    public String code() {
+        return String.format("%s%s%s%s", first, second, third, fourth);
+    }
 }
