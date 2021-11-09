@@ -26,7 +26,12 @@
 
     <!-- page body -->
     <body class="bg-light ">
-        
+
+        <!-- toasts container -->
+        <th:block
+            th:replace="~{app/fragments/toasts :: toast-container}">
+        </th:block>
+
         <!-- navbar default -->
         <nav
             th:replace="~{app/fragments/navbar :: navbar}">

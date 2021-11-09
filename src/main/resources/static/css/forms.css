@@ -1,0 +1,15 @@
+main.container {
+    margin-top: 1rem;
+    
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+}
+
+main.container form {
+    width: 320px;
+}

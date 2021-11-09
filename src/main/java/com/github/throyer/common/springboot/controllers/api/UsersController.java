@@ -10,7 +10,7 @@ import com.github.throyer.common.springboot.domain.services.user.CreateUserServi
 import com.github.throyer.common.springboot.domain.services.user.FindUserService;
 import com.github.throyer.common.springboot.domain.services.user.RemoveUserService;
 import com.github.throyer.common.springboot.domain.services.user.UpdateUserService;
-import com.github.throyer.common.springboot.domain.services.user.dto.CreateUser;
+import com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApi;
 import com.github.throyer.common.springboot.domain.services.user.dto.SearchUser;
 import com.github.throyer.common.springboot.domain.services.user.dto.UpdateUser;
 import com.github.throyer.common.springboot.domain.services.user.dto.UserDetails;
@@ -63,7 +63,7 @@ public class UsersController {
     
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<UserDetails> save(@Validated @RequestBody CreateUser body) {
+    public ResponseEntity<UserDetails> save(@Validated @RequestBody CreateUserApi body) {
         return createService.create(body);
     }
     

@@ -7,6 +7,8 @@ import com.github.throyer.common.springboot.domain.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 @Component
 public class EmailValidations {
@@ -29,6 +31,12 @@ public class EmailValidations {
         }
     }
 
+    public static void validateEmailUniqueness(HasEmail entity, BindingResult result) {
+        if (repository.existsByEmail(entity.getEmail())) {
+            result.addError(new ObjectError(FIELD, MESSAGE));
+        }
+    }
+
     public static void validateEmailUniquenessOnModify(HasEmail newEntity, HasEmail actualEntity) {
 
         var newEmail = newEntity.getEmail();
@@ -40,6 +48,24 @@ public class EmailValidations {
 
         if (changedEmail && emailAlreadyUsed) {
             throw new EmailNotUniqueException(EMAIL_ERROR);
+        }
+    }
+
+    public static void validateEmailUniquenessOnModify(
+        HasEmail newEntity,
+        HasEmail actualEntity,
+        BindingResult result
+    ) {
+
+        var newEmail = newEntity.getEmail();
+        var actualEmail = actualEntity.getEmail();
+
+        var changedEmail = !actualEmail.equals(newEmail);
+
+        var emailAlreadyUsed = repository.existsByEmail(newEmail);
+
+        if (changedEmail && emailAlreadyUsed) {
+            result.addError(new ObjectError(FIELD, MESSAGE));
         }
     }
 }

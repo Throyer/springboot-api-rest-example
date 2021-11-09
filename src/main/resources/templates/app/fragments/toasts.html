@@ -1,0 +1,15 @@
+<th:block th:fragment="toast-container">
+    <div th:if="${toasts}" class="toast-container position-absolute mt-5 p-3 top-0 end-0" id="toast_container">
+        <div th:each="toast : ${toasts}" th:classappend="${toast.type}" class="toast show">
+            <div class="d-flex">
+                <div th:text="${toast.message}" class="toast-body">Toast message</div>
+                <button
+                    type="button"
+                    class="btn-close me-2 m-auto"
+                    data-bs-dismiss="toast"
+                    aria-label="Close">
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
