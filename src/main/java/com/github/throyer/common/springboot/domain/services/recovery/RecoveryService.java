@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 
 @Service
 public class RecoveryService {
+    
+    private static final Integer MINUTES_TO_EXPIRE = 20;
 
     @Autowired
     private UserRepository users;
@@ -49,14 +51,18 @@ public class RecoveryService {
             return;
         }
 
-        var minutesToExpire = 20;
-
-        var recovery = new Recovery(user.get(), minutesToExpire);
+        var recovery = new Recovery(user.get(), MINUTES_TO_EXPIRE);
 
         recoveries.save(recovery);
 
         try {
-            var recoveryEmail = new RecoveryEmail(email, "password recovery code", recovery.getCode());
+            var recoveryEmail = new RecoveryEmail(
+                email,
+                "password recovery code",
+                user.get().getName(),
+                recovery.getCode()
+            );
+            
             service.send(recoveryEmail);
         } catch (Exception exception) { }
     }
