@@ -119,20 +119,16 @@ Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aqu
 ---
 
 ## Database Migrations
-existem dois scripts `bash` que podem ser usados para criação de arquivos de migração
+Criando arquivos de arquivos de migração
 
 - Java based migrations
   ```bash
-    ./migration_create <migration-name>
-    # or zsh users
-    bash migration_create.sh <migration-name>
+  mvn migration:generate -Dname=my-migration-name
   ```
 
 - SQL based migrations
   ```bash
-    ./sql_create <migration-name>
-    # or zsh users
-    bash sql_create.sh <migration-name>
+  mvn migration:generate -Dname=my-migration-name -Dtype=sql
   ```
 
 ---
