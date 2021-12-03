@@ -17,12 +17,12 @@
         <java.version>16</java.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>migration-maven-plugin</id>
-            <url>file://${project.basedir}/lib/migration-maven-plugin-1.0.0.jar</url>
-        </repository>
-    </repositories>
+    <pluginRepositories>
+		<pluginRepository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</pluginRepository>
+	</pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -171,7 +171,7 @@
             <plugin>
                 <groupId>com.github.throyer</groupId>
                 <artifactId>migration-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.2.2</version>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
