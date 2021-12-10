@@ -155,8 +155,8 @@ Criando arquivos de arquivos de migração
 >
 > ```shell
 > # para mudar o valor de alguma variável de ambiente
-> # na execução basta passar ela como parâmetro. (como --port=80 por exemplo).
-> $ java -jar api-1.0.0.RELEASE.jar --port=80
+> # na execução basta passar ela como parâmetro. (como --SERVER_PORT=80 por exemplo).
+> $ java -jar api-1.0.0.RELEASE.jar --SERVER_PORT=80
 > ```
 >
 > > [Todas opções do `aplication.properties` **padrões** no Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
