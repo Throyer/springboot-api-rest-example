@@ -23,7 +23,7 @@ public class SwaggerTests {
     @DisplayName("Deve exibir a documentação | swagger ui")
     public void should_show_swagger_docs_ui() throws Exception {
 
-        var request = get("/documentation/swagger-ui/index.html");;
+        var request = get("/swagger-ui/index.html");
 
         api.perform(request)
             .andDo(print())
