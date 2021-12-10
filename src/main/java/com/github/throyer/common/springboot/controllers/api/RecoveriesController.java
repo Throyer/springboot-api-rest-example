@@ -1,10 +1,10 @@
 package com.github.throyer.common.springboot.controllers.api;
 
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 import com.github.throyer.common.springboot.domain.services.recovery.RecoveryConfirmService;
 import com.github.throyer.common.springboot.domain.services.recovery.RecoveryService;
 import com.github.throyer.common.springboot.domain.services.recovery.RecoveryUpdateService;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-
 import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryConfirm;
 import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryRequest;
 import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryUpdate;
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-
-@Api(tags = "Password recovery", produces = "application/json")
 @RestController
 @RequestMapping("/api/recoveries")
 public class RecoveriesController {

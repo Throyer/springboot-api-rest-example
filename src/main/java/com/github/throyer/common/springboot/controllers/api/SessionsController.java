@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-
-@Api(tags = "Session")
 @RestController
 @RequestMapping("/api/sessions")
 public class SessionsController {
