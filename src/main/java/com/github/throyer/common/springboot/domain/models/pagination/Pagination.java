@@ -1,10 +1,13 @@
 package com.github.throyer.common.springboot.domain.models.pagination;
 
+import static java.util.Objects.nonNull;
+import static org.springframework.data.domain.PageRequest.of;
+import static org.springframework.data.domain.Sort.by;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -13,16 +16,11 @@ import javax.persistence.Entity;
 import com.github.throyer.common.springboot.domain.validation.InvalidSortException;
 import com.github.throyer.common.springboot.domain.validation.SimpleError;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
-import static java.util.Objects.nonNull;
-import static org.springframework.data.domain.PageRequest.of;
-import static org.springframework.data.domain.Sort.by;
 
 public class Pagination {
 

@@ -1,11 +1,10 @@
 package com.github.throyer.common.springboot.domain.services.user;
 
-import com.github.throyer.common.springboot.domain.models.shared.Toast;
-import com.github.throyer.common.springboot.domain.models.shared.Type;
 import static com.github.throyer.common.springboot.utils.Responses.created;
 
 import java.util.List;
 
+import com.github.throyer.common.springboot.domain.models.shared.Type;
 import com.github.throyer.common.springboot.domain.repositories.RoleRepository;
 import com.github.throyer.common.springboot.domain.repositories.UserRepository;
 import com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApi;

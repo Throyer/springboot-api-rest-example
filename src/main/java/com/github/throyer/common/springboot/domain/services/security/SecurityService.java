@@ -6,7 +6,6 @@ import static java.util.Objects.nonNull;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import com.github.throyer.common.springboot.domain.models.security.Authorized;

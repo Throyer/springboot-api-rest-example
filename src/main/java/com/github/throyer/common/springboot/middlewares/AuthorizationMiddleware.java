@@ -1,6 +1,5 @@
 package com.github.throyer.common.springboot.middlewares;
 
-import static com.github.throyer.common.springboot.domain.services.security.SecurityService.authorize;
 import static com.github.throyer.common.springboot.utils.TokenUtils.authorization;
 import static java.util.Optional.ofNullable;
 
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.github.throyer.common.springboot.domain.services.security.SecurityService;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 

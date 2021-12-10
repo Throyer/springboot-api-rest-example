@@ -1,13 +1,10 @@
 package com.github.throyer.common.springboot.controllers.app;
 
-import com.github.throyer.common.springboot.domain.models.shared.Toast;
-import com.github.throyer.common.springboot.domain.models.shared.Type;
-import com.github.throyer.common.springboot.domain.services.user.CreateUserService;
-
-import com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApp;
-import com.github.throyer.common.springboot.utils.Toasts;
-import java.util.List;
 import javax.validation.Valid;
+
+import com.github.throyer.common.springboot.domain.services.user.CreateUserService;
+import com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
