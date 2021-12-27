@@ -7,6 +7,7 @@
                     class="nav-link link-dark px-2 active"
                     aria-current="page"
                 >
+                    <i class="fas fa-home"></i>
                     Home
                 </a>
             </li>
@@ -16,23 +17,41 @@
                     class="nav-link link-dark px-2 active"
                     aria-current="page"
                 >
+                    <i class="fas fa-scroll"></i>
                     Swagger docs
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    href="https://github.com/Throyer/springboot-api-crud#spring-boot-api-crud"
+                    class="nav-link link-dark px-2 active"
+                    aria-current="page"
+                >
+                <i class="fab fa-github-alt"></i>
+                    Repository
                 </a>
             </li>
         </ul>
         <ul sec:authorize="isAuthenticated()" class="nav">
             <li class="nav-item">
                 <a th:href="@{/app/logout}" class="nav-link link-dark px-2">
-                    Sign out <i class="fas fa-door-open"></i>
+                    <i class="fas fa-door-open"></i>
+                    Sign out
                 </a>
             </li>
         </ul>
         <ul sec:authorize="!isAuthenticated()" class="nav">
             <li class="nav-item">
-                <a th:href="@{/app/login}" class="nav-link link-dark px-2">Login <i class="fas fa-door-closed"></i></a>
+                <a th:href="@{/app/login}" class="nav-link link-dark px-2">
+                    <i class="fas fa-door-closed"></i>
+                    Login
+                </a>
             </li>
             <li class="nav-item">
-                <a th:href="@{/app/register}" class="nav-link link-dark px-2">Sign up <i class="fas fa-certificate"></i></a>
+                <a th:href="@{/app/register}" class="nav-link link-dark px-2">
+                    <i class="fas fa-certificate"></i>
+                    Sign up
+                </a>
             </li>
         </ul>
     </div>

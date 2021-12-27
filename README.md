@@ -54,7 +54,7 @@
 ## Requisitos
 
 - MariaDB: `^10.6.1`
-- Java: `^16`
+- Java: `^17`
 > recomendo a instalação do maven localmente, mas o projeto tem uma versão portatil nos arquivos [`mvnw`](./mvnw) e [`mvnw.cmd`](./mvnw.cmd)
 
 Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
