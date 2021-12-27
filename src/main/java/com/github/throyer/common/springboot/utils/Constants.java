@@ -3,7 +3,7 @@ package com.github.throyer.common.springboot.utils;
 import com.github.throyer.common.springboot.domain.services.security.JsonWebToken;
 
 public class Constants {
-    public class SECURITY {
+    public static class SECURITY {
         public static final JsonWebToken JWT = new JsonWebToken();
         public static final Long HOUR_IN_SECONDS = 3600L;
         public static final Integer DAY_MILLISECONDS = 86400;

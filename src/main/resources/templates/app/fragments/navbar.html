@@ -12,27 +12,27 @@
             </li>
             <li class="nav-item">
                 <a
-                    th:href="@{/documentation/swagger-ui/#/}"
+                    th:href="@{/swagger-ui/index.html?configUrl=/documentation/schemas/swagger-config}"
                     class="nav-link link-dark px-2 active"
                     aria-current="page"
                 >
-                    Swagger API
+                    Swagger docs
                 </a>
             </li>
         </ul>
         <ul sec:authorize="isAuthenticated()" class="nav">
             <li class="nav-item">
                 <a th:href="@{/app/logout}" class="nav-link link-dark px-2">
-                    Sign out
+                    Sign out <i class="fas fa-door-open"></i>
                 </a>
             </li>
         </ul>
         <ul sec:authorize="!isAuthenticated()" class="nav">
             <li class="nav-item">
-                <a th:href="@{/app/login}" class="nav-link link-dark px-2">Login</a>
+                <a th:href="@{/app/login}" class="nav-link link-dark px-2">Login <i class="fas fa-door-closed"></i></a>
             </li>
             <li class="nav-item">
-                <a th:href="@{/app/register}" class="nav-link link-dark px-2">Sign up</a>
+                <a th:href="@{/app/register}" class="nav-link link-dark px-2">Sign up <i class="fas fa-certificate"></i></a>
             </li>
         </ul>
     </div>

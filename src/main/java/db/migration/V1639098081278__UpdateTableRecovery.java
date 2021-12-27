@@ -14,15 +14,15 @@ public class V1639098081278__UpdateTableRecovery extends BaseJavaMigration {
         create.transaction(configuration -> {
             using(configuration)
                 .alterTable("recovery")
-                .addColumn("confirmed", BOOLEAN.nullable(true))
-                .after("code")
-                .execute();
+                    .addColumn("confirmed", BOOLEAN.nullable(true))
+                        .after("code")
+                            .execute();
 
             using(configuration)
                 .alterTable("recovery")
-                .addColumn("used", BOOLEAN.nullable(true))
-                .after("confirmed")
-                .execute();
+                    .addColumn("used", BOOLEAN.nullable(true))
+                        .after("confirmed")
+                            .execute();
         });
     }
 }

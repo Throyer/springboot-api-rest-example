@@ -53,20 +53,16 @@
 
                         <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show mt-2"
                             role="alert">
-                            <strong>Senha ou usuario invalido!</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <strong>Senha ou usuário invalido</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
 
                         <div th:if="${param.denied}" class="alert alert-warning alert-dismissible fade show mt-3 mb-3"
                             role="alert">
                             <strong>Acesso negado!</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             <hr>
-                            Por favor faça o login com outro usuario ou entre em
+                            Por favor faça o login com outro usuário ou entre em
                             <a th:href="@{/contato}" class="">contato</a> com o administrador do sistema.
                         </div>
                     </form>

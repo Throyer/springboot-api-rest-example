@@ -1,94 +1,147 @@
-<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{}, ~{::section}, ~{}, ~{})}">
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::links}, ~{::section}, ~{}, ~{})}">
     <title>Home</title>
+    <links>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    </links>
     <section>
-        <div class="col-lg-8 mx-auto p-3 py-md-5">
-            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-                <a th:href="@{/app}" class="d-flex d-flex flex-row container align-items-center justify-content-between text-dark text-decoration-none">
-                    <img class="d-inline-block align-top ml-2 img-fluid"
-                    width="500"
-                        src="https://github.com/Throyer/springboot-api-crud/raw/master/assets/tecnologias.png">
-                        <span class="fs-1 d-none d-sm-block">Simple Spring Boot API C.R.U.D</span>
-                </a>
-            </header>
-
+        <div
+            class="col-lg-8 mx-auto p-3 py-md-3 border-bottom"
+            sec:authorize="isAuthenticated()"
+            th:object="${#authentication.principal}">
+            <p>
+                <span class="fs-2">Welcome: </span>
+                <span class="fs-2 fw-light" th:if="${name}" th:text="${name}"></span>
+            </p>
+            <p>
+                <span class="fs-2">Roles: </span>
+                <code th:each="role : *{authorities}">
+                    <span th:text="${role}" class="fs-5"></span>
+                </code>
+            </p>
+        </div>
+        <div class="col-lg-8 mx-auto p-3 py-md-3">
+            <h1>Simple Spring Boot API <code class="fs-1">C.R.U.D</code></h1>
+            <p class="fs-5 col-md-8">
+                This is a simple <code>API</code> and <code>WEB APP</code>.
+            </p>
+            <p class="fs-5 col-md-8">
+                Project with a crud of users with as
+                many good practices as I can.
+            </p>
             <main>
-
-                <h1>Explore the project</h1>
-                <p class="fs-5 col-md-8">
-                    This is a simple API and Web App (MVC)
-                    project with a crud of users with as
-                    many good practices as I can.
-                </p>
-                <ul class="icon-list">
-                    <li>
-                        Swagger
-                    </li>
-                    <li>
-                        Database migrations (java based)
-                    </li>
-                    <li>
-                        JWT and Refresh token
-                    </li>
-                    <li>
-                        Integration with SMTP services (Email)
-                    </li>
-                </ul>
-                <p>
-                    It was meant to be used as a base for larger projects.
-                </p>
-
-                <div class="mb-5">
-                    <a href="https://github.com/Throyer/springboot-api-crud#sumario" target="_blank"
-                        class="btn btn-primary btn-lg px-4">Repository <i class="fab fa-github"></i></a>
-                </div>
-
-                <hr class="col-3 col-md-2 mb-5">
-
-                <div class="row g-5">
-                    <div class="col-md-6">
-                        <h2>Other projects</h2>
-                        <p>There is a project on nodejs with a similar idea.</p>
-                        <ul class="icon-list">
-                            <li>
-                                <a href="https://github.com/Throyer/nodejs-api-crud#table-of-contents" rel="noopener"
-                                    target="_blank">
-                                    NodeJs project
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/Throyer/quarkus-api-crud#quarkus-api-crud" rel="noopener"
-                                    target="_blank">
-                                    Quarkus project
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/Throyer/products#requisitos" rel="noopener" target="_blank">
-                                    Spring boot project but with PostgreSQL
-                                </a>
-                            </li>
-                            <li class="text-muted">.NetCore project (coming soon!)</li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-6">
-                        <h2>Project features</h2>
-                        <p>The idea is to have as many good practices and standards as possible, here are some already
-                            implemented</p>
-                        <ul class="icon-list">
-                            <li>JWT</li>
-                            <li>Refresh token</li>
-                            <li>Tests with JUnity</li>
-                            <li>Test coverage report (Jacoco)</li>
-                            <li>Database migrations</li>
-                            <li><a
-                                    href="https://github.com/Throyer/java-based-flyway-migrations#migra%C3%A7%C3%B5es-de-banco-de-dados-baseadas-em-arquivos-java">Java
-                                    Based migrations</a></li>
-                            <li>Soft delete</li>
-                            <li>Swagger</li>
-                            <li>Email (SMTP)</li>
-                            <li>Lazy load</li>
-                            <li>Audit fields (created_at, updated_at etc)</li>
-                        </ul>
+                <div class="container px-2 py-2" id="hanging-icons">
+                    <h2 class="pb-2 border-bottom">Features</h2>
+                    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-shield-alt text-light"></i>
+                            </div>
+                            <div>
+                                <h2>JWT</h2>
+                                <p>
+                                    Spring security configuration,
+                                    roles and session.
+                                    JSON web token and refresh token
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-flask text-light"></i>
+                            </div>
+                            <div>
+                                <h2>Tests</h2>
+                                <p>
+                                    Tests with JUnity, Test coverage report with Jacoco.
+                                    Memory database tests H2 and Spring mock mvc
+                                    integration tests
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-database text-light"></i>
+                            </div>
+                            <div>
+                                <h2>Database migrations</h2>
+                                <p>
+                                    Database migrations using flywaydb.
+                                    They are are created using
+                                    <a class="text-dark" href="https://github.com/Throyer/migration-maven-plugin">
+                                        Java
+                                    </a>
+                                    through JOOQ query builder
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-scroll text-light"></i>
+                            </div>
+                            <div>
+                                <h2>Swagger docs</h2>
+                                <p>
+                                    Swagger documentation generated
+                                    automatically from api controllers
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-envelope text-light"></i>
+                            </div>
+                            <div>
+                                <h2>SMTP integration</h2>
+                                <p>
+                                    Integration with SMTP
+                                    service for sending emails
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-search text-light"></i>
+                            </div>
+                            <div>
+                                <h2>Soft delete</h2>
+                                <p>
+                                    Soft delete implementation using spring data repository
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-history text-light"></i>
+                            </div>
+                            <div>
+                                <h2>Lazy load</h2>
+                                <p>
+                                    Lazy load relationships on entities
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fas fa-key text-light"></i>
+                            </div>
+                            <div>
+                                <h2>Audit fields</h2>
+                                <p>
+                                    Audit fields via inheritance in entities with BaseEntity. (created_at, updated_at, deleted_at, created_by etc)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <div class="icon-square bg-dark text-dark flex-shrink-0 me-3">
+                                <i class="fab fa-docker text-light"></i>
+                            </div>
+                            <div>
+                                <h2>Docker</h2>
+                                <p>
+                                    Docker compose configuration, back-end and database
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
