@@ -1,7 +1,6 @@
 <form
     novalidate
     method="POST"
-    autocomplete="off"
     class="needs-validation shadow-sm p-3 mb-5 bg-body rounded"
     th:object="${user}"
     th:action="@{/app/register}"
@@ -25,7 +24,9 @@
                 th:field="*{name}"
             >
             <div class="invalid-feedback">
-                Por favor, informe o nome.
+                <small>
+                    Por favor, informe o nome.
+                </small>
             </div>
         </div>
         <div class="col-md-12">
@@ -39,7 +40,9 @@
                 th:field="*{email}"
             >
             <div class="invalid-feedback">
-                Por favor, informe o e-mail.
+                <small>
+                    Por favor, informe o e-mail.
+                </small>
             </div>
         </div>
         <div class="col-md-12">
@@ -53,7 +56,9 @@
                 th:field="*{password}"
             >
             <div class="invalid-feedback">
-                Por favor, informe a senha.
+                <small>
+                    Por favor, informe a senha.
+                </small>
             </div>
         </div>
     </div>

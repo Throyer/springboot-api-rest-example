@@ -1,57 +1,75 @@
-<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::link}, ~{::main}, ~{::script}, ~{})}">
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::links}, ~{::main}, ~{::script}, ~{})}">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/codes.css}">
+    <links>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/codes.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/center-forms.css}">
+    </links>
     <main class="container">
-        <i class="fas fa-user fa-6x mb-2"></i>
-        <h1>Recovery</h1>
-        <form autocomplete="off" th:object="${codes}" class="needs-validation" novalidate th:action="@{/app/recovery/confirm}" method="POST">
-            <input
-                th:field="*{email}"
-                type="email"
-                hidden
-            >
-            <label for="input_email" class="form-label mt-4">Recovery code</label>
-            <div class="codes">
-                <div class="code">
-                    <input
-                        th:field="*{first}"
-                        type="number"
-                        class="form-control"
-                        maxlength="1"
-                        required
-                    >
+        <form
+            autocomplete="off"
+            th:object="${codes}"
+            class="needs-validation shadow-sm p-3 mb-5 bg-body rounded"
+            novalidate
+            th:action="@{/app/recovery/confirm}"
+            method="POST"
+        >
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="fs-3 text-center">
+                        <i class="fas fa-fingerprint"></i>
+                        Confirm
+                    </h1>
                 </div>
-                <div class="code">
-                    <input
-                        th:field="*{second}"
-                        type="number"
-                        class="form-control"
-                        maxlength="1"
-                        required
-                    >
-                </div>
-                <div class="code">
-                    <input
-                        th:field="*{third}"
-                        type="number"
-                        class="form-control"
-                        maxlength="1"
-                        required
-                    >
-                </div>
-                <div class="code">
-                    <input
-                        th:field="*{fourth}"
-                        type="number"
-                        class="form-control"
-                        maxlength="1"
-                        required
-                    >
+            </div>
+            <div class="row">
+                <input
+                    th:field="*{email}"
+                    type="email"
+                    hidden
+                >
+                <label for="input_email" class="form-label mt-4 text-center">Recovery code</label>
+                <div class="codes">
+                    <div class="code">
+                        <input
+                            th:field="*{first}"
+                            type="number"
+                            class="form-control"
+                            maxlength="1"
+                            required
+                        >
+                    </div>
+                    <div class="code">
+                        <input
+                            th:field="*{second}"
+                            type="number"
+                            class="form-control"
+                            maxlength="1"
+                            required
+                        >
+                    </div>
+                    <div class="code">
+                        <input
+                            th:field="*{third}"
+                            type="number"
+                            class="form-control"
+                            maxlength="1"
+                            required
+                        >
+                    </div>
+                    <div class="code">
+                        <input
+                            th:field="*{fourth}"
+                            type="number"
+                            class="form-control"
+                            maxlength="1"
+                            required
+                        >
+                    </div>
                 </div>
             </div>
             <div class="submit-container mt-4">
-                <a th:href="@{/app/login}" class="btn btn-primary" role="button">Back</a>
+                <a th:href="@{/app/recovery}" class="btn btn-primary" role="button">Back</a>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </form>

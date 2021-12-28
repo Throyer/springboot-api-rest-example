@@ -1,87 +1,89 @@
 <layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::link}, ~{::main}, ~{::script}, ~{})}">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/codes.css}">
+    <links>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/codes.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/center-forms.css}">
+    </links>
     <main class="container">
-        <i class="fas fa-user fa-6x mb-2"></i>
-        <h1>Recovery</h1>
-        <form autocomplete="off" th:object="${update}" class="needs-validation" novalidate th:action="@{/app/recovery/update}" method="POST">
-            <input
-                th:field="*{email}"
-                type="email"
-                hidden
-            >
-            <div class="codes">
-                <div class="code">
-                    <input
-                        th:field="*{first}"
-                        type="number"
-                        hidden
-                        maxlength="1"
-                        required
-                    >
-                </div>
-                <div class="code">
-                    <input
-                        th:field="*{second}"
-                        type="number"
-                        hidden
-                        maxlength="1"
-                        required
-                    >
-                </div>
-                <div class="code">
-                    <input
-                        th:field="*{third}"
-                        type="number"
-                        hidden
-                        maxlength="1"
-                        required
-                    >
-                </div>
-                <div class="code">
-                    <input
-                        th:field="*{fourth}"
-                        type="number"
-                        hidden
-                        maxlength="1"
-                        required
-                    >
-                </div>
-            </div>
+        <form
+            autocomplete="off"
+            th:object="${update}"
+            class="needs-validation shadow-sm p-3 mb-5 bg-body rounded"
+            novalidate
+            th:action="@{/app/recovery/update}"
+            method="POST"
+        >
             <div class="row">
-                <div class="col-md-12 mt-4">
-                    <label for="input_password" class="form-label">Password</label>
-                    <input
-                        th:field="*{password}"
-                        type="password"
-                        autocomplete="new-password"
-                        class="form-control"
-                        id="input_password"
-                        required
-                    >
-                    <div class="invalid-feedback">
-                        Por favor, informe a senha.
+                <input
+                    th:field="*{email}"
+                    type="email"
+                    hidden
+                >
+                <div class="codes">
+                    <div class="code">
+                        <input
+                            th:field="*{first}"
+                            type="number"
+                            hidden
+                            maxlength="1"
+                            required
+                        >
+                    </div>
+                    <div class="code">
+                        <input
+                            th:field="*{second}"
+                            type="number"
+                            hidden
+                            maxlength="1"
+                            required
+                        >
+                    </div>
+                    <div class="code">
+                        <input
+                            th:field="*{third}"
+                            type="number"
+                            hidden
+                            maxlength="1"
+                            required
+                        >
+                    </div>
+                    <div class="code">
+                        <input
+                            th:field="*{fourth}"
+                            type="number"
+                            hidden
+                            maxlength="1"
+                            required
+                        >
                     </div>
                 </div>
+
             </div>
-            <div class="row">
-                <div class="col-md-12 mt-4">
-                    <label for="input_confirm_password" class="form-label">Confirm password</label>
+            <div class="row gap-3">
+                <div class="col-md-12">
+                    <h1 class="fs-3 text-center">
+                        <i class="fas fa-key"></i>
+                        New password
+                    </h1>
+                </div>
+                <div class="col-md-12">
                     <input
-                        th:field="*{confirmPassword}"
-                        type="password"
-                        class="form-control"
-                        id="input_confirm_password"
                         required
+                        type="password"
+                        autocomplete="new-password"
+                        placeholder="New password"
+                        id="input_password"
+                        class="form-control form-control-sm"
+                        th:field="*{password}"
                     >
                     <div class="invalid-feedback">
-                        Por favor, confirme a senha.
+                        <small>Por favor, informe a senha.</small>
                     </div>
                 </div>
             </div>
             <div class="submit-container mt-4">
-                <a th:href="@{/app/login}" class="btn btn-primary" role="button">Back</a>
+                <a th:href="@{/app/recovery}" class="btn btn-primary" role="button">Back</a>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </form>

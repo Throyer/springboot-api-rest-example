@@ -1,23 +1,38 @@
-<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::link}, ~{::main}, ~{::script}, ~{})}">
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::links}, ~{::main}, ~{::script}, ~{})}">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+    <links>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/center-forms.css}">
+    </links>
     <main class="container">
-        <i class="fas fa-user fa-6x mb-2"></i>
-        <h1>Recovery</h1>
-        <form th:object="${recovery}" class="needs-validation" novalidate th:action="@{/app/recovery}" method="POST">
-            <div class="row">
-                <div class="col-md-12 mt-4">
-                    <label for="input_email" class="form-label">E-mail</label>
+        <form
+            novalidate
+            method="POST"
+            autocomplete="off"
+            class="needs-validation shadow-sm p-3 mb-5 bg-body rounded"
+            th:object="${recovery}"
+            th:action="@{/app/recovery}"
+            th:fragment="form-register"
+        >
+            <div class="row gap-3">
+                <div class="col-md-12">
+                    <h1 class="fs-3 text-center">
+                        <i class="far fa-envelope"></i>
+                        Recovery
+                    </h1>
+                </div>
+                <div class="col-md-12">
                     <input
-                        th:field="*{email}"
-                        type="email"
-                        class="form-control"
-                        id="input_name"
-                        autocomplete="email"
                         required
+                        type="email"
+                        autocomplete="email"
+                        placeholder="E-mail"
+                        id="input_name"
+                        class="form-control form-control-sm"
+                        th:field="*{email}"
                     >
                     <div class="invalid-feedback">
-                        Por favor, informe o email.
+                        <small>Por favor, informe o email.</small>
                     </div>
                 </div>
             </div>
