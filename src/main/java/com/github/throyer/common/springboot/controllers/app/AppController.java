@@ -1,7 +1,7 @@
 package com.github.throyer.common.springboot.controllers.app;
 
 import com.github.throyer.common.springboot.domain.repositories.UserRepository;
-import com.github.throyer.common.springboot.domain.services.security.SecurityService;
+import static com.github.throyer.common.springboot.domain.services.security.SecurityService.authorized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,10 @@ public class AppController {
 
     @GetMapping
     public String index(Model model) {
-        SecurityService.authorized()
-            .ifPresent(session -> repository.findById(session.getId())
-                .ifPresent(user -> model.addAttribute("name", user.getName()))
-        );
+        authorized()
+            .ifPresent(session -> repository.findNameById(session.getId())
+                .ifPresent(name -> model.addAttribute("name", name)));
+        
         return "app/index";
     }
 }

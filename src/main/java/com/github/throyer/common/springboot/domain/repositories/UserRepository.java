@@ -52,6 +52,12 @@ public interface UserRepository extends SoftDeleteRepository<User> {
     public Boolean existsByEmail(String email);
     
     public Optional<User> findOptionalByIdAndDeletedAtIsNull(Long id);
+    
+    @Query("""
+        SELECT user.name FROM #{#entityName} user
+        WHERE user.id = ?1
+    """)
+    public Optional<String> findNameById(Long id);
 
     @Query("""
         SELECT user FROM #{#entityName} user

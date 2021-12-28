@@ -1,0 +1,65 @@
+<form
+    novalidate
+    method="POST"
+    autocomplete="off"
+    class="needs-validation shadow-sm p-3 mb-5 bg-body rounded"
+    th:object="${user}"
+    th:action="@{/app/register}"
+    th:fragment="form-register"
+>
+    <div class="row gap-3">
+        <div class="col-md-12">
+            <h1 class="fs-3 text-center">
+                <i class="far fa-user"></i>
+                Register
+            </h1>
+        </div>
+        <div class="col-md-12">
+            <input
+                required
+                type="text"
+                autocomplete="name"
+                placeholder="Name"
+                id="input_name"
+                class="form-control form-control-sm"
+                th:field="*{name}"
+            >
+            <div class="invalid-feedback">
+                Por favor, informe o nome.
+            </div>
+        </div>
+        <div class="col-md-12">
+            <input
+                required
+                type="email"
+                autocomplete="email"
+                placeholder="E-mail"
+                id="input_email"
+                class="form-control form-control-sm"
+                th:field="*{email}"
+            >
+            <div class="invalid-feedback">
+                Por favor, informe o e-mail.
+            </div>
+        </div>
+        <div class="col-md-12">
+            <input
+                required
+                type="password"
+                autocomplete="new-password"
+                placeholder="Password"
+                class="form-control form-control-sm"
+                id="input_password"
+                th:field="*{password}"
+            >
+            <div class="invalid-feedback">
+                Por favor, informe a senha.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mt-4 d-grid gap-2">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </div>
+</form>
