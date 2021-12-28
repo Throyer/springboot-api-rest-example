@@ -13,8 +13,7 @@
 
 ## Sumario
 
-- [Motivação](#motivação)
-- [Próximos passos](#o-que-foi-feito-e-os-próximos-passos)
+- [Features](#features)
 - [Requisitos](#requisitos)
 - [Entidades](#entidades)
 - [Instalação](#instalação)
@@ -24,32 +23,13 @@
 - [Database Migrations](#database-migrations)
 - [Variaveis de ambiente](#variáveis-de-ambiente)
 
-# Motivação
+# Features
 
-<p>
-  A ideia desse repositório é a criação de uma api em spring boot,
-  com o máximo possível de boas praticas e o mais completa que eu conseguir,
-  para servir como uma base para min no futuro, ou para outras pessoas
-  que estiverem buscando um guia para a construção de uma api com Spring Boot.
-  Qualquer pessoa que quiser contribuir ou usar esse projeto é bem vinda.
+<p align="center">
+  <a href="https://throyer-crud-api.herokuapp.co" target="blank"><img src="https://i.imgur.com/YWjBtvG.png"  alt="Tecnologias" /></a>
 </p>
 
-# O que foi feito e os próximos passos
 
-- [X] **JWT**
-- [X] **Refresh token**
-- [X] _users **CRUD**_
-- [X] _test coverage report **Jacoco report**_
-- [X] _tests **JUnity**_
-- [X] _database migration **Flyway**_
-- [X] _java based migrations_
-- [X] _Soft delete_
-- [X] _Auditoria_
-- [X] _swagger_
-- [X] _email templates_
-- [X] _lazy load_
-
----
 
 ## Requisitos
 
