@@ -26,7 +26,7 @@
 # Features
 
 <p align="center">
-  <a href="https://throyer-crud-api.herokuapp.co" target="blank"><img src="https://i.imgur.com/YWjBtvG.png"  alt="Tecnologias" /></a>
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="https://i.imgur.com/YWjBtvG.png"  alt="Tecnologias" /></a>
 </p>
 
 
