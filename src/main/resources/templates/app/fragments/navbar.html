@@ -67,16 +67,22 @@
                     </a>
                     <ul class="dropdown-menu border-0 shadow bg-light animate slideIn" aria-labelledby="show-more">
                         <li>
-                            <a data-bs-toggle="modal" data-bs-target="#me" class="dropdown-item" href="#">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#me" class="dropdown-item">
                                 <i class="fas fa-user-circle"></i>
                                 Me
+                            </a>
+                        </li>
+                        <li sec:authorize="hasAnyAuthority('ADM')">
+                            <a class="dropdown-item" th:href="@{/app/users}">
+                                <i class="fas fa-users"></i>
+                                Users
                             </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a th:href="@{/app/logout}" class="dropdown-item" href="#">
+                            <a th:href="@{/app/logout}" class="dropdown-item">
                                 <i class="fas fa-door-open"></i>
                                 Sign out
                             </a>

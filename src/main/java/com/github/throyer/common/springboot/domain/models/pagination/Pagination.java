@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 
 import com.github.throyer.common.springboot.domain.validation.InvalidSortException;
 import com.github.throyer.common.springboot.domain.validation.SimpleError;
+import java.util.Objects;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -57,6 +58,26 @@ public class Pagination {
         }
     }
 
+    public void setSize(String string) {
+
+        if (Objects.isNull(string)) {
+            this.size = DEFAULT_SIZE;
+            return;
+        }
+
+        try {
+            var size = Integer.parseInt(string);
+            if (size >= MIN_SIZE && size <= MAX_SIZE) {
+                this.size = size;
+            } else {
+                this.size = DEFAULT_SIZE;
+            }
+        }
+        catch (NumberFormatException exception) {
+            this.size = DEFAULT_SIZE;
+        }
+    }
+
     public Pageable build() {
         return of(page, size);
     }
@@ -68,8 +89,8 @@ public class Pagination {
     public <T> Pageable build(Sort query, Class<T> entity) {
         if (!entity.isAnnotationPresent(Entity.class)) {
             throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                "Esta Classe não é uma entidade."
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Esta Classe não é uma entidade."
             );
         }
 
@@ -78,9 +99,9 @@ public class Pagination {
 
         for (Order order : query) {
             Optional<Field> optional = fields(entity)
-                .filter(field -> belongs(field, order))
+                    .filter(field -> belongs(field, order))
                     .findAny();
-                    
+
             if (optional.isPresent()) {
                 orders.add(getOrder(order, optional.get()));
             } else {
@@ -97,7 +118,7 @@ public class Pagination {
 
     private static Boolean belongs(Field field, Order order) {
         var sortable = field.getAnnotation(SortableProperty.class);
-        
+
         var fieldName = field.getName().equals(order.getProperty());
         var name = sortable.name().equals(order.getProperty());
 
@@ -106,8 +127,8 @@ public class Pagination {
 
     private static <T> Stream<Field> fields(Class<T> entity) {
         return Arrays
-        .asList(entity.getDeclaredFields())
-            .stream()
+                .asList(entity.getDeclaredFields())
+                .stream()
                 .filter(field -> field.isAnnotationPresent(SortableProperty.class));
     }
 

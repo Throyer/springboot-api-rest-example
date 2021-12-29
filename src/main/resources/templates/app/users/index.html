@@ -1,0 +1,14 @@
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{}, ~{::section}, ~{::scripts}, ~{::modal})}">
+    <title>Users</title>
+    <section class="container">
+        <table
+            th:replace="~{__${execInfo.templateName}__/../fragments/table :: table(${page})}">
+        </table>
+        <modal
+            th:replace="~{__${execInfo.templateName}__/../fragments/modal :: delete-confirm}">
+        </modal>
+        <scripts>
+            <script language="javascript" th:src="@{/js/users-modal.js}"></script>
+        </scripts>
+    </section>
+</layout>

@@ -3,6 +3,7 @@ package com.github.throyer.common.springboot.domain.repositories;
 import java.util.Optional;
 
 import com.github.throyer.common.springboot.domain.models.entity.User;
+import com.github.throyer.common.springboot.domain.services.user.dto.UserDetails;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -74,4 +75,15 @@ public interface UserRepository extends SoftDeleteRepository<User> {
     public Optional<User> findOptionalByEmailFetchRoles(String email);
 
     public Optional<User> findOptionalByEmail(String email);
+    
+    @Query("""
+        SELECT
+            new com.github.throyer.common.springboot.domain.services.user.dto.UserDetails(
+                user.id,
+                user.name,
+                user.email
+            )
+        FROM #{#entityName} user
+    """)
+    public Page<UserDetails> findSimplifiedUsers(Pageable pageable);
 }

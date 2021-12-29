@@ -45,3 +45,25 @@
     -webkit-animation-name: slideIn;
     animation-name        : slideIn;
 }
+
+.pagination-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+#sizes_input {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+  gap: .25rem;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+
+.dropdown-menu .dropdown-item {
+  border-radius: .25rem;
+}
