@@ -1,15 +1,20 @@
 <p align="center">
-  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/demo.gif" alt="Demonstration" /></a>
+  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
 </p>
 
 <h1 align="center">Spring Boot API CRUD</h1>
 <p align="center">
   Um cadastro de usuários completo, com permissões de acesso, token JWT testes de integração e unitários, no padrão API RESTful.
 </p>
+
 <br>
 <br>
 
 [**Live demo on heroku**](https://throyer-crud-api.herokuapp.com)
+
+<p align="center">
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/demo.gif" alt="Demonstration" /></a>
+</p>
 
 ## Sumario
 
