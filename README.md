@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/demo.gif" alt="Demonstration" /></a>
 </p>
 
 <h1 align="center">Spring Boot API CRUD</h1>
@@ -90,8 +90,9 @@ Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/doc
 [exemplo no heroku](https://throyer-crud-api.herokuapp.com/documentation)
 
 ## Postman
-Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
-
+>Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
+>
+>> _🚨 this file deprecated!_
 
 <br>
 <br>
@@ -108,7 +109,7 @@ Criando arquivos de arquivos de migração
 
 - SQL based migrations
   ```bash
-  mvn migration:generate -Dname=my-migration-name -Dtype=sql
+  mvn migration:generate -Dname=my-migration-name -Dsql
   ```
 
 ---
@@ -136,7 +137,7 @@ Criando arquivos de arquivos de migração
 > ```shell
 > # para mudar o valor de alguma variável de ambiente
 > # na execução basta passar ela como parâmetro. (como --SERVER_PORT=80 por exemplo).
-> $ java -jar api-1.0.0.RELEASE.jar --SERVER_PORT=80
+> $ java -jar api-3.0.3.RELEASE.jar --SERVER_PORT=80
 > ```
 >
 > > [Todas opções do `aplication.properties` **padrões** no Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
