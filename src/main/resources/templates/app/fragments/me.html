@@ -1,0 +1,25 @@
+<div th:fragment="me" class="modal fade" tabindex="-1" role="dialog" id="me">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-6 shadow">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title"><i class="fas fa-user-alt"></i> About me</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0" sec:authorize="isAuthenticated()" th:object="${#authentication.principal}">
+                <p>
+                    <span class="fs-3">Name: </span>
+                    <span class="fs-5 fw-light" th:if="*{name}" th:text="*{name}"></span>
+                </p>
+                <p>
+                    <span class="fs-3">Roles: </span>
+                    <code th:each="role : *{authorities}">
+                        <span th:text="${role}" class="fs-5"></span>
+                    </code>
+                </p>
+            </div>
+            <div class="modal-footer flex-column border-top-0">
+                <button type="button" class="btn btn-lg btn-light w-100 mx-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,11 +11,13 @@ public class Authorized extends User {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private final Long id;
+    private final String name;
 
     public Authorized(Long id, List<Role> authorities) {
         super("USERNAME", "SECRET", authorities);
         this.id = id;
+        this.name = "";
     }
 
     public Authorized(com.github.throyer.common.springboot.domain.models.entity.User user) {
@@ -29,12 +31,17 @@ public class Authorized extends User {
             user.getRoles()
         );
         this.id = user.getId();
+        this.name = user.getName();
     }
 
     public Long getId() {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+    
     public UsernamePasswordAuthenticationToken getAuthentication() {
         return new UsernamePasswordAuthenticationToken(this, null, getAuthorities());
     }

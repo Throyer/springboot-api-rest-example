@@ -49,6 +49,10 @@
             th:replace="${modals}">
         </th:block>
 
+        <th:block
+            th:replace="~{app/fragments/me :: me}">
+        </th:block>
+
         <!-- default scripts -->
         <script
             th:replace="~{app/fragments/imports :: default-javascript}">
