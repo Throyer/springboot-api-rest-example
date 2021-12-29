@@ -92,7 +92,7 @@ Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/doc
 ## Postman
 >Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
 >
->> _🚨 this file deprecated!_
+>> _🚨 this file is deprecated!_
 
 <br>
 <br>
