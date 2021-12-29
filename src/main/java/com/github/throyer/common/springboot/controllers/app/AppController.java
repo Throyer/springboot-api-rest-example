@@ -11,6 +11,6 @@ public class AppController {
 
     @GetMapping
     public String index(Model model) {        
-        return "/app/index";
+        return "app/index";
     }
 }

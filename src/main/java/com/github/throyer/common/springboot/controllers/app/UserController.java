@@ -28,6 +28,6 @@ public class UserController {
         
         model.addAttribute("page", page);
         
-        return "/app/users/index";
+        return "app/users/index";
     }
 }
