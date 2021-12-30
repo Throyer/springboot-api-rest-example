@@ -13,7 +13,13 @@
                 <td th:text="*{email}" class="align-middle">email</td>
                 <td width="130" class="text-center">
                     <div class="btn-group">
-                        <button type="button" class="btn-sm btn btn-outline-dark">
+                        <button
+                            type="button"
+                            class="btn-sm btn btn-outline-dark"
+                            data-bs-toggle="modal"
+                            data-bs-target="#delete-confirm"
+                            th:data-id="*{id}"
+                            th:data-name="*{name}">
                             <i class="far fa-trash-alt"></i>
                         </button>
                     </div>

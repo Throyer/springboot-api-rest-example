@@ -1,17 +1,23 @@
 <div th:fragment="delete-confirm" class="modal fade" tabindex="-1" role="dialog" id="delete-confirm">
-    <div class="modal-dialog" role="document">
+    <div class="modal-sm modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-body p-4 text-center">
-                <h5 class="mb-0">Enable this setting?</h5>
-                <p class="mb-0">You can always change your mind in your account settings.</p>
+                <h5 class="mb-0">Deseja remover <span>username</span>?</h5>
+                <p class="mb-0">Caso o usuário seja deletado, esta ação não pode ser desfeita.</p>
             </div>
-            <div class="modal-footer flex-nowrap p-0">
-                <button type="button"
-                    class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right"><strong>Yes,
-                        enable</strong></button>
-                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
-                    data-bs-dismiss="modal">No thanks</button>
-            </div>
+            <form action="" method="post" class="modal-footer mb-0 flex-nowrap p-0">
+                <button
+                    type="submit"
+                    class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end">
+                    <strong>Sim, remover</strong>
+                </button>
+                <button
+                    type="button"
+                    data-bs-dismiss="modal"
+                    class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0">
+                    Cancelar
+                </button>
+            </form>
         </div>
     </div>
 </div>

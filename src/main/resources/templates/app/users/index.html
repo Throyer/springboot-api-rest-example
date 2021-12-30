@@ -1,5 +1,8 @@
-<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{}, ~{::section}, ~{::scripts}, ~{::modal})}">
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::styles}, ~{::section}, ~{::scripts}, ~{::modal})}">
     <title>Users</title>
+    <styles>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
+    </styles>
     <section class="container">
         <table
             th:replace="~{__${execInfo.templateName}__/../fragments/table :: table(${page})}">
