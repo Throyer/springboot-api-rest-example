@@ -82,7 +82,7 @@ use the parameter `-Dtest=<class>#<method>`
 
 for example the integration test. creating a user:
 ```
-$ mvnw test -Dtest=UsersControllerIntegrationTests#should_save_a_new_user
+$ mvn test -Dtest=UsersControllerIntegrationTests#should_save_a_new_user
 ```
 
 
