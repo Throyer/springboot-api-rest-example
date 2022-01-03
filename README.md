@@ -1,10 +1,12 @@
+[In Portuguese](assests/readme.md)
+
 <p align="center">
   <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
 </p>
 
 <h1 align="center">Spring Boot API CRUD</h1>
 <p align="center">
-  Um cadastro de usuários completo, com permissões de acesso, token JWT testes de integração e unitários, no padrão API RESTful.
+  A complete user registry, with access permissions, JWT token, integration and unit tests, using the RESTful API pattern.
 </p>
 
 <br>
@@ -16,15 +18,14 @@
   <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/demo.gif" alt="Demonstration" /></a>
 </p>
 
-## Sumario
+## Table of Contents
 
 - [Features](#features)
-- [Requisitos](#requisitos)
-- [Entidades](#entidades)
-- [Instalação](#instalação)
-- [Rodando um teste especifico](#rodando-um-teste-especifico)
-- [Documentação do Swagger](#documentação-do-swagger)
-- [Postman](#postman)
+- [Prerequisites](#prerequisites)
+- [Entities](#entities)
+- [Installation](#installation)
+- [Running a specific test](#running-a-specific-test)
+- [Swagger](#swagger)
 - [Database Migrations](#database-migrations)
 - [Variaveis de ambiente](#variáveis-de-ambiente)
 
@@ -36,15 +37,15 @@
 
 
 
-## Requisitos
+## Prerequisites
 
 - MariaDB: `^10.6.1`
 - Java: `^17`
-> recomendo a instalação do maven localmente, mas o projeto tem uma versão portatil nos arquivos [`mvnw`](./mvnw) e [`mvnw.cmd`](./mvnw.cmd)
+- Maven: `^3.8.4`
 
-Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
+This project was started with [Spring Initializr](https://start.spring.io/).
 
-## Entidades
+## Entities
 
 <p>
   <img src="./database_diagram/spring_boot_crud_database_diagram.png" alt="database diagram" />
@@ -52,60 +53,49 @@ Esse projeto foi configurado com [Spring Initializr](https://start.spring.io/).
 
 > arquivo do [draw.io](./der/spring_boot_crud_database_diagram.drawio)
 
-## Instalação
-
-> Caso tiver o maven instalado localmente substitua `mvnw` por `mvn` (_para usuários do zsh adicione o comando `bash` antes de mvnw_)
-
+## Installation
 
 ```shell
-# Clone o repositório e acesse o diretório.
+# clone the repository and access the directory.
 $ git clone git@github.com:Throyer/springboot-api-crud.git && cd springboot-api-crud
 
-# Baixe as dependencias (o parametro -DskipTests pula os testes)
-$ mvnw install -DskipTests
+# download dependencies
+$ mvn install -DskipTests
 
-# Rode a aplicação
-$ mvnw spring-boot:run
+# run the application
+$ mvn spring-boot:run
 
-# Para rodar os testes
-$ mvnw test
+# run the tests
+$ mvn test
 
-# Para buildar para produção
-$ mvnw clean package
+# to build for production
+$ mvn clean package
 
-# Para gerar o relatório de cobertura apos os testes (fica disponível em: target/site/jacoco/index.html)
-$ mvnw jacoco:report
+# to generate the coverage report after testing (available at: target/site/jacoco/index.html)
+$ mvn jacoco:report
 ```
 
 
-## Rodando um teste especifico
-use o parâmetro `-Dtest=<Classe>#<metodo>`
+## Running a specific test
+use the parameter `-Dtest=<class>#<method>`
 
 
-por exemplo o teste de integração de criação usuário:
+for example the integration test. creating a user:
 ```
-$ mvnw test -Dtest=UsuariosControllerIntegrationTests#should_save_a_new_user
+$ mvnw test -Dtest=UsersControllerIntegrationTests#should_save_a_new_user
 ```
 
 
-## Documentação do Swagger
-Assim que a aplicação estiver de pé, fica disponível em: [localhost:8080/documentation](localhost:8080/documentation)
+## Swagger
+Once the application is up, it is available at: [localhost:8080/documentation](localhost:8080/documentation)
 
 
-[exemplo no heroku](https://throyer-crud-api.herokuapp.com/documentation)
-
-## Postman
->Clique [**aqui**](./postman/crud_api.postman_collection.json) para acessar o aquivo `json` da coleção do postman.
->
->> _🚨 this file is deprecated!_
-
-<br>
-<br>
+[example on heroku](https://throyer-crud-api.herokuapp.com/documentation)
 
 ---
 
 ## Database Migrations
-Criando arquivos de arquivos de migração
+Creating database migration files
 
 - Java based migrations
   ```bash
@@ -119,32 +109,32 @@ Criando arquivos de arquivos de migração
 
 ---
 
-## Variáveis de ambiente
+## Environment variables
 
 | **Descrição**                               | **parâmetro**                          | **Valor padrão**          |
 | ------------------------------------------- | -------------------------------------- | ------------------------- |
-| porta da aplicação                          | `SERVER_PORT`                          | 8080                      |
-| url do banco                                | `DB_URL`                               | localhost:3306/common_app |
-| nome de usuário (banco)                     | `DB_USERNAME`                          | root                      |
-| senha do usuário (banco)                    | `DB_PASSWORD`                          | root                      |
-| mostrar sql na saida                        | `DB_SHOW_SQL`                          | false                     |
-| máximo de conexões com o banco              | `DB_MAX_CONNECTIONS`                   | 5                         |
-| valor do secret na geração dos tokens       | `TOKEN_SECRET`                         | secret                    |
-| tempo de expiração do token em horas        | `TOKEN_EXPIRATION_IN_HOURS`            | 24                        |
-| tempo de expiração do refresh token em dias | `REFRESH_TOKEN_EXPIRATION_IN_DAYS`     | 7                         |
-| endereço do servidor smtp                   | `SMTP_HOST`                            | smtp.gmail.com            |
-| porta do servidor smtp                      | `SMTP_PORT`                            | 587                       |
-| nome de usuário smtp                        | `SMTP_USERNAME`                        | user                      |
-| senha do servidor smtp                      | `SMTP_PASSWORD`                        | secret                    |
+| Server port                                 | `SERVER_PORT`                          | 8080                      |
+| database url                                | `DB_URL`                               | localhost:3306/common_app |
+| username (database)                         | `DB_USERNAME`                          | root                      |
+| user password (database)                    | `DB_PASSWORD`                          | root                      |
+| displays the generated sql in the logger    | `DB_SHOW_SQL`                          | false                     |
+| set maximum database connections            | `DB_MAX_CONNECTIONS`                   | 5                         |
+| secret value in token generation            | `TOKEN_SECRET`                         | secret                    |
+| token expiration time in hours              | `TOKEN_EXPIRATION_IN_HOURS`            | 24                        |
+| refresh token expiry time in days           | `REFRESH_TOKEN_EXPIRATION_IN_DAYS`     | 7                         |
+| SMTP server address                         | `SMTP_HOST`                            | smtp.gmail.com            |
+| SMTP server port                            | `SMTP_PORT`                            | 587                       |
+| SMTP username                               | `SMTP_USERNAME`                        | user                      |
+| SMTP server password                        | `SMTP_PASSWORD`                        | secret                    |
 
-> são definidas em: [**application.properties**](./src/main/resources/application.properties)
+> these variables are defined in: [**application.properties**](./src/main/resources/application.properties)
 >
 > ```shell
-> # para mudar o valor de alguma variável de ambiente
-> # na execução basta passar ela como parâmetro. (como --SERVER_PORT=80 por exemplo).
+> # to change the value of some environment variable at runtime
+> # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
 > $ java -jar api-3.0.3.RELEASE.jar --SERVER_PORT=80
 > ```
 >
-> > [Todas opções do `aplication.properties` **padrões** no Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
+> > [All options of `aplication.properties` here](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 > >
-> > [Todas **funcionalidades** do Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html).
+> > [All **features** of Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html).
