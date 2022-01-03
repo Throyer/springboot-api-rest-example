@@ -21,7 +21,7 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Prerequisites](#prerequisites)
+- [Requirements](#requirements)
 - [Entities](#entities)
 - [Installation](#installation)
 - [Running a specific test](#running-a-specific-test)
@@ -37,7 +37,7 @@
 
 
 
-## Prerequisites
+## Requirements
 
 - MariaDB: `^10.6.1`
 - Java: `^17`
