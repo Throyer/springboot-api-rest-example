@@ -1,4 +1,4 @@
-[In Portuguese](assests/readme.md)
+[In Portuguese](https://github.com/Throyer/springboot-api-crud/blob/master/assets/readme.md#spring-boot-api-crud)
 
 <p align="center">
   <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
@@ -27,7 +27,7 @@
 - [Running a specific test](#running-a-specific-test)
 - [Swagger](#swagger)
 - [Database Migrations](#database-migrations)
-- [Variaveis de ambiente](#variáveis-de-ambiente)
+- [Environment variables](#environment-variables)
 
 # Features
 
