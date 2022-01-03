@@ -51,7 +51,7 @@ This project was started with [Spring Initializr](https://start.spring.io/).
   <img src="./database_diagram/spring_boot_crud_database_diagram.png" alt="database diagram" />
 </p>
 
-> arquivo do [draw.io](./der/spring_boot_crud_database_diagram.drawio)
+>[🚨 draw.io file here](./der/spring_boot_crud_database_diagram.drawio)
 
 ## Installation
 
