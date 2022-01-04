@@ -43,7 +43,7 @@
 - Java: `^17`
 - Maven: `^3.8.4`
 
-This project was started with [Spring Initializr](https://start.spring.io/).
+This project was started with [Spring Initializr](https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.6.2&packaging=jar&jvmVersion=17&groupId=com.github.throyer.common&artifactId=api&name=api&description=CRUD%20API&packageName=com.github.throyer.common.api&dependencies=devtools,lombok,web,security,thymeleaf,mysql,h2,data-jpa,flyway,jooq).
 
 ## Entities
 
