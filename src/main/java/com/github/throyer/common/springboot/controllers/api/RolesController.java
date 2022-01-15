@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.github.throyer.common.springboot.domain.models.entity.Role;
 import com.github.throyer.common.springboot.domain.repositories.RoleRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/roles")
+@SecurityRequirement(name = "token")
 @PreAuthorize("hasAnyAuthority('ADM')")
 public class RolesController {
 

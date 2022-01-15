@@ -21,14 +21,15 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.github.throyer.common.springboot.domain.models.pagination.SortableProperty;
 import com.github.throyer.common.springboot.domain.models.security.Authorized;
 import com.github.throyer.common.springboot.domain.models.shared.HasEmail;
 import com.github.throyer.common.springboot.domain.services.user.dto.UpdateUser;
+import lombok.Data;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Data
 @Entity
 @Table(name = "user")
 @Where(clause = Auditable.NON_DELETED_CLAUSE)
@@ -40,13 +41,11 @@ public class User extends Auditable implements Serializable, HasEmail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SortableProperty(name = "id")
     private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @SortableProperty(name = "email")
     @Column(name = "email", unique = true)
     private String email;
 
@@ -58,7 +57,6 @@ public class User extends Auditable implements Serializable, HasEmail {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @SortableProperty(name = "role", column = "roles_name")
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
         joinColumns = {
@@ -70,14 +68,14 @@ public class User extends Auditable implements Serializable, HasEmail {
     public User() { }
 
     public User(Long id) {
-        setId(id);
+        this.id = id;
     }
 
     public User(String name, String email, String password, List<Role> roles) {
-        setName(name);
-        setEmail(email);
-        setPassword(password);
-        setRoles(roles);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     public List<Role> getRoles() {
@@ -93,45 +91,9 @@ public class User extends Auditable implements Serializable, HasEmail {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String nome) {
-        this.name = nome;
-    }
-
     @Override
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDeletedEmail() {
-        return deletedEmail;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Boolean contains(String search) {
-        if (Objects.nonNull(getRoles())) {
-            return roles.stream()
-            .anyMatch(role -> role.compare(search));
-        }
-        return false;
     }
 
     public void merge(UpdateUser dto) {

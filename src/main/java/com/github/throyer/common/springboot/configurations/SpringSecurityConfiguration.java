@@ -34,6 +34,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Component
 @EnableWebSecurity
@@ -70,28 +71,34 @@ public class SpringSecurityConfiguration {
             http
                 .antMatcher("/api/**")
                     .authorizeRequests()
-                        .antMatchers(GET, "/api")
+                        .antMatchers(
+                            GET,
+                            "/api",
+                            "/api/documentation/**"
+                        )
                             .permitAll()
-                        .antMatchers(POST, "/api/users")
-                            .permitAll()
-                        .antMatchers(POST, "/api/sessions/**")
-                            .permitAll()
-                        .antMatchers(POST, "/api/recoveries/**")
-                            .permitAll()
-                        .antMatchers(GET, "/api/documentation/**")
+                        .antMatchers(
+                            POST,
+                            "/api/users",
+                            "/api/sessions/**",
+                            "/api/recoveries/**",
+                            "/api/documentation/**"
+                        )
                             .permitAll()
                         .anyRequest()
                             .authenticated()
                 .and()
                     .csrf()
-                        .disable()
+                    .disable()
                     .exceptionHandling()
-                        .authenticationEntryPoint((request, response, exception) -> forbidden(response))
+                    .authenticationEntryPoint((request, response, exception) -> forbidden(response))
                 .and()
                     .sessionManagement()
-                        .sessionCreationPolicy(STATELESS)
+                    .sessionCreationPolicy(STATELESS)
                 .and()
-                    .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+                    .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .cors()
+                    .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         }
     
         @Override
@@ -124,29 +131,31 @@ public class SpringSecurityConfiguration {
             http
                 .antMatcher("/app/**")
                     .authorizeRequests()
-                        .antMatchers(GET, LOGIN_URL)
+                        .antMatchers(
+                            GET,
+                            LOGIN_URL,
+                            "/app",
+                            "/app/register",
+                            "/app/recovery/**"
+                        )
                             .permitAll()
-                        .antMatchers(GET, "/app")
-                            .permitAll()
-                        .antMatchers(GET, "/app/register")
-                            .permitAll()
-                        .antMatchers(POST, "/app/register")
-                            .permitAll()
-                        .antMatchers(GET, "/app/recovery/**")
-                            .permitAll()
-                        .antMatchers(POST, "/app/recovery/**")
+                        .antMatchers(
+                            POST,
+                            "/app/register",
+                            "/app/recovery/**"
+                        )
                             .permitAll()
                         .anyRequest()
                             .authenticated()
-                                .and()
-                                    .csrf()
-                                        .disable()
-                    .formLogin()
-                        .loginPage(LOGIN_URL)
-                            .failureUrl(LOGIN_ERROR_URL)
-                            .defaultSuccessUrl(HOME_URL)
-                        .usernameParameter(USERNAME_PARAMETER)
-                        .passwordParameter(PASSWORD_PARAMETER)
+                .and()
+                    .csrf()
+                        .disable()
+                            .formLogin()
+                                .loginPage(LOGIN_URL)
+                                    .failureUrl(LOGIN_ERROR_URL)
+                                    .defaultSuccessUrl(HOME_URL)
+                                .usernameParameter(USERNAME_PARAMETER)
+                                .passwordParameter(PASSWORD_PARAMETER)
                 .and()                    
                     .rememberMe()
                         .key(SECRET)

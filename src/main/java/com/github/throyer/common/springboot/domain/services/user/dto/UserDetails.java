@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.throyer.common.springboot.domain.models.entity.User;
 import com.github.throyer.common.springboot.domain.models.shared.Entity;
+import static java.util.Optional.ofNullable;
 
 public class UserDetails implements Entity {
     private final Long id;
@@ -30,6 +31,16 @@ public class UserDetails implements Entity {
         this.name = name;
         this.email = email;
         this.roles = null;
+    }    
+
+    public UserDetails(Long id, String name, String email, String roles) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        
+        this.roles = ofNullable(roles)
+            .map(string -> List.of(string.split(",")))
+                .orElse(List.of());
     }    
     
     public Long getId() {

@@ -10,10 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 
+@Data
 @Entity
 @Table(name = "role")
 @Where(clause = Auditable.NON_DELETED_CLAUSE)
@@ -55,55 +57,6 @@ public class Role extends Auditable implements GrantedAuthority {
     public Role(Long id, String initials) {
         this.id = id;
         this.initials = initials;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDeletedName() {
-        return deletedName;
-    }
-
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
-    }
-
-    public String getDeletedInitials() {
-        return deletedInitials;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean compare(String search) {
-        if (Objects.nonNull(search)) {
-            return 
-                getName().toLowerCase().equals(search.toLowerCase()) ||
-                getInitials().toLowerCase().equals(search.toLowerCase());
-        }
-        return false;
     }
 
     @Override

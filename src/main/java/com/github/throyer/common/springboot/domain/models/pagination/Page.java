@@ -1,5 +1,6 @@
 package com.github.throyer.common.springboot.domain.models.pagination;
 
+import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
 import java.util.Collection;
 
 public class Page<T> {
@@ -17,6 +18,15 @@ public class Page<T> {
         this.totalElements = page.getTotalElements();
     }
 
+    public Page(Collection<T> content, Integer page, Integer size, Long count) {        
+        this.content = content;
+        this.page = page;
+        this.size = size;
+        this.totalPages = (int) Math.ceil((double)count / size);
+        this.totalElements = count;
+    }
+
+    
     public Collection<T> getContent() {
         return content;
     }
@@ -39,5 +49,14 @@ public class Page<T> {
 
     public static <T> Page<T> of(org.springframework.data.domain.Page<T> page) {
         return new Page<>(page);
+    }
+    
+    public static <T> Page<T> of(Collection<T> content, Integer page, Integer size, Long count) {
+        return new Page<>(content, page, size, count);
+    }
+
+    @Override
+    public String toString() {
+        return toJson(this);
     }
 }
