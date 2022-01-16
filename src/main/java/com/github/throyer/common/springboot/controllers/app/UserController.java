@@ -1,16 +1,11 @@
 package com.github.throyer.common.springboot.controllers.app;
 
-import com.github.throyer.common.springboot.domain.models.pagination.Page;
-import com.github.throyer.common.springboot.domain.models.pagination.Pagination;
 import com.github.throyer.common.springboot.domain.models.shared.Type;
-import com.github.throyer.common.springboot.domain.repositories.UserRepository;
 import com.github.throyer.common.springboot.domain.services.user.FindUserService;
 import com.github.throyer.common.springboot.domain.services.user.RemoveUserService;
-import com.github.throyer.common.springboot.domain.services.user.dto.SearchUser;
 import com.github.throyer.common.springboot.utils.Toasts;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,9 +31,6 @@ public class UserController {
         Model model,
         Optional<Integer> page,
         Optional<Integer> size
-//        Optional<String> name,
-//        Optional<String> email,
-//        ArrayList<String> roles
     ) {
         
         var result = findService.findAll(page, size);

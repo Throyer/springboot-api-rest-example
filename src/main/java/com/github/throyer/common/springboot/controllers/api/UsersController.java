@@ -53,9 +53,6 @@ public class UsersController {
     public ResponseEntity<Page<UserDetails>> index(
         Optional<Integer> page,
         Optional<Integer> size
-//        Optional<String> name,
-//        Optional<String> email,
-//        ArrayList<String> roles
     ) {
         var result = findService.findAll(page, size);
         return ok(result);
