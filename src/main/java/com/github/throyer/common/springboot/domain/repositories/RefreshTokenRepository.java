@@ -20,9 +20,9 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
         UPDATE
             RefreshToken
         SET
-            available = 0
+            available = false
         WHERE
-            user_id = ?1 AND available = 1
+            user_id = ?1 AND available = true
     """)
     public void disableOldRefreshTokens(Long id);
 

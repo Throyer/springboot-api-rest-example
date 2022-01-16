@@ -9,9 +9,9 @@ public class Constants {
         public static final Integer DAY_MILLISECONDS = 86400;
 
         public static final String ROLES_KEY_ON_JWT = "roles";
-        public static final String INVALID_USERNAME = "Nome de usuário invalido.";
-        public static final String CREATE_SESSION_ERROR_MESSAGE = "Senha ou Usuário inválidos.";
-        public static final String REFRESH_SESSION_ERROR_MESSAGE = "Refresh token expirado ou inválido.";
+        public static final String INVALID_USERNAME = "Invalid username.";
+        public static final String CREATE_SESSION_ERROR_MESSAGE = "Invalid password or username.";
+        public static final String REFRESH_SESSION_ERROR_MESSAGE = "Refresh token expired or invalid.";
     
         public static final String USERNAME_PARAMETER = "email";
         public static final String PASSWORD_PARAMETER = "password";

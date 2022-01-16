@@ -1,28 +1,35 @@
 version: '3'
 services:
-
-  mariadb:
-    image: mariadb:10.6.1
-    container_name: mariadb-container
+  
+  postgresql:
+    image: postgres:13
+    restart: unless-stopped
+    container_name: postgres-container
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
     ports:
-      - 3306:3306
+      - 5432:5432
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "common_app"
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=common_app
+      - TZ=America/Sao_Paulo
+      - PGTZ=America/Sao_Paulo
     volumes:
-      - ./.volumes/database:/var/lib/mysql
+      - ./.volumes/database:/var/lib/postgresql/data
 
   api:
     image: maven:3.8.3
+    restart: unless-stopped
+    container_name: api-container
     links:
-      - mariadb
+      - postgresql
     depends_on:
-      - mariadb
+      - postgresql
     ports:
       - 8080:8080
       - 8000:8000
     environment:
-      DB_URL: "mariadb:3306/common_app"
+      DB_URL: "postgresql:5432/common_app"
       DB_USERNAME: "root"
       DB_PASSWORD: "root"
     volumes:
