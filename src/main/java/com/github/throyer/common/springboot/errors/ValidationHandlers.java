@@ -1,17 +1,18 @@
 package com.github.throyer.common.springboot.errors;
 
+import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.github.throyer.common.springboot.domain.validation.EmailNotUniqueException;
-import com.github.throyer.common.springboot.domain.validation.InvalidSortException;
-import com.github.throyer.common.springboot.domain.validation.SimpleError;
-import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import com.github.throyer.common.springboot.domain.mail.exceptions.EmailNotUniqueException;
+import com.github.throyer.common.springboot.domain.shared.SimpleError;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -51,12 +52,6 @@ public class ValidationHandlers {
         return ResponseEntity
             .status(exception.getStatus())
                 .body(new SimpleError(exception.getReason(), exception.getStatus()));
-    }    
-
-    @ResponseStatus(code = BAD_REQUEST)
-    @ExceptionHandler(InvalidSortException.class)
-    public List<SimpleError> badRequest(InvalidSortException exception) {
-        return exception.getErrors();
     }    
 
     @ResponseStatus(code = UNAUTHORIZED)

@@ -1,13 +1,11 @@
 package com.github.throyer.common.springboot.utils;
 
-import static com.github.throyer.common.springboot.domain.builders.UserBuilder.createUser;
-
 import java.util.List;
 import java.util.Locale;
 
 import com.github.javafaker.Faker;
-import com.github.throyer.common.springboot.domain.models.entity.Role;
-import com.github.throyer.common.springboot.domain.models.entity.User;
+import com.github.throyer.common.springboot.domain.role.entity.Role;
+import com.github.throyer.common.springboot.domain.user.entity.User;
 
 public class Random {
         
@@ -35,12 +33,11 @@ public class Random {
     }
 
     public static User randomUser(List<Role> roles) {
-        var builder = createUser(FAKER.name().fullName())
-            .setEmail(FAKER.internet().safeEmailAddress())
-            .setPassword(password());
-        
-        roles.forEach(builder::addRole);
-        
-        return builder.build();
+        return new User(
+            FAKER.name().fullName(),
+            FAKER.internet().safeEmailAddress(),
+            password(),
+            roles
+        );
     }
 }

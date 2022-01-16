@@ -3,18 +3,21 @@ package com.github.throyer.common.springboot.controllers.api;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
-import com.github.throyer.common.springboot.domain.models.entity.User;
-import com.github.throyer.common.springboot.domain.models.pagination.Page;
-
-import com.github.throyer.common.springboot.domain.services.user.CreateUserService;
-import com.github.throyer.common.springboot.domain.services.user.FindUserService;
-import com.github.throyer.common.springboot.domain.services.user.RemoveUserService;
-import com.github.throyer.common.springboot.domain.services.user.UpdateUserService;
-import com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApi;
-import com.github.throyer.common.springboot.domain.services.user.dto.UpdateUser;
-import com.github.throyer.common.springboot.domain.services.user.dto.UserDetails;
+import static com.github.throyer.common.springboot.utils.Responses.created;
 import static com.github.throyer.common.springboot.utils.Responses.ok;
+
+import com.github.throyer.common.springboot.domain.pagination.model.Page;
+import com.github.throyer.common.springboot.domain.user.service.FindUserService;
+import com.github.throyer.common.springboot.domain.user.service.RemoveUserService;
+import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
+import com.github.throyer.common.springboot.domain.user.service.CreateUserService;
+import com.github.throyer.common.springboot.domain.user.model.UpdateUserProps;
+import com.github.throyer.common.springboot.domain.user.service.FindUserByIdService;
+import com.github.throyer.common.springboot.domain.user.service.UpdateUserService;
+import com.github.throyer.common.springboot.domain.user.model.UserDetails;
+
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +37,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/users")
 public class UsersController {
-    
+        
+    private final CreateUserService createService;
+    private final UpdateUserService updateService;
+    private final RemoveUserService removeService;
+    private final FindUserService findService;
+    private final FindUserByIdService findByIdService;
+
     @Autowired
-    private CreateUserService createService;
-    
-    @Autowired
-    private UpdateUserService updateService;
-    
-    @Autowired
-    private RemoveUserService removeService;
-    
-    @Autowired
-    private FindUserService findService;
+    public UsersController(
+        CreateUserService createService,
+        UpdateUserService updateService,
+        RemoveUserService removeService,
+        FindUserService findService,
+        FindUserByIdService findByIdService
+    ) {
+        this.createService = createService;
+        this.updateService = updateService;
+        this.removeService = removeService;
+        this.findService = findService;
+        this.findByIdService = findByIdService;
+    }
     
     @GetMapping
     @SecurityRequirement(name = "token")
@@ -54,21 +66,25 @@ public class UsersController {
         Optional<Integer> page,
         Optional<Integer> size
     ) {
-        var result = findService.findAll(page, size);
-        return ok(result);
+        var content = findService.findAll(page, size);
+        return ok(content);
     }
     
     @GetMapping("/{id}")
     @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     public ResponseEntity<UserDetails> show(@PathVariable Long id) {
-        return findService.find(id);
+        var user = findByIdService.find(id);
+        return ok(user);
     }
     
     @PostMapping
     @ResponseStatus(CREATED)
-    public ResponseEntity<UserDetails> save(@Validated @RequestBody CreateUserApi body) {
-        return createService.create(body);
+    public ResponseEntity<UserDetails> save(
+        @Validated @RequestBody CreateUserProps body
+    ) {
+        var user = createService.create(body);
+        return created(user, "api/users");
     }
     
     @PutMapping("/{id}")
@@ -76,16 +92,16 @@ public class UsersController {
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     public ResponseEntity<UserDetails> update(
         @PathVariable Long id,
-        @RequestBody @Validated UpdateUser body
+        @RequestBody @Validated UpdateUserProps body
     ) {
-        return updateService.update(id, body);
+        var user = updateService.update(id, body);
+        return ok(user);
     }
     
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
     @SecurityRequirement(name = "token")
-    @PreAuthorize("hasAnyAuthority('ADM')")
-    public ResponseEntity<User> destroy(@PathVariable Long id) {
-        return removeService.remove(id);
+    public void destroy(@PathVariable Long id) {
+        removeService.remove(id);
     }
 }

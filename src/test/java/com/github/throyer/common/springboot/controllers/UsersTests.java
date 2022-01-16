@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.*;
 import java.util.List;
 import java.util.Map;
 
-import com.github.throyer.common.springboot.domain.repositories.UserRepository;
+import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
