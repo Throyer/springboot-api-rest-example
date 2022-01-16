@@ -15,7 +15,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import com.github.throyer.common.springboot.domain.services.security.SecurityService;
+import com.github.throyer.common.springboot.domain.session.service.SessionService;
 import com.github.throyer.common.springboot.middlewares.AuthorizationMiddleware;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ import org.springframework.web.cors.CorsConfiguration;
 public class SpringSecurityConfiguration {
     
     @Autowired
-    private SecurityService securityService;
+    private SessionService sessionService;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -62,7 +62,7 @@ public class SpringSecurityConfiguration {
         
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(securityService)
+            auth.userDetailsService(sessionService)
                 .passwordEncoder(encoder);
         }
     
@@ -121,7 +121,7 @@ public class SpringSecurityConfiguration {
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.
-                userDetailsService(securityService)
+                userDetailsService(sessionService)
                     .passwordEncoder(encoder);
         }
     

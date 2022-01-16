@@ -1,9 +1,13 @@
 package com.github.throyer.common.springboot.controllers.app;
 
-import javax.validation.Valid;
+import static com.github.throyer.common.springboot.domain.shared.Type.SUCCESS;
+import static com.github.throyer.common.springboot.utils.Responses.validate;
 
-import com.github.throyer.common.springboot.domain.services.user.CreateUserService;
-import com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApp;
+import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
+import com.github.throyer.common.springboot.domain.user.service.CreateUserService;
+import com.github.throyer.common.springboot.utils.Toasts;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,23 +21,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/app/register")
 public class RegisterController {
-    
+
     @Autowired
     private CreateUserService service;
 
     @GetMapping(produces = "text/html")
     public String index(Model model) {
-        model.addAttribute("user", new CreateUserApp());
+        model.addAttribute("user", new CreateUserProps());
         return "app/register/index";
     }
 
     @PostMapping(produces = "text/html")
     public String create(
-        @Valid CreateUserApp user,
+        @Valid CreateUserProps props,
         BindingResult result,
         RedirectAttributes redirect,
         Model model
     ) {
-        return service.create(user, result, redirect, model);
+        
+        if (validate(model, props, "user", result)) {
+            return "app/register/index";
+        }
+        
+        service.create(props);
+        
+        Toasts.add(redirect, "Cadastro realizado com sucesso.", SUCCESS);
+        
+        return "redirect:/app/login";
     }
 }

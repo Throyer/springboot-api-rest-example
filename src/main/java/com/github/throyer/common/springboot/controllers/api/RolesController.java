@@ -4,8 +4,8 @@ import static com.github.throyer.common.springboot.utils.Responses.ok;
 
 import java.util.List;
 
-import com.github.throyer.common.springboot.domain.models.entity.Role;
-import com.github.throyer.common.springboot.domain.repositories.RoleRepository;
+import com.github.throyer.common.springboot.domain.role.entity.Role;
+import com.github.throyer.common.springboot.domain.role.repository.RoleRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import org.springframework.beans.factory.annotation.Autowired;

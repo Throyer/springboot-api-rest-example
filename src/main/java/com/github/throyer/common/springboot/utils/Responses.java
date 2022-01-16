@@ -2,11 +2,13 @@ package com.github.throyer.common.springboot.utils;
 
 import java.net.URI;
 
-import com.github.throyer.common.springboot.domain.models.shared.Entity;
+import com.github.throyer.common.springboot.domain.management.model.Entity;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
@@ -100,5 +102,14 @@ public class Responses {
 
     public static final ResponseStatusException InternalServerError(String reason) {
         return new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, reason);
+    }
+    
+    public static final <P> Boolean validate(Model model, P props, String propertyName, BindingResult result) {
+        if (result.hasErrors()) {
+            model.addAttribute(propertyName, props);
+            Toasts.add(model, result);            
+            return true;
+        }
+        return false;
     }
 }

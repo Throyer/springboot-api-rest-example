@@ -1,11 +1,10 @@
 package com.github.throyer.common.springboot.utils;
 
-import com.github.throyer.common.springboot.domain.models.shared.Toast;
+import com.github.throyer.common.springboot.domain.shared.Toast;
 import java.util.List;
 
-import static com.github.throyer.common.springboot.domain.models.shared.Type.*;
-import com.github.throyer.common.springboot.domain.models.shared.Type;
-import java.util.stream.Collectors;
+import static com.github.throyer.common.springboot.domain.shared.Type.*;
+import com.github.throyer.common.springboot.domain.shared.Type;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,7 +53,7 @@ public class Toasts {
     
     private static List<Toast> toasts(List<ObjectError> errors) {
         return errors.stream()
-                .map(error -> Toast.of(error.getDefaultMessage(), DANGER))
-                .collect(Collectors.toList());
+                .map(Toast::of)
+                    .toList();
     }
 }

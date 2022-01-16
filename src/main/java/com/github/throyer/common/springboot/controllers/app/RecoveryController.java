@@ -1,12 +1,18 @@
 package com.github.throyer.common.springboot.controllers.app;
 
-import com.github.throyer.common.springboot.domain.services.recovery.RecoveryConfirmService;
-import com.github.throyer.common.springboot.domain.services.recovery.RecoveryService;
-import com.github.throyer.common.springboot.domain.services.recovery.RecoveryUpdateService;
-import com.github.throyer.common.springboot.domain.services.user.dto.Codes;
-import com.github.throyer.common.springboot.domain.services.user.dto.RecoveryRequest;
-import com.github.throyer.common.springboot.domain.services.user.dto.Update;
+import static com.github.throyer.common.springboot.utils.Responses.validate;
+
+import com.github.throyer.common.springboot.domain.recovery.service.RecoveryConfirmService;
+import com.github.throyer.common.springboot.domain.recovery.service.RecoveryService;
+import com.github.throyer.common.springboot.domain.recovery.service.RecoveryUpdateService;
+import com.github.throyer.common.springboot.domain.recovery.model.Codes;
+import com.github.throyer.common.springboot.domain.recovery.model.RecoveryRequest;
+import com.github.throyer.common.springboot.domain.recovery.model.Update;
+import com.github.throyer.common.springboot.domain.shared.Type;
+import com.github.throyer.common.springboot.utils.Toasts;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -41,7 +48,18 @@ public class RecoveryController {
         BindingResult result,
         Model model
     ) {
-        return recoveryService.recovery(recovery, result, model);
+        
+        if (validate(model, recovery, "recovery", result)) {
+            return "app/recovery/index";
+        }
+                
+        var email = recovery.getEmail();
+        
+        recoveryService.recovery(email);
+        
+        model.addAttribute("codes", new Codes(email));
+        
+        return "app/recovery/confirm";
     }
 
     @PostMapping("/confirm")
@@ -51,7 +69,24 @@ public class RecoveryController {
         RedirectAttributes redirect,
         Model model
     ) {
-        return confirmService.confirm(codes, result, model, redirect);
+        
+        if (validate(model, codes, "recovery", result)) {
+            return "app/recovery/confirm";
+        }
+
+        try {
+            
+            confirmService.confirm(codes.getEmail(), codes.code());            
+            return "redirect:/app/recovery/update";            
+        } catch (ResponseStatusException exception) {
+            
+            Toasts.add(model, "Código expirado ou invalido.", Type.DANGER);
+            model.addAttribute("confirm", codes);
+        }
+
+        model.addAttribute("update", new Update(codes));
+
+        return "app/recovery/update";
     }
 
     @PostMapping("/update")
@@ -61,6 +96,21 @@ public class RecoveryController {
         RedirectAttributes redirect,
         Model model
     ) {
-        return updateService.update(update, result, model, redirect);
+        update.validate(result);
+        
+        if (validate(model, update, "update", result)) {
+            return "app/recovery/update";
+        }
+ 
+        try {
+            updateService.update(update.getEmail(), update.code(), update.getPassword());
+        } catch (ResponseStatusException exception) {
+            Toasts.add(model, "Código expirado ou invalido.", Type.DANGER);
+            model.addAttribute("update", update);
+            return "app/recovery/update";
+        }
+        
+        Toasts.add(redirect, "Sua senha foi atualizada com sucesso.", Type.SUCCESS);
+        return "redirect:/app/login";
     }
 }
