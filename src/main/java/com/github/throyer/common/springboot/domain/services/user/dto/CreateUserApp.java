@@ -7,13 +7,9 @@ import com.github.throyer.common.springboot.domain.builders.UserBuilder;
 import com.github.throyer.common.springboot.domain.models.entity.User;
 import com.github.throyer.common.springboot.domain.models.shared.HasEmail;
 
-import static com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApi.STRONG_PASSWORD;
-import static com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApi.STRONG_PASSWORD_MESSAGE;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.Data;

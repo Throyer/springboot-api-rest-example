@@ -22,7 +22,7 @@ public class MailService {
     private JavaMailSender sender;
 
     private static Logger LOGGER = LoggerFactory.getLogger(MailService.class);
-    private static String ERROR_MESSAGE = "Erro ao enviar email.";
+    private static String ERROR_MESSAGE = "Error sending email.";
     private static final Boolean CONTENT_IS_HTML = true;
 
     public void send(Email email) {
@@ -33,7 +33,7 @@ public class MailService {
             helper.setSubject(email.getSubject());
             helper.setText(engine.process(email.getTemplate(), email.getContext()), CONTENT_IS_HTML);
             sender.send(message);
-            LOGGER.info("Email enviado com sucesso para: {}", email.getDestination());
+            LOGGER.info("Email successfully sent to: {}", email.getDestination());
         } catch (MessagingException | MailException exception) {
             LOGGER.error(ERROR_MESSAGE, exception);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ERROR_MESSAGE);

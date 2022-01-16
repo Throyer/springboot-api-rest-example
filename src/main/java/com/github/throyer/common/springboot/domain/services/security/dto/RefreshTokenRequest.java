@@ -1,14 +1,12 @@
 package com.github.throyer.common.springboot.domain.services.security.dto;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RefreshTokenRequest {
 
-    @NotNull(message = "refresh_token não pode NULO.")
-    @NotEmpty(message = "refresh_token invalido.")
+    @NotEmpty(message = "Invalid refresh_token.")
     @JsonProperty("refresh_token")
     private String refresh;
 

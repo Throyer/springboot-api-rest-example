@@ -51,6 +51,7 @@ public class FindUserService {
             from 
                 "user" u
             left join user_roles as urs on urs.user_id = u.id
+            where u.deleted_at is null
         """;
         
         var query = manager.createNativeQuery(sql, Tuple.class);

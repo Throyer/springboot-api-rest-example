@@ -9,25 +9,22 @@ import javax.validation.constraints.Pattern;
 import com.github.throyer.common.springboot.domain.builders.UserBuilder;
 import com.github.throyer.common.springboot.domain.models.entity.User;
 import com.github.throyer.common.springboot.domain.models.shared.HasEmail;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class CreateUserApi implements HasEmail {
 
-    public static final String DEFAULT_PASSWORD = "mudar123";
-    public static final String STRONG_PASSWORD = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$";
-    public static final String STRONG_PASSWORD_MESSAGE = "No mínimo 8 caracteres, com no mínimo um número, um caractere especial, uma letra maiúscula e uma letra minúscula.";
-
-    @NotEmpty(message = "Por favor, forneça um nome.")
+    @NotEmpty(message = "email is a required field.")
     private String name;
-    
-    @NotEmpty(message = "Por favor, forneça um e-mail.")
-    @Email(message = "Por favor, forneça um e-mail valido.")
+
+    @NotEmpty(message = "email is a required field.")
+    @Email(message = "invalid email.")
     private String email;
 
-    @NotEmpty(message = "Por favor, forneça uma senha.")
-    @Pattern(regexp = STRONG_PASSWORD, message = STRONG_PASSWORD_MESSAGE)
-    private String password = DEFAULT_PASSWORD;
+    @NotEmpty(message = "password is a required field.")
+    @Size(min = 8, max = 155, message = "The password must contain at least {min} characters.")
+    private String password;
 
     public CreateUserApi(String name, String email, String password) {
         setName(name);

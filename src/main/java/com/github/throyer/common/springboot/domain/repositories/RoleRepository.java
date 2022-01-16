@@ -28,7 +28,7 @@ public interface RoleRepository extends SoftDeleteRepository<Role> {
             ),
             initials = NULL,
             deleted_at = CURRENT_TIMESTAMP,
-            active = 0,
+            active = false,
             deleted_by = ?#{principal?.id}
         WHERE id = ?1
     """)

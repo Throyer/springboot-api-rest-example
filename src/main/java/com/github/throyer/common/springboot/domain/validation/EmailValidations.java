@@ -16,7 +16,7 @@ public class EmailValidations {
     private static UserRepository repository;
 
     private static String FIELD = "email";
-    private static String MESSAGE = "Este email já foi utilizado por outro usuário. Por favor utilize um email diferente.";
+    private static String MESSAGE = "This email has already been used by another user. Please use a different email.";
 
     private static final List<SimpleError> EMAIL_ERROR = List.of(new SimpleError(FIELD, MESSAGE));
 

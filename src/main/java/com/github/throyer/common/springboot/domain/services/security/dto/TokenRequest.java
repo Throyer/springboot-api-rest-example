@@ -2,16 +2,13 @@ package com.github.throyer.common.springboot.domain.services.security.dto;
 
 import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class TokenRequest {
 
-    @NotNull(message = "O Email não pode ser NULO.")
-    @NotEmpty(message = "Email invalido.")
+    @NotEmpty(message = "Invalid email.")
     private String email;
 
-    @NotNull(message = "A Senha não pode ser NULA.")
-    @NotEmpty(message = "Senha invalida.")
+    @NotEmpty(message = "Invalid password.")
     private String password;
 
     public void setEmail(String email) {

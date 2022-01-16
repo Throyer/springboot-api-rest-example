@@ -5,14 +5,19 @@ import static com.github.throyer.common.springboot.utils.Random.FAKER;
 import static com.github.throyer.common.springboot.utils.Random.password;
 import static com.github.throyer.common.springboot.utils.Random.randomUser;
 import static com.github.throyer.common.springboot.utils.TokenUtils.token;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+
+import static java.lang.String.format;
+import static org.hamcrest.Matchers.*;
 
 import java.util.List;
 import java.util.Map;
@@ -29,8 +34,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.web.servlet.MockMvc;
@@ -75,7 +79,7 @@ public class UsersTests {
 
         var request = post("/api/users")
             .content(json)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+            .header(CONTENT_TYPE, APPLICATION_JSON);
 
         api.perform(request)
             .andDo(print())
@@ -95,7 +99,7 @@ public class UsersTests {
         
         var request = post("/api/users")
             .content(payload)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+                .header(CONTENT_TYPE, APPLICATION_JSON);
 
         api.perform(request)
             .andDo(print())
@@ -111,7 +115,7 @@ public class UsersTests {
         repository.saveAll(List.of(randomUser(), randomUser(), randomUser(), randomUser()));
         
         var request = get("/api/users")
-            .header(HttpHeaders.AUTHORIZATION, header)
+            .header(AUTHORIZATION, header)
                 .queryParam("page", "0")
                 .queryParam("size", "10");
 
@@ -119,6 +123,39 @@ public class UsersTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content", hasSize(greaterThan(3))));
+    }
+    
+    @Test
+    @DisplayName("Must not list deleted users.")
+    public void must_not_list_deleted_users() throws Exception {
+
+        var user = repository.save(randomUser());
+        var id = user.getId();
+        var expression = format("$.content[?(@.id == %s)].id", id);
+        
+        var first = get("/api/users")
+            .header(AUTHORIZATION, header)
+                .queryParam("page", "0")
+                .queryParam("size", "10");
+
+        api.perform(first).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath(expression, hasItem(id.intValue())));
+        
+        var second = delete(String.format("/api/users/%s", id))
+            .header(AUTHORIZATION, header);
+
+        api.perform(second).andDo(print())
+                .andExpect(status().isNoContent());
+        
+        var third = get("/api/users")
+            .header(AUTHORIZATION, header)
+                .queryParam("page", "0")
+                .queryParam("size", "10");
+
+        api.perform(third).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath(format("$.content[?(@.id == %s)].id", id.intValue())).isEmpty());
     }
 
     @Test
@@ -128,7 +165,7 @@ public class UsersTests {
         var user = repository.save(randomUser());
         
         var request = delete(String.format("/api/users/%s", user.getId()))
-            .header(HttpHeaders.AUTHORIZATION, header);
+            .header(AUTHORIZATION, header);
 
         api.perform(request).andDo(print())
                 .andExpect(status().isNoContent());
@@ -140,13 +177,13 @@ public class UsersTests {
         var user = repository.save(randomUser());
 
         var fist = delete(String.format("/api/users/%s", user.getId()))
-            .header(HttpHeaders.AUTHORIZATION, header);
+            .header(AUTHORIZATION, header);
 
         api.perform(fist).andDo(print())
                 .andExpect(status().isNoContent());
 
         var second = delete(String.format("/api/users/%s", user.getId()))
-            .header(HttpHeaders.AUTHORIZATION, header);
+            .header(AUTHORIZATION, header);
 
         api.perform(second).andDo(print())
                 .andExpect(status().isNotFound());
@@ -164,7 +201,7 @@ public class UsersTests {
 
         var first = post("/api/users")
             .content(json)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+            .header(CONTENT_TYPE, APPLICATION_JSON);
 
         api.perform(first)
             .andDo(print())
@@ -174,7 +211,7 @@ public class UsersTests {
 
         var second = post("/api/users")
             .content(json)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+            .header(CONTENT_TYPE, APPLICATION_JSON);
 
         api.perform(second)
             .andDo(print())

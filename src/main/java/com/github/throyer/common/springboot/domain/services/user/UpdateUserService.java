@@ -24,11 +24,11 @@ public class UpdateUserService {
 
         authorized()
             .filter(authorized -> authorized.cantModify(id))
-                .orElseThrow(() -> unauthorized("Permissão invalida atualização de recurso"));
+                .orElseThrow(() -> unauthorized("Permission invalidates resource update"));
 
         var actual = repository
             .findOptionalByIdAndDeletedAtIsNullFetchRoles(id)
-                .orElseThrow(() -> notFound("Usuário não encontrado"));
+                .orElseThrow(() -> notFound("User not found"));
         
         validateEmailUniquenessOnModify(body, actual);
 
