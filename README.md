@@ -45,7 +45,7 @@
 - Java: `^17`
 - Maven: `^3.8.4`
 
-This project was started with [Spring Initializr](https://start.spring.io/).
+This project was started with [Spring Initializr](https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.6.2&packaging=jar&jvmVersion=17&groupId=com.github.throyer.common&artifactId=api&name=api&description=CRUD%20API&packageName=com.github.throyer.common.api&dependencies=devtools,lombok,web,security,thymeleaf,mysql,h2,data-jpa,flyway,jooq).
 
 ## Entities
 
@@ -134,7 +134,8 @@ Creating database migration files
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
-> $ java -jar api-4.0.0.RELEASE.jar --SERVER_PORT=80
+
+> $ java -jar api-3.0.4.RELEASE.jar --SERVER_PORT=80
 > ```
 >
 > > [All options of `aplication.properties` here](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).

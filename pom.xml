@@ -11,6 +11,7 @@
     <artifactId>api</artifactId>
     <version>4.0.0</version>
     <name>CRUD API</name>
+
     <description>Exemplo de api simples com Spring Boot</description>
 
     <properties>
