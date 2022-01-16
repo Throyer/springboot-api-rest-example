@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @Configuration
 @OpenAPIDefinition(info = @Info(
     title = "Common CRUD API",
-    version = "v3.0.4",
+    version = "v4.0.0",
     description = """
         A complete user registry, with access permissions,
         JWT token, integration and unit tests, using

@@ -35,27 +35,31 @@ public class FindUserService {
         Optional<Integer> size
     ) {
         var sql = """
+            with user_roles as (
+                select
+                        ur.user_id, string_agg(r.initials, ',') roles
+                from "role" r
+                        left join user_role ur on r.id = ur.role_id
+                group by ur.user_id 
+            )
+            
             select
-            	u.id,
-            	u.name,
-            	u.email,
-            	(select
-            		GROUP_CONCAT(r.initials)
-            	from role r
-            		left join user_role ur on r.id = ur.role_id
-            	where ur.user_id = u.id) as roles
+                u.id,
+                u."name",
+                u.email,
+                urs.roles
             from 
-                user u
-            where u.deleted_at is null
+                "user" u
+            left join user_roles as urs on urs.user_id = u.id
         """;
         
         var query = manager.createNativeQuery(sql, Tuple.class);
         var count = ((BigInteger) manager.createNativeQuery("""
             select
-            	count(u.id)
+            	count(id)
             from 
-            	user u
-            where u.deleted_at is null
+            	"user"
+            where deleted_at is null
         """).getSingleResult()).longValue();
         
         var pageable = Pagination.of(page, size);

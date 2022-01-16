@@ -1,4 +1,6 @@
-[In Portuguese](https://github.com/Throyer/springboot-api-crud/blob/master/assets/readme.md#spring-boot-api-crud)
+>[🇧🇷 In Portuguese](https://github.com/Throyer/springboot-api-crud/blob/master/assets/readme.md#spring-boot-api-crud)
+>
+> [🐬 MySQL/MariaDB implementation](https://github.com/Throyer/springboot-api-crud/tree/mariadb#readme)
 
 <p align="center">
   <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
@@ -39,7 +41,7 @@
 
 ## Requirements
 
-- MariaDB: `^10.6.1`
+- Postgres: `^13`
 - Java: `^17`
 - Maven: `^3.8.4`
 
@@ -132,6 +134,7 @@ Creating database migration files
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
+
 > $ java -jar api-3.0.4.RELEASE.jar --SERVER_PORT=80
 > ```
 >

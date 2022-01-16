@@ -15,14 +15,12 @@ public class V1639098081278__UpdateTableRecovery extends BaseJavaMigration {
             using(configuration)
                 .alterTable("recovery")
                     .addColumn("confirmed", BOOLEAN.nullable(true))
-                        .after("code")
-                            .execute();
+                        .execute();
 
             using(configuration)
                 .alterTable("recovery")
                     .addColumn("used", BOOLEAN.nullable(true))
-                        .after("confirmed")
-                            .execute();
+                        .execute();
         });
     }
 }

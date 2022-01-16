@@ -1,5 +1,6 @@
-[Em Inglês](../README.md)
-
+> [🇺🇸 Em Inglês](../README.md)
+> 
+> [🐬 Implementação com MySQL/MariaDB](https://github.com/Throyer/springboot-api-crud/tree/mariadb#readme)
 <p align="center">
   <a href="https://github.com/Throyer" target="blank"><img src="./tecnologias.png" width="560" alt="Tecnologias" /></a>
 </p>
@@ -40,7 +41,7 @@
 
 ## Requisitos
 
-- MariaDB: `^10.6.1`
+- Postgres: `^13`
 - Java: `^17`
 > recomendo a instalação do maven localmente, mas o projeto tem uma versão portatil nos arquivos [`mvnw`](./mvnw) e [`mvnw.cmd`](./mvnw.cmd)
 
@@ -144,7 +145,7 @@ Criando arquivos de arquivos de migração
 > ```shell
 > # para mudar o valor de alguma variável de ambiente
 > # na execução basta passar ela como parâmetro. (como --SERVER_PORT=80 por exemplo).
-> $ java -jar api-3.0.3.RELEASE.jar --SERVER_PORT=80
+> $ java -jar api-4.0.0.RELEASE.jar --SERVER_PORT=80
 > ```
 >
 > > [Todas opções do `aplication.properties` **padrões** no Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
