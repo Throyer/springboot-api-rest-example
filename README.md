@@ -39,7 +39,7 @@
 
 ## Requirements
 
-- MariaDB: `^10.6.1`
+- Postgres: `^13`
 - Java: `^17`
 - Maven: `^3.8.4`
 
@@ -132,7 +132,7 @@ Creating database migration files
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
-> $ java -jar api-3.0.3.RELEASE.jar --SERVER_PORT=80
+> $ java -jar api-4.0.0.RELEASE.jar --SERVER_PORT=80
 > ```
 >
 > > [All options of `aplication.properties` here](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
