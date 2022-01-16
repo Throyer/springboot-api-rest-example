@@ -5,18 +5,19 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import com.github.throyer.common.springboot.domain.models.entity.User;
 import com.github.throyer.common.springboot.domain.models.pagination.Page;
-import com.github.throyer.common.springboot.domain.models.pagination.Pagination;
+
 import com.github.throyer.common.springboot.domain.services.user.CreateUserService;
 import com.github.throyer.common.springboot.domain.services.user.FindUserService;
 import com.github.throyer.common.springboot.domain.services.user.RemoveUserService;
 import com.github.throyer.common.springboot.domain.services.user.UpdateUserService;
 import com.github.throyer.common.springboot.domain.services.user.dto.CreateUserApi;
-import com.github.throyer.common.springboot.domain.services.user.dto.SearchUser;
 import com.github.throyer.common.springboot.domain.services.user.dto.UpdateUser;
 import com.github.throyer.common.springboot.domain.services.user.dto.UserDetails;
+import static com.github.throyer.common.springboot.utils.Responses.ok;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -47,12 +48,18 @@ public class UsersController {
     private FindUserService findService;
     
     @GetMapping
+    @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM')")
-    public ResponseEntity<Page<UserDetails>> index(Pagination pagination, Sort sort, SearchUser search) {
-        return findService.find(pagination, sort, search);
+    public ResponseEntity<Page<UserDetails>> index(
+        Optional<Integer> page,
+        Optional<Integer> size
+    ) {
+        var result = findService.findAll(page, size);
+        return ok(result);
     }
     
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     public ResponseEntity<UserDetails> show(@PathVariable Long id) {
         return findService.find(id);
@@ -65,6 +72,7 @@ public class UsersController {
     }
     
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     public ResponseEntity<UserDetails> update(
         @PathVariable Long id,
@@ -75,6 +83,7 @@ public class UsersController {
     
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
+    @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM')")
     public ResponseEntity<User> destroy(@PathVariable Long id) {
         return removeService.remove(id);
