@@ -116,7 +116,7 @@ Creating database migration files
 | **Descrição**                               | **parâmetro**                          | **Valor padrão**          |
 | ------------------------------------------- | -------------------------------------- | ------------------------- |
 | Server port                                 | `SERVER_PORT`                          | 8080                      |
-| database url                                | `DB_URL`                               | localhost:3306/common_app |
+| database url                                | `DB_URL`                               | localhost:5432/common_app |
 | username (database)                         | `DB_USERNAME`                          | root                      |
 | user password (database)                    | `DB_PASSWORD`                          | root                      |
 | displays the generated sql in the logger    | `DB_SHOW_SQL`                          | false                     |
