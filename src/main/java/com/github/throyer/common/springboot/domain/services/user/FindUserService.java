@@ -52,6 +52,7 @@ public class FindUserService {
                 "user" u
             left join user_roles as urs on urs.user_id = u.id
             where u.deleted_at is null
+            order by u.created_at desc
         """;
         
         var query = manager.createNativeQuery(sql, Tuple.class);
@@ -60,7 +61,7 @@ public class FindUserService {
             	count(id)
             from 
             	"user"
-            where deleted_at is null
+            where deleted_at is null                                                                                                
         """).getSingleResult()).longValue();
         
         var pageable = Pagination.of(page, size);
