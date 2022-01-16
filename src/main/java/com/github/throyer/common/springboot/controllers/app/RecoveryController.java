@@ -26,16 +26,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/app/recovery")
 public class RecoveryController {
-    
+
     @Autowired
     private RecoveryService recoveryService;
-    
+
     @Autowired
     private RecoveryConfirmService confirmService;
-    
+
     @Autowired
     private RecoveryUpdateService updateService;
-    
+
     @GetMapping
     public String index(Model model) {
         model.addAttribute("recovery", new RecoveryRequest());
@@ -48,17 +48,17 @@ public class RecoveryController {
         BindingResult result,
         Model model
     ) {
-        
+
         if (validate(model, recovery, "recovery", result)) {
             return "app/recovery/index";
         }
-                
+
         var email = recovery.getEmail();
-        
+
         recoveryService.recovery(email);
-        
+
         model.addAttribute("codes", new Codes(email));
-        
+
         return "app/recovery/confirm";
     }
 
@@ -69,19 +69,18 @@ public class RecoveryController {
         RedirectAttributes redirect,
         Model model
     ) {
-        
+
         if (validate(model, codes, "recovery", result)) {
             return "app/recovery/confirm";
         }
 
         try {
-            
-            confirmService.confirm(codes.getEmail(), codes.code());            
-            return "redirect:/app/recovery/update";            
+            confirmService.confirm(codes.getEmail(), codes.code());
         } catch (ResponseStatusException exception) {
-            
+
             Toasts.add(model, "Código expirado ou invalido.", Type.DANGER);
             model.addAttribute("confirm", codes);
+            return "app/recovery/confirm";
         }
 
         model.addAttribute("update", new Update(codes));
@@ -97,11 +96,11 @@ public class RecoveryController {
         Model model
     ) {
         update.validate(result);
-        
+
         if (validate(model, update, "update", result)) {
             return "app/recovery/update";
         }
- 
+
         try {
             updateService.update(update.getEmail(), update.code(), update.getPassword());
         } catch (ResponseStatusException exception) {
@@ -109,7 +108,7 @@ public class RecoveryController {
             model.addAttribute("update", update);
             return "app/recovery/update";
         }
-        
+
         Toasts.add(redirect, "Sua senha foi atualizada com sucesso.", Type.SUCCESS);
         return "redirect:/app/login";
     }

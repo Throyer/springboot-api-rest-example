@@ -29,7 +29,7 @@ public class Queries {
         WHERE user.id = ?1
     """;
     
-    public static final String FIND_BY_EMAIL_FETCH_ROLES = """
+    public static final String FIND_USER_BY_EMAIL_FETCH_ROLES = """
         SELECT user FROM #{#entityName} user
         LEFT JOIN FETCH user.roles
         WHERE user.email = ?1

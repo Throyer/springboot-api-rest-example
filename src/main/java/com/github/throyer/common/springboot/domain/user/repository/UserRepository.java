@@ -6,7 +6,6 @@ import com.github.throyer.common.springboot.domain.user.entity.User;
 import com.github.throyer.common.springboot.domain.user.model.UserDetails;
 import static com.github.throyer.common.springboot.domain.user.repository.Queries.DELETE_USER_BY_ID;
 import static com.github.throyer.common.springboot.domain.user.repository.Queries.FIND_ALL_USER_DETAILS_WITHOUT_ROLES;
-import static com.github.throyer.common.springboot.domain.user.repository.Queries.FIND_BY_EMAIL_FETCH_ROLES;
 import static com.github.throyer.common.springboot.domain.user.repository.Queries.FIND_USERNAME_BY_ID;
 import static com.github.throyer.common.springboot.domain.user.repository.Queries.FIND_USER_BY_ID_FETCH_ROLES;
 import com.github.throyer.common.springboot.domain.management.repository.SoftDeleteRepository;
@@ -17,6 +16,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import static com.github.throyer.common.springboot.domain.user.repository.Queries.FIND_USER_BY_EMAIL_FETCH_ROLES;
 
 @Repository
 public interface UserRepository extends SoftDeleteRepository<User> {
@@ -51,7 +51,7 @@ public interface UserRepository extends SoftDeleteRepository<User> {
     @Query(FIND_USER_BY_ID_FETCH_ROLES)
     public Optional<User> findOptionalByIdFetchRoles(Long id);
 
-    @Query(FIND_BY_EMAIL_FETCH_ROLES)
+    @Query(FIND_USER_BY_EMAIL_FETCH_ROLES)
     public Optional<User> findOptionalByEmailFetchRoles(String email);
 
     public Optional<User> findOptionalByEmail(String email);
