@@ -7,7 +7,7 @@ services:
     container_name: postgres-container
     command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
@@ -26,8 +26,8 @@ services:
     depends_on:
       - postgresql
     ports:
-      - 8080:8080
-      - 8000:8000
+      - "8080:8080"
+      - "8000:8000"
     environment:
       DB_URL: "postgresql:5432/common_app"
       DB_USERNAME: "root"

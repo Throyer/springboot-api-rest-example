@@ -49,8 +49,8 @@ public class SessionsTests {
 
         var body = """
             {
-                \"email\": \"%s\",
-                \"password\": \"%s\"
+                "email": "%s",
+                "password": "%s"
             }
         """;
 
