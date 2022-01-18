@@ -14,14 +14,14 @@ public class V1639097688772__CreateTableRecovery extends BaseJavaMigration {
         create.transaction(configuration -> {
             using(configuration)
                 .createTableIfNotExists("recovery")
-                .column("id", BIGINT.identity(true))
-                .column("code", VARCHAR(4).nullable(false))
-                .column("expires_in", TIMESTAMP.nullable(false))
-                .column("user_id", BIGINT.nullable(false))
+                    .column("id", BIGINT.identity(true))
+                    .column("code", VARCHAR(4).nullable(false))
+                    .column("expires_in", TIMESTAMP.nullable(false))
+                    .column("user_id", BIGINT.nullable(false))
                 .constraints(
-                    primaryKey("id"),
-                    unique("code"),
-                    foreignKey("user_id").references("user", "id"))
+                    constraint("recovery_pk").primaryKey("id"),
+                    constraint("recovery_unique_code").unique("code"),                        
+                    constraint("recovery_user_fk").foreignKey("user_id").references("user", "id"))
                 .execute();
         });
     }

@@ -14,24 +14,24 @@ public class V1639097360419__CreateTableUser extends BaseJavaMigration {
         create.transaction(configuration -> {
             using(configuration)
                     .createTableIfNotExists("user")
-                    .column("id", BIGINT.identity(true))
-                    .column("name", VARCHAR(100).nullable(false))
-                    .column("email", VARCHAR(100).nullable(true))
-                    .column("deleted_email", VARCHAR(100).nullable(true))
-                    .column("password", VARCHAR(100).nullable(false))
-                    .column("active", BOOLEAN.defaultValue(true))
-                    .column("created_at", TIMESTAMP.defaultValue(currentTimestamp()))
-                    .column("updated_at", TIMESTAMP.nullable(true))
-                    .column("deleted_at", TIMESTAMP.nullable(true))
-                    .column("created_by", BIGINT.nullable(true))
-                    .column("updated_by", BIGINT.nullable(true))
-                    .column("deleted_by", BIGINT.nullable(true))
+                        .column("id", BIGINT.identity(true))
+                        .column("name", VARCHAR(100).nullable(false))
+                        .column("email", VARCHAR(100).nullable(true))
+                        .column("deleted_email", VARCHAR(100).nullable(true))
+                        .column("password", VARCHAR(100).nullable(false))
+                        .column("active", BOOLEAN.defaultValue(true))
+                        .column("created_at", TIMESTAMP.defaultValue(currentTimestamp()))
+                        .column("updated_at", TIMESTAMP.nullable(true))
+                        .column("deleted_at", TIMESTAMP.nullable(true))
+                        .column("created_by", BIGINT.nullable(true))
+                        .column("updated_by", BIGINT.nullable(true))
+                        .column("deleted_by", BIGINT.nullable(true))
                     .constraints(
-                        primaryKey("id"),
-                        unique("email"),
-                        foreignKey("created_by").references("user", "id"),
-                        foreignKey("updated_by").references("user", "id"),
-                        foreignKey("deleted_by").references("user", "id"))
+                        constraint("user_pk").primaryKey("id"),                            
+                        constraint("user_unique_email").unique("email"),                        
+                        constraint("user_created_by_fk").foreignKey("created_by").references("user", "id"),                        
+                        constraint("user_updated_by_fk").foreignKey("updated_by").references("user", "id"),                        
+                        constraint("user_deleted_by_fk").foreignKey("deleted_by").references("user", "id"))
                     .execute();
         });
     }

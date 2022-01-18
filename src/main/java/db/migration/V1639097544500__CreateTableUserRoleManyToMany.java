@@ -14,11 +14,11 @@ public class V1639097544500__CreateTableUserRoleManyToMany extends BaseJavaMigra
         create.transaction(configuration -> {
             using(configuration)
                 .createTableIfNotExists("user_role")
-                .column("user_id", BIGINT.nullable(true))
-                .column("role_id", BIGINT.nullable(true))
+                    .column("user_id", BIGINT.nullable(true))
+                    .column("role_id", BIGINT.nullable(true))
                 .constraints(
-                    foreignKey("user_id").references("user", "id"),
-                    foreignKey("role_id").references("role", "id"))
+                    constraint("user_role_fk").foreignKey("user_id").references("user", "id"),
+                    constraint("role_user_fk").foreignKey("role_id").references("role", "id"))
                 .execute();
         });
     }

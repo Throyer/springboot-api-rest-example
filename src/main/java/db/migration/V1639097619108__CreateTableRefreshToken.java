@@ -14,15 +14,15 @@ public class V1639097619108__CreateTableRefreshToken extends BaseJavaMigration {
         create.transaction(configuration -> {
             using(configuration)
                 .createTableIfNotExists("refresh_token")
-                .column("id", BIGINT.identity(true))
-                .column("code", VARCHAR(40).nullable(false))
-                .column("available", BOOLEAN.defaultValue(true))
-                .column("expires_in", TIMESTAMP.nullable(false))
-                .column("user_id", BIGINT.nullable(false))
+                    .column("id", BIGINT.identity(true))
+                    .column("code", VARCHAR(40).nullable(false))
+                    .column("available", BOOLEAN.defaultValue(true))
+                    .column("expires_in", TIMESTAMP.nullable(false))
+                    .column("user_id", BIGINT.nullable(false))
                 .constraints(
-                    primaryKey("id"),
-                    unique("code"),
-                    foreignKey("user_id").references("user", "id"))
+                    constraint("refresh_token_pk").primaryKey("id"),                            
+                    constraint("refresh_token_unique_code").unique("code"),                        
+                    constraint("refresh_token_user_fk").foreignKey("user_id").references("user", "id"))
                 .execute();
         });
     }
