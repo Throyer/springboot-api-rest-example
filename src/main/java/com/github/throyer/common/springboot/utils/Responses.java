@@ -104,7 +104,7 @@ public class Responses {
         return new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, reason);
     }
     
-    public static final <P> Boolean validate(Model model, P props, String propertyName, BindingResult result) {
+    public static final <P> Boolean validateAndUpdateModel(Model model, P props, String propertyName, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute(propertyName, props);
             Toasts.add(model, result);            

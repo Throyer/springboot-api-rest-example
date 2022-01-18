@@ -3,6 +3,7 @@ package com.github.throyer.common.springboot.domain.user.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
+import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.user.entity.User;
 import com.github.throyer.common.springboot.domain.management.model.Entity;
 import static java.util.Optional.ofNullable;
@@ -22,7 +23,7 @@ public class UserDetails implements Entity {
 
         this.roles = user.getRoles()
             .stream()
-                .map(role -> role.getAuthority())
+                .map(Role::getAuthority)
                     .toList();
     }
 
