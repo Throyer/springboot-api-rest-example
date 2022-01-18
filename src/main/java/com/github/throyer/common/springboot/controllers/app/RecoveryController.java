@@ -8,8 +8,8 @@ import com.github.throyer.common.springboot.domain.recovery.service.RecoveryUpda
 import com.github.throyer.common.springboot.domain.recovery.model.Codes;
 import com.github.throyer.common.springboot.domain.recovery.model.RecoveryRequest;
 import com.github.throyer.common.springboot.domain.recovery.model.Update;
-import com.github.throyer.common.springboot.domain.shared.Type;
-import com.github.throyer.common.springboot.utils.Toasts;
+import com.github.throyer.common.springboot.domain.toast.Type;
+import com.github.throyer.common.springboot.domain.toast.Toasts;
 
 import javax.validation.Valid;
 

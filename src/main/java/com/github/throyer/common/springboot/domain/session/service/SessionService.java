@@ -2,11 +2,14 @@ package com.github.throyer.common.springboot.domain.session.service;
 
 import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 import com.github.throyer.common.springboot.domain.session.model.Authorized;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.JWT;
+
+import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
 import static java.util.Objects.nonNull;
 import java.util.Optional;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static java.util.logging.Level.WARNING;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +22,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SessionService implements UserDetailsService {
-
-    @Autowired
-    UserRepository repository;
     private static final Logger LOGGER = Logger.getLogger(SessionService.class.getName());
-    
-    public static final String INVALID_USERNAME = "Invalid user name.";
+
+    private final UserRepository repository;
 
     private static String SECRET;
 
-    public SessionService(@Value("${token.secret}") String secret) {
+    public SessionService(
+        @Value(TOKEN_SECRET_ENV_PROPERTY) String secret,
+        UserRepository repository
+    ) {
         SessionService.SECRET = secret;
+        this.repository = repository;
     }
 
     @Override
@@ -47,7 +51,7 @@ public class SessionService implements UserDetailsService {
                     .getContext()
                     .setAuthentication(authorized.getAuthentication());
         } catch (Exception exception) {
-            LOGGER.log(Level.WARNING, "Token expired or invalid");
+            LOGGER.log(WARNING, TOKEN_EXPIRED_MESSAGE);
         }
     }
 

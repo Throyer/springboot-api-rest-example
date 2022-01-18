@@ -1,12 +1,12 @@
 package com.github.throyer.common.springboot.utils;
 
 import com.github.throyer.common.springboot.domain.session.service.JsonWebToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class Constants {
     public static class SECURITY {
         public static final JsonWebToken JWT = new JsonWebToken();
-        public static final Long HOUR_IN_SECONDS = 3600L;
         public static final Integer DAY_MILLISECONDS = 86400;
         
         public static final Integer PASSWORD_STRENGTH = 10;
@@ -16,7 +16,13 @@ public class Constants {
         public static final String INVALID_USERNAME = "Invalid username.";
         public static final String CREATE_SESSION_ERROR_MESSAGE = "Invalid password or username.";
         public static final String REFRESH_SESSION_ERROR_MESSAGE = "Refresh token expired or invalid.";
-    
+
+        public static final String TOKEN_SECRET_ENV_PROPERTY = "${token.secret}";
+        public static final String EXPIRATION_TOKEN_ENV_PROPERTY = "${token.expiration-in-hours}";
+        public static final String REFRESH_TOKEN_ENV_PROPERTY = "${token.refresh.expiration-in-days}";
+
+        public static final String TOKEN_EXPIRED_MESSAGE = "Token expired or invalid";
+
         public static final String USERNAME_PARAMETER = "email";
         public static final String PASSWORD_PARAMETER = "password";
 

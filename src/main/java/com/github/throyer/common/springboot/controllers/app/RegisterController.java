@@ -1,11 +1,11 @@
 package com.github.throyer.common.springboot.controllers.app;
 
-import static com.github.throyer.common.springboot.domain.shared.Type.SUCCESS;
+import static com.github.throyer.common.springboot.domain.toast.Type.SUCCESS;
 import static com.github.throyer.common.springboot.utils.Responses.validateAndUpdateModel;
 
 import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
 import com.github.throyer.common.springboot.domain.user.service.CreateUserService;
-import com.github.throyer.common.springboot.utils.Toasts;
+import com.github.throyer.common.springboot.domain.toast.Toasts;
 
 import javax.validation.Valid;
 

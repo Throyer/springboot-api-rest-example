@@ -1,23 +1,7 @@
 package com.github.throyer.common.springboot.configurations;
 
-import static com.github.throyer.common.springboot.errors.ValidationHandlers.forbidden;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.ACESSO_NEGADO_URL;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.DAY_MILLISECONDS;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.HOME_URL;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.LOGIN_ERROR_URL;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.LOGIN_URL;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.LOGOUT_URL;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.PASSWORD_PARAMETER;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.SESSION_COOKIE_NAME;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.STATIC_FILES;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.USERNAME_PARAMETER;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 import com.github.throyer.common.springboot.domain.session.service.SessionService;
 import com.github.throyer.common.springboot.middlewares.AuthorizationMiddleware;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
+
+import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.utils.Responses.forbidden;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Component
 @EnableWebSecurity

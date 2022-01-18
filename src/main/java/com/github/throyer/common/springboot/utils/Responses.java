@@ -1,15 +1,22 @@
 package com.github.throyer.common.springboot.utils;
 
-import java.net.URI;
-
 import com.github.throyer.common.springboot.domain.management.model.Entity;
-
+import com.github.throyer.common.springboot.domain.toast.Toasts;
+import com.github.throyer.common.springboot.errors.Error;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
+
+import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 /**
  * HTTP Responses.
@@ -19,6 +26,8 @@ import org.springframework.web.server.ResponseStatusException;
  * utilizando <code>ResponseEntity</code>.
  */
 public class Responses {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Responses.class);
 
     private Responses() { }
 
@@ -107,9 +116,27 @@ public class Responses {
     public static final <P> Boolean validateAndUpdateModel(Model model, P props, String propertyName, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute(propertyName, props);
-            Toasts.add(model, result);            
+            Toasts.add(model, result);
             return true;
         }
         return false;
+    }
+
+    public static final ResponseEntity<Error> fromException(ResponseStatusException exception) {
+        return ResponseEntity
+                .status(exception.getStatus())
+                .body(new Error(exception.getReason(), exception.getStatus()));
+    }
+
+    public static void forbidden(HttpServletResponse response) {
+        try {
+            response.setStatus(FORBIDDEN.value());
+            response.setContentType("application/json");
+            response.getWriter().write(toJson(
+                    new Error("Can't find token on Authorization header.", FORBIDDEN)
+            ));
+        } catch (Exception exception) {
+            LOGGER.error("can't write response error on token expired or invalid exception", exception);
+        }
     }
 }

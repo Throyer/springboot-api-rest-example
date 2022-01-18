@@ -1,10 +1,8 @@
-package com.github.throyer.common.springboot.utils;
+package com.github.throyer.common.springboot.domain.toast;
 
-import com.github.throyer.common.springboot.domain.shared.Toast;
 import java.util.List;
 
-import static com.github.throyer.common.springboot.domain.shared.Type.*;
-import com.github.throyer.common.springboot.domain.shared.Type;
+import static com.github.throyer.common.springboot.domain.toast.Type.*;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

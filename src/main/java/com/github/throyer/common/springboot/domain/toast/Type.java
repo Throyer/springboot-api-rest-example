@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.domain.shared;
+package com.github.throyer.common.springboot.domain.toast;
 
 public enum Type {
 

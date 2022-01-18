@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.domain.shared;
+package com.github.throyer.common.springboot.domain.toast;
 
 import lombok.Data;
 import org.springframework.validation.ObjectError;

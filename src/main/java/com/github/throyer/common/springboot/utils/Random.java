@@ -7,6 +7,8 @@ import com.github.javafaker.Faker;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.user.entity.User;
 
+import static java.lang.String.format;
+
 public class Random {
         
     private static final java.util.Random RANDOM = new java.util.Random();
@@ -21,7 +23,7 @@ public class Random {
     }
 
     public static String code() {
-        return String.format("%s%s%s%s", between(0, 9), between(0, 9), between(0, 9), between(0, 9));
+        return format("%s%s%s%s", between(0, 9), between(0, 9), between(0, 9), between(0, 9));
     }
 
     public static String password() {

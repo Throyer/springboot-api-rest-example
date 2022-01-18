@@ -7,9 +7,8 @@ import com.github.throyer.common.springboot.domain.session.entity.RefreshToken;
 import com.github.throyer.common.springboot.domain.session.repository.RefreshTokenRepository;
 import com.github.throyer.common.springboot.domain.session.model.TokenRequest;
 import com.github.throyer.common.springboot.domain.session.model.TokenResponse;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.CREATE_SESSION_ERROR_MESSAGE;
 
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.JWT;
+import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 
 import java.time.LocalDateTime;
@@ -20,21 +19,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateTokenService {
-    
-    @Value("${token.secret}")
-    private String TOKEN_SECRET;
 
-    @Value("${token.expiration-in-hours}")
-    private Integer TOKEN_EXPIRATION_IN_HOURS;
+    private final String TOKEN_SECRET;
+    private final Integer TOKEN_EXPIRATION_IN_HOURS;
+    private final Integer REFRESH_TOKEN_EXPIRATION_IN_DAYS;
 
-    @Value("${token.refresh.expiration-in-days}")
-    private Integer REFRESH_TOKEN_EXPIRATION_IN_DAYS;
-    
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
+
     @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
-    @Autowired
-    private UserRepository userRepository;
-    
+    public CreateTokenService(
+        @Value(TOKEN_SECRET_ENV_PROPERTY) String tokenSecret,
+        @Value(EXPIRATION_TOKEN_ENV_PROPERTY) Integer tokenExpirationInHours,
+        @Value(REFRESH_TOKEN_ENV_PROPERTY) Integer refreshTokenExpirationInDays,
+        RefreshTokenRepository refreshTokenRepository,
+        UserRepository userRepository
+    ) {
+        this.TOKEN_SECRET = tokenSecret;
+        this.TOKEN_EXPIRATION_IN_HOURS = tokenExpirationInHours;
+        this.REFRESH_TOKEN_EXPIRATION_IN_DAYS = refreshTokenExpirationInDays;
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.userRepository = userRepository;
+    }
+
     public TokenResponse create(TokenRequest request) {
         var user = userRepository.findOptionalByEmailFetchRoles(request.getEmail())
             .filter(session -> session.validatePassword(request.getPassword()))

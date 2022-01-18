@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import com.github.throyer.common.springboot.domain.management.model.Addressable;
-import com.github.throyer.common.springboot.domain.shared.SimpleError;
+import com.github.throyer.common.springboot.errors.Error;
 
 @Component
 public class EmailValidations {
@@ -19,7 +19,7 @@ public class EmailValidations {
     private static String FIELD = "email";
     private static String MESSAGE = "This email has already been used by another user. Please use a different email.";
 
-    private static final List<SimpleError> EMAIL_ERROR = List.of(new SimpleError(FIELD, MESSAGE));
+    private static final List<Error> EMAIL_ERROR = List.of(new Error(FIELD, MESSAGE));
 
     @Autowired
     public EmailValidations(UserRepository repository) {

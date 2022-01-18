@@ -13,23 +13,23 @@ import com.github.throyer.common.springboot.domain.user.model.UserDetails;
 import com.github.throyer.common.springboot.domain.session.model.Authorized;
 
 import io.jsonwebtoken.Jwts;
+
+import static com.github.throyer.common.springboot.utils.Constants.SECURITY.ROLES_KEY_ON_JWT;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
+import static java.time.ZoneId.systemDefault;
 import static java.util.Arrays.stream;
+import static java.util.Date.from;
 
 
 public class JsonWebToken {
-
-    public static final String ROLES_KEY_ON_JWT = "roles";
-
     public String encode(User user, LocalDateTime expiration, String secret) {
-        var roles = user.getRoles().stream().map(role -> role.getAuthority()).toList();
+        var roles = user.getRoles().stream().map(Role::getAuthority).toList();
         return encode(user.getId(), roles, expiration, secret);
     }
     
     public String encode(UserDetails user, LocalDateTime expiration, String secret) {
         return encode(user.getId(), user.getRoles(), expiration, secret);
     }
-
 
     public String encode(
         Long id,
@@ -39,12 +39,8 @@ public class JsonWebToken {
     ) {
         return Jwts.builder()
             .setSubject(id.toString())
-            .claim(ROLES_KEY_ON_JWT, authorities
-                .stream()                
-                .collect(Collectors.joining(",")))
-            .setExpiration(Date.from(expiration
-                .atZone(ZoneId.systemDefault())
-                .toInstant()))
+            .claim(ROLES_KEY_ON_JWT, String.join(",", authorities))
+            .setExpiration(from(expiration.atZone(systemDefault()).toInstant()))
             .signWith(HS256, secret)
             .compact();
     }

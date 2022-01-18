@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.domain.shared;
+package com.github.throyer.common.springboot.errors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -6,38 +6,43 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
-public class SimpleError {
+import java.util.List;
 
-    @JsonInclude(Include.NON_NULL)
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
+public class Error {
+
+    @JsonInclude(NON_NULL)
     private String field;
 
-    @JsonInclude(Include.NON_NULL)
+    @JsonInclude(NON_NULL)
     private String message;
 
-    @JsonInclude(Include.NON_NULL)
+    @JsonInclude(NON_NULL)
     private Integer status;
 
-    public SimpleError(FieldError error) {
+    public Error(FieldError error) {
         this.field = error.getField();
         this.message = error.getDefaultMessage();
     }
 
-    public SimpleError(ObjectError error) {
+    public Error(ObjectError error) {
         this.message = error.getDefaultMessage();
     }
 
-    public SimpleError(String filed, String message) {
+    public Error(String filed, String message) {
         this.field = filed;
         this.message = message;
     }
 
-    public SimpleError(String message, Integer status) {
+    public Error(String message, Integer status) {
         this.message = message;
         this.status = status;
     }
 
-    public SimpleError(String message, HttpStatus status) {
+    public Error(String message, HttpStatus status) {
         this.message = message;
         this.status = status.value();
     }
@@ -64,5 +69,13 @@ public class SimpleError {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public static final List<Error> of(MethodArgumentNotValidException exception) {
+        return exception.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map((error) -> (new Error((FieldError) error)))
+                .toList();
     }
 }

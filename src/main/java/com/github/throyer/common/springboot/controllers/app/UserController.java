@@ -1,9 +1,9 @@
 package com.github.throyer.common.springboot.controllers.app;
 
-import com.github.throyer.common.springboot.domain.shared.Type;
+import com.github.throyer.common.springboot.domain.toast.Type;
 import com.github.throyer.common.springboot.domain.user.service.FindUserService;
 import com.github.throyer.common.springboot.domain.user.service.RemoveUserService;
-import com.github.throyer.common.springboot.utils.Toasts;
+import com.github.throyer.common.springboot.domain.toast.Toasts;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
