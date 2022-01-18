@@ -9,6 +9,8 @@ import com.github.throyer.common.springboot.domain.recovery.model.RecoveryConfir
 import com.github.throyer.common.springboot.domain.recovery.model.RecoveryRequest;
 import com.github.throyer.common.springboot.domain.recovery.model.RecoveryUpdate;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,31 +19,45 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "Password recovery")
 @RequestMapping("/api/recoveries")
 public class RecoveriesController {
 
+    private final RecoveryService recoveryService;
+    private final RecoveryConfirmService confirmService;
+    private final RecoveryUpdateService updateService;
+
     @Autowired
-    private RecoveryService recoveryService;
-    
-    @Autowired
-    private RecoveryConfirmService confirmService;
-    
-    @Autowired
-    private RecoveryUpdateService updateService;
+    public RecoveriesController(
+        RecoveryService recoveryService,
+        RecoveryConfirmService confirmService,
+        RecoveryUpdateService updateService
+    ) {
+        this.recoveryService = recoveryService;
+        this.confirmService = confirmService;
+        this.updateService = updateService;
+    }
 
     @PostMapping
     @ResponseStatus(NO_CONTENT)
-    public void index(@RequestBody RecoveryRequest request) {        
+    @Operation(
+        summary = "Starts recovery password process",
+        description = "Sends a email to user with recovery code"
+    )
+    public void recovery(@RequestBody RecoveryRequest request) {
         recoveryService.recovery(request.getEmail());
     }
 
     @PostMapping("/confirm")
-    public void confirm(@RequestBody RecoveryConfirm confirm) {        
+    @ResponseStatus(NO_CONTENT)
+    @Operation(summary = "Confirm recovery code")
+    public void confirm(@RequestBody RecoveryConfirm confirm) {
         confirmService.confirm(confirm.getEmail(), confirm.getCode());
     }
 
     @PostMapping("/update")
     @ResponseStatus(NO_CONTENT)
+    @Operation(summary = "Update user password")
     public void update(@RequestBody RecoveryUpdate update) {        
         updateService.update(update.getEmail(), update.getCode(), update.getPassword());
     }

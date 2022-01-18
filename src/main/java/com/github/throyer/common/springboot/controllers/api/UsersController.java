@@ -16,10 +16,12 @@ import com.github.throyer.common.springboot.domain.user.service.FindUserByIdServ
 import com.github.throyer.common.springboot.domain.user.service.UpdateUserService;
 import com.github.throyer.common.springboot.domain.user.model.UserDetails;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "Users")
 @RequestMapping("/api/users")
 public class UsersController {
         
@@ -58,10 +61,11 @@ public class UsersController {
         this.findService = findService;
         this.findByIdService = findByIdService;
     }
-    
+
     @GetMapping
     @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM')")
+    @Operation(summary = "Returns a list of users")
     public ResponseEntity<Page<UserDetails>> index(
         Optional<Integer> page,
         Optional<Integer> size
@@ -73,6 +77,7 @@ public class UsersController {
     @GetMapping("/{id}")
     @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
+    @Operation(summary = "Show user info")
     public ResponseEntity<UserDetails> show(@PathVariable Long id) {
         var user = findByIdService.find(id);
         return ok(user);
@@ -80,6 +85,7 @@ public class UsersController {
     
     @PostMapping
     @ResponseStatus(CREATED)
+    @Operation(summary = "Register a new user", description = "Returns the new user")
     public ResponseEntity<UserDetails> save(
         @Validated @RequestBody CreateUserProps props
     ) {
@@ -91,6 +97,7 @@ public class UsersController {
     @PutMapping("/{id}")
     @SecurityRequirement(name = "token")
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
+    @Operation(summary = "Update user data")
     public ResponseEntity<UserDetails> update(
         @PathVariable Long id,
         @RequestBody @Validated UpdateUserProps body
@@ -102,6 +109,7 @@ public class UsersController {
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
     @SecurityRequirement(name = "token")
+    @Operation(summary = "Delete user")
     public void destroy(@PathVariable Long id) {
         removeService.remove(id);
     }
