@@ -1,7 +1,7 @@
 package com.github.throyer.common.springboot.controllers.app;
 
 import static com.github.throyer.common.springboot.domain.shared.Type.SUCCESS;
-import static com.github.throyer.common.springboot.utils.Responses.validate;
+import static com.github.throyer.common.springboot.utils.Responses.validateAndUpdateModel;
 
 import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
 import com.github.throyer.common.springboot.domain.user.service.CreateUserService;
@@ -38,8 +38,10 @@ public class RegisterController {
         RedirectAttributes redirect,
         Model model
     ) {
-        
-        if (validate(model, props, "user", result)) {
+
+        props.validate(result);
+
+        if (validateAndUpdateModel(model, props, "user", result)) {
             return "app/register/index";
         }
         

@@ -20,15 +20,13 @@ public class CreateUserService {
     @Autowired
     RoleRepository roleRepository;
 
-    public UserDetails create(CreateUserProps data) {
-
-        data.validate();
+    public UserDetails create(CreateUserProps props) {
 
         var roles = roleRepository.findOptionalByInitials("USER")
-                .map(role -> List.of(role))
+                .map(List::of)
                     .orElseGet(() -> List.of());
 
-        var user = userRepository.save(new User(data, roles));
+        var user = userRepository.save(new User(props, roles));
 
         return new UserDetails(user);
     }

@@ -81,9 +81,10 @@ public class UsersController {
     @PostMapping
     @ResponseStatus(CREATED)
     public ResponseEntity<UserDetails> save(
-        @Validated @RequestBody CreateUserProps body
+        @Validated @RequestBody CreateUserProps props
     ) {
-        var user = createService.create(body);
+        props.validate();
+        var user = createService.create(props);
         return created(user, "api/users");
     }
     

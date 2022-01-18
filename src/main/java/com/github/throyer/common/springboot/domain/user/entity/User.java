@@ -1,53 +1,46 @@
 package com.github.throyer.common.springboot.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.throyer.common.springboot.domain.management.entity.Auditable;
+import com.github.throyer.common.springboot.domain.management.model.Addressable;
+import com.github.throyer.common.springboot.domain.role.entity.Role;
+import com.github.throyer.common.springboot.domain.session.model.Authorized;
+import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
+import com.github.throyer.common.springboot.domain.user.model.UpdateUserProps;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.Where;
+
+import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
-
-import com.github.throyer.common.springboot.domain.session.model.Authorized;
-import com.github.throyer.common.springboot.domain.user.model.UpdateUserProps;
-import com.github.throyer.common.springboot.domain.management.entity.Auditable;
-import com.github.throyer.common.springboot.domain.role.entity.Role;
-import com.github.throyer.common.springboot.domain.management.model.Addressable;
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static com.github.throyer.common.springboot.domain.management.repository.Queries.NON_DELETED_CLAUSE;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.PASSWORD_ENCODER;
+import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
+import static java.util.Optional.ofNullable;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
-import lombok.Data;
-
-import org.hibernate.annotations.Where;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-@Data
 @Entity
+@Getter
+@Setter
 @Table(name = "user")
 @Where(clause = NON_DELETED_CLAUSE)
 public class User extends Auditable implements Serializable, Addressable {
-
-    public static final Integer PASSWORD_STRENGTH = 10;
-
+    @Serial
     private static final long serialVersionUID = -8080540494839892473L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -60,11 +53,11 @@ public class User extends Auditable implements Serializable, Addressable {
     @Column(name = "deleted_email")
     private String deletedEmail;
 
-    @JsonProperty(access = Access.WRITE_ONLY)
+    @JsonProperty(access = WRITE_ONLY)
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = DETACH, fetch = LAZY)
     @JoinTable(name = "user_role",
         joinColumns = {
             @JoinColumn(name = "user_id")},
@@ -110,36 +103,14 @@ public class User extends Auditable implements Serializable, Addressable {
         return email;
     }
 
-    public void merge(UpdateUserProps dto) {
-        setName(dto.getName());
-        setEmail(dto.getEmail());
+    public void merge(UpdateUserProps props) {
+        this.name = props.getName();
+        this.email = props.getEmail();
     }
 
     public void updatePassword(String newPassword) {
-        this.password = new BCryptPasswordEncoder(PASSWORD_STRENGTH)
+        this.password = PASSWORD_ENCODER
             .encode(newPassword);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User other = (User) obj;
-        return Objects.equals(this.id, other.id);
     }
 
     public boolean isPrincipal(Principal principal) {
@@ -167,6 +138,22 @@ public class User extends Auditable implements Serializable, Addressable {
 
     @Override
     public String toString() {
-        return Objects.nonNull(getName()) ? name : "null";
+        return toJson(Map.of(
+            "name", ofNullable(this.name).orElse(""),
+            "email", ofNullable(this.email).orElse("")
+        ));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

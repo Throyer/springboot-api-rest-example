@@ -1,6 +1,6 @@
 package com.github.throyer.common.springboot.controllers.app;
 
-import static com.github.throyer.common.springboot.utils.Responses.validate;
+import static com.github.throyer.common.springboot.utils.Responses.validateAndUpdateModel;
 
 import com.github.throyer.common.springboot.domain.recovery.service.RecoveryConfirmService;
 import com.github.throyer.common.springboot.domain.recovery.service.RecoveryService;
@@ -49,7 +49,7 @@ public class RecoveryController {
         Model model
     ) {
 
-        if (validate(model, recovery, "recovery", result)) {
+        if (validateAndUpdateModel(model, recovery, "recovery", result)) {
             return "app/recovery/index";
         }
 
@@ -70,7 +70,7 @@ public class RecoveryController {
         Model model
     ) {
 
-        if (validate(model, codes, "recovery", result)) {
+        if (validateAndUpdateModel(model, codes, "recovery", result)) {
             return "app/recovery/confirm";
         }
 
@@ -97,7 +97,7 @@ public class RecoveryController {
     ) {
         update.validate(result);
 
-        if (validate(model, update, "update", result)) {
+        if (validateAndUpdateModel(model, update, "update", result)) {
             return "app/recovery/update";
         }
 

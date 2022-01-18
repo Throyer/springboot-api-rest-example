@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.BindingResult;
 
 @Data
 @NoArgsConstructor
@@ -32,6 +33,10 @@ public class CreateUserProps implements Addressable {
         setName(name);
         setEmail(email);
         setPassword(password);
+    }
+
+    public void validate(BindingResult result) {
+        validateEmailUniqueness(this, result);
     }
 
     public void validate() {
