@@ -25,11 +25,9 @@ public class Constants {
     }
 
     public static class SECURITY {
-        public static final JsonWebToken JWT = new JsonWebToken();
         public static final Integer DAY_MILLISECONDS = 86400;
-        
-        public static final Integer PASSWORD_STRENGTH = 10;
-        public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(PASSWORD_STRENGTH);
+        public static final JsonWebToken JWT = new JsonWebToken();
+        public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(10);
 
         public static final String ROLES_KEY_ON_JWT = "roles";
         public static final String INVALID_USERNAME = "Invalid username.";
