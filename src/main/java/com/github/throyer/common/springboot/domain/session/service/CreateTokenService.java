@@ -1,43 +1,31 @@
 package com.github.throyer.common.springboot.domain.session.service;
 
 
-import com.github.throyer.common.springboot.domain.user.model.UserDetails;
-import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 import com.github.throyer.common.springboot.domain.session.entity.RefreshToken;
-import com.github.throyer.common.springboot.domain.session.repository.RefreshTokenRepository;
 import com.github.throyer.common.springboot.domain.session.model.TokenRequest;
 import com.github.throyer.common.springboot.domain.session.model.TokenResponse;
+import com.github.throyer.common.springboot.domain.session.repository.RefreshTokenRepository;
+import com.github.throyer.common.springboot.domain.user.model.UserDetails;
+import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 
-import java.time.LocalDateTime;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 @Service
 public class CreateTokenService {
-
-    private final String TOKEN_SECRET;
-    private final Integer TOKEN_EXPIRATION_IN_HOURS;
-    private final Integer REFRESH_TOKEN_EXPIRATION_IN_DAYS;
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
 
     @Autowired
     public CreateTokenService(
-        @Value(TOKEN_SECRET_ENV_PROPERTY) String tokenSecret,
-        @Value(EXPIRATION_TOKEN_ENV_PROPERTY) Integer tokenExpirationInHours,
-        @Value(REFRESH_TOKEN_ENV_PROPERTY) Integer refreshTokenExpirationInDays,
         RefreshTokenRepository refreshTokenRepository,
         UserRepository userRepository
     ) {
-        this.TOKEN_SECRET = tokenSecret;
-        this.TOKEN_EXPIRATION_IN_HOURS = tokenExpirationInHours;
-        this.REFRESH_TOKEN_EXPIRATION_IN_DAYS = refreshTokenExpirationInDays;
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;
     }

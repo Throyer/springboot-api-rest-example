@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.github.throyer.common.springboot.domain.management.model.Addressable;
+import com.github.throyer.common.springboot.domain.mail.model.Addressable;
 
 public class UpdateUserProps implements Addressable {
     

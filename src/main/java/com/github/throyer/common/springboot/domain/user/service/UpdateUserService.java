@@ -4,7 +4,7 @@ import com.github.throyer.common.springboot.domain.user.repository.UserRepositor
 import static com.github.throyer.common.springboot.domain.session.service.SessionService.authorized;
 import com.github.throyer.common.springboot.domain.user.model.UpdateUserProps;
 import com.github.throyer.common.springboot.domain.user.model.UserDetails;
-import static com.github.throyer.common.springboot.domain.mail.exceptions.EmailValidations.validateEmailUniquenessOnModify;
+import static com.github.throyer.common.springboot.domain.mail.validation.EmailValidations.validateEmailUniquenessOnModify;
 import static com.github.throyer.common.springboot.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.utils.Responses.unauthorized;
 import org.springframework.beans.factory.annotation.Autowired;

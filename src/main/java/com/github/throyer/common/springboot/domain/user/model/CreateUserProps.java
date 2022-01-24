@@ -1,8 +1,8 @@
 package com.github.throyer.common.springboot.domain.user.model;
 
-import static com.github.throyer.common.springboot.domain.mail.exceptions.EmailValidations.validateEmailUniqueness;
+import static com.github.throyer.common.springboot.domain.mail.validation.EmailValidations.validateEmailUniqueness;
 
-import com.github.throyer.common.springboot.domain.management.model.Addressable;
+import com.github.throyer.common.springboot.domain.mail.model.Addressable;
 import com.github.throyer.common.springboot.domain.user.entity.User;
 import java.util.List;
 

@@ -1,18 +1,13 @@
 package com.github.throyer.common.springboot.domain.session.service;
 
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.github.throyer.common.springboot.domain.role.entity.Role;
+import com.github.throyer.common.springboot.domain.session.model.Authorized;
 import com.github.throyer.common.springboot.domain.user.entity.User;
 import com.github.throyer.common.springboot.domain.user.model.UserDetails;
-import com.github.throyer.common.springboot.domain.session.model.Authorized;
-
 import io.jsonwebtoken.Jwts;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.ROLES_KEY_ON_JWT;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;

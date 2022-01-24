@@ -48,7 +48,7 @@ public class RefreshToken implements Serializable {
     public RefreshToken(UserDetails user, Integer daysToExpire) {
         this.expiresIn = now().plusDays(daysToExpire);
         this.code = randomUUID().toString();
-        this.user = Optional.ofNullable(user.getId()).map(userId -> new User(userId)).orElse(null);
+        this.user = Optional.ofNullable(user.getId()).map(User::new).orElse(null);
     }
 
     public Boolean nonExpired() {

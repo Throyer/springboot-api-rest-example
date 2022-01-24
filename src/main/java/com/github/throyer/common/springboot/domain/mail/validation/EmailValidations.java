@@ -1,25 +1,19 @@
-package com.github.throyer.common.springboot.domain.mail.exceptions;
+package com.github.throyer.common.springboot.domain.mail.validation;
 
-import java.util.List;
-
+import com.github.throyer.common.springboot.domain.mail.exceptions.EmailNotUniqueException;
+import com.github.throyer.common.springboot.domain.mail.model.Addressable;
 import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import com.github.throyer.common.springboot.domain.management.model.Addressable;
-import com.github.throyer.common.springboot.errors.Error;
+
+import static com.github.throyer.common.springboot.utils.Constants.MAIL.*;
 
 @Component
 public class EmailValidations {
 
     private static UserRepository repository;
-
-    private static String FIELD = "email";
-    private static String MESSAGE = "This email has already been used by another user. Please use a different email.";
-
-    private static final List<Error> EMAIL_ERROR = List.of(new Error(FIELD, MESSAGE));
 
     @Autowired
     public EmailValidations(UserRepository repository) {
@@ -34,7 +28,7 @@ public class EmailValidations {
 
     public static void validateEmailUniqueness(Addressable entity, BindingResult result) {
         if (repository.existsByEmail(entity.getEmail())) {
-            result.addError(new ObjectError(FIELD, MESSAGE));
+            result.addError(new ObjectError(EMAIL_FIELD, EMAIL_ALREADY_USED_MESSAGE));
         }
     }
 
@@ -66,7 +60,7 @@ public class EmailValidations {
         var emailAlreadyUsed = repository.existsByEmail(newEmail);
 
         if (changedEmail && emailAlreadyUsed) {
-            result.addError(new ObjectError(FIELD, MESSAGE));
+            result.addError(new ObjectError(EMAIL_FIELD, EMAIL_ALREADY_USED_MESSAGE));
         }
     }
 }

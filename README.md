@@ -113,21 +113,22 @@ Creating database migration files
 
 ## Environment variables
 
-| **Descrição**                               | **parâmetro**                          | **Valor padrão**          |
-| ------------------------------------------- | -------------------------------------- | ------------------------- |
-| Server port                                 | `SERVER_PORT`                          | 8080                      |
-| database url                                | `DB_URL`                               | localhost:5432/common_app |
-| username (database)                         | `DB_USERNAME`                          | root                      |
-| user password (database)                    | `DB_PASSWORD`                          | root                      |
-| displays the generated sql in the logger    | `DB_SHOW_SQL`                          | false                     |
-| set maximum database connections            | `DB_MAX_CONNECTIONS`                   | 5                         |
-| secret value in token generation            | `TOKEN_SECRET`                         | secret                    |
-| token expiration time in hours              | `TOKEN_EXPIRATION_IN_HOURS`            | 24                        |
-| refresh token expiry time in days           | `REFRESH_TOKEN_EXPIRATION_IN_DAYS`     | 7                         |
-| SMTP server address                         | `SMTP_HOST`                            | smtp.gmail.com            |
-| SMTP server port                            | `SMTP_PORT`                            | 587                       |
-| SMTP username                               | `SMTP_USERNAME`                        | user                      |
-| SMTP server password                        | `SMTP_PASSWORD`                        | secret                    |
+| **Descrição**                            | **Parameter**                      | **Valor padrão**          |
+|------------------------------------------|------------------------------------|---------------------------|
+| Server port                              | `SERVER_PORT`                      | 8080                      |
+| database url                             | `DB_URL`                           | localhost:5432/common_app |
+| username (database)                      | `DB_USERNAME`                      | root                      |
+| user password (database)                 | `DB_PASSWORD`                      | root                      |
+| displays the generated sql in the logger | `DB_SHOW_SQL`                      | false                     |
+| set maximum database connections         | `DB_MAX_CONNECTIONS`               | 5                         |
+| secret value in token generation         | `TOKEN_SECRET`                     | secret                    |
+| token expiration time in hours           | `TOKEN_EXPIRATION_IN_HOURS`        | 24                        |
+| refresh token expiry time in days        | `REFRESH_TOKEN_EXPIRATION_IN_DAYS` | 7                         |
+| SMTP server address                      | `SMTP_HOST`                        | smtp.gmail.com            |
+| SMTP server port                         | `SMTP_PORT`                        | 587                       |
+| SMTP username                            | `SMTP_USERNAME`                    | user                      |
+| SMTP server password                     | `SMTP_PASSWORD`                    | secret                    |
+| time for recovery email to expire        | `MINUTES_TO_EXPIRE_RECOVERY_CODE`  | 20                        |
 
 > these variables are defined in: [**application.properties**](./src/main/resources/application.properties)
 >

@@ -64,8 +64,8 @@ public class SessionsTests {
     }
 
     @Test
-    @DisplayName("Não deve criar gerar o token quando a senha estiver incorreta.")
-    public void dont_should_sigh_in_with_wrong_password() throws Exception {
+    @DisplayName("Não gerar o token quando a senha estiver incorreta.")
+    public void not_should_sigh_in_with_wrong_password() throws Exception {
 
         var user = repository.save(randomUser());
         

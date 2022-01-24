@@ -16,22 +16,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RefreshTokenService {
-    private final String TOKEN_SECRET;
-    private final Integer TOKEN_EXPIRATION_IN_HOURS;
-    private final Integer REFRESH_TOKEN_EXPIRATION_IN_DAYS;
-
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
-    public RefreshTokenService(
-        @Value(TOKEN_SECRET_ENV_PROPERTY) String tokenSecret,
-        @Value(EXPIRATION_TOKEN_ENV_PROPERTY) Integer tokenExpirationInHours,
-        @Value(REFRESH_TOKEN_ENV_PROPERTY) Integer refreshTokenExpirationInDays,
-        RefreshTokenRepository refreshTokenRepository
-    ) {
-        this.TOKEN_SECRET = tokenSecret;
-        this.TOKEN_EXPIRATION_IN_HOURS = tokenExpirationInHours;
-        this.REFRESH_TOKEN_EXPIRATION_IN_DAYS = refreshTokenExpirationInDays;
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository) {;
         this.refreshTokenRepository = refreshTokenRepository;
     }
 

@@ -11,7 +11,7 @@ public class RefreshTokenResponse {
     private final String token;
     private final RefreshToken refreshToken;
     private final LocalDateTime expiresIn;
-    private final String type = "Bearer";
+    private static final String type = "Bearer";
 
     public RefreshTokenResponse(
         String token,

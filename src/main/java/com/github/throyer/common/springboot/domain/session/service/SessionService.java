@@ -10,9 +10,8 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static java.util.logging.Level.WARNING;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,13 +25,7 @@ public class SessionService implements UserDetailsService {
 
     private final UserRepository repository;
 
-    private static String SECRET;
-
-    public SessionService(
-        @Value(TOKEN_SECRET_ENV_PROPERTY) String secret,
-        UserRepository repository
-    ) {
-        SessionService.SECRET = secret;
+    public SessionService(UserRepository repository) {
         this.repository = repository;
     }
 
@@ -46,7 +39,7 @@ public class SessionService implements UserDetailsService {
 
     public static void authorize(String token) {
         try {
-            var authorized = JWT.decode(token, SECRET);
+            var authorized = JWT.decode(token, TOKEN_SECRET);
             SecurityContextHolder
                     .getContext()
                     .setAuthentication(authorized.getAuthentication());

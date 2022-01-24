@@ -3,7 +3,7 @@ package com.github.throyer.common.springboot.domain.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.throyer.common.springboot.domain.management.entity.Auditable;
-import com.github.throyer.common.springboot.domain.management.model.Addressable;
+import com.github.throyer.common.springboot.domain.mail.model.Addressable;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.session.model.Authorized;
 import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
