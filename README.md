@@ -113,7 +113,7 @@ Creating database migration files
 
 ## Environment variables
 
-| **Descrição**                            | **Parameter**                      | **Valor padrão**          |
+| **Descrição**                            | **Parameter**                      | **Default values**        |
 |------------------------------------------|------------------------------------|---------------------------|
 | Server port                              | `SERVER_PORT`                      | 8080                      |
 | database url                             | `DB_URL`                           | localhost:5432/common_app |
