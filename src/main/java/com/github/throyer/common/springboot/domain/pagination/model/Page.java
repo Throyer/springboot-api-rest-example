@@ -1,8 +1,14 @@
 package com.github.throyer.common.springboot.domain.pagination.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+
 import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
 import java.util.Collection;
+import java.util.List;
 
+@Getter
+@Schema(requiredProperties = {"content", "page", "size", "totalPages", "totalElements"})
 public class Page<T> {
     private final Collection<T> content;
     private final Integer page;
@@ -26,33 +32,16 @@ public class Page<T> {
         this.totalElements = count;
     }
 
-    
-    public Collection<T> getContent() {
-        return content;
-    }
-    
-    public Integer getPage() {
-        return page;
-    }
-    
-    public Integer getSize() {
-        return size;
-    }
-
-    public Long getTotalElements() {
-        return totalElements;
-    }
-
-    public Integer getTotalPages() {
-        return totalPages;
-    }
-
     public static <T> Page<T> of(org.springframework.data.domain.Page<T> page) {
         return new Page<>(page);
     }
     
     public static <T> Page<T> of(Collection<T> content, Integer page, Integer size, Long count) {
         return new Page<>(content, page, size, count);
+    }
+
+    public static <T> Page<T> empty() {
+        return new Page<>(List.of(), 0, 0, 0L);
     }
 
     @Override

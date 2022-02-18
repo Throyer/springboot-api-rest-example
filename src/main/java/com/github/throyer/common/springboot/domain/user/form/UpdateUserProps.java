@@ -1,21 +1,18 @@
-package com.github.throyer.common.springboot.domain.user.model;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+package com.github.throyer.common.springboot.domain.user.form;
 
 import com.github.throyer.common.springboot.domain.mail.model.Addressable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 public class UpdateUserProps implements Addressable {
-    
-    @NotNull(message = "O nome não pode ser NULL.")
-    @NotEmpty(message = "Por favor, forneça um nome.")
+
+    @NotEmpty(message = "{user.name.not-empty}")
     private String name;
-    
-    @NotNull(message = "O e-mail não pode ser NULL.")
-    @Email(message = "Por favor, forneça um e-mail valido.")
+
+    @NotEmpty(message = "{user.email.not-empty}")
+    @Email(message = "{user.email.is-valid}")
     private String email;
-    
 
     public String getName() {
         return name;

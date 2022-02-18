@@ -3,7 +3,10 @@ package com.github.throyer.common.springboot.domain.session.service;
 import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 import com.github.throyer.common.springboot.domain.session.model.Authorized;
 
+import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.INVALID_USERNAME;
+import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.TOKEN_EXPIRED_OR_INVALID;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.utils.Messages.message;
 import static java.util.Objects.nonNull;
 import java.util.Optional;
 import static java.util.Optional.empty;
@@ -32,7 +35,7 @@ public class SessionService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var user = repository.findOptionalByEmailFetchRoles(email)
-                .orElseThrow(() -> new UsernameNotFoundException(INVALID_USERNAME));
+                .orElseThrow(() -> new UsernameNotFoundException(message(INVALID_USERNAME)));
         
         return new Authorized(user);
     }
@@ -40,11 +43,11 @@ public class SessionService implements UserDetailsService {
     public static void authorize(String token) {
         try {
             var authorized = JWT.decode(token, TOKEN_SECRET);
-            SecurityContextHolder
+                SecurityContextHolder
                     .getContext()
                     .setAuthentication(authorized.getAuthentication());
         } catch (Exception exception) {
-            LOGGER.log(WARNING, TOKEN_EXPIRED_MESSAGE);
+            LOGGER.log(WARNING, message(TOKEN_EXPIRED_OR_INVALID));
         }
     }
 

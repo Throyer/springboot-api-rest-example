@@ -1,17 +1,19 @@
 package com.github.throyer.common.springboot.domain.session.model;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.github.throyer.common.springboot.domain.session.entity.RefreshToken;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.time.LocalDateTime;
+
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
+
+@Schema(name = "RefreshToken", requiredProperties = {"accessToken", "refreshToken", "expiresIn", "tokenType"})
 public class RefreshTokenResponse {
     private final String token;
     private final RefreshToken refreshToken;
     private final LocalDateTime expiresIn;
-    private static final String type = "Bearer";
 
     public RefreshTokenResponse(
         String token,
@@ -23,24 +25,24 @@ public class RefreshTokenResponse {
         this.expiresIn = expiresIn;
     }
 
-    @JsonProperty("access_token")
+    @JsonProperty("accessToken")
     public String getToken() {
         return token;
     }
 
-    @JsonProperty("refresh_token")
+    @JsonProperty("refreshToken")
     public String getRefresh() {
         return refreshToken.getCode();
     }
 
-    @JsonFormat(shape = Shape.STRING)
-    @JsonProperty("expires_in")
+    @JsonFormat(shape = STRING)
+    @JsonProperty("expiresIn")
     public LocalDateTime getExpiresIn() {
         return expiresIn;
     }
 
-    @JsonProperty("token_type")
+    @JsonProperty("tokenType")
     public String getTokenType() {
-        return type;
+        return "Bearer";
     }
 }

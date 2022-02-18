@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.CREATE_SESSION_ERROR_MESSAGE;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.utils.Messages.message;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 
 @Service
@@ -33,7 +35,7 @@ public class CreateTokenService {
     public TokenResponse create(TokenRequest request) {
         var user = userRepository.findOptionalByEmailFetchRoles(request.getEmail())
             .filter(session -> session.validatePassword(request.getPassword()))
-                .orElseThrow(() -> forbidden(CREATE_SESSION_ERROR_MESSAGE));
+                .orElseThrow(() -> forbidden(message(CREATE_SESSION_ERROR_MESSAGE)));
         return create(new UserDetails(user));
     }
 

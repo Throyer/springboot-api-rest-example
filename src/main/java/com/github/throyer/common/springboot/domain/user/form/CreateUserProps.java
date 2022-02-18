@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.domain.user.model;
+package com.github.throyer.common.springboot.domain.user.form;
 
 import static com.github.throyer.common.springboot.domain.mail.validation.EmailValidations.validateEmailUniqueness;
 
@@ -18,22 +18,16 @@ import org.springframework.validation.BindingResult;
 @NoArgsConstructor
 public class CreateUserProps implements Addressable {
 
-    @NotEmpty(message = "email is a required field.")
+    @NotEmpty(message = "${user.name.not-empty}")
     private String name;
 
-    @NotEmpty(message = "email is a required field.")
-    @Email(message = "invalid email.")
+    @NotEmpty(message = "{user.email.not-empty}")
+    @Email(message = "{user.email.is-valid}")
     private String email;
 
-    @NotEmpty(message = "password is a required field.")
-    @Size(min = 8, max = 155, message = "The password must contain at least {min} characters.")
+    @NotEmpty(message = "{user.password.not-empty}")
+    @Size(min = 8, max = 155, message = "{user.password.size}")
     private String password;
-
-    public CreateUserProps(String name, String email, String password) {
-        setName(name);
-        setEmail(email);
-        setPassword(password);
-    }
 
     public void validate(BindingResult result) {
         validateEmailUniqueness(this, result);

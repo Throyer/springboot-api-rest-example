@@ -1,46 +1,23 @@
 package com.github.throyer.common.springboot.domain.recovery.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+@Getter
+@Setter
 public class RecoveryUpdate {
-    @Email
-    @NotNull
-    @NotEmpty
+    @Email(message = "{recovery.email.is-valid}")
+    @NotEmpty(message = "{recovery.email.not-empty}")
     private String email;
 
-    @Email
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "{recovery.code.not-empty}")
     private String code;
 
-    @Email
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "{user.password.not-empty}")
+    @Size(min = 8, max = 155, message = "{user.password.size}")
     private String password;
-    
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

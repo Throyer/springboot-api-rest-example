@@ -5,7 +5,9 @@ import com.github.throyer.common.springboot.domain.session.model.RefreshTokenReq
 import com.github.throyer.common.springboot.domain.session.model.RefreshTokenResponse;
 import com.github.throyer.common.springboot.domain.session.repository.RefreshTokenRepository;
 
+import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.REFRESH_SESSION_ERROR_MESSAGE;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.utils.Messages.message;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 import static java.time.LocalDateTime.now;
 
@@ -26,7 +28,7 @@ public class RefreshTokenService {
     public RefreshTokenResponse refresh(RefreshTokenRequest request) {
         var old = refreshTokenRepository.findOptionalByCodeAndAvailableIsTrue(request.getRefresh())
             .filter(RefreshToken::nonExpired)
-                .orElseThrow(() -> forbidden(REFRESH_SESSION_ERROR_MESSAGE));
+                .orElseThrow(() -> forbidden(message(REFRESH_SESSION_ERROR_MESSAGE)));
 
         var now = now();
         var expiresIn = now.plusHours(TOKEN_EXPIRATION_IN_HOURS);

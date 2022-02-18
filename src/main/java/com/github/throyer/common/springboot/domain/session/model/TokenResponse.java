@@ -7,15 +7,17 @@ import com.github.throyer.common.springboot.domain.user.model.UserDetails;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDateTime;
 
+@Schema(name = "Token", requiredProperties = {"user", "accessToken", "refreshToken", "expiresIn", "tokenType"})
 public class TokenResponse {
 
     private final UserDetails user;
     private final String token;
     private final RefreshToken refreshToken;
     private final LocalDateTime expiresIn;
-    private final String type = "Bearer";
 
     public TokenResponse(
         User user,
@@ -45,24 +47,24 @@ public class TokenResponse {
         return user;
     }
 
-    @JsonProperty("access_token")
+    @JsonProperty("accessToken")
     public String getToken() {
         return token;
     }
 
-    @JsonProperty("refresh_token")
+    @JsonProperty("refreshToken")
     public String getRefresh() {
         return refreshToken.getCode();
     }
 
     @JsonFormat(shape = Shape.STRING)
-    @JsonProperty("expires_in")
+    @JsonProperty("expiresIn")
     public LocalDateTime getExpiresIn() {
         return expiresIn;
     }
 
-    @JsonProperty("token_type")
+    @JsonProperty("tokenType")
     public String getTokenType() {
-        return type;
+        return "Bearer";
     }
 }

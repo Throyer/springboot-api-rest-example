@@ -1,15 +1,15 @@
 package com.github.throyer.common.springboot.domain.session.model;
 
-import javax.validation.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotEmpty;
 
 public class RefreshTokenRequest {
 
-    @NotEmpty(message = "Invalid refresh_token.")
-    @JsonProperty("refresh_token")
+    @NotEmpty(message = "{token.refresh-token.not-null}")
     private String refresh;
 
+    @JsonProperty("refreshToken")
     public String getRefresh() {
         return refresh;
     }

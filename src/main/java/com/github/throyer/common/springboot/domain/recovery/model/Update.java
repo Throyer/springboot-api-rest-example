@@ -15,9 +15,8 @@ import org.springframework.validation.BindingResult;
 @NoArgsConstructor
 public class Update {
 
-    @Email
-    @NotNull
-    @NotEmpty
+    @Email(message = "{recovery.email.is-valid}")
+    @NotEmpty(message = "{recovery.email.not-empty}")
     private String email;
 
     private String first = "";
@@ -25,8 +24,8 @@ public class Update {
     private String third = "";
     private String fourth = "";
 
-    @NotEmpty(message = "Please provide a password.")
-    @Size(min = 8, max = 255, message = "The password must contain at least {min} characters.")
+    @NotEmpty(message = "{user.password.not-empty}")
+    @Size(min = 8, max = 155, message = "{user.password.size}")
     private String password;
 
     public Update(Codes codes) {

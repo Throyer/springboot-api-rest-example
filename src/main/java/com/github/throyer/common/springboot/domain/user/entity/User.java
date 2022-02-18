@@ -6,8 +6,8 @@ import com.github.throyer.common.springboot.domain.management.entity.Auditable;
 import com.github.throyer.common.springboot.domain.mail.model.Addressable;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.session.model.Authorized;
-import com.github.throyer.common.springboot.domain.user.model.CreateUserProps;
-import com.github.throyer.common.springboot.domain.user.model.UpdateUserProps;
+import com.github.throyer.common.springboot.domain.user.form.CreateUserProps;
+import com.github.throyer.common.springboot.domain.user.form.UpdateUserProps;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
@@ -25,6 +25,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static com.github.throyer.common.springboot.domain.management.repository.Queries.NON_DELETED_CLAUSE;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.PASSWORD_ENCODER;
 import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
+import static java.util.Objects.hash;
 import static java.util.Optional.ofNullable;
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.FetchType.LAZY;
@@ -113,20 +114,6 @@ public class User extends Auditable implements Serializable, Addressable {
             .encode(newPassword);
     }
 
-    public boolean isPrincipal(Principal principal) {
-        if (Objects.nonNull(principal) && principal instanceof Authorized authorized) {
-            return getId().equals(authorized.getId());
-        }
-        return false;
-    }
-
-    public boolean isPrincipal(Authorized authorized) {
-        if (Objects.nonNull(authorized)) {
-            return getId().equals(authorized.getId());
-        }
-        return false;
-    }
-
     public Boolean validatePassword(String password) {
         return PASSWORD_ENCODER.matches(password, this.password);
     }
@@ -154,6 +141,6 @@ public class User extends Auditable implements Serializable, Addressable {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return hash(getId());
     }
 }
