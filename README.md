@@ -34,7 +34,7 @@
 # Features
 
 <p align="center">
-  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="https://i.imgur.com/YWjBtvG.png"  alt="Tecnologias" /></a>
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/features.png"  alt="Tecnologias" /></a>
 </p>
 
 
@@ -135,7 +135,7 @@ Creating database migration files
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
-> $ java -jar api-4.0.1.RELEASE.jar --SERVER_PORT=80
+> $ java -jar api-4.1.0.RELEASE.jar --SERVER_PORT=80
 > ```
 
 
