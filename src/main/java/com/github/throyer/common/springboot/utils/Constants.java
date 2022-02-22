@@ -17,13 +17,15 @@ public class Constants {
         @Value("${token.secret}") String tokenSecret,
         @Value("${token.expiration-in-hours}") Integer tokenExpirationInHours,
         @Value("${token.refresh.expiration-in-days}") Integer refreshTokenExpirationInDays,
-        @Value("${recovery.minutes-to-expire}") Integer recoveryMinutesToExpire
+        @Value("${recovery.minutes-to-expire}") Integer recoveryMinutesToExpire,
+        @Value("${bucket4j.filters[0].rate-limits[0].bandwidths[0].capacity}") Integer maxRequestsPerMinute
     ) {
         Constants.SECURITY.TOKEN_SECRET = tokenSecret;
         Constants.SECURITY.TOKEN_EXPIRATION_IN_HOURS = tokenExpirationInHours;
         Constants.SECURITY.REFRESH_TOKEN_EXPIRATION_IN_DAYS = refreshTokenExpirationInDays;
 
         Constants.MAIL.MINUTES_TO_EXPIRE_RECOVERY_CODE = recoveryMinutesToExpire;
+        Constants.RATE_LIMIT.MAX_REQUESTS_PER_MINUTE = maxRequestsPerMinute;
     }
 
     public static class SECURITY {
@@ -82,6 +84,10 @@ public class Constants {
         public static final String SUBJECT_PASSWORD_RECOVERY_CODE = "Password recovery code";
         public static final String EMAIL_SENT_SUCCESSFULLY_MESSAGE_LOG_TEMPLATE = "email sent successfully to: %s";
         public static final String UNABLE_TO_SEND_EMAIL_MESSAGE_TEMPLATE = "Unable to send email to: %s";
+    }
+
+    public static class RATE_LIMIT {
+        public static Integer MAX_REQUESTS_PER_MINUTE;
     }
 
     /**

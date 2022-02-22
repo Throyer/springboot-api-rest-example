@@ -1,4 +1,4 @@
-package com.github.throyer.common.springboot.localization;
+package com.github.throyer.common.springboot;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

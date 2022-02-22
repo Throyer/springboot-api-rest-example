@@ -113,9 +113,9 @@ Creating database migration files
 
 ## Environment variables
 
-| **Descrição**                            | **Parameter**                      | **Default values**        |
+| **Description**                          | **Parameter**                      | **Default values**        |
 |------------------------------------------|------------------------------------|---------------------------|
-| Server port                              | `SERVER_PORT`                      | 8080                      |
+| server port                              | `SERVER_PORT`                      | 8080                      |
 | database url                             | `DB_URL`                           | localhost:5432/common_app |
 | username (database)                      | `DB_USERNAME`                      | root                      |
 | user password (database)                 | `DB_PASSWORD`                      | root                      |
@@ -129,6 +129,7 @@ Creating database migration files
 | SMTP username                            | `SMTP_USERNAME`                    | user                      |
 | SMTP server password                     | `SMTP_PASSWORD`                    | secret                    |
 | time for recovery email to expire        | `MINUTES_TO_EXPIRE_RECOVERY_CODE`  | 20                        |
+| max requests per minute                  | `MAX_REQUESTS_PER_MINUTE`          | 10                        |
 
 > these variables are defined in: [**application.properties**](./src/main/resources/application.properties)
 >
