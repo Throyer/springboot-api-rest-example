@@ -22,11 +22,8 @@ public class SwaggerTests {
     @Test
     @DisplayName("Deve exibir a documentação | swagger ui")
     public void should_show_swagger_docs_ui() throws Exception {
-
         var request = get("/swagger-ui/index.html?configUrl=/documentation/schemas/swagger-config");
-
         api.perform(request)
-            .andDo(print())
             .andExpect(status().isOk());
     }
 }

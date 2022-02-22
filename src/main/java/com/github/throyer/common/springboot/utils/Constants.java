@@ -1,12 +1,14 @@
 package com.github.throyer.common.springboot.utils;
 
 import com.github.throyer.common.springboot.domain.session.service.JsonWebToken;
-import com.github.throyer.common.springboot.errors.model.ValidationError;
+import com.github.throyer.common.springboot.domain.shared.PublicRoutes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import static com.github.throyer.common.springboot.domain.shared.PublicRoutes.create;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 @Component
 public class Constants {
@@ -25,6 +27,10 @@ public class Constants {
     }
 
     public static class SECURITY {
+        public static final PublicRoutes PUBLIC_API_ROUTES = create()
+            .add(GET, "/api", "/api/documentation/**")
+            .add(POST, "/api/users", "/api/sessions/**", "/api/recoveries/**", "/api/documentation/**");
+
         public static final Integer DAY_MILLISECONDS = 86400;
         public static final JsonWebToken JWT = new JsonWebToken();
 
@@ -48,9 +54,10 @@ public class Constants {
         
         public static final String SESSION_COOKIE_NAME = "JSESSIONID";
 
+        public static final String SECURITY_TYPE = "Bearer";
         public static final String AUTHORIZATION_HEADER = "Authorization";
-        public static final String BEARER_TOKEN = "Bearer";
-        public static final String ACCEPTABLE_TOKEN_TYPE = BEARER_TOKEN + " ";
+        public static final String ACCEPTABLE_TOKEN_TYPE = SECURITY_TYPE + " ";
+        public static final String CAN_T_WRITE_RESPONSE_ERROR = "can't write response error.";
         public static final Integer BEARER_WORD_LENGTH = 7;
 
         public static final String[] STATIC_FILES = {

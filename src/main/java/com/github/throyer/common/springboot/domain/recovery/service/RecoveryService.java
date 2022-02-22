@@ -37,7 +37,7 @@ public class RecoveryService {
 
     public void recovery(String email) {
 
-        var user = users.findOptionalByEmail(email);
+        var user = users.findByEmail(email);
 
         if (user.isEmpty()) {
             return;

@@ -1,7 +1,9 @@
 package com.github.throyer.common.springboot.controllers.app;
 
+import com.github.throyer.common.springboot.domain.pagination.service.Pagination;
 import com.github.throyer.common.springboot.domain.toast.Type;
-import com.github.throyer.common.springboot.domain.user.service.FindUserService;
+import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
+import com.github.throyer.common.springboot.domain.user.repository.custom.NativeQueryUserRepository;
 import com.github.throyer.common.springboot.domain.user.service.RemoveUserService;
 import com.github.throyer.common.springboot.domain.toast.Toasts;
 import java.util.Optional;
@@ -21,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
     
     @Autowired
-    private FindUserService findService;
+    private UserRepository repository;
     
     @Autowired
     private RemoveUserService removeService;
@@ -32,10 +34,10 @@ public class UserController {
         Optional<Integer> page,
         Optional<Integer> size
     ) {
+        var pageable = Pagination.of(page, size);
+        var content = repository.findAll(pageable);
         
-        var result = findService.findAll(page, size);
-        
-        model.addAttribute("page", result);
+        model.addAttribute("page", content);
         
         return "app/users/index";
     }

@@ -33,10 +33,10 @@ public class CreateTokenService {
     }
 
     public TokenResponse create(TokenRequest request) {
-        var user = userRepository.findOptionalByEmailFetchRoles(request.getEmail())
-            .filter(session -> session.validatePassword(request.getPassword()))
+        var session = userRepository.findByEmail(request.getEmail())
+            .filter(user -> user.validatePassword(request.getPassword()))
                 .orElseThrow(() -> forbidden(message(CREATE_SESSION_ERROR_MESSAGE)));
-        return create(new UserDetails(user));
+        return create(new UserDetails(session));
     }
 
     public TokenResponse create(UserDetails user) {

@@ -53,13 +53,11 @@ public class SpringSecurityConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            PUBLIC_API_ROUTES.configure(http);
+
             http
                 .antMatcher("/api/**")
                     .authorizeRequests()
-                        .antMatchers(GET, "/api", "/api/documentation/**")
-                            .permitAll()
-                        .antMatchers(POST, "/api/users", "/api/sessions/**", "/api/recoveries/**", "/api/documentation/**")
-                            .permitAll()
                         .anyRequest()
                             .authenticated()
                 .and()

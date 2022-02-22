@@ -12,7 +12,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
 
 @NoRepositoryBean
-public interface SoftDeleteRepository <T extends Auditable> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
+public interface SoftDeleteRepository <T extends Auditable> extends JpaRepository<T, Long> {
     
     @Override
     @Modifying

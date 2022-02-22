@@ -40,6 +40,6 @@ public class ValidationHandlers {
     @ResponseStatus(code = UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
     public ApiError unauthorized(AccessDeniedException exception) {
-        return new ApiError(exception.getMessage(), UNAUTHORIZED);
+        return new ApiError("Not authorized.", UNAUTHORIZED);
     }
 }

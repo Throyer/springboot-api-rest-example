@@ -17,7 +17,7 @@ public class RecoveryUpdateService {
     private RecoveryRepository recoveries;
 
     public void update(String email, String code, String password) {
-        var user = users.findOptionalByEmail(email)
+        var user = users.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
 
         var recovery = recoveries

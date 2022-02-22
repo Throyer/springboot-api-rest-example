@@ -17,7 +17,7 @@ public class RecoveryConfirmService {
     private RecoveryRepository recoveryRepository;
 
     public void confirm(String email, String code) {
-        var user = users.findOptionalByEmail(email)
+        var user = users.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
 
         var recovery = recoveryRepository

@@ -1,0 +1,28 @@
+package com.github.throyer.common.springboot.utils;
+
+import javax.servlet.http.HttpServletRequest;
+
+import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static java.util.Objects.isNull;
+
+public class Authorization {
+    private Authorization() { }
+
+    public static String extract(HttpServletRequest request) {
+        var token = request.getHeader(AUTHORIZATION_HEADER);
+
+        if (tokenIsNull(token)) {
+            return null;
+        }
+
+        if (token.substring(7).equals(SECURITY_TYPE)) {
+            return null;
+        }
+
+        return token.substring(7);
+    }
+
+    public static boolean tokenIsNull(String token) {
+        return isNull(token) || !token.startsWith(ACCEPTABLE_TOKEN_TYPE);
+    }
+}

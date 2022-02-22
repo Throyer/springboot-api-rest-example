@@ -1,6 +1,5 @@
 package com.github.throyer.common.springboot.localization;
 
-import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,13 +29,10 @@ public class InternationalizationTests {
     public void should_return_error_messages_in_pt_BR() throws Exception {
         var body = "{ \"password\": \"senha_bem_segura_1234\", \"email\": \"email@email.com\" }";
 
-        var request = post("/api/sessions")
-                .content(body)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR");
-
-        api.perform(request)
-                .andDo(print())
+        api.perform(post("/api/sessions")
+                    .content(body)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value("Senha ou usuário invalido."));;
     }
@@ -47,13 +42,10 @@ public class InternationalizationTests {
     public void should_return_error_messages_in_english() throws Exception {
         var body = "{ \"password\": \"senha_bem_segura_1234\", \"email\": \"email@email.com\" }";
 
-        var request = post("/api/sessions")
-                .content(body)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "en-US");
-
-        api.perform(request)
-                .andDo(print())
+        api.perform(post("/api/sessions")
+                    .content(body)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "en-US"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value("Invalid password or username."));;
     }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.throyer.common.springboot.domain.management.entity.Auditable;
 import com.github.throyer.common.springboot.domain.mail.model.Addressable;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
-import com.github.throyer.common.springboot.domain.session.model.Authorized;
 import com.github.throyer.common.springboot.domain.user.form.CreateUserProps;
 import com.github.throyer.common.springboot.domain.user.form.UpdateUserProps;
 import lombok.Getter;
@@ -16,17 +15,19 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.security.Principal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static com.github.throyer.common.springboot.domain.management.repository.Queries.NON_DELETED_CLAUSE;
 import static com.github.throyer.common.springboot.utils.Constants.SECURITY.PASSWORD_ENCODER;
-import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
+import static com.github.throyer.common.springboot.utils.JSON.stringify;
 import static java.util.Objects.hash;
 import static java.util.Optional.ofNullable;
+import static java.util.stream.Stream.of;
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -85,6 +86,16 @@ public class User extends Auditable implements Serializable, Addressable {
         this.password = props.getPassword();
         this.roles = roles;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = ofNullable(id)
+                .map(BigInteger::longValue)
+                .orElse(null);
+    }
     
     public List<Role> getRoles() {
         return roles;
@@ -125,7 +136,7 @@ public class User extends Auditable implements Serializable, Addressable {
 
     @Override
     public String toString() {
-        return toJson(Map.of(
+        return stringify(Map.of(
             "name", ofNullable(this.name).orElse(""),
             "email", ofNullable(this.email).orElse("")
         ));
@@ -142,5 +153,18 @@ public class User extends Auditable implements Serializable, Addressable {
     @Override
     public int hashCode() {
         return hash(getId());
+    }
+
+    public static User from(Tuple tuple) {
+        var user = new User();
+        user.setId(tuple.get("id", BigInteger.class));
+        user.setName(tuple.get("name", String.class));
+        user.setEmail(tuple.get("email", String.class));
+        user.setPassword(tuple.get("password", String.class));
+        user.setRoles(ofNullable(tuple.get("roles", String.class))
+                .map(roles -> of(roles.split(","))
+                        .map(Role::new).toList())
+                .orElse(List.of()));
+        return user;
     }
 }

@@ -1,40 +1,29 @@
 package com.github.throyer.common.springboot.controllers.api;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-
-import static com.github.throyer.common.springboot.utils.Responses.created;
-import static com.github.throyer.common.springboot.utils.Responses.ok;
-
 import com.github.throyer.common.springboot.domain.pagination.model.Page;
-import com.github.throyer.common.springboot.domain.user.service.FindUserService;
-import com.github.throyer.common.springboot.domain.user.service.RemoveUserService;
+import com.github.throyer.common.springboot.domain.pagination.service.Pagination;
 import com.github.throyer.common.springboot.domain.user.form.CreateUserProps;
-import com.github.throyer.common.springboot.domain.user.service.CreateUserService;
 import com.github.throyer.common.springboot.domain.user.form.UpdateUserProps;
-import com.github.throyer.common.springboot.domain.user.service.FindUserByIdService;
-import com.github.throyer.common.springboot.domain.user.service.UpdateUserService;
 import com.github.throyer.common.springboot.domain.user.model.UserDetails;
-
+import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
+import com.github.throyer.common.springboot.domain.user.service.CreateUserService;
+import com.github.throyer.common.springboot.domain.user.service.FindUserByIdService;
+import com.github.throyer.common.springboot.domain.user.service.RemoveUserService;
+import com.github.throyer.common.springboot.domain.user.service.UpdateUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
-import java.util.Optional;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+import static com.github.throyer.common.springboot.utils.Responses.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @Tag(name = "Users")
@@ -44,22 +33,23 @@ public class UsersController {
     private final CreateUserService createService;
     private final UpdateUserService updateService;
     private final RemoveUserService removeService;
-    private final FindUserService findService;
     private final FindUserByIdService findByIdService;
+
+    private final UserRepository repository;
 
     @Autowired
     public UsersController(
         CreateUserService createService,
         UpdateUserService updateService,
         RemoveUserService removeService,
-        FindUserService findService,
-        FindUserByIdService findByIdService
+        FindUserByIdService findByIdService,
+        UserRepository repository
     ) {
         this.createService = createService;
         this.updateService = updateService;
         this.removeService = removeService;
-        this.findService = findService;
         this.findByIdService = findByIdService;
+        this.repository = repository;
     }
 
     @GetMapping
@@ -70,8 +60,9 @@ public class UsersController {
         Optional<Integer> page,
         Optional<Integer> size
     ) {
-        var content = findService.findAll(page, size);
-        return ok(content);
+        var pageable = Pagination.of(page, size);
+        var content = repository.findAll(pageable);
+        return ok(content.map(UserDetails::new));
     }
     
     @GetMapping("/{id}")
@@ -79,8 +70,9 @@ public class UsersController {
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     @Operation(summary = "Show user info")
     public ResponseEntity<UserDetails> show(@PathVariable Long id) {
-        var user = findByIdService.find(id);
-        return ok(user);
+        var user = repository.findById(id)
+                .orElseThrow(() -> notFound("user not found"));
+        return ok(new UserDetails(user));
     }
     
     @PostMapping

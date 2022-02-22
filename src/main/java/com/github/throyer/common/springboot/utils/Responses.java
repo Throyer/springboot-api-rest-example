@@ -3,7 +3,6 @@ package com.github.throyer.common.springboot.utils;
 import com.github.throyer.common.springboot.domain.management.model.Entity;
 import com.github.throyer.common.springboot.domain.toast.Toasts;
 import com.github.throyer.common.springboot.errors.model.ApiError;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
@@ -13,10 +12,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.TOKEN_EXPIRED_OR_INVALID;
 import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.TOKEN_HEADER_MISSING_MESSAGE;
-import static com.github.throyer.common.springboot.utils.JsonUtils.toJson;
+import static com.github.throyer.common.springboot.utils.Constants.SECURITY.CAN_T_WRITE_RESPONSE_ERROR;
+import static com.github.throyer.common.springboot.utils.JSON.stringify;
 import static com.github.throyer.common.springboot.utils.Messages.message;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
@@ -29,7 +33,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
  */
 public class Responses {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Responses.class);
+    private static final java.util.logging.Logger LOGGER = Logger.getLogger(Responses.class.getName());
 
     private Responses() {
     }
@@ -132,14 +136,34 @@ public class Responses {
     }
 
     public static void forbidden(HttpServletResponse response) {
+        if (response.isCommitted()) {
+            return;
+        }
+
         try {
             response.setStatus(FORBIDDEN.value());
             response.setContentType("application/json");
-            response.getWriter().write(toJson(
-                new ApiError(message(TOKEN_HEADER_MISSING_MESSAGE), FORBIDDEN)
+            response.getWriter().write(stringify(
+                    new ApiError(message(TOKEN_HEADER_MISSING_MESSAGE), FORBIDDEN)
             ));
         } catch (Exception exception) {
-            LOGGER.error("can't write response error on token expired or invalid exception", exception);
+            LOGGER.log(Level.SEVERE, CAN_T_WRITE_RESPONSE_ERROR, exception);
+        }
+    }
+
+    public static void expired(HttpServletResponse response) {
+        if (response.isCommitted()) {
+            return;
+        }
+
+        try {
+            response.setStatus(FORBIDDEN.value());
+            response.setContentType("application/json");
+            response.getWriter().write(stringify(
+                    new ApiError(message(TOKEN_EXPIRED_OR_INVALID), FORBIDDEN)
+            ));
+        } catch (IOException exception) {
+            LOGGER.log(Level.SEVERE, CAN_T_WRITE_RESPONSE_ERROR, exception);
         }
     }
 }

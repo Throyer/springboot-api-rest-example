@@ -1,30 +1,29 @@
 package com.github.throyer.common.springboot.domain.session.service;
 
-import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 import com.github.throyer.common.springboot.domain.session.model.Authorized;
-
-import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.INVALID_USERNAME;
-import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.TOKEN_EXPIRED_OR_INVALID;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
-import static com.github.throyer.common.springboot.utils.Messages.message;
-import static java.util.Objects.nonNull;
-import java.util.Optional;
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
-import static java.util.logging.Level.WARNING;
-
-import java.util.logging.Logger;
-
-import org.springframework.beans.factory.annotation.Value;
+import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
+import com.github.throyer.common.springboot.utils.Authorization;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
+
+import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.INVALID_USERNAME;
+import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.utils.Messages.message;
+import static com.github.throyer.common.springboot.utils.Responses.expired;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+
 @Service
 public class SessionService implements UserDetailsService {
-    private static final Logger LOGGER = Logger.getLogger(SessionService.class.getName());
 
     private final UserRepository repository;
 
@@ -34,20 +33,33 @@ public class SessionService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        var user = repository.findOptionalByEmailFetchRoles(email)
+        var user = repository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(message(INVALID_USERNAME)));
         
         return new Authorized(user);
     }
 
-    public static void authorize(String token) {
+    public static void authorize(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        if (PUBLIC_API_ROUTES.anyMatch(request)) {
+            return;
+        }
+
+        var token = Authorization.extract(request);
+
+        if (isNull(token)) {
+            return;
+        }
+
         try {
             var authorized = JWT.decode(token, TOKEN_SECRET);
-                SecurityContextHolder
+            SecurityContextHolder
                     .getContext()
                     .setAuthentication(authorized.getAuthentication());
         } catch (Exception exception) {
-            LOGGER.log(WARNING, message(TOKEN_EXPIRED_OR_INVALID));
+            expired(response);
         }
     }
 
