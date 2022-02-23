@@ -26,7 +26,7 @@
 - [Requirements](#requirements)
 - [Entities](#entities)
 - [Installation](#installation)
-- [Running a specific test](#running-a-specific-test)
+- [Running a specific test](#tests)
 - [Swagger](#swagger)
 - [Database Migrations](#database-migrations)
 - [Environment variables](#environment-variables)
@@ -77,6 +77,9 @@ $ mvn clean package
 $ mvn jacoco:report
 ```
 
+## Tests
+
+[![Coverage Status](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)
 
 ## Running a specific test
 use the parameter `-Dtest=<class>#<method>`
