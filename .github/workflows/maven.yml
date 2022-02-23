@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: Build and Test Pipeline
 
 on:
   push:
@@ -21,5 +21,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
+
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn --batch-mode --update-snapshots test jacoco:report --file pom.xml
+
+    - name: 🚀 Coveralls Coverage Report Submission
+      run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }}
