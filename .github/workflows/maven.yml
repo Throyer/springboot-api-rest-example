@@ -4,6 +4,8 @@
 name: Build and Test Pipeline
 
 on:
+  workflow_dispatch:
+
   push:
     branches: [ master ]
   pull_request:
