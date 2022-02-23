@@ -28,4 +28,4 @@ jobs:
       run: mvn --batch-mode --update-snapshots test jacoco:report --file pom.xml
 
     - name: 🚀 Coveralls Coverage Report Submission
-      run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }}
+      run: mvn coveralls:report --define repoToken=${{ env.COVERALL_REPO_TOKEN }}
