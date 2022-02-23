@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
 
-import static com.github.throyer.common.springboot.utils.Constants.MAIL.*;
+import static com.github.throyer.common.springboot.constants.MAIL.EMAIL_SENT_SUCCESSFULLY_MESSAGE_LOG_TEMPLATE;
+import static com.github.throyer.common.springboot.constants.MAIL.UNABLE_TO_SEND_EMAIL_MESSAGE_TEMPLATE;
+import static com.github.throyer.common.springboot.constants.PASSWORD_RECOVERY.MINUTES_TO_EXPIRE_RECOVERY_CODE;
+import static com.github.throyer.common.springboot.constants.PASSWORD_RECOVERY.SUBJECT_PASSWORD_RECOVERY_CODE;
 import static java.lang.String.format;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;

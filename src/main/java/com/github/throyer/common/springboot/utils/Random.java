@@ -9,8 +9,8 @@ import com.github.javafaker.Faker;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.user.entity.User;
 
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.JWT;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.TOKEN_SECRET;
+import static com.github.throyer.common.springboot.constants.SECURITY.JWT;
+import static com.github.throyer.common.springboot.constants.SECURITY.TOKEN_SECRET;
 import static java.lang.String.format;
 import static java.time.LocalDateTime.now;
 import static java.util.List.of;

@@ -4,7 +4,9 @@ import com.github.throyer.common.springboot.domain.user.repository.UserRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.github.throyer.common.springboot.constants.MESSAGES.NOT_AUTHORIZED_TO_MODIFY;
 import static com.github.throyer.common.springboot.domain.session.service.SessionService.authorized;
+import static com.github.throyer.common.springboot.utils.Messages.message;
 import static com.github.throyer.common.springboot.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.utils.Responses.unauthorized;
 
@@ -17,7 +19,7 @@ public class RemoveUserService {
     public void remove(Long id) {
         authorized()
             .filter(authorized -> authorized.itsMeOrSessionIsADM(id))
-                .orElseThrow(() -> unauthorized("Invalid permission to remove resource"));
+                .orElseThrow(() -> unauthorized(message(NOT_AUTHORIZED_TO_MODIFY, "'user'")));
         
         var user = repository
             .findById(id)

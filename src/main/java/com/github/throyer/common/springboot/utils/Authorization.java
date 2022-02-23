@@ -2,7 +2,7 @@ package com.github.throyer.common.springboot.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.constants.SECURITY.*;
 import static java.util.Objects.isNull;
 
 public class Authorization {
@@ -15,11 +15,11 @@ public class Authorization {
             return null;
         }
 
-        if (token.substring(7).equals(SECURITY_TYPE)) {
+        if (token.substring(BEARER_WORD_LENGTH).equals(SECURITY_TYPE)) {
             return null;
         }
 
-        return token.substring(7);
+        return token.substring(BEARER_WORD_LENGTH);
     }
 
     public static boolean tokenIsNull(String token) {

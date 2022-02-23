@@ -1,13 +1,11 @@
 package com.github.throyer.common.springboot.controllers.api;
 
 import com.github.throyer.common.springboot.domain.pagination.model.Page;
-import com.github.throyer.common.springboot.domain.pagination.service.Pagination;
 import com.github.throyer.common.springboot.domain.user.form.CreateUserProps;
 import com.github.throyer.common.springboot.domain.user.form.UpdateUserProps;
 import com.github.throyer.common.springboot.domain.user.model.UserDetails;
-import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 import com.github.throyer.common.springboot.domain.user.service.CreateUserService;
-import com.github.throyer.common.springboot.domain.user.service.FindUserByIdService;
+import com.github.throyer.common.springboot.domain.user.service.FindUserService;
 import com.github.throyer.common.springboot.domain.user.service.RemoveUserService;
 import com.github.throyer.common.springboot.domain.user.service.UpdateUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static com.github.throyer.common.springboot.utils.Responses.*;
+import static com.github.throyer.common.springboot.utils.Responses.created;
+import static com.github.throyer.common.springboot.utils.Responses.ok;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
@@ -33,23 +32,19 @@ public class UsersController {
     private final CreateUserService createService;
     private final UpdateUserService updateService;
     private final RemoveUserService removeService;
-    private final FindUserByIdService findByIdService;
-
-    private final UserRepository repository;
+    private final FindUserService findService;
 
     @Autowired
     public UsersController(
         CreateUserService createService,
         UpdateUserService updateService,
         RemoveUserService removeService,
-        FindUserByIdService findByIdService,
-        UserRepository repository
+        FindUserService findService
     ) {
         this.createService = createService;
         this.updateService = updateService;
         this.removeService = removeService;
-        this.findByIdService = findByIdService;
-        this.repository = repository;
+        this.findService = findService;
     }
 
     @GetMapping
@@ -60,8 +55,7 @@ public class UsersController {
         Optional<Integer> page,
         Optional<Integer> size
     ) {
-        var pageable = Pagination.of(page, size);
-        var content = repository.findAll(pageable);
+        var content = findService.find(page, size);
         return ok(content.map(UserDetails::new));
     }
     
@@ -70,8 +64,7 @@ public class UsersController {
     @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
     @Operation(summary = "Show user info")
     public ResponseEntity<UserDetails> show(@PathVariable Long id) {
-        var user = repository.findById(id)
-                .orElseThrow(() -> notFound("user not found"));
+        var user = findService.find(id);
         return ok(new UserDetails(user));
     }
     
@@ -81,9 +74,8 @@ public class UsersController {
     public ResponseEntity<UserDetails> save(
         @Validated @RequestBody CreateUserProps props
     ) {
-        props.validate();
         var user = createService.create(props);
-        return created(user, "api/users");
+        return created(new UserDetails(user), "api/users");
     }
     
     @PutMapping("/{id}")
@@ -95,7 +87,7 @@ public class UsersController {
         @RequestBody @Validated UpdateUserProps body
     ) {
         var user = updateService.update(id, body);
-        return ok(user);
+        return ok(new UserDetails(user));
     }
     
     @DeleteMapping("/{id}")

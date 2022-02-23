@@ -2,8 +2,8 @@ package com.github.throyer.common.springboot.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.throyer.common.springboot.domain.management.entity.Auditable;
 import com.github.throyer.common.springboot.domain.mail.model.Addressable;
+import com.github.throyer.common.springboot.domain.management.entity.Auditable;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.user.form.CreateUserProps;
 import com.github.throyer.common.springboot.domain.user.form.UpdateUserProps;
@@ -19,11 +19,10 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static com.github.throyer.common.springboot.constants.SECURITY.PASSWORD_ENCODER;
 import static com.github.throyer.common.springboot.domain.management.repository.Queries.NON_DELETED_CLAUSE;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.PASSWORD_ENCODER;
 import static com.github.throyer.common.springboot.utils.JSON.stringify;
 import static java.util.Objects.hash;
 import static java.util.Optional.ofNullable;

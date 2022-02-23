@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.TemplateEngine;
 
-import static com.github.throyer.common.springboot.utils.Constants.MAIL.*;
+import static com.github.throyer.common.springboot.constants.MAIL.*;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Service

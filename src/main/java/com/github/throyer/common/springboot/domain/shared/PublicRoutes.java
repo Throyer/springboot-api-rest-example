@@ -43,14 +43,14 @@ public class PublicRoutes {
         }
     }
 
-    public void configure(HttpSecurity http) {
+    public void injectOn(HttpSecurity http) {
         routes.forEach((method, routes) -> {
             try {
                 http
-                        .antMatcher("/**")
+                    .antMatcher("/**")
                         .authorizeRequests()
-                        .antMatchers(method, routes)
-                        .permitAll();
+                            .antMatchers(method, routes)
+                    .permitAll();
             } catch (Exception exception) {
                 LOGGER.log(SEVERE, "error on set public routes", exception);
             }

@@ -9,7 +9,7 @@ import io.jsonwebtoken.Jwts;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.ROLES_KEY_ON_JWT;
+import static com.github.throyer.common.springboot.constants.SECURITY.ROLES_KEY_ON_JWT;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import static java.time.ZoneId.systemDefault;
 import static java.util.Arrays.stream;

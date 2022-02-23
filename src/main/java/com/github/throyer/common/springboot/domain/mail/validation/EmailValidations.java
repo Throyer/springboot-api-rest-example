@@ -11,7 +11,7 @@ import org.springframework.validation.ObjectError;
 
 import java.util.List;
 
-import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.EMAIL_ALREADY_USED_MESSAGE;
+import static com.github.throyer.common.springboot.constants.MESSAGES.EMAIL_ALREADY_USED_MESSAGE;
 import static com.github.throyer.common.springboot.utils.Messages.message;
 
 @Component
@@ -30,9 +30,9 @@ public class EmailValidations {
         }
     }
 
-    public static void validateEmailUniqueness(Addressable entity, BindingResult result) {
+    public static void validateEmailUniqueness(Addressable entity, BindingResult validations) {
         if (repository.existsByEmail(entity.getEmail())) {
-            result.addError(new ObjectError("email", message(EMAIL_ALREADY_USED_MESSAGE)));
+            validations.addError(new ObjectError("email", message(EMAIL_ALREADY_USED_MESSAGE)));
         }
     }
 
@@ -52,7 +52,7 @@ public class EmailValidations {
     public static void validateEmailUniquenessOnModify(
         Addressable newEntity,
         Addressable actualEntity,
-        BindingResult result
+        BindingResult validations
     ) {
 
         var newEmail = newEntity.getEmail();
@@ -63,7 +63,7 @@ public class EmailValidations {
         var emailAlreadyUsed = repository.existsByEmail(newEmail);
 
         if (changedEmail && emailAlreadyUsed) {
-            result.addError(new ObjectError("email", message(EMAIL_ALREADY_USED_MESSAGE)));
+            validations.addError(new ObjectError("email", message(EMAIL_ALREADY_USED_MESSAGE)));
         }
     }
 }

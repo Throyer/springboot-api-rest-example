@@ -4,17 +4,14 @@ import com.github.throyer.common.springboot.domain.session.entity.RefreshToken;
 import com.github.throyer.common.springboot.domain.session.model.RefreshTokenRequest;
 import com.github.throyer.common.springboot.domain.session.model.RefreshTokenResponse;
 import com.github.throyer.common.springboot.domain.session.repository.RefreshTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.REFRESH_SESSION_ERROR_MESSAGE;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.constants.MESSAGES.REFRESH_SESSION_ERROR_MESSAGE;
+import static com.github.throyer.common.springboot.constants.SECURITY.*;
 import static com.github.throyer.common.springboot.utils.Messages.message;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 import static java.time.LocalDateTime.now;
-
-import java.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 @Service
 public class RefreshTokenService {

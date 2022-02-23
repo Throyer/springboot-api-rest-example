@@ -1,27 +1,31 @@
 package com.github.throyer.common.springboot.domain.user.service;
 
+import com.github.throyer.common.springboot.domain.user.entity.User;
 import com.github.throyer.common.springboot.domain.user.form.UpdateUserProps;
-import com.github.throyer.common.springboot.domain.user.model.UserDetails;
 import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.github.throyer.common.springboot.constants.MESSAGES.NOT_AUTHORIZED_TO_MODIFY;
 import static com.github.throyer.common.springboot.domain.mail.validation.EmailValidations.validateEmailUniquenessOnModify;
 import static com.github.throyer.common.springboot.domain.session.service.SessionService.authorized;
+import static com.github.throyer.common.springboot.utils.Messages.message;
 import static com.github.throyer.common.springboot.utils.Responses.notFound;
 import static com.github.throyer.common.springboot.utils.Responses.unauthorized;
 
 @Service
 public class UpdateUserService {
-    
+    private final UserRepository repository;
+
     @Autowired
-    UserRepository repository;
+    public UpdateUserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
-    public UserDetails update(Long id, UpdateUserProps body) {
-
+    public User update(Long id, UpdateUserProps body) {
         authorized()
             .filter(authorized -> authorized.itsMeOrSessionIsADM(id))
-                .orElseThrow(() -> unauthorized("Permission invalidates resource update"));
+                .orElseThrow(() -> unauthorized(message(NOT_AUTHORIZED_TO_MODIFY, "'user'")));
 
         var actual = repository
             .findById(id)
@@ -31,6 +35,8 @@ public class UpdateUserService {
 
         actual.merge(body);
 
-        return new UserDetails(repository.save(actual));
+        repository.save(actual);
+
+        return actual;
     }
 }

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.CREATE_SESSION_ERROR_MESSAGE;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.constants.MESSAGES.CREATE_SESSION_ERROR_MESSAGE;
+import static com.github.throyer.common.springboot.constants.SECURITY.*;
 import static com.github.throyer.common.springboot.utils.Messages.message;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 

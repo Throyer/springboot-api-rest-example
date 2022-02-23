@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.github.throyer.common.springboot.utils.Constants.RATE_LIMIT.MAX_REQUESTS_PER_MINUTE;
+import static com.github.throyer.common.springboot.constants.RATE_LIMIT.MAX_REQUESTS_PER_MINUTE;
 import static java.lang.String.valueOf;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;

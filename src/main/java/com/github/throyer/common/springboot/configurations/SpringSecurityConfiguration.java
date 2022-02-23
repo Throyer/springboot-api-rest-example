@@ -18,7 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.constants.SECURITY.*;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -53,7 +53,7 @@ public class SpringSecurityConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            PUBLIC_API_ROUTES.configure(http);
+            PUBLIC_API_ROUTES.injectOn(http);
 
             http
                 .antMatcher("/api/**")

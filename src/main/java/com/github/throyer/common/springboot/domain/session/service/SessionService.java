@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.github.throyer.common.springboot.utils.Constants.MESSAGES.INVALID_USERNAME;
-import static com.github.throyer.common.springboot.utils.Constants.SECURITY.*;
+import static com.github.throyer.common.springboot.constants.MESSAGES.INVALID_USERNAME;
+import static com.github.throyer.common.springboot.constants.SECURITY.*;
 import static com.github.throyer.common.springboot.utils.Messages.message;
 import static com.github.throyer.common.springboot.utils.Responses.expired;
 import static java.util.Objects.isNull;
