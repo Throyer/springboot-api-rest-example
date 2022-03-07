@@ -6,7 +6,7 @@
   <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
 </p>
 
-<h1 align="center">Spring Boot API CRUD</h1>
+<h1 align="center">Spring Boot API RESTful</h1>
 <p align="center">
   A complete user registry, with access permissions, JWT token, integration and unit tests, using the RESTful API pattern.
 </p>
