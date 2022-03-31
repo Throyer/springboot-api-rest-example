@@ -28,7 +28,7 @@ public class UpdateUserService {
                 .orElseThrow(() -> unauthorized(message(NOT_AUTHORIZED_TO_MODIFY, "'user'")));
 
         var actual = repository
-            .findById(id)
+            .findByIdFetchRoles(id)
                 .orElseThrow(() -> notFound("User not found"));
         
         validateEmailUniquenessOnModify(body, actual);

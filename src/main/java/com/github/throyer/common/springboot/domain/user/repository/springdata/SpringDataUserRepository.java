@@ -34,5 +34,10 @@ public interface SpringDataUserRepository extends SoftDeleteRepository<User> {
 
     Boolean existsByEmail(String email);
 
-    Optional<User> findOptionalByEmail(String email);
+    @Query("""
+        select user from #{#entityName} user
+        left join fetch user.roles
+        where user.id = ?1 
+    """)
+    Optional<User> findByIdFetchRoles(Long id);
 }

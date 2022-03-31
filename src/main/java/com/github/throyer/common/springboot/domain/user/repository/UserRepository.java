@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface UserRepository {
     Page<User> findAll(Pageable pageable);
     Optional<User> findById(Long id);
+    Optional<User> findByIdFetchRoles(Long id);
     Optional<User> findByEmail(String email);
     Boolean existsByEmail(String email);
     void deleteById(Long id);

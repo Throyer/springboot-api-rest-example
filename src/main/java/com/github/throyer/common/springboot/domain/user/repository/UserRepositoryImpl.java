@@ -37,6 +37,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByIdFetchRoles(Long id) {
+        return this.springData.findByIdFetchRoles(id);
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         return queryNative.findByEmail(email);
     }
