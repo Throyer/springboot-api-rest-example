@@ -19,13 +19,21 @@ jobs:
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           port: 22
           script: |
-            DOCKER_BUILDKIT=1
+            echo "👀 deploy started"
+            echo " "
+            echo "🔨 updating repository"
+            echo " "
+            cd /home/ubuntu/repository
             eval `ssh-agent -s`
             ssh-add .ssh/github_action
-            cd /home/ubuntu/repository
             git checkout develop -f
             git fetch
             git pull
-            docker build -t spring-crud-api:development .
+            echo "📦 building docker image"
+            echo " "
+            DOCKER_BUILDKIT=1 docker build -t spring-crud-api:development .
+            echo "🚨 restarting container"
+            echo " "
             cd /home/ubuntu
-            docker-compose up -d --build
+            docker-compose up -d --force-recreate
+            echo "🚀 deploy finished"
