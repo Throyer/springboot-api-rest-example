@@ -25,7 +25,7 @@ jobs:
             echo " "
             cd /home/ubuntu/repository
             eval `ssh-agent -s`
-            ssh-add .ssh/github_action
+            ssh-add ~/.ssh/github_action
             git checkout development -f
             git fetch
             git pull
