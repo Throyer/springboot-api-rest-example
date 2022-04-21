@@ -20,6 +20,8 @@ jobs:
           port: 22
           script: |
             DOCKER_BUILDKIT=1
+            eval `ssh-agent -s`
+            ssh-add .ssh/github_action
             cd /home/ubuntu/repository
             git checkout develop -f
             git fetch
