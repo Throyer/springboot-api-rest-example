@@ -26,7 +26,7 @@ jobs:
             cd /home/ubuntu/repository
             eval `ssh-agent -s`
             ssh-add .ssh/github_action
-            git checkout develop -f
+            git checkout development -f
             git fetch
             git pull
             echo "📦 building docker image"
