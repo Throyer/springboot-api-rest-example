@@ -1,11 +1,11 @@
 package com.github.throyer.common.springboot.domain.management.repository;
 
-import com.github.throyer.common.springboot.domain.management.entity.Auditable;
 import static com.github.throyer.common.springboot.domain.management.repository.Queries.DELETE_ALL;
 import static com.github.throyer.common.springboot.domain.management.repository.Queries.DELETE_BY_ID;
 
+import com.github.throyer.common.springboot.domain.management.entity.Auditable;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;

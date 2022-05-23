@@ -1,12 +1,13 @@
 package com.github.throyer.common.springboot.controllers.app;
 
+import java.util.Optional;
+
 import com.github.throyer.common.springboot.domain.pagination.service.Pagination;
+import com.github.throyer.common.springboot.domain.toast.Toasts;
 import com.github.throyer.common.springboot.domain.toast.Type;
 import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
-import com.github.throyer.common.springboot.domain.user.repository.custom.NativeQueryUserRepository;
 import com.github.throyer.common.springboot.domain.user.service.RemoveUserService;
-import com.github.throyer.common.springboot.domain.toast.Toasts;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

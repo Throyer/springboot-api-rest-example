@@ -5,11 +5,12 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.validation.BindingResult;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.BindingResult;
 
 @Data
 @NoArgsConstructor
@@ -31,8 +32,9 @@ public class Update {
     public Update(Codes codes) {
         copyProperties(codes, this);
     }
-        
-    public void validate(BindingResult result) { }
+
+    public void validate(BindingResult result) {
+    }
 
     public String code() {
         return format("%s%s%s%s", first, second, third, fourth);

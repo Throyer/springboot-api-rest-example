@@ -1,17 +1,16 @@
 package com.github.throyer.common.springboot.domain.user.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import static java.util.Optional.ofNullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.throyer.common.springboot.domain.management.model.Entity;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.user.entity.User;
-import com.github.throyer.common.springboot.domain.management.model.Entity;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-
-import static java.util.Optional.ofNullable;
 
 @Getter
 @Schema(name = "User", requiredProperties = {"id", "name", "email", "roles"})
