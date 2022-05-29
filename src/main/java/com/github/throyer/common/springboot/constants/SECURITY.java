@@ -18,27 +18,20 @@ public class SECURITY {
     public SECURITY(
         @Value("${token.secret}") String tokenSecret,
         @Value("${token.expiration-in-hours}") Integer tokenExpirationInHours,
-        @Value("${token.refresh.expiration-in-days}") Integer refreshTokenExpirationInDays
+        @Value("${token.refresh.expiration-in-days}") Integer refreshTokenExpirationInDays,
+        @Value("${server.servlet.session.cookie.name}") String sessionCookieName,
+        @Value("${swagger.is-private}") Boolean privateSwagger
     ) {
         SECURITY.TOKEN_SECRET = tokenSecret;
         SECURITY.TOKEN_EXPIRATION_IN_HOURS = tokenExpirationInHours;
         SECURITY.REFRESH_TOKEN_EXPIRATION_IN_DAYS = refreshTokenExpirationInDays;
+        SECURITY.SESSION_COOKIE_NAME = sessionCookieName;
+        SECURITY.PRIVATE_SWAGGER = privateSwagger;
     }
 
-    public static final String[] STATIC_FILES = {
-        "/robots.txt",
-        "/font/**",
-        "/css/**",
-        "/webjars/**",
-        "/js/**",
-        "/favicon.ico",
-        "/**.html",
-        "/documentation/**"
-    };
-
     public static final PublicRoutes PUBLIC_API_ROUTES = create()
-            .add(GET, "/api", "/api/documentation/**")
-            .add(POST, "/api/users", "/api/sessions/**", "/api/recoveries/**", "/api/documentation/**");
+            .add(GET, "/api")
+            .add(POST, "/api/users", "/api/sessions/**", "/api/recoveries/**");
 
     public static final Integer DAY_MILLISECONDS = 86400;
     public static final JsonWebToken JWT = new JsonWebToken();
@@ -52,6 +45,9 @@ public class SECURITY {
     public static Integer TOKEN_EXPIRATION_IN_HOURS;
     public static Integer REFRESH_TOKEN_EXPIRATION_IN_DAYS;
 
+    public static String SESSION_COOKIE_NAME;
+    public static Boolean PRIVATE_SWAGGER;
+
     public static final String USERNAME_PARAMETER = "email";
     public static final String PASSWORD_PARAMETER = "password";
 
@@ -60,8 +56,6 @@ public class SECURITY {
     public static final String LOGIN_ERROR_URL = LOGIN_URL + "?error=true";
     public static final String ACESSO_NEGADO_URL = LOGIN_URL + "?denied=true";
     public static final String LOGOUT_URL = "/app/logout";
-
-    public static final String SESSION_COOKIE_NAME = "JSESSIONID";
 
     public static final String SECURITY_TYPE = "Bearer";
     public static final String AUTHORIZATION_HEADER = "Authorization";

@@ -28,3 +28,6 @@ services:
       DB_URL: database:5432/${DB_NAME}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      TOKEN_SECRET: ${TOKEN_SECRET}
+      DB_SHOW_SQL: "false"
+      PRIVATE_SWAGGER: "true"

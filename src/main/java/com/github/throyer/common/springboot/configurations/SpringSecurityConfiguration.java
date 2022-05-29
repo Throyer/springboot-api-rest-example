@@ -8,15 +8,14 @@ import static com.github.throyer.common.springboot.constants.SECURITY.LOGIN_URL;
 import static com.github.throyer.common.springboot.constants.SECURITY.LOGOUT_URL;
 import static com.github.throyer.common.springboot.constants.SECURITY.PASSWORD_ENCODER;
 import static com.github.throyer.common.springboot.constants.SECURITY.PASSWORD_PARAMETER;
+import static com.github.throyer.common.springboot.constants.SECURITY.PRIVATE_SWAGGER;
 import static com.github.throyer.common.springboot.constants.SECURITY.PUBLIC_API_ROUTES;
 import static com.github.throyer.common.springboot.constants.SECURITY.SESSION_COOKIE_NAME;
-import static com.github.throyer.common.springboot.constants.SECURITY.STATIC_FILES;
 import static com.github.throyer.common.springboot.constants.SECURITY.TOKEN_SECRET;
 import static com.github.throyer.common.springboot.constants.SECURITY.USERNAME_PARAMETER;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import com.github.throyer.common.springboot.domain.session.service.SessionService;
@@ -32,7 +31,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -72,19 +70,13 @@ public class SpringSecurityConfiguration {
     ) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(STATIC_FILES);
-    }
-
+    
     @Bean
     @Order(1)
     public SecurityFilterChain api(HttpSecurity http) throws Exception {
         PUBLIC_API_ROUTES.injectOn(http);
 
         http
-            .httpBasic(withDefaults())
             .antMatcher("/api/**")
                 .authorizeRequests()
                     .anyRequest()
@@ -138,6 +130,27 @@ public class SpringSecurityConfiguration {
             .and()
                 .exceptionHandling()
                     .accessDeniedPage(ACESSO_NEGADO_URL);
+
+        return http.build();
+    }
+
+    @Bean
+    @Order(4)
+    public SecurityFilterChain swagger(HttpSecurity http) throws Exception {
+
+        if (PRIVATE_SWAGGER) {
+            http
+                .authorizeRequests()
+                        .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/**.html", "/documentation/**")
+                            .authenticated()
+                .and()
+                    .httpBasic();
+        } else {
+            http
+                .authorizeRequests()
+                        .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/**.html", "/documentation/**")
+                            .permitAll();
+        }
 
         return http.build();
     }
