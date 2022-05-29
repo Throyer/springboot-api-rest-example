@@ -125,7 +125,7 @@ docker-compose -p common-api-development -f docker-compose.dev.yml up -d
 Building image for production
 ```bash
 cd docker
-DOCKER_BUILDKIT=1 docker build -f Dockerfile.prod -t common-api:4.1.1 .
+DOCKER_BUILDKIT=1 docker build -f Dockerfile.prod -t common-api:4.1.1 ../
 ```
 
 docker compose for production
