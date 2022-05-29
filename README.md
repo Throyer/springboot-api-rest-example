@@ -1,6 +1,6 @@
 >[🇧🇷 In Portuguese](https://github.com/Throyer/springboot-api-crud/blob/master/assets/readme.md#spring-boot-api-crud)
 >
-> [🐬 MySQL/MariaDB implementation](https://github.com/Throyer/springboot-api-crud/tree/mariadb#readme)
+> [🐬 MySQL/MariaDB (outdated) implementation](https://github.com/Throyer/springboot-api-crud/tree/mariadb#readme)
 
 <p align="center">
   <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
