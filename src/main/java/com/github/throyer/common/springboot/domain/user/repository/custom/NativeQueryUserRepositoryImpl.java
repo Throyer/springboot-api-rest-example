@@ -55,6 +55,7 @@ public class NativeQueryUserRepositoryImpl implements NativeQueryUserRepository 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Page<User> findAll(Pageable pageable) {
         var query = manager
                 .createNativeQuery(FIND_ALL_USER_FETCH_ROLES, Tuple.class);
