@@ -1,6 +1,7 @@
 package com.github.throyer.common.springboot.domain.role.entity;
 
-import com.github.throyer.common.springboot.domain.management.entity.Auditable;
+import static com.github.throyer.common.springboot.domain.management.repository.Queries.NON_DELETED_CLAUSE;
+
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -11,13 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import static com.github.throyer.common.springboot.domain.management.repository.Queries.NON_DELETED_CLAUSE;
-import lombok.Data;
+import com.github.throyer.common.springboot.domain.management.entity.Auditable;
 
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 
-@Data
+import lombok.Getter;
+
+@Getter
 @Entity
 @Table(name = "role")
 @Where(clause = NON_DELETED_CLAUSE)
@@ -46,7 +48,8 @@ public class Role extends Auditable implements GrantedAuthority {
     @Column(nullable = true, unique = true)
     private String description;
 
-    public Role() { }
+    public Role() {
+    }
 
     public Role(String initials) {
         this.initials = initials;
@@ -87,5 +90,5 @@ public class Role extends Auditable implements GrantedAuthority {
     public String getAuthority() {
         return this.getInitials();
     }
-    
+
 }

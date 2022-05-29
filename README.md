@@ -29,6 +29,7 @@
 - [Running a specific test](#tests)
 - [Swagger](#swagger)
 - [Database Migrations](#database-migrations)
+- [Docker](#docker-examples)
 - [Environment variables](#environment-variables)
 
 # Features
@@ -114,6 +115,27 @@ Creating database migration files
 
 ---
 
+## Docker examples
+docker compose for development
+```bash
+cd docker
+docker-compose -p common-api-development -f docker-compose.dev.yml up -d
+```
+
+Building image for production
+```bash
+cd docker
+DOCKER_BUILDKIT=1 docker build -f Dockerfile.prod -t common-api:4.1.1 .
+```
+
+docker compose for production
+```bash
+cd docker
+cp .env.example .env
+
+docker-compose -p common-api -f docker-compose.prod.yml up -d
+```
+
 ## Environment variables
 
 | **Description**                          | **Parameter**                      | **Default values**        |
@@ -139,7 +161,7 @@ Creating database migration files
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
-> $ java -jar api-4.1.0.RELEASE.jar --SERVER_PORT=80
+> $ java -jar api-4.1.1.RELEASE.jar --SERVER_PORT=80
 > ```
 
 

@@ -6,7 +6,7 @@ import org.flywaydb.core.api.migration.BaseJavaMigration;
 import org.flywaydb.core.api.migration.Context;
 
 /**
-* @see https://www.jooq.org/doc/3.1/manual/sql-building/ddl-statements/
+* @see "https://www.jooq.org/doc/3.1/manual/sql-building/ddl-statements/"
 */
 public class V1639097360419__CreateTableUser extends BaseJavaMigration {
     public void migrate(Context context) throws Exception {

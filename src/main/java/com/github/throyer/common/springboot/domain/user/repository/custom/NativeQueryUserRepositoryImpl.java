@@ -1,24 +1,26 @@
 package com.github.throyer.common.springboot.domain.user.repository.custom;
 
-import com.github.throyer.common.springboot.domain.pagination.model.Page;
-import com.github.throyer.common.springboot.domain.user.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import static com.github.throyer.common.springboot.domain.user.repository.Queries.COUNT_ENABLED_USERS;
+import static com.github.throyer.common.springboot.domain.user.repository.Queries.FIND_ALL_USER_FETCH_ROLES;
+import static com.github.throyer.common.springboot.domain.user.repository.Queries.FIND_BY_FIELD_FETCH_ROLES;
+import static java.lang.String.format;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Tuple;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
-import static com.github.throyer.common.springboot.domain.user.repository.Queries.*;
-import static java.lang.String.format;
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
+import com.github.throyer.common.springboot.domain.pagination.model.Page;
+import com.github.throyer.common.springboot.domain.user.entity.User;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class NativeQueryUserRepositoryImpl implements NativeQueryUserRepository {
@@ -53,6 +55,7 @@ public class NativeQueryUserRepositoryImpl implements NativeQueryUserRepository 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Page<User> findAll(Pageable pageable) {
         var query = manager
                 .createNativeQuery(FIND_ALL_USER_FETCH_ROLES, Tuple.class);

@@ -25,6 +25,17 @@ public class SECURITY {
         SECURITY.REFRESH_TOKEN_EXPIRATION_IN_DAYS = refreshTokenExpirationInDays;
     }
 
+    public static final String[] STATIC_FILES = {
+        "/robots.txt",
+        "/font/**",
+        "/css/**",
+        "/webjars/**",
+        "/js/**",
+        "/favicon.ico",
+        "/**.html",
+        "/documentation/**"
+    };
+
     public static final PublicRoutes PUBLIC_API_ROUTES = create()
             .add(GET, "/api", "/api/documentation/**")
             .add(POST, "/api/users", "/api/sessions/**", "/api/recoveries/**", "/api/documentation/**");
@@ -57,16 +68,4 @@ public class SECURITY {
     public static final String ACCEPTABLE_TOKEN_TYPE = SECURITY_TYPE + " ";
     public static final String CAN_T_WRITE_RESPONSE_ERROR = "can't write response error.";
     public static final Integer BEARER_WORD_LENGTH = SECURITY_TYPE.length();
-
-    public static final String[] STATIC_FILES = {
-            "/robots.txt",
-            "/font/**",
-            "/css/**",
-            "/webjars/**",
-            "/webjars/",
-            "/js/**",
-            "/favicon.ico",
-            "/**.html",
-            "/documentation/**"
-    };
 }
