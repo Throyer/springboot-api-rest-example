@@ -18,6 +18,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -80,7 +81,7 @@ public class SpringSecurityConfiguration {
                     .passwordEncoder(ENCODER)
                     .withUser(username)
                     .password(ENCODER.encode(password))
-                    .authorities("SWAGGER");
+                    .authorities(List.of());
         }
 
 
@@ -133,7 +134,7 @@ public class SpringSecurityConfiguration {
                     .antMatchers(POST, "/app/register", "/app/recovery/**")
                         .permitAll()
                     .anyRequest()
-                        .authenticated()
+                        .hasAuthority("USER")
             .and()
                 .csrf()
                     .disable()                    

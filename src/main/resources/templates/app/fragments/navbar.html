@@ -68,7 +68,7 @@
                         Show more
                     </a>
                     <ul class="dropdown-menu border-0 shadow bg-light animate slideIn" aria-labelledby="show-more">
-                        <li>
+                        <li sec:authorize="hasAnyAuthority('USER', 'ADM')">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#me" class="dropdown-item">
                                 <i class="fas fa-user-circle"></i>
                                 Me
