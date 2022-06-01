@@ -17,7 +17,7 @@ services:
       - ./.volumes/database:/var/lib/postgresql/data
 
   api:
-    image: common-api:4.1.1
+    image: common-api:4.1.2
     restart: unless-stopped
     container_name: common-api
     links:
@@ -30,4 +30,5 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       TOKEN_SECRET: ${TOKEN_SECRET}
       DB_SHOW_SQL: "false"
-      PRIVATE_SWAGGER: "true"
+      SWAGGER_USERNAME: "example"
+      SWAGGER_PASSWORD: "example"
