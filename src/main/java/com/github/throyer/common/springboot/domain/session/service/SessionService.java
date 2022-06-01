@@ -43,7 +43,7 @@ public class SessionService implements UserDetailsService {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-        if (PUBLIC_API_ROUTES.anyMatch(request)) {
+        if (PUBLICS.anyMatch(request)) {
             return;
         }
 

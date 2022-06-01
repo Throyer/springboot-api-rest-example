@@ -155,6 +155,8 @@ docker-compose -p common-api -f docker-compose.prod.yml up -d
 | SMTP server password                     | `SMTP_PASSWORD`                    | secret                    |
 | time for recovery email to expire        | `MINUTES_TO_EXPIRE_RECOVERY_CODE`  | 20                        |
 | max requests per minute                  | `MAX_REQUESTS_PER_MINUTE`          | 10                        |
+| swagger username                         | `SWAGGER_USERNAME`                 | `null`                    |
+| swagger password                         | `SWAGGER_PASSWORD`                 | `null`                    |
 
 > these variables are defined in: [**application.properties**](./src/main/resources/application.properties)
 >
