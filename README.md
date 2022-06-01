@@ -163,7 +163,7 @@ docker-compose -p common-api -f docker-compose.prod.yml up -d
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
-> $ java -jar api-4.1.2.RELEASE.jar --SERVER_PORT=80
+> $ java -jar api-4.1.2.jar --SERVER_PORT=80
 > ```
 
 
