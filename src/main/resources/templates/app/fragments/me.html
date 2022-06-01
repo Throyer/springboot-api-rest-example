@@ -5,10 +5,10 @@
                 <h5 class="modal-title"><i class="fas fa-user-alt"></i> About me</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body py-0" sec:authorize="isAuthenticated()" th:object="${#authentication.principal}">
+            <div class="modal-body py-0" sec:authorize="hasAnyAuthority('USER', 'ADM')" th:object="${#authentication.principal}">
                 <p>
                     <span class="fs-3">Name: </span>
-                    <span class="fs-5 fw-light" th:if="*{name}" th:text="*{name}"></span>
+                    <span class="fs-5 fw-light" th:text="*{name}"></span>
                 </p>
                 <p>
                     <span class="fs-3">Roles: </span>
