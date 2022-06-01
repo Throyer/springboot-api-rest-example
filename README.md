@@ -125,7 +125,7 @@ docker-compose -p common-api-development -f docker-compose.dev.yml up -d
 Building image for production
 ```bash
 cd docker
-DOCKER_BUILDKIT=1 docker build -f Dockerfile.prod -t common-api:4.1.1 ../
+DOCKER_BUILDKIT=1 docker build -f Dockerfile.prod -t common-api:4.1.2 ../
 ```
 
 docker compose for production
@@ -155,13 +155,15 @@ docker-compose -p common-api -f docker-compose.prod.yml up -d
 | SMTP server password                     | `SMTP_PASSWORD`                    | secret                    |
 | time for recovery email to expire        | `MINUTES_TO_EXPIRE_RECOVERY_CODE`  | 20                        |
 | max requests per minute                  | `MAX_REQUESTS_PER_MINUTE`          | 10                        |
+| swagger username                         | `SWAGGER_USERNAME`                 | `null`                    |
+| swagger password                         | `SWAGGER_PASSWORD`                 | `null`                    |
 
 > these variables are defined in: [**application.properties**](./src/main/resources/application.properties)
 >
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
-> $ java -jar api-4.1.1.RELEASE.jar --SERVER_PORT=80
+> $ java -jar api-4.1.2.RELEASE.jar --SERVER_PORT=80
 > ```
 
 

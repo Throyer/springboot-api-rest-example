@@ -2,26 +2,30 @@ package com.github.throyer.common.springboot.configurations;
 
 import static com.github.throyer.common.springboot.constants.SECURITY.ACESSO_NEGADO_URL;
 import static com.github.throyer.common.springboot.constants.SECURITY.DAY_MILLISECONDS;
+import static com.github.throyer.common.springboot.constants.SECURITY.ENCODER;
 import static com.github.throyer.common.springboot.constants.SECURITY.HOME_URL;
 import static com.github.throyer.common.springboot.constants.SECURITY.LOGIN_ERROR_URL;
 import static com.github.throyer.common.springboot.constants.SECURITY.LOGIN_URL;
 import static com.github.throyer.common.springboot.constants.SECURITY.LOGOUT_URL;
-import static com.github.throyer.common.springboot.constants.SECURITY.PASSWORD_ENCODER;
 import static com.github.throyer.common.springboot.constants.SECURITY.PASSWORD_PARAMETER;
-import static com.github.throyer.common.springboot.constants.SECURITY.PRIVATE_SWAGGER;
-import static com.github.throyer.common.springboot.constants.SECURITY.PUBLIC_API_ROUTES;
+import static com.github.throyer.common.springboot.constants.SECURITY.PUBLICS;
 import static com.github.throyer.common.springboot.constants.SECURITY.SESSION_COOKIE_NAME;
 import static com.github.throyer.common.springboot.constants.SECURITY.TOKEN_SECRET;
 import static com.github.throyer.common.springboot.constants.SECURITY.USERNAME_PARAMETER;
 import static com.github.throyer.common.springboot.utils.Responses.forbidden;
+import static java.util.Optional.ofNullable;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import com.github.throyer.common.springboot.domain.session.service.SessionService;
 import com.github.throyer.common.springboot.middlewares.AuthorizationMiddleware;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -46,6 +50,9 @@ public class SpringSecurityConfiguration {
     private final SessionService sessionService;
     private final AuthorizationMiddleware filter;
 
+    public static String SWAGGER_USERNAME;
+    public static String SWAGGER_PASSWORD;
+
     @Autowired
     public SpringSecurityConfiguration(
         SessionService sessionService,
@@ -57,11 +64,29 @@ public class SpringSecurityConfiguration {
 
     @Autowired
     protected void globalConfiguration(
-        AuthenticationManagerBuilder authentication
+        AuthenticationManagerBuilder authentication,
+        @Value("${swagger.username}") String username,
+        @Value("${swagger.password}") String password
     ) throws Exception {
+        SpringSecurityConfiguration.SWAGGER_USERNAME = username;
+        SpringSecurityConfiguration.SWAGGER_PASSWORD = password;
+
+        if (Stream
+            .of(ofNullable(SWAGGER_PASSWORD), ofNullable(SWAGGER_USERNAME))
+                .allMatch(Optional::isPresent)) {
+
+            authentication
+                .inMemoryAuthentication()
+                    .passwordEncoder(ENCODER)
+                    .withUser(username)
+                    .password(ENCODER.encode(password))
+                    .authorities("SWAGGER");
+        }
+
+
         authentication
             .userDetailsService(sessionService)
-            .passwordEncoder(PASSWORD_ENCODER);
+            .passwordEncoder(ENCODER);
     }
 
     @Bean
@@ -74,7 +99,7 @@ public class SpringSecurityConfiguration {
     @Bean
     @Order(1)
     public SecurityFilterChain api(HttpSecurity http) throws Exception {
-        PUBLIC_API_ROUTES.injectOn(http);
+        PUBLICS.injectOn(http);
 
         http
             .antMatcher("/api/**")
@@ -137,19 +162,20 @@ public class SpringSecurityConfiguration {
     @Bean
     @Order(4)
     public SecurityFilterChain swagger(HttpSecurity http) throws Exception {
+        if (Stream
+                .of(ofNullable(SWAGGER_PASSWORD), ofNullable(SWAGGER_USERNAME))
+                    .allMatch(Optional::isPresent)) {
 
-        if (PRIVATE_SWAGGER) {
             http
-                .authorizeRequests()
-                        .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/**.html", "/documentation/**")
+                .antMatcher("/swagger-ui/**")
+                    .authorizeRequests()
+                        .anyRequest()
                             .authenticated()
                 .and()
+                    .sessionManagement()
+                            .sessionCreationPolicy(STATELESS)
+                .and()
                     .httpBasic();
-        } else {
-            http
-                .authorizeRequests()
-                        .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/**.html", "/documentation/**")
-                            .permitAll();
         }
 
         return http.build();

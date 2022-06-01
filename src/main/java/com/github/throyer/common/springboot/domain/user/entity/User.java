@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
-import static com.github.throyer.common.springboot.constants.SECURITY.PASSWORD_ENCODER;
+import static com.github.throyer.common.springboot.constants.SECURITY.ENCODER;
 import static com.github.throyer.common.springboot.domain.management.repository.Queries.NON_DELETED_CLAUSE;
 import static com.github.throyer.common.springboot.utils.JSON.stringify;
 import static java.util.Objects.hash;
@@ -120,17 +120,16 @@ public class User extends Auditable implements Serializable, Addressable {
     }
 
     public void updatePassword(String newPassword) {
-        this.password = PASSWORD_ENCODER
-            .encode(newPassword);
+        this.password = ENCODER.encode(newPassword);
     }
 
     public Boolean validatePassword(String password) {
-        return PASSWORD_ENCODER.matches(password, this.password);
+        return ENCODER.matches(password, this.password);
     }
 
     @PrePersist
     private void created() {
-        this.password = PASSWORD_ENCODER.encode(password);
+        this.password = ENCODER.encode(password);
     }
 
     @Override

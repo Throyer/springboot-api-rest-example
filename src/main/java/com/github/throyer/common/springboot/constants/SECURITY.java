@@ -19,17 +19,15 @@ public class SECURITY {
         @Value("${token.secret}") String tokenSecret,
         @Value("${token.expiration-in-hours}") Integer tokenExpirationInHours,
         @Value("${token.refresh.expiration-in-days}") Integer refreshTokenExpirationInDays,
-        @Value("${server.servlet.session.cookie.name}") String sessionCookieName,
-        @Value("${swagger.is-private}") Boolean privateSwagger
+        @Value("${server.servlet.session.cookie.name}") String sessionCookieName
     ) {
         SECURITY.TOKEN_SECRET = tokenSecret;
         SECURITY.TOKEN_EXPIRATION_IN_HOURS = tokenExpirationInHours;
         SECURITY.REFRESH_TOKEN_EXPIRATION_IN_DAYS = refreshTokenExpirationInDays;
         SECURITY.SESSION_COOKIE_NAME = sessionCookieName;
-        SECURITY.PRIVATE_SWAGGER = privateSwagger;
     }
 
-    public static final PublicRoutes PUBLIC_API_ROUTES = create()
+    public static final PublicRoutes PUBLICS = create()
             .add(GET, "/api")
             .add(POST, "/api/users", "/api/sessions/**", "/api/recoveries/**");
 
@@ -37,7 +35,7 @@ public class SECURITY {
     public static final JsonWebToken JWT = new JsonWebToken();
 
     public static final Integer PASSWORD_STRENGTH = 10;
-    public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(PASSWORD_STRENGTH);
+    public static final BCryptPasswordEncoder ENCODER = new BCryptPasswordEncoder(PASSWORD_STRENGTH);
 
     public static final String ROLES_KEY_ON_JWT = "roles";
 
@@ -46,7 +44,6 @@ public class SECURITY {
     public static Integer REFRESH_TOKEN_EXPIRATION_IN_DAYS;
 
     public static String SESSION_COOKIE_NAME;
-    public static Boolean PRIVATE_SWAGGER;
 
     public static final String USERNAME_PARAMETER = "email";
     public static final String PASSWORD_PARAMETER = "password";
