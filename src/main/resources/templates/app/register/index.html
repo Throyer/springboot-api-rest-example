@@ -6,7 +6,7 @@
     </links>
     <main class="container">
         <form
-            th:replace="~{__${execInfo.templateName}__/../fragments/form-register :: form-register}">
+            th:replace="~{__${#execInfo.templateName}__/../fragments/form-register :: form-register}">
         </form>
     </main>
     <script language="javascript" th:src="@{/js/forms.js}"></script>
