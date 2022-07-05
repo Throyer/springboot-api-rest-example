@@ -48,8 +48,14 @@ public class UserController {
     }
 
     @GetMapping("/form")
-    public String form(Model model) {        
-        model.addAttribute("user", new CreateOrUpdateUserByAppForm());
+    public String createForm(Model model) {
+        model.addAttribute("create", true);
+        return "app/users/form";
+    }
+
+    @GetMapping("/form/{id}")
+    public String editForm(Model model) {
+        model.addAttribute("create", false);
         return "app/users/form";
     }
 

@@ -6,7 +6,7 @@
       <div class="col-md-12">
           <h3 class="font-weight-light">
             <i class="fas fa-user"></i>
-            <span th:text="${user.id == null ? 'Create' : 'Edit'}"></span>
+            <span th:text="${create ? 'Create' : 'Edit'}"></span>
             User
           </h3>
           <hr>
@@ -17,7 +17,6 @@
       novalidate
       method="POST"
       th:action="@{/app/users}"
-      th:data-user="${user}"
       class="row d-flex justify-content-center needs-validation">
     </form>
   </section>

@@ -1,22 +1,51 @@
 const App = () => {
 
+    const [waiting, setWaiting] = React.useState(true)
+
     const [roles, setRoles] = React.useState([])
+    const [user, setUser] = React.useState()
 
     const findAllRoles = React.useCallback(async () => {
         const { data: roles } = await axios
-            .get('app/roles');
+            .get('app/json/roles');
 
         setRoles(roles);
     }, []);
 
+    const findUser = React.useCallback(async () => {
+        const id = Number(window.location.pathname.split('/').pop())
+
+        if (Number.isSafeInteger(Number(id))) {
+            const { data: user } = await axios
+                .get(`app/json/user/${id}`);
+
+            setUser(user);
+            return;
+        }
+
+        setUser({
+            id: null,
+            name: "",
+            email: "",
+            roles: []
+        })
+    }, []);
+
+    const fetch = React.useCallback(async () => {
+        await Promise.all([findUser(), findAllRoles()]);
+        setWaiting(false);
+    }, []);
+
 
     React.useEffect(() => {
-        findAllRoles();
+        fetch();
     }, [])
 
-
-    return (
+    return !waiting && (
         <div className="col-md-4 shadow-sm p-3 mb-5 bg-body rounded">
+            <pre>
+                {JSON.stringify(user, undefined, 4)}
+            </pre>
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group">
@@ -32,7 +61,12 @@ const App = () => {
                             required
                             name="name"
                             type="text"
+                            value={user.name}
                             className="form-control form-control-sm"
+                            onChange={({ target: { value } }) => setUser({
+                                ...user,
+                                name: value
+                            })}
                         />
                     </div>
                 </div>
@@ -47,10 +81,15 @@ const App = () => {
                             </small>
                         </label>
                         <input
+                            required
                             name="email"
                             type="email"
+                            value={user.email}
                             className="form-control form-control-sm"
-                            required
+                            onChange={({ target: { value } }) => setUser({
+                                ...user,
+                                email: value
+                            })}
                         />
 
                         <div className="invalid-feedback">
@@ -73,8 +112,8 @@ const App = () => {
                         className="form-select form-select-sm"
                     >
                         <option value="">Selecione</option>
-                        {roles.map(({ id, name }) => (
-                            <option value={id}>{name}</option>
+                        {roles.map(({ id, name, initials }) => (
+                            <option selected={user.roles[0] == initials} value={id}>{name}</option>
                         ))}
                     </select>
 
