@@ -17,4 +17,4 @@ COPY --from=BUILDER /usr/src/app/target/api*.jar ./api.jar
 
 EXPOSE ${SERVER_PORT}
 
-CMD [ "java", "-jar", "api.jar" ]
+ENTRYPOINT [ "java", "-jar", "api.jar" ]

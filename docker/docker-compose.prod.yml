@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_DB: common_app
       TZ: America/Sao_Paulo
       PGTZ: America/Sao_Paulo
     volumes:
@@ -25,7 +25,7 @@ services:
     ports:
       - 8080:80
     environment:
-      DB_URL: database:5432/${DB_NAME}
+      DB_URL: ${DB_URL}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       TOKEN_SECRET: ${TOKEN_SECRET}

@@ -11,14 +11,14 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_DB: common_app
       TZ: America/Sao_Paulo
       PGTZ: America/Sao_Paulo
     volumes:
       - ./.volumes/database:/var/lib/postgresql/data
   
   api:
-    image: maven:3.8.3
+    image: maven:3.8.5-openjdk-17
     restart: unless-stopped
     container_name: common-api
     links:
@@ -29,11 +29,11 @@ services:
       - "8080:8080"
       - "8000:8000"
     environment:
-      DB_URL: database:5432/${DB_NAME}
+      DB_URL: ${DB_URL}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./:/app
+      - ../:/app
       - ./.volumes/maven:/root/.m2
     working_dir: /app
-    command: mvn spring-boot:run
+    entrypoint: mvn spring-boot:run
