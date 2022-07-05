@@ -2,10 +2,9 @@
 
     <!-- head -->
     <head>
-
-        <title th:replace="${title}">
-            Common API
-        </title>
+        <th:block th:replace="${title}">
+            Spring Boot example
+        </th:block>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,16 +32,16 @@
         </th:block>
 
         <!-- navbar default -->
-        <nav
+        <th:block
             th:replace="~{app/fragments/navbar :: navbar}">
-        </nav>
+        </th:block>
         
         <!-- content container -->
         <th:block th:replace="${content}"></th:block>
 
-        <footer
+        <th:block
             th:replace="~{app/fragments/footer :: footer}">
-        </footer>
+        </th:block>
         
         <!-- modals section -->
         <th:block
@@ -54,9 +53,9 @@
         </th:block>
 
         <!-- default scripts -->
-        <script
+        <th:block
             th:replace="~{app/fragments/imports :: default-javascript}">
-        </script>
+        </th:block>
 
         <!-- custom scripts -->
         <th:block
