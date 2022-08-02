@@ -9,11 +9,19 @@ RUN --mount=type=cache,target=/root/.m2 mvn package -DskipTests
 
 FROM openjdk:17-alpine
 
-ENV SERVER_PORT=80
-
 WORKDIR /usr/src/app
 
-COPY --from=BUILDER /usr/src/app/target/api*.jar ./api.jar
+ENV SERVER_PORT=80
+ENV DB_SHOW_SQL=false
+ENV DOCKERIZE_VERSION v0.6.1
+
+COPY --from=BUILDER /usr/src/app/target/*.jar ./api.jar
+
+RUN apk add --no-cache openssl
+
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 EXPOSE ${SERVER_PORT}
 
