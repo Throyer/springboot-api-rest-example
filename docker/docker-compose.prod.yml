@@ -1,0 +1,59 @@
+version: '3'
+services:
+
+  database:
+    image: postgres:13
+    restart: unless-stopped
+    container_name: example-api-database
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: example_api
+      TZ: America/Sao_Paulo
+      PGTZ: America/Sao_Paulo
+    volumes:
+      - ./.volumes/database:/var/lib/postgresql/data
+    networks:
+      - example-api
+    tty: true
+
+  api:
+    build: 
+      context: ../api
+      dockerfile: ../api/docker/Dockerfile.prod
+    image: throyer/example-api:latest
+    restart: unless-stopped
+    container_name: example-api
+    links:
+      - database
+    ports:
+      - 8080:80
+    depends_on:
+      - database
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - example-api
+    tty: true
+    entrypoint: "dockerize -wait tcp://database:5432 -timeout 20s java -jar api.jar"
+
+  # web:
+  #   build: 
+  #     context: ../web
+  #     dockerfile: ../web/docker/Dockerfile.prod
+  #   image: throyer/example-api-front-end:latest
+  #   restart: unless-stopped
+  #   container_name: example-api-front-end
+  #   ports:
+  #     - "8082:8080"
+  #   networks:
+  #     - example-api
+  #   tty: true
+
+networks:
+  example-api:
+    driver: bridge
