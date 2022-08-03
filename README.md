@@ -128,15 +128,25 @@ and that you are in the correct directory __./api__
 > ```
 
 - docker compose development
-    ```bash
-    docker-compose -p example-api-development -f ./docker/docker-compose.dev.yml --env-file ./docker/.env up -d --force-recreate
-    ```
+  ```bash
+  docker-compose -p example-api-development -f ./docker/docker-compose.dev.yml --env-file ./docker/.env up -d --force-recreate
+  ```
 
 - docker compose production
-    ```bash
-    docker-compose -p example-api -f ./docker/docker-compose.prod.yml --env-file ./docker/.env up -d --build
-    ```
+  ```bash
+  docker-compose -p example-api -f ./docker/docker-compose.prod.yml --env-file ./docker/.env up -d --build
+  ```
 
+or
+```
+# development up / down
+scripts/dev.sh up
+scripts/dev.sh down
+
+# production up / down
+scripts/prod.sh up
+scripts/prod.sh down
+```
 
 ## Environment variables
 
