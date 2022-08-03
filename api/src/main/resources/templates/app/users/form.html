@@ -12,17 +12,8 @@
           <hr>
       </div>
     </div>
-    <form
-      id="app"
-      novalidate
-      method="POST"
-      th:action="@{/app/users}"
-      class="row d-flex justify-content-center needs-validation">
-    </form>
   </section>
-  <th:block id="scripts">
-    <th:block th:replace="~{app/fragments/imports :: react-javascript}"></th:block>   
+  <th:block id="scripts">  
     <script language="javascript" th:src="@{/js/forms.js}"></script>
-    <script language="javascript" type="text/babel" th:src="@{/js/forms/users-form.js}"></script>
   </th:block>
 </layout>

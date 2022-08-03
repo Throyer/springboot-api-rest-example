@@ -121,28 +121,6 @@
             <version>5.1.3</version>
         </dependency>
 
-        <!-- react-->
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>react</artifactId>
-            <version>18.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>react-dom</artifactId>
-            <version>18.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>babel-standalone</artifactId>
-            <version>6.26.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>axios</artifactId>
-            <version>0.27.2</version>
-        </dependency>
-
         <!-- extras -->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
