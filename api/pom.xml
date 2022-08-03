@@ -19,13 +19,6 @@
         <java.version>17</java.version>
     </properties>
 
-    <!-- <pluginRepositories>
-        <pluginRepository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </pluginRepository>
-    </pluginRepositories> -->
-
     <dependencies>
         <!-- spring boot -->
         <dependency>
@@ -225,11 +218,11 @@
 
     <build>
         <plugins>
-            <!-- <plugin>
-                <groupId>com.github.throyer</groupId>
+            <plugin>
+                <groupId>io.github.throyer</groupId>
                 <artifactId>migration-maven-plugin</artifactId>
-                <version>1.2.7</version>
-            </plugin> -->
+                <version>2.0.0</version>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

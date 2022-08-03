@@ -2,3 +2,4 @@ docker/.env
 docker/.volumes
 Vendas.iml
 .idea
+.vscode/settings.json
