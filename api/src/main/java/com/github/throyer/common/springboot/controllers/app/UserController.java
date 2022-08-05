@@ -67,7 +67,7 @@ public class UserController {
         Model model
     ) {
         if (validations.hasErrors()) {
-            // return "app/users/index";
+            return "app/users/index";
         }
 
         return "redirect:/app/users/form";
