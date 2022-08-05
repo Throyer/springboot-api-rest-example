@@ -3,7 +3,7 @@
 > [🐬 MySQL/MariaDB (outdated) implementation](https://github.com/Throyer/springboot-api-crud/tree/mariadb#readme)
 
 <p align="center">
-  <a href="https://github.com/Throyer" target="blank"><img src="./assets/tecnologias.png" width="560" alt="Tecnologias" /></a>
+  <a href="https://github.com/Throyer" target="blank"><img src="./assets/images/tecnologias.png" width="560" alt="Tecnologias" /></a>
 </p>
 
 <h1 align="center">Spring Boot API RESTful</h1>
@@ -17,7 +17,7 @@
 [**Live demo on heroku**](https://throyer-crud-api.herokuapp.com)
 
 <p align="center">
-  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/demo.gif" alt="Demonstration" /></a>
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/images/demo.gif" alt="Demonstration" /></a>
 </p>
 
 ## Table of Contents
@@ -35,7 +35,7 @@
 # Features
 
 <p align="center">
-  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/features.png"  alt="Tecnologias" /></a>
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/images/features.png"  alt="Tecnologias" /></a>
 </p>
 
 
@@ -51,10 +51,10 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
 ## Entities
 
 <p>
-  <img src="./database_diagram/spring_boot_crud_database_diagram.png" alt="database diagram" />
+  <img src="./assets/database/diagram.png" alt="database diagram" />
 </p>
 
->[🚨 draw.io file here](./der/spring_boot_crud_database_diagram.drawio)
+>[🚨 draw.io file here](./assets/database/diagram.drawio)
 
 ## Installation
 
@@ -103,6 +103,10 @@ Once the application is up, it is available at: [localhost:8080/documentation](l
 ## Database Migrations
 Creating database migration files
 
+> 🚨 make sure you have maven in your environment
+and that you are in the correct directory __./api__
+
+
 - Java based migrations
   ```bash
   mvn migration:generate -Dname=my-migration-name
@@ -116,24 +120,32 @@ Creating database migration files
 ---
 
 ## Docker examples
-docker compose for development
-```bash
-cd docker
-docker-compose -p common-api-development -f docker-compose.dev.yml up -d
+
+> 🚨 create `environment` file
+>
+> ```bash
+>  cp docker/.env.example docker/.env
+> ```
+
+- docker compose development
+  ```bash
+  docker-compose -p example-api-development -f ./docker/docker-compose.dev.yml --env-file ./docker/.env up -d --force-recreate
+  ```
+
+- docker compose production
+  ```bash
+  docker-compose -p example-api -f ./docker/docker-compose.prod.yml --env-file ./docker/.env up -d --build
+  ```
+
+or
 ```
+# development up / down
+scripts/dev.sh up
+scripts/dev.sh down
 
-Building image for production
-```bash
-cd docker
-DOCKER_BUILDKIT=1 docker build -f Dockerfile.prod -t common-api:4.1.2 ../
-```
-
-docker compose for production
-```bash
-cd docker
-cp .env.example .env
-
-docker-compose -p common-api -f docker-compose.prod.yml up -d
+# production up / down
+scripts/prod.sh up
+scripts/prod.sh down
 ```
 
 ## Environment variables

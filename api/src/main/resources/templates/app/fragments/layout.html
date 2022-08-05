@@ -1,0 +1,65 @@
+<html th:fragment="layout(title, links, content, scripts, modals)">
+
+    <!-- head -->
+    <head>
+        <th:block th:replace="${title}">
+            Spring Boot example
+        </th:block>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <base href="/">
+
+        <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+        <!-- default links -->
+        <th:block
+            th:replace="~{app/fragments/imports :: default-css}">
+        </th:block>
+        
+        <!-- custom links -->
+        <th:block
+            th:replace="${links}">
+        </th:block>
+    </head>
+
+    <!-- page body -->
+    <body class="bg-light ">
+
+        <!-- toasts container -->
+        <th:block
+            th:replace="~{app/fragments/toasts :: toast-container}">
+        </th:block>
+
+        <!-- navbar default -->
+        <th:block
+            th:replace="~{app/fragments/navbar :: navbar}">
+        </th:block>
+        
+        <!-- content container -->
+        <th:block th:replace="${content}"></th:block>
+
+        <th:block
+            th:replace="~{app/fragments/footer :: footer}">
+        </th:block>
+        
+        <!-- modals section -->
+        <th:block
+            th:replace="${modals}">
+        </th:block>
+
+        <th:block
+            th:replace="~{app/fragments/me :: me}">
+        </th:block>
+
+        <!-- default scripts -->
+        <th:block
+            th:replace="~{app/fragments/imports :: default-javascript}">
+        </th:block>
+
+        <!-- custom scripts -->
+        <th:block
+            th:replace="${scripts}">
+        </th:block>
+    </body>
+</html>

@@ -25,7 +25,9 @@ jobs:
         cache: 'maven'
 
     - name: 📦 Build with Maven
+      working-directory: ./api
       run: mvn --batch-mode --update-snapshots test jacoco:report --file pom.xml
 
     - name: 🚀 Coveralls Coverage Report Submission
+      working-directory: ./api
       run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_SECRET }}

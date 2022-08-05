@@ -4,31 +4,57 @@ services:
   database:
     image: postgres:13
     restart: unless-stopped
-    container_name: common-database
+    container_name: example-api-database
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_DB: example_api
       TZ: America/Sao_Paulo
       PGTZ: America/Sao_Paulo
     volumes:
       - ./.volumes/database:/var/lib/postgresql/data
+    networks:
+      - example-api
+    tty: true
 
   api:
-    image: common-api:4.1.2
+    build: 
+      context: ../api
+      dockerfile: ../api/docker/Dockerfile.prod
+    image: throyer/example-api:latest
+    platform: linux/x86_64
     restart: unless-stopped
-    container_name: common-api
+    container_name: example-api
     links:
       - database
     ports:
       - 8080:80
+    depends_on:
+      - database
     environment:
-      DB_URL: database:5432/${DB_NAME}
+      DB_URL: ${DB_URL}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      TOKEN_SECRET: ${TOKEN_SECRET}
-      DB_SHOW_SQL: "false"
-      SWAGGER_USERNAME: "example"
-      SWAGGER_PASSWORD: "example"
+    networks:
+      - example-api
+    tty: true
+    entrypoint: "dockerize -wait tcp://database:5432 -timeout 20s java -jar api.jar"
+
+  # web:
+  #   build: 
+  #     context: ../web
+  #     dockerfile: ../web/docker/Dockerfile.prod
+  #   image: throyer/example-api-front-end:latest
+  #   restart: unless-stopped
+  #   container_name: example-api-front-end
+  #   ports:
+  #     - "8082:8080"
+  #   networks:
+  #     - example-api
+  #   tty: true
+
+networks:
+  example-api:
+    driver: bridge

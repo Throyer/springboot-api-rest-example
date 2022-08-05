@@ -1,40 +1,5 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
-!**/src/test/**
-
-### docker ###
-docker/.volumes/
 docker/.env
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
+docker/.volumes
+Vendas.iml
 .idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-nb-configuration.xml
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-
-### VS Code ###
-.vscode/
-/nbproject/
-nbactions.xml
-.gitignore
-nbactions-release-profile.xml
+.vscode/settings.json

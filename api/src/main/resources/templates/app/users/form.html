@@ -1,0 +1,19 @@
+<layout th:replace="~{app/fragments/layout :: layout(~{:: title}, ~{:: link}, ~{:: section}, ~{:: #scripts}, ~{})}">
+  <title>Users</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
+  <section class="container mt-4">
+    <div class="row">
+      <div class="col-md-12">
+          <h3 class="font-weight-light">
+            <i class="fas fa-user"></i>
+            <span th:text="${create ? 'Create' : 'Edit'}"></span>
+            User
+          </h3>
+          <hr>
+      </div>
+    </div>
+  </section>
+  <th:block id="scripts">  
+    <script language="javascript" th:src="@{/js/forms.js}"></script>
+  </th:block>
+</layout>

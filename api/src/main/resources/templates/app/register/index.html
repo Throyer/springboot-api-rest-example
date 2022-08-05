@@ -1,0 +1,13 @@
+<layout th:replace="~{app/fragments/layout :: layout(~{::title}, ~{::links}, ~{::main}, ~{::script}, ~{})}">
+    <title>Register</title>
+    <links>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/center-forms.css}">
+    </links>
+    <main class="container">
+        <form
+            th:replace="~{__${#execInfo.templateName}__/../fragments/form-register :: form-register}">
+        </form>
+    </main>
+    <script language="javascript" th:src="@{/js/forms.js}"></script>
+</layout>
