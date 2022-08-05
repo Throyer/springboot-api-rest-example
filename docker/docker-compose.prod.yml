@@ -24,6 +24,7 @@ services:
       context: ../api
       dockerfile: ../api/docker/Dockerfile.prod
     image: throyer/example-api:latest
+    platform: linux/x86_64
     restart: unless-stopped
     container_name: example-api
     links:
