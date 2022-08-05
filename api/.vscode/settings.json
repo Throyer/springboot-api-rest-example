@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
+        "instanceof",
         "jooq",
+        "Servlet",
         "springboot",
         "springframework",
         "throyer"
