@@ -1,5 +1,11 @@
 package com.github.throyer.common.springboot.utils;
 
+import static com.github.throyer.common.springboot.constants.SECURITY.JWT;
+import static com.github.throyer.common.springboot.constants.SECURITY.TOKEN_SECRET;
+import static java.lang.String.format;
+import static java.time.LocalDateTime.now;
+import static java.util.List.of;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +15,6 @@ import com.github.javafaker.Faker;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.user.entity.User;
 
-import static com.github.throyer.common.springboot.constants.SECURITY.JWT;
-import static com.github.throyer.common.springboot.constants.SECURITY.TOKEN_SECRET;
-import static java.lang.String.format;
-import static java.time.LocalDateTime.now;
-import static java.util.List.of;
-
 public class Random {
         
     private static final java.util.Random RANDOM = new java.util.Random();
@@ -23,6 +23,10 @@ public class Random {
     public static Integer between(Integer min, Integer max) {
         return RANDOM.nextInt(max - min) + min;
     }
+
+    public static <T> T element(List<T> list) {        
+        return list.get(RANDOM.nextInt(list.size()));
+    } 
 
     public static String code() {
         return format("%s%s%s%s", between(0, 9), between(0, 9), between(0, 9), between(0, 9));
