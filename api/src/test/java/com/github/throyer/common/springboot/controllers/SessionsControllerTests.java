@@ -143,15 +143,13 @@ public class SessionsControllerTests {
     @DisplayName("deve aceitar requisições sem token em rotas publicas")
     public void must_accept_requests_without_token_on_public_routes() throws Exception {
         api.perform(get("/api"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Is a live!"));
+                .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("deve aceitar requisições sem token em rotas publicas porem com um token invalido no header")
     public void must_accept_requests_without_token_on_public_routes_but_with_invalid_token_on_header() throws Exception {
         api.perform(get("/api").header(AUTHORIZATION, token("ADM", "this_is_not_my_secret")))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Is a live!"));
+                .andExpect(status().isOk());
     }
 }
