@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc
-public class SessionsControllerTests {
+class SessionsControllerTests {
 
     @Autowired
     private MockMvc api;
@@ -40,7 +40,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("deve retornar OK quando a senha estiver correta")
-    public void should_return_OK_when_password_is_correct() throws Exception {
+    void should_return_OK_when_password_is_correct() throws Exception {
 
         var user = user();
 
@@ -59,7 +59,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("deve retornar FORBIDDEN quando a senha estiver incorreta")
-    public void should_return_FORBIDDEN_when_password_is_incorrect() throws Exception {
+    void should_return_FORBIDDEN_when_password_is_incorrect() throws Exception {
         var user = repository.save(user());
 
         var body = JSON.stringify(Map.of(
@@ -75,7 +75,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("deve retornar FORBIDDEN quando o usuário não existir")
-    public void should_return_FORBIDDEN_when_user_does_not_exist() throws Exception {
+    void should_return_FORBIDDEN_when_user_does_not_exist() throws Exception {
         var body = JSON.stringify(Map.of(
                 "email", "this.not.exist@email.com",
                 "password", "Írineu! você não sabe, nem eu!"
@@ -89,7 +89,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("não deve aceitar requisições sem o token no cabeçalho quando as rotas forem privadas")
-    public void should_not_accept_requests_without_token_in_header_when_routes_are_private() throws Exception {
+    void should_not_accept_requests_without_token_in_header_when_routes_are_private() throws Exception {
         api.perform(get("/api/users"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value("Can't find token on Authorization header."));
@@ -97,7 +97,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("não deve aceitar requisições com o token expirado")
-    public void should_not_accept_requests_with_token_expired() throws Exception {
+    void should_not_accept_requests_with_token_expired() throws Exception {
         var expiredToken = token(now().minusHours(24), "ADM");
 
         api.perform(get("/api/users")
@@ -108,7 +108,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("deve aceitar requisições com o token um válido")
-    public void should_accept_requests_with_token_valid() throws Exception {
+    void should_accept_requests_with_token_valid() throws Exception {
         var token = token("ADM");
 
         api.perform(get("/api/users")
@@ -119,7 +119,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("não deve aceitar requisições com o token um inválido")
-    public void must_not_accept_requests_with_an_invalid_token() throws Exception {
+    void must_not_accept_requests_with_an_invalid_token() throws Exception {
         var token = token(now().plusHours(24),"ADM", "this_is_not_my_secret");
 
         api.perform(get("/api/users")
@@ -130,7 +130,7 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("não deve aceitar requisições com o token sem a role correta")
-    public void must_not_accept_requests_with_token_without_the_correct_role() throws Exception {
+    void must_not_accept_requests_with_token_without_the_correct_role() throws Exception {
         var token = token("THIS_IS_NOT_CORRECT_ROLE");
 
         api.perform(get("/api/users")
@@ -141,14 +141,14 @@ public class SessionsControllerTests {
 
     @Test
     @DisplayName("deve aceitar requisições sem token em rotas publicas")
-    public void must_accept_requests_without_token_on_public_routes() throws Exception {
+    void must_accept_requests_without_token_on_public_routes() throws Exception {
         api.perform(get("/api"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("deve aceitar requisições sem token em rotas publicas porem com um token invalido no header")
-    public void must_accept_requests_without_token_on_public_routes_but_with_invalid_token_on_header() throws Exception {
+    void must_accept_requests_without_token_on_public_routes_but_with_invalid_token_on_header() throws Exception {
         api.perform(get("/api").header(AUTHORIZATION, token("ADM", "this_is_not_my_secret")))
                 .andExpect(status().isOk());
     }

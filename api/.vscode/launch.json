@@ -6,7 +6,13 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Attach)",
+            "name": "Debug (local)",
+            "request": "launch",
+            "mainClass": "com.github.throyer.common.springboot.Application"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Attach Docker)",
             "projectName": "Vendas",
             "request": "attach",
             "hostName": "127.0.0.1",

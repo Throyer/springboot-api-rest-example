@@ -34,7 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class UsersControllerTests {
+class UsersControllerTests {
+    
     @Autowired
     UserRepository repository;
 
@@ -43,7 +44,7 @@ public class UsersControllerTests {
     
     @Test
     @DisplayName("Deve salvar um novo usuário.")
-    public void should_save_a_new_user() throws Exception {
+    void should_save_a_new_user() throws Exception {
         var json = stringify(Map.of(
             "name", name(),
             "email", email(),
@@ -60,7 +61,7 @@ public class UsersControllerTests {
     
     @Test
     @DisplayName("Deve retornar status code 400 caso faltar algum campo requerido.")
-    public void should_return_400_saving_user_without_required_fields() throws Exception {
+    void should_return_400_saving_user_without_required_fields() throws Exception {
 
         var payload = stringify(Map.of(
             "name", name(),
@@ -77,7 +78,7 @@ public class UsersControllerTests {
 
     @Test
     @DisplayName("Deve listar os usuários.")
-    public void should_list_users() throws Exception {
+    void should_list_users() throws Exception {
 
         repository.saveAll(users(4));
 
@@ -92,7 +93,7 @@ public class UsersControllerTests {
     
     @Test
     @DisplayName("Must not list deleted users.")
-    public void must_not_list_deleted_users() throws Exception {
+    void must_not_list_deleted_users() throws Exception {
 
         var user = repository.save(user());
         var id = user.getId();
@@ -120,7 +121,7 @@ public class UsersControllerTests {
 
     @Test
     @DisplayName("Deve deletar usuário.")
-    public void should_delete_user() throws Exception {
+    void should_delete_user() throws Exception {
         var user = repository.save(user());
         var id = user.getId();
 
@@ -131,7 +132,7 @@ public class UsersControllerTests {
 
     @Test
     @DisplayName("Deve retornar status code 404 depois de remover o usuário.")
-    public void should_return_404_after_delete_user() throws Exception {  
+    void should_return_404_after_delete_user() throws Exception {  
         var user = repository.save(user());
         var id = user.getId();
 
@@ -147,7 +148,7 @@ public class UsersControllerTests {
 
     @Test
     @DisplayName("Deve retornar status code 400 quando salvar um usuário com o mesmo email.")
-    public void should_return_400_after_save_same_email() throws Exception {  
+    void should_return_400_after_save_same_email() throws Exception {  
 
         var body = JSON.stringify(Map.of(
             "name", FAKER.name().fullName(),

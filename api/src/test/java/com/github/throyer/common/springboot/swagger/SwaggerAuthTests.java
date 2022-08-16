@@ -15,17 +15,19 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@TestPropertySource(properties = {
-    "SWAGGER_USERNAME=test",
-    "SWAGGER_PASSWORD=test"})
-public class SwaggerAuthTests {
+@TestPropertySource(
+    properties = {
+        "SWAGGER_USERNAME=test",
+        "SWAGGER_PASSWORD=test"
+    })
+class SwaggerAuthTests {
 
     @Autowired
     private MockMvc api;
 
     @Test
     @DisplayName("Deve exibir a documentação com basic auth valido")
-    public void should_display_the_swagger_docs_ui_with_valid_credentials() throws Exception {
+    void should_display_the_swagger_docs_ui_with_valid_credentials() throws Exception {
         
         var request = get("/swagger-ui/index.html?configUrl=/documentation/schemas/swagger-config")
             .header(AUTHORIZATION, "Basic dGVzdDp0ZXN0");
@@ -35,7 +37,7 @@ public class SwaggerAuthTests {
     }
     @Test
     @DisplayName("Não deve exibir a documentação com basic auth invalido")
-    public void must_not_display_the_swagger_docs_ui_with_invalid_credentials() throws Exception {
+    void must_not_display_the_swagger_docs_ui_with_invalid_credentials() throws Exception {
         var request = get("/swagger-ui/index.html?configUrl=/documentation/schemas/swagger-config")
             .header(AUTHORIZATION, "Basic anViaWxldTppcmluZXU=");
         

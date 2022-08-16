@@ -206,7 +206,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <jvmArguments>
-                        -agentlib:jdwp=transport=dt_socket,server=y,address=*:8000,server=y,suspend=n
+                        -agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n
                     </jvmArguments>
                 </configuration>
                 <executions>

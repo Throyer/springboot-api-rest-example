@@ -19,14 +19,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc
-public class InternationalizationTests {
+class InternationalizationTests {
 
     @Autowired
     private MockMvc api;
 
     @Test
     @DisplayName("Deve retornar as mensagens de erro em pt BR.")
-    public void should_return_error_messages_in_pt_BR() throws Exception {
+    void should_return_error_messages_in_pt_BR() throws Exception {
         var body = "{ \"password\": \"senha_bem_segura_1234\", \"email\": \"email@email.com\" }";
 
         api.perform(post("/api/sessions")
@@ -39,7 +39,7 @@ public class InternationalizationTests {
 
     @Test
     @DisplayName("Deve retornar as mensagens de erro em Inglês.")
-    public void should_return_error_messages_in_english() throws Exception {
+    void should_return_error_messages_in_english() throws Exception {
         var body = "{ \"password\": \"senha_bem_segura_1234\", \"email\": \"email@email.com\" }";
 
         api.perform(post("/api/sessions")

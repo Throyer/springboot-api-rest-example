@@ -24,13 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(PER_CLASS)
 @SpringBootTest(webEnvironment = MOCK)
 @DirtiesContext(classMode = BEFORE_CLASS)
-public class RateLimitTests {
+class RateLimitTests {
     @Autowired
     private MockMvc api;
 
     @Test
     @DisplayName("Deve retornar TOO_MANY_REQUESTS quando a quantidade de requests passar do limite.")
-    public void should_return_TOO_MANY_REQUESTS_when_number_of_requests_exceeds_the_limit() throws Exception {
+    void should_return_TOO_MANY_REQUESTS_when_number_of_requests_exceeds_the_limit() throws Exception {
         var request = get("/api")
                 .header(CONTENT_TYPE, APPLICATION_JSON);
 

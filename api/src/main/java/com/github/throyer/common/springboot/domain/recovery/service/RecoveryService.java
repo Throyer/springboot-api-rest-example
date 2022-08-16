@@ -1,22 +1,20 @@
 package com.github.throyer.common.springboot.domain.recovery.service;
 
+import static com.github.throyer.common.springboot.constants.MAIL.ERROR_SENDING_EMAIL_MESSAGE_TO;
+import static com.github.throyer.common.springboot.constants.PASSWORD_RECOVERY.MINUTES_TO_EXPIRE_RECOVERY_CODE;
+import static com.github.throyer.common.springboot.constants.PASSWORD_RECOVERY.SUBJECT_PASSWORD_RECOVERY_CODE;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.github.throyer.common.springboot.domain.mail.service.MailService;
 import com.github.throyer.common.springboot.domain.recovery.entity.Recovery;
 import com.github.throyer.common.springboot.domain.recovery.model.RecoveryEmail;
 import com.github.throyer.common.springboot.domain.recovery.repository.RecoveryRepository;
 import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.logging.Logger;
-
-import static com.github.throyer.common.springboot.constants.MAIL.EMAIL_SENT_SUCCESSFULLY_MESSAGE_LOG_TEMPLATE;
-import static com.github.throyer.common.springboot.constants.MAIL.UNABLE_TO_SEND_EMAIL_MESSAGE_TEMPLATE;
-import static com.github.throyer.common.springboot.constants.PASSWORD_RECOVERY.MINUTES_TO_EXPIRE_RECOVERY_CODE;
-import static com.github.throyer.common.springboot.constants.PASSWORD_RECOVERY.SUBJECT_PASSWORD_RECOVERY_CODE;
-import static java.lang.String.format;
-import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.WARNING;
 
 @Service
 public class RecoveryService {
@@ -50,23 +48,21 @@ public class RecoveryService {
 
         recoveries.save(recovery);
 
-        var sendEmailBackground = new Thread(() -> {
-            try {
-                var recoveryEmail = new RecoveryEmail(
-                    email,
-                    SUBJECT_PASSWORD_RECOVERY_CODE,
-                    user.get().getName(),
-                    recovery.getCode()
-                );
+        var sendEmailInBackground = new Thread(() -> {
+            var recoveryEmail = new RecoveryEmail(
+                email,
+                SUBJECT_PASSWORD_RECOVERY_CODE,
+                user.get().getName(),
+                recovery.getCode()
+            );
 
+            try {                
                 service.send(recoveryEmail);
-
-                LOGGER.log(INFO, format(EMAIL_SENT_SUCCESSFULLY_MESSAGE_LOG_TEMPLATE, email));
             } catch (Exception exception) {
-                LOGGER.log(WARNING, format(UNABLE_TO_SEND_EMAIL_MESSAGE_TEMPLATE, email), exception);
+                LOGGER.log(Level.INFO, ERROR_SENDING_EMAIL_MESSAGE_TO, email);
             }
         });
 
-        sendEmailBackground.start();
+        sendEmailInBackground.start();
     }
 }

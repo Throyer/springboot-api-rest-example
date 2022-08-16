@@ -1,10 +1,13 @@
 {
     "cSpell.words": [
+        "hamcrest",
         "instanceof",
         "jooq",
+        "servlet",
         "Servlet",
         "springboot",
         "springframework",
         "throyer"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
