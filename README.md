@@ -80,8 +80,6 @@ $ mvn jacoco:report
 
 ## Tests
 
-[![Coverage Status](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)
-
 ## Running a specific test
 use the parameter `-Dtest=<class>#<method>`
 
