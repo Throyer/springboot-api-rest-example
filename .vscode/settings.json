@@ -1,0 +1,16 @@
+{
+    "cSpell.words": [
+        "hamcrest",
+        "instanceof",
+        "jooq",
+        "servlet",
+        "Servlet",
+        "springboot",
+        "springframework",
+        "throyer"
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic",
+
+    // https://github.com/halcyon/asdf-java#asdf-java
+    "java.jdt.ls.java.home": "~/.asdf/installs/java/openjdk-17.0.1"
+}
