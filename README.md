@@ -102,9 +102,12 @@ Once the application is up, it is available at: [localhost:8080/documentation](l
 ## Database Migrations
 Creating database migration files
 
-> 🚨 make sure you have maven in your environment
-and that you are in the correct directory __./api__
-
+> 🚨 make sure you have maven in your environment and that you are in the correct directory __./api__
+>
+> if you using docker-compose
+> ```
+> .docker/scripts/mvn migration:generate -Dname=my-migration-name
+> ```
 
 - Java based migrations
   ```bash
@@ -123,41 +126,25 @@ and that you are in the correct directory __./api__
 > 🚨 create `environment` file and add permission to execute scripts
 >
 > ```shell
-> cp docker/.env.example docker/.env
-> ```
-> 
-> ```shell
-> chmod -R +x scripts/
+> cp .docker/.env.example .docker/.env && chmod -R +x .docker/scripts
 > ```
 
-- docker compose development
-  ```bash
-  docker-compose -p example-api-development -f ./docker/docker-compose.dev.yml --env-file ./docker/.env up -d --force-recreate
+- docker-compose for development
   ```
-
-- docker compose production
-  ```bash
-  docker-compose -p example-api -f ./docker/docker-compose.prod.yml --env-file ./docker/.env up -d --build
-  ```
-
-or
-
-- development up / down
-  ```
-  scripts/dev.sh up
+  .docker/scripts/develop up -d
   ```
 
   ```
-  scripts/dev.sh down
+  .docker/scripts/develop down
   ```
 
-- production up / down
+- docker-compose for production
   ```
-  scripts/prod.sh up
+  .docker/scripts/production up -d --build
   ```
 
   ```
-  scripts/prod.sh down
+  .docker/scripts/production down
   ```
 
 ## Environment variables

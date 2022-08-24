@@ -1,1 +1,0 @@
-docker logs $(docker ps -a | grep -i springboot-api-crud | awk {'print $1'}) -f

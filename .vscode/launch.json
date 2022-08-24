@@ -8,7 +8,8 @@
             "type": "java",
             "name": "Debug (local)",
             "request": "launch",
-            "mainClass": "com.github.throyer.common.springboot.Application"
+            "mainClass": "com.github.throyer.common.springboot.Application",
+            "cwd": "${workspaceFolder}/api"
         },
         {
             "type": "java",
