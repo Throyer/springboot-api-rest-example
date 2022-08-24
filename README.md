@@ -138,6 +138,8 @@ and that you are in the correct directory __./api__
 
 or
 
+>🚨 `chmod -R +x scripts/`
+
 - development up / down
 ```
 scripts/dev.sh up
