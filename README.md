@@ -137,13 +137,22 @@ and that you are in the correct directory __./api__
   ```
 
 or
-```
-# development up / down
-scripts/dev.sh up
-scripts/dev.sh down
 
-# production up / down
+- development up / down
+```
+scripts/dev.sh up
+```
+
+```
+scripts/dev.sh down
+```
+
+- production up / down
+```
 scripts/prod.sh up
+```
+
+```
 scripts/prod.sh down
 ```
 
