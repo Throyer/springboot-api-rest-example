@@ -143,22 +143,22 @@ and that you are in the correct directory __./api__
 or
 
 - development up / down
-```
-scripts/dev.sh up
-```
+  ```
+  scripts/dev.sh up
+  ```
 
-```
-scripts/dev.sh down
-```
+  ```
+  scripts/dev.sh down
+  ```
 
 - production up / down
-```
-scripts/prod.sh up
-```
+  ```
+  scripts/prod.sh up
+  ```
 
-```
-scripts/prod.sh down
-```
+  ```
+  scripts/prod.sh down
+  ```
 
 ## Environment variables
 
