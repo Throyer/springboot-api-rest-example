@@ -130,12 +130,19 @@ Creating database migration files
 > ```
 
 - docker-compose for development
+  - starting containers
   ```
   .docker/scripts/develop up -d
   ```
-
+  
+  - removing contaiers
   ```
   .docker/scripts/develop down
+  ```
+
+  - show backend logs
+  ```
+  .docker/scripts/develop logs -f api
   ```
 
 - docker-compose for production
