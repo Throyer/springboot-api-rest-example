@@ -120,10 +120,14 @@ and that you are in the correct directory __./api__
 
 ## Docker examples
 
-> 🚨 create `environment` file
+> 🚨 create `environment` file and add permission to execute scripts
 >
-> ```bash
->  cp docker/.env.example docker/.env
+> ```shell
+> cp docker/.env.example docker/.env
+> ```
+> 
+> ```shell
+> chmod -R +x scripts/
 > ```
 
 - docker compose development
@@ -137,8 +141,6 @@ and that you are in the correct directory __./api__
   ```
 
 or
-
->🚨 `chmod -R +x scripts/`
 
 - development up / down
 ```

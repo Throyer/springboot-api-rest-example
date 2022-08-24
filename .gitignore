@@ -3,3 +3,4 @@ docker/.volumes
 Vendas.iml
 .idea
 .vscode/settings.json
+*.DS_Store
