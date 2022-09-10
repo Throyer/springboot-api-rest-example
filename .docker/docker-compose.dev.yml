@@ -23,7 +23,7 @@ services:
   api:
     image: maven:3.8.5-openjdk-17
     restart: unless-stopped
-    container_name: example-api-development
+    container_name: crud-api
     links:
       - database
     ports:
@@ -42,19 +42,22 @@ services:
     tty: true
     entrypoint: "mvn spring-boot:run"
 
-  # web:
-  #   image: node:16.14.2
-  #   restart: unless-stopped
-  #   container_name: example-api-front-end-development
-  #   ports:
-  #     - "4200:4200"
-  #   volumes:
-  #     - ../web:/app
-  #   working_dir: /app
-  #   networks:
-  #     - vendas
-  #   tty: true
-  #   entrypoint: "npm start"
+  web:
+    build: 
+      context: ../web
+      dockerfile: ../web/docker/Dockerfile.dev
+    image: node:16.14.2
+    restart: unless-stopped
+    container_name: crud-web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../web:/app
+    working_dir: /app
+    networks:
+      - example-api
+    tty: true
+    entrypoint: "npm run dev"
 
 networks:
   example-api:

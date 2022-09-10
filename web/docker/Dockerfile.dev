@@ -1,0 +1,12 @@
+FROM node:16.14.2 as BUILDER
+
+WORKDIR /app
+
+EXPOSE 3000
+
+COPY . .
+
+RUN npm set cache ./.npm
+RUN --mount=type=cache,target=/usr/src/app/.npm npm install
+
+ENTRYPOINT [ "npm", "run", "dev" ]

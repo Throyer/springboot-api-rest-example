@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose -f .docker/docker-compose.dev.yml --env-file .docker/.env $@
+docker compose -f .docker/docker-compose.dev.yml --env-file .docker/.env $@
