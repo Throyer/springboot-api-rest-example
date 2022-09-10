@@ -6,7 +6,6 @@ EXPOSE 3000
 
 COPY . .
 
-RUN npm set cache ./.npm
-RUN --mount=type=cache,target=/usr/src/app/.npm npm install
+RUN npm install
 
 ENTRYPOINT [ "npm", "run", "dev" ]
