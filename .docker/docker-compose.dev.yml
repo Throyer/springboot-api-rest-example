@@ -5,7 +5,14 @@ services:
     image: postgres:13
     restart: unless-stopped
     container_name: example-api-database
-    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+    command:
+      [
+        "postgres",
+        "-c",
+        "log_statement=all",
+        "-c",
+        "log_destination=stderr"
+      ]
     ports:
       - "5432:5432"
     environment:
@@ -17,7 +24,7 @@ services:
     volumes:
       - ./.volumes/database:/var/lib/postgresql/data
     networks:
-      - example-api
+      - simple-network
     tty: true
 
   api:
@@ -38,12 +45,12 @@ services:
       - ./.volumes/maven:/root/.m2
     working_dir: /app
     networks:
-      - example-api
+      - simple-network
     tty: true
     entrypoint: "mvn spring-boot:run"
 
   web:
-    build: 
+    build:
       context: ../web
       dockerfile: ../web/docker/Dockerfile.dev
     image: node:16.14.2
@@ -55,10 +62,10 @@ services:
       - ../web:/app
     working_dir: /app
     networks:
-      - example-api
+      - simple-network
     tty: true
     entrypoint: "npm run dev"
 
 networks:
-  example-api:
+  simple-network:
     driver: bridge
