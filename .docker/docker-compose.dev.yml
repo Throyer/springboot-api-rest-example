@@ -4,7 +4,7 @@ services:
   database:
     image: postgres:13
     restart: unless-stopped
-    container_name: example-api-database
+    container_name: crud-database
     command:
       [
         "postgres",

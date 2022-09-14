@@ -1,10 +1,12 @@
 package com.github.throyer.common.springboot.domain.user.model;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static java.util.Optional.ofNullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.throyer.common.springboot.domain.management.model.Entity;
 import com.github.throyer.common.springboot.domain.role.entity.Role;
 import com.github.throyer.common.springboot.domain.user.entity.User;
@@ -19,11 +21,15 @@ public class UserDetails implements Entity {
     private final String name;
     private final String email;
 
+    @JsonInclude(NON_NULL)
+    private Boolean active;
+
     private final List<String> roles;
 
     public UserDetails(User user) {
         this.id = user.getId();
         this.name = user.getName();
+        this.active = user.isActive();
         this.email = user.getEmail();
 
         this.roles = user.getRoles()

@@ -157,6 +157,7 @@ public class User extends Auditable implements Serializable, Addressable {
         var user = new User();
         user.setId(tuple.get("id", BigInteger.class));
         user.setName(tuple.get("name", String.class));
+        user.setActive(tuple.get("active", Boolean.class));
         user.setEmail(tuple.get("email", String.class));
         user.setPassword(tuple.get("password", String.class));
         user.setRoles(ofNullable(tuple.get("roles", String.class))

@@ -40,6 +40,7 @@ public class Queries {
             u."name",
             u.email,
             u.password,
+            u.active,
             urs.roles
         from 
             "user" u
@@ -62,6 +63,7 @@ public class Queries {
             u."name",
             u.email,
             u.password,
+            u.active,
             urs.roles
         from
             "user" u
