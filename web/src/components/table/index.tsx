@@ -24,7 +24,7 @@ export interface Options<T> {
 export function Table<T>({ loading, content, columns, size, variant }: Options<T>) {
   return (
     <TableContainer>
-      <ChakraUiTable minHeight="520px" size={size} variant={variant}>
+      <ChakraUiTable size={size} variant={variant}>
         <Thead>
           <Tr>
             {columns.map(({ title: name, property, options }, index) => (
