@@ -2,10 +2,11 @@ import { Button } from "@chakra-ui/button";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Box, Heading, HStack } from "@chakra-ui/layout";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
-import { Badge, ButtonGroup, Center, Stack } from "@chakra-ui/react";
+import { Badge, Center, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsFillPenFill, BsTrash2 } from 'react-icons/bs';
 import { Template } from "../../components/page";
+import { Pagination, PaginationProps } from "../../components/pagination";
 import { Table } from "../../components/table";
 import { User } from "../../services/models/user";
 import { UsersApi } from "../../services/users";
@@ -14,19 +15,30 @@ export const Users = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [users, setUsers] = useState<User[]>([]);
+  const [{ page, size, totalPages }, setPagination] = useState<PaginationProps>({
+    page: 0,
+    size: 10,
+    totalPages: 0
+  });
 
-  const getUsers = async () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchUsers = async (page?: number, size?: number) => {
+    setLoading(true);
     try {
-      const { data: page } = await UsersApi.findAll();
-      setUsers(page.content);
+      const { data: { content, ...pagination } } = await UsersApi.findAll(page, size);
+      setUsers(content);
+      setPagination(pagination);
     } catch (error) {
       console.error('error on find all users');
+    } finally {
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    getUsers();
+    fetchUsers();
   }, [])
 
   return (
@@ -42,6 +54,8 @@ export const Users = () => {
       </Box>
       <Box>
         <Table
+          loading={loading}
+          size="sm"
           content={users}
           columns={[
             {
@@ -56,7 +70,7 @@ export const Users = () => {
               title: 'Roles',
               render: ({ roles }) => (
                 <Stack direction='row'>
-                  {roles.map(role => <Badge>{role}</Badge>)}
+                  {roles.map(role => <Badge key={role}>{role}</Badge>)}
                 </Stack>
               )
             },
@@ -71,14 +85,17 @@ export const Users = () => {
               options: {
                 w: '28'
               },
+              disableSkeleton: true,
               render: () => (
                 <HStack>
                   <Button
+                    disabled={loading}
                     size="sm"
                     variant="outline">
                     <BsFillPenFill />
                   </Button>
                   <Button
+                    disabled={loading}
                     size="sm"
                     variant="outline"
                     onClick={onOpen}>
@@ -89,36 +106,13 @@ export const Users = () => {
             }
           ]}
         />
-        <Center mt="12">
-          <ButtonGroup size='md' isAttached variant="outline">
-            <Button disabled>
-              Primeira
-            </Button>
-            <Button>
-              Anterior
-            </Button>
-            <Button>
-              1
-            </Button>
-            <Button>
-              2
-            </Button>
-            <Button variant="solid">
-              3
-            </Button>
-            <Button>
-              4
-            </Button>
-            <Button>
-              5
-            </Button>
-            <Button>
-              Proxima
-            </Button>
-            <Button>
-              Ultima
-            </Button>
-          </ButtonGroup>
+        <Center my="12">
+          <Pagination
+            page={page}
+            size={size}
+            totalPages={totalPages}
+            onChange={(page, size) => fetchUsers(page, size)}
+          />
         </Center>
       </Box>
 
