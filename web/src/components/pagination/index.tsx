@@ -1,8 +1,9 @@
 import { Button } from "@chakra-ui/button";
-import { ButtonGroup, Select, Stack } from "@chakra-ui/react";
+import { ButtonGroup, Center, Select, Spinner, Stack } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 export interface PaginationProps {
+  loading?: boolean;
   page?: number;
   size?: number;
   totalPages?: number;
@@ -13,6 +14,7 @@ export interface PaginationProps {
 
 export const Pagination = ({
   onChange,
+  loading,
   page = 1,
   size = 10,
   totalPages = 1,
@@ -45,6 +47,23 @@ export const Pagination = ({
 
   const handleChange = (page: number, size: number) => {
     onChange && onChange(page, size);
+  }
+
+  if (loading) {
+    return (
+      <Stack direction="row" spacing="5">
+        <Center>
+          <Spinner color="gray" />
+        </Center>
+        <Select
+          disabled
+          borderRadius="5"
+          w="52"
+          size="sm"
+          placeholder='Itens por pagina'
+        />
+      </ Stack>
+    )
   }
 
   return (
