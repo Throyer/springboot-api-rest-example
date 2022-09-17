@@ -23,10 +23,11 @@ import { Column } from "../../components/table/types";
 
 import { Roles } from "./components/roles";
 import { Status } from "./components/status";
+import { useDialog } from "../../hooks/alert";
 
 export const Users = () => {
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { show } = useDialog();
 
   const [{ page, size, totalPages }, setPagination] = useState<PaginationProps>({
     page: 0,
@@ -101,29 +102,19 @@ export const Users = () => {
             edit: { options: { disabled: loading } },
             remove: {
               options: { disabled: loading },
-              onClick: onOpen
+              onClick: (row) => show({
+                title: 'Delete user',
+                content: 'Are you sure? You can\'t undo this action afterwards.',
+                accept: {
+                  title: 'Delete',
+                  onClick: () => console.log('remove: ', row?.name)
+                },
+                decline: { title: 'Cancel' }
+              })
             },
           })
         ]}
       />
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            bla bla bla
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Template>
   )
 }

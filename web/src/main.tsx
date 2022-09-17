@@ -4,14 +4,15 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 import { App } from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { Providers } from './hooks';
 
 const element = document.getElementById('root') as Element;
 const root = createRoot(element);
 
 root.render(
   <BrowserRouter>
-    <ChakraProvider>
+    <Providers>
       <App />
-    </ChakraProvider>
+    </Providers>
   </BrowserRouter>
 );
