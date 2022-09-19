@@ -8,7 +8,8 @@
         "Servlet",
         "springboot",
         "springframework",
-        "throyer"
+        "throyer",
+        "zustand"
     ],
     "java.configuration.updateBuildConfiguration": "automatic",
 

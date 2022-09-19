@@ -34,11 +34,11 @@ export interface DialogProps {
   content?: ReactNode;
 }
 
-interface DialogContextData {
+export interface DialogContextData {
   show: (content: DialogProps) => void;
 }
 
-const DialogContext = createContext<DialogContextData>({} as DialogContextData);
+export const DialogContext = createContext<DialogContextData>({} as DialogContextData);
 
 export const DialogProvider = ({ children }: PropsWithChildren) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -99,14 +99,4 @@ export const DialogProvider = ({ children }: PropsWithChildren) => {
       )}
     </DialogContext.Provider>
   );
-}
-
-export function useDialog(): DialogContextData {
-  const context = useContext(DialogContext);
-
-  if (!context) {
-    throw new Error("o useDialog deve ser utilizado dentro de um DialogProvider");
-  }
-
-  return context;
 }

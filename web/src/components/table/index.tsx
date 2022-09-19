@@ -1,6 +1,5 @@
-import { Box, Center, Skeleton } from "@chakra-ui/react";
-import { Table as ChakraUiTable, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table";
-import { Random } from "../../utils/random";
+import { Box, Center } from "@chakra-ui/react";
+import { Table as ChakraUiTable, TableContainer } from "@chakra-ui/table";
 import { Pagination, PaginationProps } from "../pagination";
 import { Body } from "./body";
 import { Head } from "./head";

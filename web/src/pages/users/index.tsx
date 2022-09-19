@@ -23,7 +23,7 @@ import { Column } from "../../components/table/types";
 
 import { Roles } from "./components/roles";
 import { Status } from "./components/status";
-import { useDialog } from "../../hooks/alert";
+import { useDialog } from "../../hooks/use-dialog";
 
 export const Users = () => {
 
@@ -99,7 +99,7 @@ export const Users = () => {
         columns={[
           ...columns,
           actions<User>({
-            edit: { options: { disabled: loading } },
+            edit: { options: { disabled: loading, } },
             remove: {
               options: { disabled: loading },
               onClick: (row) => show({
