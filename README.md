@@ -79,7 +79,7 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
   ```shell
   mvn -f api/pom.xml clean package
   ```
-- to generate the coverage report after testing `(available at: target/site/jacoco/index.html)`
+- to generate the coverage report after testing `(available at: api/target/site/jacoco/index.html)`
   ```shell
   mvn -f api/pom.xml jacoco:report
   ```
