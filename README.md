@@ -92,7 +92,7 @@ use the parameter `-Dtest=<class>#<method>`
 
 - for example the integration test. creating a user:
   ```shell
-  mvn -f api/pom.xml test -Dtest=UsersControllerIntegrationTests#should_save_a_new_user
+  mvn -f api/pom.xml test -Dtest=UsersControllerTests#should_save_a_new_user
   ```
 
 
