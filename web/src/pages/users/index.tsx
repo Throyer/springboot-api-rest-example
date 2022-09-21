@@ -1,29 +1,18 @@
-import { Button } from "@chakra-ui/button";
-import { useDisclosure } from "@chakra-ui/hooks";
 import { Box, Heading } from "@chakra-ui/layout";
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay
-} from "@chakra-ui/modal";
 import { useEffect, useState } from "react";
 
-import { UsersApi } from "../../services/users";
 import { User } from "../../services/models/user";
+import { UsersApi } from "../../services/users";
 
-import { PaginationProps } from "../../components/pagination";
 import { Template } from "../../components/page";
+import { PaginationProps } from "../../components/pagination";
 import { Table } from "../../components/table";
 import { actions } from "../../components/table/actions";
 import { Column } from "../../components/table/types";
 
+import { useDialog } from "../../hooks/use-dialog";
 import { Roles } from "./components/roles";
 import { Status } from "./components/status";
-import { useDialog } from "../../hooks/use-dialog";
 
 export const Users = () => {
 
@@ -78,10 +67,10 @@ export const Users = () => {
     <Template title="Users">
       <Box>
         <Heading
-          px="1.5"
-          my="14"
+          px="2"
+          my="6"
           as='h1'
-          size='2xl'>
+          size='md'>
           Users
         </Heading>
       </Box>

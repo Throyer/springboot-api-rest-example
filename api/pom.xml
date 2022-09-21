@@ -231,6 +231,8 @@
         <configuration>
           <excludes>
             <exclude>db/migration/**/*</exclude>
+            <exclude>com/github/throyer/common/springboot/configurations/**/*</exclude>
+            <exclude>com/github/throyer/common/springboot/constants/**/*</exclude>
           </excludes>
         </configuration>
       </plugin>

@@ -1,7 +1,14 @@
 import { Box, Heading } from "@chakra-ui/layout";
-import { Button, Center, Code, FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Code,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack
+} from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuthentication } from "../../hooks/use-authentication/use-authentication";
 import { useUser } from "../../providers/user";
 
@@ -9,7 +16,6 @@ export const Login = () => {
 
   const { login } = useAuthentication();
   const { user } = useUser();
-  const navigate = useNavigate()
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

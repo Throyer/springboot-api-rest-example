@@ -57,26 +57,32 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
 >[🚨 draw.io file here](./assets/database/diagram.drawio)
 
 ## Installation
+> 🚨 check [requirements](#requirements) or if you are using docker check [docker development instructions](#docker-examples)
 
-```shell
-# clone the repository and access the directory.
-$ git clone git@github.com:Throyer/springboot-api-crud.git && cd springboot-api-crud
-
-# download dependencies
-$ mvn install -DskipTests
-
-# run the application
-$ mvn spring-boot:run
-
-# run the tests
-$ mvn test
-
-# to build for production
-$ mvn clean package
-
-# to generate the coverage report after testing (available at: target/site/jacoco/index.html)
-$ mvn jacoco:report
-```
+- clone the repository and access the directory.
+  ```shell
+  git clone git@github.com:Throyer/springboot-api-crud.git crud && cd crud
+  ```
+- download dependencies
+  ```shell
+  mvn -f api/pom.xml install -DskipTests
+  ```
+- run the application
+  ```shell
+  mvn -f api/pom.xml spring-boot:run
+  ```
+- running the tests
+  ```shell
+  mvn -f api/pom.xml test
+  ```
+- to build for production
+  ```shell
+  mvn -f api/pom.xml clean package
+  ```
+- to generate the coverage report after testing `(available at: target/site/jacoco/index.html)`
+  ```shell
+  mvn -f api/pom.xml jacoco:report
+  ```
 
 ## Tests
 [![Coverage Status](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)
@@ -84,11 +90,10 @@ $ mvn jacoco:report
 ## Running a specific test
 use the parameter `-Dtest=<class>#<method>`
 
-
-for example the integration test. creating a user:
-```
-$ mvn test -Dtest=UsersControllerIntegrationTests#should_save_a_new_user
-```
+- for example the integration test. creating a user:
+  ```shell
+  mvn -f api/pom.xml test -Dtest=UsersControllerIntegrationTests#should_save_a_new_user
+  ```
 
 
 ## Swagger
@@ -102,7 +107,7 @@ Once the application is up, it is available at: [localhost:8080/documentation](l
 ## Database Migrations
 Creating database migration files
 
-> 🚨 make sure you have maven in your environment and that you are in the correct directory __./api__
+> 🚨 check [requirements](#requirements)
 >
 > if you using docker-compose
 > ```
@@ -111,12 +116,12 @@ Creating database migration files
 
 - Java based migrations
   ```bash
-  mvn migration:generate -Dname=my-migration-name
+  mvn -f api/pom.xml migration:generate -Dname=my-migration-name
   ```
 
 - SQL based migrations
   ```bash
-  mvn migration:generate -Dname=my-migration-name -Dsql
+  mvn -f api/pom.xml migration:generate -Dname=my-migration-name -Dsql
   ```
 
 ---

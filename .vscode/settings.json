@@ -14,5 +14,11 @@
     "java.configuration.updateBuildConfiguration": "automatic",
 
     // https://github.com/halcyon/asdf-java#asdf-java
-    "java.jdt.ls.java.home": "~/.asdf/installs/java/openjdk-17.0.1"
+    "java.jdt.ls.java.home": "~/.asdf/installs/java/openjdk-17.0.1",
+
+    "coverage-gutters.showLineCoverage": true,
+    "coverage-gutters.showRulerCoverage": true,
+    "coverage-gutters.coverageFileNames": [
+      "jacoco.xml"
+    ]
 }

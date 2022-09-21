@@ -1,23 +1,22 @@
 import {
   createContext,
-  useContext,
-  useState,
   PropsWithChildren,
   ReactNode,
-  useRef
+  useRef,
+  useState,
 } from "react";
 
 import {
   AlertDialog,
   AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader, 
   AlertDialogOverlay,
-  useDisclosure,
   Button,
   ButtonProps,
-} from '@chakra-ui/react'
+  useDisclosure
+} from '@chakra-ui/react';
 
 export interface DialogProps {
   title?: string | ReactNode;
