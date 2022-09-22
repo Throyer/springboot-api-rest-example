@@ -102,7 +102,7 @@ use the parameter `-Dtest=<class>#<method>`
 
 ## Swagger
 Once the application is up, it is available at: [localhost:8080/docs](http://localhost:8080/docs)
-> 🚨 if you set `SWAGGER_USERNAME` and `SWAGGER_PASSWORD` on `.env` file this route require authentication
+> 🚨 if you set `SWAGGER_USERNAME` and `SWAGGER_PASSWORD` on [application.properties](https://github.com/Throyer/springboot-api-rest-example/blob/master/api/src/main/resources/application.properties#L35) file this route require authentication
 
 [example on heroku](https://throyer-crud-api.herokuapp.com/docs)
 
