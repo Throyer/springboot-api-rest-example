@@ -68,12 +68,13 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
   mvn -f api/pom.xml install -DskipTests
   ```
 - run the application 
-  - home http://localhost:8080
-  - api http://localhost:8080/api
-  - swagger http://localhost:8080/docs
   ```shell
   mvn -f api/pom.xml spring-boot:run
   ```
+  - to access the application:
+    - http://localhost:8080
+    - http://localhost:8080/api
+    - http://localhost:8080/docs
 - running the tests
   ```shell
   mvn -f api/pom.xml test
