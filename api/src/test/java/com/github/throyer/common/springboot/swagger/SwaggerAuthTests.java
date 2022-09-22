@@ -17,8 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @TestPropertySource(
     properties = {
-        "SWAGGER_USERNAME=test",
-        "SWAGGER_PASSWORD=test"
+        "swagger.username=test",
+        "swagger.password=test"
     })
 class SwaggerAuthTests {
 

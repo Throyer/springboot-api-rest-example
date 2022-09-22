@@ -67,7 +67,10 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
   ```shell
   mvn -f api/pom.xml install -DskipTests
   ```
-- run the application
+- run the application 
+  - home http://localhost:8080
+  - api http://localhost:8080/api
+  - swagger http://localhost:8080/docs
   ```shell
   mvn -f api/pom.xml spring-boot:run
   ```
@@ -97,10 +100,10 @@ use the parameter `-Dtest=<class>#<method>`
 
 
 ## Swagger
-Once the application is up, it is available at: [localhost:8080/documentation](localhost:8080/documentation)
+Once the application is up, it is available at: [localhost:8080/docs](http://localhost:8080/docs)
+> 🚨 if you set `SWAGGER_USERNAME` and `SWAGGER_PASSWORD` on `.env` file this route require authentication
 
-
-[example on heroku](https://throyer-crud-api.herokuapp.com/documentation)
+[example on heroku](https://throyer-crud-api.herokuapp.com/docs)
 
 ---
 
@@ -164,9 +167,11 @@ Creating database migration files
 | **Description**                          | **Parameter**                      | **Default values**        |
 |------------------------------------------|------------------------------------|---------------------------|
 | server port                              | `SERVER_PORT`                      | 8080                      |
-| database url                             | `DB_URL`                           | localhost:5432/common_app |
-| username (database)                      | `DB_USERNAME`                      | root                      |
-| user password (database)                 | `DB_PASSWORD`                      | root                      |
+| database host                            | `DB_HOST`                          | localhost                 |
+| database port                            | `DB_PORT`                          | 5432                      |
+| database name                            | `DB_NAME`                          | example                   |
+| database username                        | `DB_USERNAME`                      | root                      |
+| database user password                   | `DB_PASSWORD`                      | root                      |
 | displays the generated sql in the logger | `DB_SHOW_SQL`                      | false                     |
 | set maximum database connections         | `DB_MAX_CONNECTIONS`               | 5                         |
 | secret value in token generation         | `TOKEN_SECRET`                     | secret                    |
@@ -177,7 +182,8 @@ Creating database migration files
 | SMTP username                            | `SMTP_USERNAME`                    | user                      |
 | SMTP server password                     | `SMTP_PASSWORD`                    | secret                    |
 | time for recovery email to expire        | `MINUTES_TO_EXPIRE_RECOVERY_CODE`  | 20                        |
-| max requests per minute                  | `MAX_REQUESTS_PER_MINUTE`          | 10                        |
+| max requests per minute                  | `MAX_REQUESTS_PER_MINUTE`          | 50                        |
+| swagger url                              | `SWAGGER_URL`                      | /docs                     |
 | swagger username                         | `SWAGGER_USERNAME`                 | `null`                    |
 | swagger password                         | `SWAGGER_PASSWORD`                 | `null`                    |
 
