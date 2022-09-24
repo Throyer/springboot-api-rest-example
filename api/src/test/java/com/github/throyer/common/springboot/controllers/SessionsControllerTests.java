@@ -1,7 +1,18 @@
 package com.github.throyer.common.springboot.controllers;
 
-import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
-import com.github.throyer.common.springboot.utils.JSON;
+import static com.github.throyer.common.springboot.utils.Random.token;
+import static com.github.throyer.common.springboot.utils.Random.user;
+import static java.time.LocalDateTime.now;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Map;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +24,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Map;
-
-import static com.github.throyer.common.springboot.utils.Random.token;
-import static com.github.throyer.common.springboot.utils.Random.user;
-import static java.time.LocalDateTime.now;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.github.throyer.common.springboot.domain.user.repository.UserRepository;
+import com.github.throyer.common.springboot.utils.JSON;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -134,7 +134,6 @@ class SessionsControllerTests {
 
     api.perform(get("/api/users")
         .header(AUTHORIZATION, token))
-        .andDo(print())
         .andExpect(status().isForbidden())
         .andExpect(jsonPath("$.message").value("Token expired or invalid."));
   }

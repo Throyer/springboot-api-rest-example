@@ -62,6 +62,8 @@ services:
 
       # swagger
       SWAGGER_URL: ${SWAGGER_URL}
+      SWAGGER_USERNAME: ${SWAGGER_USERNAME}
+      SWAGGER_PASSWORD: ${SWAGGER_PASSWORD}
     volumes:
       - ../api:/app
       - ./.volumes/maven:/root/.m2
