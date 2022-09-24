@@ -35,7 +35,7 @@
 # Features
 
 <p align="center">
-  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/images/features.png"  alt="Tecnologias" /></a>
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/images/features.jpeg"  alt="Tecnologias" /></a>
 </p>
 
 
@@ -67,14 +67,10 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
   ```shell
   mvn -f api/pom.xml install -DskipTests
   ```
-- run the application 
+- run the application (available at: [localhost:8080](http://localhost:8080))
   ```shell
   mvn -f api/pom.xml spring-boot:run
   ```
-  - to access the application:
-    - http://localhost:8080
-    - http://localhost:8080/api
-    - http://localhost:8080/docs
 - running the tests
   ```shell
   mvn -f api/pom.xml test
@@ -91,7 +87,7 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
 ## Tests
 [![Coverage Status](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)
 
-## Running a specific test
+### Running a specific test
 use the parameter `-Dtest=<class>#<method>`
 
 - for example the integration test. creating a user:
