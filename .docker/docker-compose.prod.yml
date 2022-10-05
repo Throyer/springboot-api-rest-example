@@ -4,57 +4,88 @@ services:
   database:
     image: postgres:13
     restart: unless-stopped
-    container_name: example-api-database
+    container_name: ${COMPOSE_PROJECT_NAME}-database
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: example_api
-      TZ: America/Sao_Paulo
-      PGTZ: America/Sao_Paulo
+      POSTGRES_DB: ${DB_NAME}
+      TZ: ${TIMEZONE}
+      PGTZ: ${TIMEZONE}
     volumes:
-      - ./.volumes/database:/var/lib/postgresql/data
+      - ~/.volumes/database/postgresql:/var/lib/postgresql/data
     networks:
-      - example-api
+      - spring-boot-example-network
     tty: true
 
   api:
     build: 
       context: ../api
       dockerfile: ../api/docker/Dockerfile.prod
-    image: throyer/example-api:latest
+    image: throyer/springboot/spring-boot-example-network:latest
     platform: linux/x86_64
     restart: unless-stopped
-    container_name: example-api
+    container_name: ${COMPOSE_PROJECT_NAME}-api
     links:
       - database
     ports:
       - 8080:80
-    depends_on:
-      - database
     environment:
-      DB_URL: ${DB_URL}
+
+      # database
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_SHOW_SQL: ${DB_SHOW_SQL}
+      DB_MAX_CONNECTIONS: ${DB_MAX_CONNECTIONS}
+
+      # security
+      TOKEN_SECRET: ${TOKEN_SECRET}
+      TOKEN_EXPIRATION_IN_HOURS: ${TOKEN_EXPIRATION_IN_HOURS}
+      REFRESH_TOKEN_EXPIRATION_IN_DAYS: ${REFRESH_TOKEN_EXPIRATION_IN_DAYS}
+      MINUTES_TO_EXPIRE_RECOVERY_CODE: ${MINUTES_TO_EXPIRE_RECOVERY_CODE}
+      MAX_REQUESTS_PER_MINUTE: ${MAX_REQUESTS_PER_MINUTE}
+
+      # smtp
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+
+      # swagger
+      SWAGGER_URL: ${SWAGGER_URL}
+      SWAGGER_USERNAME: ${SWAGGER_USERNAME}
+      SWAGGER_PASSWORD: ${SWAGGER_PASSWORD}
     networks:
-      - example-api
+      - spring-boot-example-network
     tty: true
-    entrypoint: "dockerize -wait tcp://database:5432 -timeout 20s java -jar api.jar"
+    entrypoint: [
+      "dockerize",
+      "-wait",
+      "tcp://database:${DB_PORT}",
+      "-timeout",
+      "20s",
+      "java",
+      "-jar",
+      "api.jar"
+    ]
 
   # web:
+  #   image: throyer/springboot/example-web:latest
   #   build: 
   #     context: ../web
   #     dockerfile: ../web/docker/Dockerfile.prod
-  #   image: throyer/example-api-front-end:latest
   #   restart: unless-stopped
-  #   container_name: example-api-front-end
+  #   container_name: ${COMPOSE_PROJECT_NAME}-web
   #   ports:
-  #     - "8082:8080"
+  #     - "8082:80"
   #   networks:
-  #     - example-api
+  #     - spring-boot-example-network
   #   tty: true
 
 networks:
-  example-api:
+  spring-boot-example-network:
     driver: bridge

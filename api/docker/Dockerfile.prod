@@ -1,4 +1,4 @@
-FROM maven:3.8.5-openjdk-17 as BUILDER
+FROM maven:3.8.6-eclipse-temurin-17-alpine as BUILDER
 
 WORKDIR /usr/src/app
 
@@ -7,7 +7,7 @@ COPY ./src ./src
 
 RUN --mount=type=cache,target=/root/.m2 mvn package -DskipTests
 
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-alpine
 
 WORKDIR /usr/src/app
 

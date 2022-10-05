@@ -1,23 +1,20 @@
 {
-    // Use o IntelliSense para saber mais sobre os atributos possíveis.
-    // Focalizar para exibir as descrições dos atributos existentes.
-    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "java",
-            "name": "Debug (local)",
-            "request": "launch",
-            "mainClass": "com.github.throyer.common.springboot.Application",
-            "cwd": "${workspaceFolder}/api"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Attach Docker)",
-            "projectName": "Vendas",
-            "request": "attach",
-            "hostName": "127.0.0.1",
-            "port": 8000
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug (Attach Docker)",
+      "projectName": "Vendas",
+      "request": "attach",
+      "hostName": "127.0.0.1",
+      "port": 8000
+    },
+    {
+      "type": "java",
+      "name": "Debug (local)",
+      "request": "launch",
+      "mainClass": "com.github.throyer.common.springboot.Application",
+      "cwd": "${workspaceFolder}/api"
+    }
+  ]
 }

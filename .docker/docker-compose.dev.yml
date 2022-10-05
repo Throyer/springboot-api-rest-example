@@ -4,7 +4,7 @@ services:
   database:
     image: postgres:13
     restart: unless-stopped
-    container_name: crud-database
+    container_name: ${COMPOSE_PROJECT_NAME}-database
     command:
       [
         "postgres",
@@ -22,15 +22,19 @@ services:
       TZ: ${TIMEZONE}
       PGTZ: ${TIMEZONE}
     volumes:
-      - ./.volumes/database:/var/lib/postgresql/data
+      - ~/.volumes/database/postgresql:/var/lib/postgresql/data
     networks:
-      - example-network
+      - spring-boot-example-network
     tty: true
 
   api:
-    image: maven:3.8.5-openjdk-17
+    build:
+      context: ../api
+      dockerfile: ../api/docker/Dockerfile.dev
+    image: throyer/springboot/example-api-development:latest
+    platform: linux/x86_64
     restart: unless-stopped
-    container_name: crud-api
+    container_name: ${COMPOSE_PROJECT_NAME}-api
     links:
       - database
     ports:
@@ -66,34 +70,50 @@ services:
       SWAGGER_PASSWORD: ${SWAGGER_PASSWORD}
     volumes:
       - ../api:/app
-      - ./.volumes/maven:/root/.m2
+      - ~/.m2:/root/.m2
     working_dir: /app
     networks:
-      - example-network
+      - spring-boot-example-network
     tty: true
     entrypoint: [
+      "dockerize",
+      "-wait",
+      "tcp://database:${DB_PORT}",
+      "-timeout",
+      "20s",
       'mvn',
       'spring-boot:run',
       '-Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,address=*:${API_DEBUG_PORT},suspend=n"'
     ]
 
   web:
+    image: throyer/springboot/example-web-development:latest
     build:
       context: ../web
       dockerfile: ../web/docker/Dockerfile.dev
-    image: node:16.14.2
     restart: unless-stopped
-    container_name: crud-web
+    container_name: ${COMPOSE_PROJECT_NAME}-web
+    links:
+      - api
     ports:
       - "${APP_PORT}:${APP_PORT}"
     volumes:
       - ../web:/app
     working_dir: /app
     networks:
-      - example-network
+      - spring-boot-example-network
     tty: true
-    entrypoint: "npm run dev"
+    entrypoint: [
+      "dockerize",
+      "-wait",
+      "http://api:${API_PORT}/api",
+      "-timeout",
+      "20s",
+      "npm",
+      "run",
+      "dev"
+    ]
 
 networks:
-  example-network:
+  spring-boot-example-network:
     driver: bridge

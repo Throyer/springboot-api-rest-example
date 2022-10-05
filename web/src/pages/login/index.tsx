@@ -2,7 +2,6 @@ import { Box, Heading } from "@chakra-ui/layout";
 import {
   Button,
   Center,
-  Code,
   FormControl,
   FormLabel,
   Input,
@@ -51,17 +50,6 @@ export const Login = () => {
           </Box>
 
           <Button type="submit">Submit</Button>
-
-          <Code>
-            <pre>
-              {JSON.stringify({ email, password }, null, 4)}
-            </pre>
-          </Code>
-          <Code>
-            <pre>
-              {JSON.stringify(user, null, 4)}
-            </pre>
-          </Code>
         </VStack>
       </form>
     </Center>
