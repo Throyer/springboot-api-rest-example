@@ -137,7 +137,7 @@ Creating database migration files
 - docker-compose for development
   - starting containers
   ```
-  .docker/scripts/develop up -d
+  .docker/scripts/develop up -d --build
   ```
   
   - removing contaiers
