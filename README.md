@@ -24,12 +24,12 @@
 
 - [Features](#features)
 - [Requirements](#requirements)
+- [Docker](#docker-examples)
+- [Local installation](#local-installation)
 - [Entities](#entities)
-- [Installation](#installation)
 - [Running a specific test](#tests)
 - [Swagger](#swagger)
 - [Database Migrations](#database-migrations)
-- [Docker](#docker-examples)
 - [Environment variables](#environment-variables)
 
 # Features
@@ -56,7 +56,40 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
 
 >[🚨 draw.io file here](./assets/database/diagram.drawio)
 
-## Installation
+## Docker examples
+
+> 🚨 create `environment` file and add permission to execute scripts
+>
+> ```shell
+> cp .docker/.env.example .docker/.env && chmod -R +x .docker/scripts
+> ```
+
+- docker-compose for development
+  - starting containers
+  ```
+  .docker/scripts/develop up -d --build
+  ```
+  
+  - removing contaiers
+  ```
+  .docker/scripts/develop down
+  ```
+
+  - show backend logs
+  ```
+  .docker/scripts/develop logs -f api
+  ```
+
+- docker-compose for production
+  ```
+  .docker/scripts/production up -d --build
+  ```
+
+  ```
+  .docker/scripts/production down
+  ```
+
+## Local Installation
 > 🚨 check [requirements](#requirements) or if you are using docker check [docker development instructions](#docker-examples)
 
 - clone the repository and access the directory.
@@ -126,38 +159,6 @@ Creating database migration files
 
 ---
 
-## Docker examples
-
-> 🚨 create `environment` file and add permission to execute scripts
->
-> ```shell
-> cp .docker/.env.example .docker/.env && chmod -R +x .docker/scripts
-> ```
-
-- docker-compose for development
-  - starting containers
-  ```
-  .docker/scripts/develop up -d --build
-  ```
-  
-  - removing contaiers
-  ```
-  .docker/scripts/develop down
-  ```
-
-  - show backend logs
-  ```
-  .docker/scripts/develop logs -f api
-  ```
-
-- docker-compose for production
-  ```
-  .docker/scripts/production up -d --build
-  ```
-
-  ```
-  .docker/scripts/production down
-  ```
 
 ## Environment variables
 
@@ -172,6 +173,7 @@ Creating database migration files
 | displays the generated sql in the logger | `DB_SHOW_SQL`                      | false                     |
 | set maximum database connections         | `DB_MAX_CONNECTIONS`               | 5                         |
 | secret value in token generation         | `TOKEN_SECRET`                     | secret                    |
+| secret hash ids                          | `HASHID_SECRET`                    | secret                    |
 | token expiration time in hours           | `TOKEN_EXPIRATION_IN_HOURS`        | 24                        |
 | refresh token expiry time in days        | `REFRESH_TOKEN_EXPIRATION_IN_DAYS` | 7                         |
 | SMTP server address                      | `SMTP_HOST`                        | smtp.gmail.com            |
@@ -189,7 +191,7 @@ Creating database migration files
 > ```shell
 > # to change the value of some environment variable at runtime
 > # on execution, just pass it as a parameter. (like --SERVER_PORT=80).
-> $ java -jar api-4.1.2.jar --SERVER_PORT=80
+> $ java -jar api-5.0.0.jar --SERVER_PORT=80
 > ```
 
 
