@@ -31,7 +31,7 @@ public class SwaggerConfiguration {
           .url("https://github.com/Throyer/springboot-api-rest-example/blob/master/LICENSE"))
         .contact(new Contact()
           .email("throyer.dev@gmail.com")
-          .name("Renato Henrique Horacio dos Santos")
+          .name("Renato Henrique")
           .url("https://github.com/Throyer")))
       .components(new Components()
         .addSecuritySchemes("jwt", new SecurityScheme()
