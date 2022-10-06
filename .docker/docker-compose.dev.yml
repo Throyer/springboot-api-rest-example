@@ -103,6 +103,9 @@ services:
     networks:
       - spring-boot-example-network
     tty: true
+    environment:
+      APP_PORT: ${APP_PORT}
+      VITE_API_BASE_URL: ${APP_API_BASE_URL}
     entrypoint: [
       "dockerize",
       "-wait",

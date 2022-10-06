@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSession } from '../providers/session';
 
 const ENV = {
-  BASE_URL: "http://localhost:8080/api"
+  BASE_URL: import.meta.env.VITE_API_BASE_URL
 }
 
 export const api = axios.create({

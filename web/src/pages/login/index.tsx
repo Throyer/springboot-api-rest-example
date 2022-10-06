@@ -12,7 +12,6 @@ import { useAuthentication } from "../../hooks/use-authentication/use-authentica
 import { useUser } from "../../providers/user";
 
 export const Login = () => {
-
   const { login } = useAuthentication();
   const { user } = useUser();
 

@@ -1,0 +1,19 @@
+FROM node:16.14.2 as BUILDER
+
+WORKDIR /app
+
+COPY . .
+
+ARG APP_API_BASE_URL
+
+ENV VITE_API_BASE_URL $APP_API_BASE_URL
+
+RUN npm set cache ./.npm
+RUN --mount=type=cache,target=/usr/src/app/.npm npm install 
+
+RUN npm run build
+
+FROM nginx:1.23.1-alpine
+
+COPY --from=BUILDER /app/dist /var/www/web-app
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf

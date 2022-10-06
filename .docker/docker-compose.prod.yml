@@ -73,18 +73,20 @@ services:
       "api.jar"
     ]
 
-  # web:
-  #   image: throyer/springboot/example-web:latest
-  #   build: 
-  #     context: ../web
-  #     dockerfile: ../web/docker/Dockerfile.prod
-  #   restart: unless-stopped
-  #   container_name: ${COMPOSE_PROJECT_NAME}-web
-  #   ports:
-  #     - "8082:80"
-  #   networks:
-  #     - spring-boot-example-network
-  #   tty: true
+  web:
+    image: throyer/springboot/example-web:latest
+    build: 
+      context: ../web
+      dockerfile: ../web/docker/Dockerfile.prod
+      args:
+        - APP_API_BASE_URL=${APP_API_BASE_URL}
+    restart: unless-stopped
+    container_name: ${COMPOSE_PROJECT_NAME}-web
+    ports:
+      - "8082:80"
+    networks:
+      - spring-boot-example-network
+    tty: true
 
 networks:
   spring-boot-example-network:
