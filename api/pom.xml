@@ -100,6 +100,13 @@
       <version>0.9.1</version>
     </dependency>
 
+    <!-- hash-ids -->
+    <dependency>
+      <groupId>org.hashids</groupId>
+      <artifactId>hashids</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+
     <!-- Locator -->
     <dependency>
       <groupId>org.webjars</groupId>
@@ -226,8 +233,7 @@
         <configuration>
           <excludes>
             <exclude>db/migration/**/*</exclude>
-            <exclude>com/github/throyer/common/springboot/configurations/**/*</exclude>
-            <exclude>com/github/throyer/common/springboot/constants/**/*</exclude>
+            <exclude>com/github/throyer/example/modules/infra/**/*</exclude>
           </excludes>
         </configuration>
       </plugin>

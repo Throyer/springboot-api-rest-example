@@ -17,8 +17,8 @@ public class V1639097454131__CreateTableRole extends BaseJavaMigration {
                         .column("id", BIGINT.identity(true))
                         .column("name", VARCHAR(100).nullable(false))
                         .column("deleted_name", VARCHAR(100).nullable(true))
-                        .column("initials", VARCHAR(100).nullable(false))
-                        .column("deleted_initials", VARCHAR(100).nullable(true))
+                        .column("short_name", VARCHAR(100).nullable(true))
+                        .column("deleted_short_name", VARCHAR(100).nullable(true))
                         .column("description", VARCHAR(100).nullable(true))
                         .column("active", BOOLEAN.defaultValue(true))
                         .column("created_at", TIMESTAMP.defaultValue(currentTimestamp()))
@@ -30,7 +30,7 @@ public class V1639097454131__CreateTableRole extends BaseJavaMigration {
                     .constraints(
                         constraint("role_pk").primaryKey("id"),                            
                         constraint("role_unique_name").unique("name"),                        
-                        constraint("role_unique_initials").unique("initials"),                        
+                        constraint("role_unique_short_name").unique("short_name"),                        
                         constraint("role_created_by_fk").foreignKey("created_by").references("user", "id"),                        
                         constraint("role_updated_by_fk").foreignKey("updated_by").references("user", "id"),                        
                         constraint("role_deleted_by_fk").foreignKey("deleted_by").references("user", "id"))

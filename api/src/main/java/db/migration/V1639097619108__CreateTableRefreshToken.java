@@ -17,7 +17,7 @@ public class V1639097619108__CreateTableRefreshToken extends BaseJavaMigration {
                     .column("id", BIGINT.identity(true))
                     .column("code", VARCHAR(40).nullable(false))
                     .column("available", BOOLEAN.defaultValue(true))
-                    .column("expires_in", TIMESTAMP.nullable(false))
+                    .column("expires_at", TIMESTAMP.nullable(false))
                     .column("user_id", BIGINT.nullable(false))
                 .constraints(
                     constraint("refresh_token_pk").primaryKey("id"),                            

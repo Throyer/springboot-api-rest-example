@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch Application",
+      "request": "launch",
+      "mainClass": "com.github.throyer.example.Application",
+      "projectName": "api"
+    },
+    {
+      "type": "java",
       "name": "Debug (Attach Docker)",
       "projectName": "Vendas",
       "request": "attach",

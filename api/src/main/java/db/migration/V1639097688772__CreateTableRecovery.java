@@ -16,7 +16,7 @@ public class V1639097688772__CreateTableRecovery extends BaseJavaMigration {
                 .createTableIfNotExists("recovery")
                     .column("id", BIGINT.identity(true))
                     .column("code", VARCHAR(4).nullable(false))
-                    .column("expires_in", TIMESTAMP.nullable(false))
+                    .column("expires_at", TIMESTAMP.nullable(false))
                     .column("user_id", BIGINT.nullable(false))
                 .constraints(
                     constraint("recovery_pk").primaryKey("id"),
