@@ -14,10 +14,9 @@ api.interceptors.request.use(async (configs) => {
   const { session, set: setSession } = useSession.getState()
 
   if (session) {
-
     if (session.isExpired()) {
       try {        
-        const { data: sessionResponse } = await axios.post(`${ENV.BASE_URL}/sessions/refresh`, {
+        const { data: sessionResponse } = await axios.post(`${ENV.BASE_URL}/v1/authentication/refresh`, {
           refreshToken: session.refreshToken
         });
         setSession(sessionResponse);

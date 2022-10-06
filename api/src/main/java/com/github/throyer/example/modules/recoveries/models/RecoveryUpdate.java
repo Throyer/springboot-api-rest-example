@@ -22,7 +22,7 @@ public class RecoveryUpdate {
   @NotEmpty(message = "{recovery.code.not-empty}")
   private String code;
   
-  @Schema(example = "veryStrongPassword123456")
+  @Schema(example = "veryStrongAndSecurePassword")
   @NotEmpty(message = "{user.password.not-empty}")
   @Size(min = 8, max = 155, message = "{user.password.size}")
   private String password;

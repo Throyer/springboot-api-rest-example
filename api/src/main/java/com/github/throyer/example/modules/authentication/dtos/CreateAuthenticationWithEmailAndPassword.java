@@ -15,7 +15,7 @@ public class CreateAuthenticationWithEmailAndPassword {
   @Email(message = "email invalido")
   private String email;
   
-  @Schema(example = "jubileu123456", required = true)
+  @Schema(example = "veryStrongAndSecurePassword", required = true)
   @NotBlank(message = "o campo password é obrigatório")
   private String password;
 }

@@ -23,7 +23,7 @@ public class UserInformation {
   @Schema(example = "true", required = true)
   private Boolean active;
 
-  @Schema(example = "[\"MNGR\"]", required = true)
+  @Schema(example = "[\"ADM\"]", required = true)
   private final List<String> roles;
 
   public UserInformation(User user) {

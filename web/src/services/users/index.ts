@@ -3,7 +3,7 @@ import { api } from "../../http/api";
 import { Page } from "../models/page";
 import { User } from "../models/user";
 
-const RESOURCE_URL = 'users'
+const RESOURCE_URL = 'v1/users'
 
 export const findAll = (page?: number, size?: number) => {
 
