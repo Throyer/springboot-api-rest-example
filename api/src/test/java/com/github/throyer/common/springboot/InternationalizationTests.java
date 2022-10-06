@@ -34,7 +34,7 @@ class InternationalizationTests {
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR"))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value("Senha ou usuário invalido."));;
+                .andExpect(jsonPath("$.message").value("Senha ou usuário invalido."));
     }
 
     @Test

@@ -204,11 +204,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <jvmArguments>
-            -agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n
-          </jvmArguments>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -231,6 +226,8 @@
         <configuration>
           <excludes>
             <exclude>db/migration/**/*</exclude>
+            <exclude>com/github/throyer/common/springboot/configurations/**/*</exclude>
+            <exclude>com/github/throyer/common/springboot/constants/**/*</exclude>
           </excludes>
         </configuration>
       </plugin>

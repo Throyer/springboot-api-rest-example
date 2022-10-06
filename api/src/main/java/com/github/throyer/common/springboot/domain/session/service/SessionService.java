@@ -25,64 +25,62 @@ import static java.util.Optional.of;
 @Service
 public class SessionService implements UserDetailsService {
 
-    private final UserRepository repository;
+  private final UserRepository repository;
 
-    public SessionService(UserRepository repository) {
-        this.repository = repository;
+  public SessionService(UserRepository repository) {
+    this.repository = repository;
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    var user = repository.findByEmail(email)
+        .orElseThrow(() -> new UsernameNotFoundException(message(INVALID_USERNAME)));
+
+    return new Authorized(user);
+  }
+
+  public static void authorize(
+      HttpServletRequest request,
+      HttpServletResponse response) {
+    if (PUBLICS.anyMatch(request)) {
+      return;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        var user = repository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(message(INVALID_USERNAME)));
-        
-        return new Authorized(user);
+    var token = Authorization.extract(request);
+
+    if (isNull(token)) {
+      return;
     }
 
-    public static void authorize(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) {
-        if (PUBLICS.anyMatch(request)) {
-            return;
-        }
-
-        var token = Authorization.extract(request);
-
-        if (isNull(token)) {
-            return;
-        }
-
-        try {
-            var authorized = JWT.decode(token, TOKEN_SECRET);
-            SecurityContextHolder
-                    .getContext()
-                    .setAuthentication(authorized.getAuthentication());
-        } catch (Exception exception) {
-            expired(response);
-        }
+    try {
+      var authorized = JWT.decode(token, TOKEN_SECRET);
+      SecurityContextHolder
+        .getContext()
+          .setAuthentication(authorized.getAuthentication());
+    } catch (Exception exception) {
+      expired(response);
     }
+  }
 
-    public static Optional<Authorized> authorized() {
-        try {
-            var principal = getPrincipal();
+  public static Optional<Authorized> authorized() {
+    try {
+      var principal = getPrincipal();
 
-            if (nonNull(principal) && principal instanceof Authorized authorized) {
-                return of(authorized);
-            }
-            return empty();
-        } catch (Exception exception) {
-            return empty();
-        }
-
+      if (nonNull(principal) && principal instanceof Authorized authorized) {
+        return of(authorized);
+      }
+      return empty();
+    } catch (Exception exception) {
+      return empty();
     }
+  }
 
-    private static Object getPrincipal() {
-        var authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
-        if (nonNull(authentication)) {
-            return authentication.getPrincipal();
-        }
-        return null;
+  private static Object getPrincipal() {
+    var authentication = SecurityContextHolder.getContext()
+      .getAuthentication();
+    if (nonNull(authentication)) {
+      return authentication.getPrincipal();
     }
+    return null;
+  }
 }

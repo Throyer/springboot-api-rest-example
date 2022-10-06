@@ -35,7 +35,7 @@
 # Features
 
 <p align="center">
-  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/images/features.png"  alt="Tecnologias" /></a>
+  <a href="https://throyer-crud-api.herokuapp.com" target="blank"><img src="./assets/images/features.jpeg"  alt="Tecnologias" /></a>
 </p>
 
 
@@ -57,52 +57,57 @@ This project was started with [Spring Initializr](https://start.spring.io/#!type
 >[🚨 draw.io file here](./assets/database/diagram.drawio)
 
 ## Installation
+> 🚨 check [requirements](#requirements) or if you are using docker check [docker development instructions](#docker-examples)
 
-```shell
-# clone the repository and access the directory.
-$ git clone git@github.com:Throyer/springboot-api-crud.git && cd springboot-api-crud
-
-# download dependencies
-$ mvn install -DskipTests
-
-# run the application
-$ mvn spring-boot:run
-
-# run the tests
-$ mvn test
-
-# to build for production
-$ mvn clean package
-
-# to generate the coverage report after testing (available at: target/site/jacoco/index.html)
-$ mvn jacoco:report
-```
+- clone the repository and access the directory.
+  ```shell
+  git clone git@github.com:Throyer/springboot-api-crud.git crud && cd crud
+  ```
+- download dependencies
+  ```shell
+  mvn -f api/pom.xml install -DskipTests
+  ```
+- run the application (available at: [localhost:8080](http://localhost:8080))
+  ```shell
+  mvn -f api/pom.xml spring-boot:run
+  ```
+- running the tests
+  ```shell
+  mvn -f api/pom.xml test
+  ```
+- to build for production
+  ```shell
+  mvn -f api/pom.xml clean package
+  ```
+- to generate the coverage report after testing `(available at: api/target/site/jacoco/index.html)`
+  ```shell
+  mvn -f api/pom.xml jacoco:report
+  ```
 
 ## Tests
 [![Coverage Status](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)](https://coveralls.io/repos/github/Throyer/springboot-api-crud/badge.svg?branch=master)
 
-## Running a specific test
+### Running a specific test
 use the parameter `-Dtest=<class>#<method>`
 
-
-for example the integration test. creating a user:
-```
-$ mvn test -Dtest=UsersControllerIntegrationTests#should_save_a_new_user
-```
+- for example the integration test. creating a user:
+  ```shell
+  mvn -f api/pom.xml test -Dtest=UsersControllerTests#should_save_a_new_user
+  ```
 
 
 ## Swagger
-Once the application is up, it is available at: [localhost:8080/documentation](localhost:8080/documentation)
+Once the application is up, it is available at: [localhost:8080/docs](http://localhost:8080/docs)
+> 🚨 if you set `SWAGGER_USERNAME` and `SWAGGER_PASSWORD` on [application.properties](https://github.com/Throyer/springboot-api-rest-example/blob/master/api/src/main/resources/application.properties#L35) file this route require authentication
 
-
-[example on heroku](https://throyer-crud-api.herokuapp.com/documentation)
+[example on heroku](https://throyer-crud-api.herokuapp.com/docs)
 
 ---
 
 ## Database Migrations
 Creating database migration files
 
-> 🚨 make sure you have maven in your environment and that you are in the correct directory __./api__
+> 🚨 check [requirements](#requirements)
 >
 > if you using docker-compose
 > ```
@@ -111,12 +116,12 @@ Creating database migration files
 
 - Java based migrations
   ```bash
-  mvn migration:generate -Dname=my-migration-name
+  mvn -f api/pom.xml migration:generate -Dname=my-migration-name
   ```
 
 - SQL based migrations
   ```bash
-  mvn migration:generate -Dname=my-migration-name -Dsql
+  mvn -f api/pom.xml migration:generate -Dname=my-migration-name -Dsql
   ```
 
 ---
@@ -132,7 +137,7 @@ Creating database migration files
 - docker-compose for development
   - starting containers
   ```
-  .docker/scripts/develop up -d
+  .docker/scripts/develop up -d --build
   ```
   
   - removing contaiers
@@ -159,9 +164,11 @@ Creating database migration files
 | **Description**                          | **Parameter**                      | **Default values**        |
 |------------------------------------------|------------------------------------|---------------------------|
 | server port                              | `SERVER_PORT`                      | 8080                      |
-| database url                             | `DB_URL`                           | localhost:5432/common_app |
-| username (database)                      | `DB_USERNAME`                      | root                      |
-| user password (database)                 | `DB_PASSWORD`                      | root                      |
+| database host                            | `DB_HOST`                          | localhost                 |
+| database port                            | `DB_PORT`                          | 5432                      |
+| database name                            | `DB_NAME`                          | example                   |
+| database username                        | `DB_USERNAME`                      | root                      |
+| database user password                   | `DB_PASSWORD`                      | root                      |
 | displays the generated sql in the logger | `DB_SHOW_SQL`                      | false                     |
 | set maximum database connections         | `DB_MAX_CONNECTIONS`               | 5                         |
 | secret value in token generation         | `TOKEN_SECRET`                     | secret                    |
@@ -172,7 +179,8 @@ Creating database migration files
 | SMTP username                            | `SMTP_USERNAME`                    | user                      |
 | SMTP server password                     | `SMTP_PASSWORD`                    | secret                    |
 | time for recovery email to expire        | `MINUTES_TO_EXPIRE_RECOVERY_CODE`  | 20                        |
-| max requests per minute                  | `MAX_REQUESTS_PER_MINUTE`          | 10                        |
+| max requests per minute                  | `MAX_REQUESTS_PER_MINUTE`          | 50                        |
+| swagger url                              | `SWAGGER_URL`                      | /docs                     |
 | swagger username                         | `SWAGGER_USERNAME`                 | `null`                    |
 | swagger password                         | `SWAGGER_PASSWORD`                 | `null`                    |
 
