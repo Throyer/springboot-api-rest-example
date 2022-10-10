@@ -198,3 +198,8 @@ Creating database migration files
 > [All options of `aplication.properties` here](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 >
 > [All **features** of Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html).
+
+# Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Throyer/springboot-api-rest-example&type=Date)](https://star-history.com/#Throyer/springboot-api-rest-example)
+
