@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.users.controllers;
+package com.github.throyer.example.modules.ssr.controllers;
 
 import javax.validation.Valid;
 
@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.github.throyer.example.modules.ssr.dtos.CreateUserByApp;
+import com.github.throyer.example.modules.ssr.services.AppUserService;
 import com.github.throyer.example.modules.users.dtos.CreateUserProps;
-import com.github.throyer.example.modules.users.service.CreateUserService;
 
 @Controller
 @RequestMapping("/app/register")
 public class RegisterController {
 
-  private final CreateUserService service;
+  private final AppUserService service;
 
   @Autowired
-  public RegisterController(CreateUserService service) {
+  public RegisterController(AppUserService service) {
     this.service = service;
   }
 
@@ -33,10 +34,11 @@ public class RegisterController {
 
   @PostMapping(produces = "text/html")
   public String create(
-      @Valid CreateUserProps props,
-      BindingResult validations,
-      RedirectAttributes redirect,
-      Model model) {
+    @Valid CreateUserByApp props,
+    BindingResult validations,
+    RedirectAttributes redirect,
+    Model model
+  ) {
     service.create(props, validations, redirect, model);
 
     if (validations.hasErrors()) {

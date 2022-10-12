@@ -1,6 +1,6 @@
-package com.github.throyer.example.modules.users.dtos;
+package com.github.throyer.example.modules.ssr.dtos;
 
-import static com.github.throyer.example.modules.mail.validations.EmailValidations.validateEmailUniqueness;
+import static com.github.throyer.example.modules.ssr.validation.AppEmailValidations.validateEmailUniqueness;
 
 import java.util.List;
 
@@ -8,19 +8,18 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.validation.BindingResult;
+
 import com.github.throyer.example.modules.mail.models.Addressable;
 import com.github.throyer.example.modules.users.entities.User;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class CreateUserProps implements Addressable {
-
+public class CreateUserByApp implements Addressable {
   @Schema(example = "Jubileu da silva")
   @NotEmpty(message = "${user.name.not-empty}")
   private String name;
@@ -35,8 +34,8 @@ public class CreateUserProps implements Addressable {
   @Size(min = 8, max = 155, message = "{user.password.size}")
   private String password;
 
-  public void validate() {
-    validateEmailUniqueness(this);
+  public void validate(BindingResult result) {
+    validateEmailUniqueness(this, result);
   }
 
   public User user() {

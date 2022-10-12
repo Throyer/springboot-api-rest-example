@@ -234,6 +234,8 @@
           <excludes>
             <exclude>db/migration/**/*</exclude>
             <exclude>com/github/throyer/example/modules/infra/**/*</exclude>
+            <exclude>com/github/throyer/example/modules/ssr/**/*</exclude>
+            <exclude>com/github/throyer/example/modules/shared/**/*</exclude>
           </excludes>
         </configuration>
       </plugin>

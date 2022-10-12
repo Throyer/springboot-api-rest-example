@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.recoveries.models;
+package com.github.throyer.example.modules.recoveries.dtos;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

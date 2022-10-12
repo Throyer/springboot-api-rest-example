@@ -1,6 +1,6 @@
-package com.github.throyer.example.modules.users.dtos;
+package com.github.throyer.example.modules.ssr.dtos;
 
-import static com.github.throyer.example.modules.mail.validations.EmailValidations.validateEmailUniqueness;
+import static com.github.throyer.example.modules.ssr.validation.AppEmailValidations.validateEmailUniqueness;
 
 import java.util.List;
 
@@ -36,10 +36,6 @@ public class CreateOrUpdateUserByAppForm implements Addressable {
 
   public void validate(BindingResult result) {
     validateEmailUniqueness(this, result);
-  }
-
-  public void validate() {
-    validateEmailUniqueness(this);
   }
 
   public User user() {

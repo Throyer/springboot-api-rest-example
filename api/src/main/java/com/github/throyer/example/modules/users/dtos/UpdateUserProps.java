@@ -6,7 +6,11 @@ import javax.validation.constraints.NotEmpty;
 import com.github.throyer.example.modules.mail.models.Addressable;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UpdateUserProps implements Addressable {
 
   @Schema(example = "Jubileu da Silva Sauro")
@@ -17,21 +21,4 @@ public class UpdateUserProps implements Addressable {
   @NotEmpty(message = "{user.email.not-empty}")
   @Email(message = "{user.email.is-valid}")
   private String email;
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @Override
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
 }

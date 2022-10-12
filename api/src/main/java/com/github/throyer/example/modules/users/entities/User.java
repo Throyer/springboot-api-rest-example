@@ -4,19 +4,16 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static com.github.throyer.example.modules.infra.environments.SecurityEnvironments.ENCODER;
 import static com.github.throyer.example.modules.management.repositories.Queries.NON_DELETED_CLAUSE;
 import static com.github.throyer.example.modules.shared.utils.JSON.stringify;
-import static java.util.Objects.hash;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Stream.of;
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +26,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Tuple;
 
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,7 +33,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.throyer.example.modules.mail.models.Addressable;
 import com.github.throyer.example.modules.management.entities.Auditable;
 import com.github.throyer.example.modules.roles.entities.Role;
-import com.github.throyer.example.modules.users.dtos.CreateUserProps;
 import com.github.throyer.example.modules.users.dtos.UpdateUserProps;
 
 import lombok.Getter;
@@ -49,9 +44,6 @@ import lombok.Setter;
 @Table(name = "user")
 @Where(clause = NON_DELETED_CLAUSE)
 public class User extends Auditable implements Serializable, Addressable {
-  @Serial
-  private static final long serialVersionUID = -8080540494839892473L;
-
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
@@ -87,13 +79,6 @@ public class User extends Auditable implements Serializable, Addressable {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.roles = roles;
-  }
-
-  public User(CreateUserProps props, List<Role> roles) {
-    this.name = props.getName();
-    this.email = props.getEmail();
-    this.password = props.getPassword();
     this.roles = roles;
   }
 
@@ -157,21 +142,6 @@ public class User extends Auditable implements Serializable, Addressable {
     return stringify(Map.of(
         "name", ofNullable(this.name).orElse(""),
         "email", ofNullable(this.email).orElse("")));
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
-      return false;
-    User user = (User) o;
-    return id != null && Objects.equals(id, user.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return hash(getId());
   }
 
   public static User from(Tuple tuple) {

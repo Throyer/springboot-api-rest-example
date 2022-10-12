@@ -19,10 +19,14 @@ import com.github.throyer.example.modules.authentication.models.Authorized;
 import com.github.throyer.example.modules.management.models.Entity;
 import com.github.throyer.example.modules.users.entities.User;
 
+import lombok.EqualsAndHashCode;
+
 @MappedSuperclass
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Auditable implements Entity {
 
   @Override
+  @EqualsAndHashCode.Include
   public abstract Long getId();
 
   @JsonIgnore

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.throyer.example.modules.recoveries.models.RecoveryConfirm;
-import com.github.throyer.example.modules.recoveries.models.RecoveryRequest;
-import com.github.throyer.example.modules.recoveries.models.RecoveryUpdate;
+import com.github.throyer.example.modules.recoveries.dtos.RecoveryConfirm;
+import com.github.throyer.example.modules.recoveries.dtos.RecoveryRequest;
+import com.github.throyer.example.modules.recoveries.dtos.RecoveryUpdate;
 import com.github.throyer.example.modules.recoveries.services.RecoveryConfirmService;
 import com.github.throyer.example.modules.recoveries.services.RecoveryService;
 import com.github.throyer.example.modules.recoveries.services.RecoveryUpdateService;

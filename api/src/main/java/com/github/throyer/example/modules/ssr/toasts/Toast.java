@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.toasts;
+package com.github.throyer.example.modules.ssr.toasts;
 
 import lombok.Data;
 import org.springframework.validation.ObjectError;

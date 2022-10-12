@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.recoveries.controllers;
+package com.github.throyer.example.modules.ssr.controllers;
 
 import static com.github.throyer.example.modules.infra.http.Responses.validateAndUpdateModel;
 
@@ -14,27 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.throyer.example.modules.recoveries.models.Codes;
-import com.github.throyer.example.modules.recoveries.models.RecoveryRequest;
-import com.github.throyer.example.modules.recoveries.models.Update;
-import com.github.throyer.example.modules.recoveries.services.RecoveryConfirmService;
-import com.github.throyer.example.modules.recoveries.services.RecoveryService;
-import com.github.throyer.example.modules.recoveries.services.RecoveryUpdateService;
-import com.github.throyer.example.modules.toasts.Toasts;
-import com.github.throyer.example.modules.toasts.Type;
+import com.github.throyer.example.modules.recoveries.dtos.RecoveryRequest;
+import com.github.throyer.example.modules.ssr.dtos.Codes;
+import com.github.throyer.example.modules.ssr.dtos.UpdatePasswordWithRecoveryCodeByApp;
+import com.github.throyer.example.modules.ssr.services.AppRecoveryService;
+import com.github.throyer.example.modules.ssr.toasts.Toasts;
+import com.github.throyer.example.modules.ssr.toasts.Type;
 
 @Controller
 @RequestMapping("/app/recovery")
 public class RecoveryController {
 
   @Autowired
-  private RecoveryService recoveryService;
-
-  @Autowired
-  private RecoveryConfirmService confirmService;
-
-  @Autowired
-  private RecoveryUpdateService updateService;
+  private AppRecoveryService service;
 
   @GetMapping
   public String index(Model model) {
@@ -54,7 +46,7 @@ public class RecoveryController {
 
     var email = recovery.getEmail();
 
-    recoveryService.recovery(email);
+    service.recovery(email);
 
     model.addAttribute("codes", new Codes(email));
 
@@ -73,7 +65,7 @@ public class RecoveryController {
     }
 
     try {
-      confirmService.confirm(codes.getEmail(), codes.code());
+      service.confirm(codes.getEmail(), codes.code());
     } catch (ResponseStatusException exception) {
 
       Toasts.add(model, "Código expirado ou invalido.", Type.DANGER);
@@ -81,14 +73,14 @@ public class RecoveryController {
       return "app/recovery/confirm";
     }
 
-    model.addAttribute("update", new Update(codes));
+    model.addAttribute("update", new UpdatePasswordWithRecoveryCodeByApp(codes));
 
     return "app/recovery/update";
   }
 
   @PostMapping("/update")
   public String update(
-      @Valid Update update,
+      @Valid UpdatePasswordWithRecoveryCodeByApp update,
       BindingResult result,
       RedirectAttributes redirect,
       Model model) {
@@ -99,7 +91,7 @@ public class RecoveryController {
     }
 
     try {
-      updateService.update(update.getEmail(), update.code(), update.getPassword());
+      service.update(update.getEmail(), update.code(), update.getPassword());
     } catch (ResponseStatusException exception) {
       Toasts.add(model, "Código expirado ou invalido.", Type.DANGER);
       model.addAttribute("update", update);

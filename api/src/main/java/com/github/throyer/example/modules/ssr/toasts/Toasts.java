@@ -1,6 +1,6 @@
-package com.github.throyer.example.modules.toasts;
+package com.github.throyer.example.modules.ssr.toasts;
 
-import static com.github.throyer.example.modules.toasts.Type.*;
+import static com.github.throyer.example.modules.ssr.toasts.Type.*;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.recoveries.models;
+package com.github.throyer.example.modules.ssr.dtos;
 
 import static java.lang.String.format;
 import static org.springframework.beans.BeanUtils.copyProperties;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Update {
+public class UpdatePasswordWithRecoveryCodeByApp {
 
     @Email(message = "{recovery.email.is-valid}")
     @NotEmpty(message = "{recovery.email.not-empty}")
@@ -29,7 +29,7 @@ public class Update {
     @Size(min = 8, max = 155, message = "{user.password.size}")
     private String password;
 
-    public Update(Codes codes) {
+    public UpdatePasswordWithRecoveryCodeByApp(Codes codes) {
         copyProperties(codes, this);
     }
 

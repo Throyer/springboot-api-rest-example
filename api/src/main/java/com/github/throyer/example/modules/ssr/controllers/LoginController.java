@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.authentication.controllers;
+package com.github.throyer.example.modules.ssr.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

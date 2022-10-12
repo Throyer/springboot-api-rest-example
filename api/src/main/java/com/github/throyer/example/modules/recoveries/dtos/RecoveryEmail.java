@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.recoveries.models;
+package com.github.throyer.example.modules.recoveries.dtos;
 
 import org.thymeleaf.context.Context;
 

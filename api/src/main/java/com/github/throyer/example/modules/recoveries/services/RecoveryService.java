@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.throyer.example.modules.mail.services.MailService;
+import com.github.throyer.example.modules.recoveries.dtos.RecoveryEmail;
 import com.github.throyer.example.modules.recoveries.entities.Recovery;
-import com.github.throyer.example.modules.recoveries.models.RecoveryEmail;
 import com.github.throyer.example.modules.recoveries.repositories.RecoveryRepository;
 import com.github.throyer.example.modules.users.repositories.UserRepository;
 

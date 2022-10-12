@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.github.throyer.example.modules.shared.errors.ApiError;
 import com.github.throyer.example.modules.shared.utils.JSON;
-import com.github.throyer.example.modules.toasts.Toasts;
+import com.github.throyer.example.modules.ssr.toasts.Toasts;
 
 import lombok.extern.log4j.Log4j2;
 

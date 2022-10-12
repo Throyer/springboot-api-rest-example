@@ -1,4 +1,4 @@
-package com.github.throyer.example.modules.users.controllers;
+package com.github.throyer.example.modules.ssr.controllers;
 
 import static com.github.throyer.example.modules.shared.utils.HashIdsUtils.decode;
 
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.github.throyer.example.modules.pagination.utils.Pagination;
-import com.github.throyer.example.modules.toasts.Toasts;
-import com.github.throyer.example.modules.toasts.Type;
-import com.github.throyer.example.modules.users.dtos.CreateOrUpdateUserByAppForm;
+import com.github.throyer.example.modules.ssr.dtos.CreateOrUpdateUserByAppForm;
+import com.github.throyer.example.modules.ssr.services.AppUserService;
+import com.github.throyer.example.modules.ssr.toasts.Toasts;
+import com.github.throyer.example.modules.ssr.toasts.Type;
 import com.github.throyer.example.modules.users.repositories.UserRepository;
-import com.github.throyer.example.modules.users.service.RemoveUserService;
 
 @Controller
 @PreAuthorize("hasAnyAuthority('ADM')")
@@ -32,7 +32,7 @@ public class UserController {
   private UserRepository repository;
   
   @Autowired
-  private RemoveUserService removeService;
+  private AppUserService service;
   
   @GetMapping
   public String index(
@@ -77,7 +77,7 @@ public class UserController {
   @PostMapping("/delete/{user_id}")
   public String delete(@PathVariable("user_id") String id, RedirectAttributes redirect) {
     
-    removeService.remove(decode(id));
+    service.remove(decode(id));
     
     Toasts.add(redirect, "Usuário deletado com sucesso.", Type.SUCCESS);
     

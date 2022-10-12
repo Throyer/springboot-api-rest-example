@@ -3,19 +3,17 @@ package com.github.throyer.example.modules.roles.entities;
 import static com.github.throyer.example.modules.management.repositories.Queries.NON_DELETED_CLAUSE;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.throyer.example.modules.management.entities.Auditable;
-
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.throyer.example.modules.management.entities.Auditable;
 
 import lombok.Getter;
 
@@ -58,22 +56,6 @@ public class Role extends Auditable implements GrantedAuthority {
   public Role(Long id, String shortName) {
     this.id = id;
     this.shortName = shortName;
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    if (object == this)
-      return true;
-    if (!(object instanceof Role)) {
-      return false;
-    }
-    Role role = (Role) object;
-    return Objects.equals(id, role.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(id);
   }
 
   @Override
