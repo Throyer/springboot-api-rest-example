@@ -92,7 +92,7 @@ public class SecurityConfiguration {
   public SecurityFilterChain api(HttpSecurity http) throws Exception {
     publicRoutes()
       .add(GET, "/api")
-      .add(POST, "/api/v1/users", "/api/v1/authentication/**", "/api/recoveries/**")
+      .add(POST, "/api/users", "/api/authentication/**", "/api/recoveries/**")
     .injectOn(http);
 
     http

@@ -51,7 +51,7 @@ class AuthenticationControllerTests {
 
     repository.save(user);
 
-    api.perform(post("/api/v1/authentication")
+    api.perform(post("/api/authentication")
         .content(body)
         .header(CONTENT_TYPE, APPLICATION_JSON))
         .andExpect(status().isOk());
@@ -66,7 +66,7 @@ class AuthenticationControllerTests {
         "email", user.getEmail(),
         "password", "Írineu! você não sabe, nem eu!"));
 
-    api.perform(post("/api/v1/authentication")
+    api.perform(post("/api/authentication")
         .content(body)
         .header(CONTENT_TYPE, APPLICATION_JSON))
         .andExpect(status().isForbidden());
@@ -79,7 +79,7 @@ class AuthenticationControllerTests {
         "email", "this.not.exist@email.com",
         "password", "Írineu! você não sabe, nem eu!"));
 
-    api.perform(post("/api/v1/authentication")
+    api.perform(post("/api/authentication")
         .content(body)
         .header(CONTENT_TYPE, APPLICATION_JSON))
         .andExpect(status().isForbidden());
@@ -109,7 +109,7 @@ class AuthenticationControllerTests {
   void should_accept_requests_with_token_valid() throws Exception {
     var token = token("ADM");
 
-    api.perform(get("/api/v1/users")
+    api.perform(get("/api/users")
         .header(AUTHORIZATION, token))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isArray());
@@ -142,7 +142,7 @@ class AuthenticationControllerTests {
   void must_not_accept_requests_with_token_without_the_correct_role() throws Exception {
     var token = token("THIS_IS_NOT_CORRECT_ROLE");
 
-    api.perform(get("/api/v1/users")
+    api.perform(get("/api/users")
         .header(AUTHORIZATION, token))
         .andExpect(status().isUnauthorized())
         .andExpect(jsonPath("$.message").value("Not authorized."));

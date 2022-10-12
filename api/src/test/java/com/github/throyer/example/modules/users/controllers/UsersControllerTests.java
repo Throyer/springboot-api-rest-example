@@ -37,139 +37,136 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UsersControllerTests {
-    
-    @Autowired
-    UserRepository repository;
 
-    @Autowired
-    private MockMvc api;
-    
-    @Test
-    @DisplayName("Deve salvar um novo usuário.")
-    void should_save_a_new_user() throws Exception {
-        var json = stringify(Map.of(
-            "name", name(),
-            "email", email(),
-            "password", password()
-        ));
+  @Autowired
+  UserRepository repository;
 
-        api.perform(post("/api/v1/users")
-                        .content(json)
-                        .header(CONTENT_TYPE, APPLICATION_JSON))
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.id").exists())
-            .andExpect(jsonPath("$.id").isNotEmpty());
-    }
-    
-    @Test
-    @DisplayName("Deve retornar status code 400 caso faltar algum campo requerido.")
-    void should_return_400_saving_user_without_required_fields() throws Exception {
+  @Autowired
+  private MockMvc api;
 
-        var payload = stringify(Map.of(
-            "name", name(),
-            "password", "123"
-        ));
+  @Test
+  @DisplayName("Deve salvar um novo usuário.")
+  void should_save_a_new_user() throws Exception {
+    var json = stringify(Map.of(
+        "name", name(),
+        "email", email(),
+        "password", password()));
 
-        api.perform(post("/api/v1/users")
-                        .content(payload)
-                        .header(CONTENT_TYPE, APPLICATION_JSON))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$", hasSize(greaterThan(0))));
-    }
+    api.perform(post("/api/users")
+        .content(json)
+        .header(CONTENT_TYPE, APPLICATION_JSON))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").exists())
+        .andExpect(jsonPath("$.id").isNotEmpty());
+  }
 
-    @Test
-    @DisplayName("Deve listar os usuários.")
-    void should_list_users() throws Exception {
+  @Test
+  @DisplayName("Deve retornar status code 400 caso faltar algum campo requerido.")
+  void should_return_400_saving_user_without_required_fields() throws Exception {
 
-        repository.saveAll(users(4));
+    var payload = stringify(Map.of(
+        "name", name(),
+        "password", "123"));
 
-        api.perform(get("/api/v1/users")
-                        .header(AUTHORIZATION, token("ADM"))
-                            .queryParam("page", "0")
-                            .queryParam("size", "10"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content", hasSize(greaterThan(3))));
-    }
-    
-    @Test
-    @DisplayName("Must not list deleted users.")
-    void must_not_list_deleted_users() throws Exception {
+    api.perform(post("/api/users")
+        .content(payload)
+        .header(CONTENT_TYPE, APPLICATION_JSON))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$").isArray())
+        .andExpect(jsonPath("$", hasSize(greaterThan(0))));
+  }
 
-        var user = repository.save(user());
-        var id = HashIdsUtils.encode(user.getId());
+  @Test
+  @DisplayName("Deve listar os usuários.")
+  void should_list_users() throws Exception {
 
-        var token = token(user.getId(), "ADM,USER");
+    repository.saveAll(users(4));
 
-        var expression = format("$.content[?(@.id == '%s')].id", id);
-        
-        var index = get("/api/v1/users")
-                .header(AUTHORIZATION, token)
-                    .queryParam("page", "0")
-                    .queryParam("size", "10");
-        
-        api.perform(index)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath(expression, hasItem(id)));
-        
-        api.perform(delete(format("/api/v1/users/%s", id))
-                        .header(AUTHORIZATION, token))
-                .andExpect(status().isNoContent());
+    api.perform(get("/api/users")
+        .header(AUTHORIZATION, token("ADM"))
+        .queryParam("page", "0")
+        .queryParam("size", "10"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content").isArray())
+        .andExpect(jsonPath("$.content", hasSize(greaterThan(3))));
+  }
 
-        api.perform(index)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath(expression).isEmpty());
-    }
+  @Test
+  @DisplayName("Must not list deleted users.")
+  void must_not_list_deleted_users() throws Exception {
 
-    @Test
-    @DisplayName("Deve deletar usuário.")
-    void should_delete_user() throws Exception {
-        var user = repository.save(user());
-        var id = user.getId();
+    var user = repository.save(user());
+    var id = HashIdsUtils.encode(user.getId());
 
-        api.perform(delete(format("/api/v1/users/%s", HashIdsUtils.encode(id)))
-                        .header(AUTHORIZATION, token(id, "ADM,USER")))
-                .andExpect(status().isNoContent());
-    }
+    var token = token(user.getId(), "ADM,USER");
 
-    @Test
-    @DisplayName("Deve retornar status code 404 depois de remover o usuário.")
-    void should_return_404_after_delete_user() throws Exception {  
-        var user = repository.save(user());
+    var expression = format("$.content[?(@.id == '%s')].id", id);
 
-        var request = delete(format("/api/v1/users/%s", HashIdsUtils.encode(user.getId())))
-            .header(AUTHORIZATION, token(user.getId(), "ADM,USER"));
+    var index = get("/api/users")
+        .header(AUTHORIZATION, token)
+        .queryParam("page", "0")
+        .queryParam("size", "10");
 
-        api.perform(request)
-                .andExpect(status().isNoContent());
+    api.perform(index)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath(expression, hasItem(id)));
 
-        api.perform(request)
-                .andExpect(status().isNotFound());
-    }
+    api.perform(delete(format("/api/users/%s", id))
+        .header(AUTHORIZATION, token))
+        .andExpect(status().isNoContent());
 
-    @Test
-    @DisplayName("Deve retornar status code 400 quando salvar um usuário com o mesmo email.")
-    void should_return_400_after_save_same_email() throws Exception {  
+    api.perform(index)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath(expression).isEmpty());
+  }
 
-        var body = JSON.stringify(Map.of(
-            "name", FAKER.name().fullName(),
-            "email", FAKER.internet().safeEmailAddress(),
-            "password", password()
-        ));
+  @Test
+  @DisplayName("Deve deletar usuário.")
+  void should_delete_user() throws Exception {
+    var user = repository.save(user());
+    var id = user.getId();
 
-        var request = post("/api/v1/users")
-            .content(body)
-            .header(CONTENT_TYPE, APPLICATION_JSON);
+    api.perform(delete(format("/api/users/%s", HashIdsUtils.encode(id)))
+        .header(AUTHORIZATION, token(id, "ADM,USER")))
+        .andExpect(status().isNoContent());
+  }
 
-        api.perform(request)
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.id").exists())
-            .andExpect(jsonPath("$.id").isNotEmpty());
+  @Test
+  @DisplayName("Deve retornar status code 404 depois de remover o usuário.")
+  void should_return_404_after_delete_user() throws Exception {
+    var user = repository.save(user());
 
-        api.perform(request)
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$", hasSize(1)));
-    }
+    var request = delete(format("/api/users/%s", HashIdsUtils.encode(user.getId())))
+        .header(AUTHORIZATION, token(user.getId(), "ADM,USER"));
+
+    api.perform(request)
+        .andExpect(status().isNoContent());
+
+    api.perform(request)
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  @DisplayName("Deve retornar status code 400 quando salvar um usuário com o mesmo email.")
+  void should_return_400_after_save_same_email() throws Exception {
+
+    var body = JSON.stringify(Map.of(
+        "name", FAKER.name().fullName(),
+        "email", FAKER.internet().safeEmailAddress(),
+        "password", password()));
+
+    var request = post("/api/users")
+        .content(body)
+        .header(CONTENT_TYPE, APPLICATION_JSON);
+
+    api.perform(request)
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").exists())
+        .andExpect(jsonPath("$.id").isNotEmpty());
+
+    api.perform(request)
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$").isArray())
+        .andExpect(jsonPath("$", hasSize(1)));
+  }
 }

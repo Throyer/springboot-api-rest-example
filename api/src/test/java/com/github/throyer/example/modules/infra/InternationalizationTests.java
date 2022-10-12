@@ -29,7 +29,7 @@ class InternationalizationTests {
   void should_return_error_messages_in_pt_BR() throws Exception {
     var body = "{ \"password\": \"senha_bem_segura_1234\", \"email\": \"email@email.com\" }";
 
-    api.perform(post("/api/v1/authentication")
+    api.perform(post("/api/authentication")
         .content(body)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
         .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR"))
@@ -42,7 +42,7 @@ class InternationalizationTests {
   void should_return_error_messages_in_english() throws Exception {
     var body = "{ \"password\": \"senha_bem_segura_1234\", \"email\": \"email@email.com\" }";
 
-    api.perform(post("/api/v1/authentication")
+    api.perform(post("/api/authentication")
         .content(body)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
         .header(HttpHeaders.ACCEPT_LANGUAGE, "en-US"))

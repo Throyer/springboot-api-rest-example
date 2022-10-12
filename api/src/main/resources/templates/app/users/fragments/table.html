@@ -1,119 +1,114 @@
 <div th:fragment="table (page)">
-    <table class="table table-bordered mt-4 table-striped table-hover ">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="user : ${page.content}" th:object="${user}">
-                <td th:text="*{name}" class="align-middle">name</td>
-                <td th:text="*{email}" class="align-middle">email</td>
-                <td width="130" class="text-center">
-                    <div class="btn-group">
-                        <button
-                            type="button"
-                            class="btn-sm btn btn-outline-dark"
-                            data-bs-toggle="modal"
-                            data-bs-target="#delete-confirm"
-                            th:data-id="*{id}"
-                            th:data-name="*{name}">
-                            <i class="far fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="pagination-container">
-        <nav class="">
-            <ul class="pagination pagination-sm">
+  <table class="table table-sm mt-4 table-hover ">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col">Roles</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="user : ${page.content}" th:object="${user}">
+        <td th:text="*{name}" class="align-middle">name</td>
+        <td th:text="*{email}" class="align-middle">email</td>
+        <td class="align-middle">
+          <small class="badge bg-light fw-light font-monospace" th:classappend="*{active} ? 'text-success' : 'text-danger'" th:text="*{active ? 'active' : 'inactive'}">active</small>
+        </td>
+        <td class="align-middle">
+          <span th:each="role : *{roles}" th:text="${role}" class="badge mx-1 text-bg-dark">role</span>
+        </td>
+        <td width="130" class="text-center">
+          <div class="btn-group">
+            <button type="button" class="btn-sm btn btn-outline-dark">
+              <i class="far fa-eye"></i>
+            </button>
+            <button type="button" class="btn-sm btn btn-outline-dark">
+              <i class="fas" th:classappend="*{active} ? 'fa-user-slash' : 'fa-user-check'"></i>
+            </button>
+            <button type="button" class="btn-sm btn btn-outline-dark" data-bs-toggle="modal"
+              data-bs-target="#delete-confirm" th:data-id="*{id}" th:data-name="*{name}">
+              <i class="fas fa-times-circle"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-container">
+    <nav class="">
+      <ul class="pagination pagination-sm mb-0">
 
-                <!-- first page -->
-                <li 
-                    th:classappend="${page.page == 0} ? 'disabled'"
-                    class="page-item">
-                    <a class="page-link" th:href="@{/app/users(page=0, size=${(param.size ?: 10)})}">
-                        <span class="d-lg-none">
-                            <i class="fas fa-angle-double-left"></i>
-                        </span>
-                        <span class="d-none d-lg-block">
-                            Primeira
-                        </span>                                
-                    </a>
-                </li>
+        <!-- first page -->
+        <li th:classappend="${page.page == 0} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="@{/app/users(page=0, size=${(param.size ?: 10)})}">
+            <span class="d-lg-none">
+              <i class="fas fa-angle-double-left"></i>
+            </span>
+            <span class="d-none d-lg-block">
+              Primeira
+            </span>
+          </a>
+        </li>
 
-                <!-- previous page -->
-                <li
-                    th:classappend="${page.page == 0} ? 'disabled'"
-                    class="page-item"
-                    th:if="${page.page > 0}">
-                    <a class="page-link" th:href="@{/app/users(page=${page.page -1}, size=${(param.size ?: 10)})}">
-                        <span class="d-lg-none">
-                            <i class="fas fa-angle-left"></i>
-                        </span>
-                        <span class="d-none d-lg-block">
-                            Anterior
-                        </span>                                
-                    </a>
-                </li>
+        <!-- previous page -->
+        <li th:classappend="${page.page == 0} ? 'disabled'" class="page-item" th:if="${page.page > 0}">
+          <a class="page-link" th:href="@{/app/users(page=${page.page -1}, size=${(param.size ?: 10)})}">
+            <span class="d-lg-none">
+              <i class="fas fa-angle-left"></i>
+            </span>
+            <span class="d-none d-lg-block">
+              Anterior
+            </span>
+          </a>
+        </li>
 
-                <!-- interval buttons -->
-                <li 
-                    class="page-item"
-                    th:each="interval : ${#numbers.sequence(page.page - 3, page.page + 3)}"
-                    th:if="${interval > -1 && interval < page.totalPages}"
-                    th:classappend="${page.page == interval} ? 'disabled'">
-                    <a 
-                        class="page-link"
-                        th:href="@{/app/users(page=${interval}, size=${(param.size ?: 10)})}"
-                        th:text="${interval + 1}">
-                    </a>
-                </li>
+        <!-- interval buttons -->
+        <li class="page-item" th:each="interval : ${#numbers.sequence(page.page - 3, page.page + 3)}"
+          th:if="${interval > -1 && interval < page.totalPages}" th:classappend="${page.page == interval} ? 'disabled'">
+          <a class="page-link" th:href="@{/app/users(page=${interval}, size=${(param.size ?: 10)})}"
+            th:text="${interval + 1}">
+          </a>
+        </li>
 
-                <!-- next page -->
-                <li 
-                    class="page-item"
-                    th:classappend="${page.page == page.totalPages} ? 'disabled'"
-                    th:if="${page.page + 1 < page.totalPages}">
-                    <a class="page-link" th:href="@{/app/users(page=${page.page +1}, size=${(param.size ?: 10)})}">
-                        <span class="d-none d-lg-block">
-                            Proximo
-                        </span>
-                        <span class="d-lg-none">
-                            <i class="fas fa-angle-right"></i>
-                        </span>
-                    </a>
-                </li>
+        <!-- next page -->
+        <li class="page-item" th:classappend="${page.page == page.totalPages} ? 'disabled'"
+          th:if="${page.page + 1 < page.totalPages}">
+          <a class="page-link" th:href="@{/app/users(page=${page.page +1}, size=${(param.size ?: 10)})}">
+            <span class="d-none d-lg-block">
+              Proximo
+            </span>
+            <span class="d-lg-none">
+              <i class="fas fa-angle-right"></i>
+            </span>
+          </a>
+        </li>
 
-                <!-- last page -->
-                <li 
-                    th:classappend="${page.page + 1 == page.totalPages} ? 'disabled'"
-                    class="page-item">
-                    <a class="page-link" th:href="@{/app/users(page=${page.totalPages -1}, size=${(param.size ?: 10)})}">
-                        <span class="d-none d-lg-block">
-                            Última
-                        </span>
-                        <span class="d-lg-none">
-                            <i class="fas fa-angle-double-right"></i>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <form id="sizes_form" class="">
-            <input hidden type="text" name="page" value="0">
-            <div class="input-group">
-                <select id="sizes_input" name="size" class="form-select form-select-sm">
-                    <option value="10">Itens por pagina</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                </select>
-            </div>
-        </form>
-    </div>
+        <!-- last page -->
+        <li th:classappend="${page.page + 1 == page.totalPages} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="@{/app/users(page=${page.totalPages -1}, size=${(param.size ?: 10)})}">
+            <span class="d-none d-lg-block">
+              Última
+            </span>
+            <span class="d-lg-none">
+              <i class="fas fa-angle-double-right"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <form id="sizes_form" class="mb-0">
+      <input hidden type="text" name="page" value="0">
+      <div class="input-group">
+        <select id="sizes_input" name="size" class="form-select form-select-sm">
+          <option value="10">Itens por pagina</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </form>
+  </div>
 </div>

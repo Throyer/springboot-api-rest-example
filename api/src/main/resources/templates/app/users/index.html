@@ -1,27 +1,24 @@
-<layout th:replace="~{app/fragments/layout :: layout(~{this :: title}, ~{this :: link}, ~{this :: section}, ~{this :: #scripts}, ~{this :: #modal})}">
-    <title>Users</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
-    <section class="container">
-        <div class="row mt-4">
-            <div class="col d-flex justify-content-between">
-                <h2 class="h4">Users</h2>
-                <a
-                    th:href="@{/app/users/form}"
-                    class="btn btn-secondary"
-                >
-                    Create new user
-                </a>
-            </div>
+<layout
+  th:replace="~{app/fragments/layout :: layout(~{this :: title}, ~{this :: link}, ~{this :: section}, ~{this :: #scripts}, ~{this :: #modal})}">
+  <title>Users</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
+  <section class="container">
+    <div class="row mt-4">
+      <div class="d-flex justify-content-between">
+        <h2 class="h4">Users</h2>
+        <div>
+          <a th:href="@{/app/users/form}" class="btn btn-sm btn-dark">
+            <i class="fas fa-plus"></i> Create user
+          </a>
         </div>
-        <table
-            th:replace="~{__${#execInfo.templateName}__/../fragments/table :: table(${page})}">
-        </table>
-        <modal
-            id="modal"
-            th:replace="~{__${#execInfo.templateName}__/../fragments/modal :: delete-confirm}">
-        </modal>
-    </section>
-    <th:block id="scripts">
-        <script language="javascript" th:src="@{/js/users-modal.js}"></script>
-    </th:block>
+      </div>
+    </div>
+    <table th:replace="~{__${#execInfo.templateName}__/../fragments/table :: table(${page})}">
+    </table>
+    <modal id="modal" th:replace="~{__${#execInfo.templateName}__/../fragments/modal :: delete-confirm}">
+    </modal>
+  </section>
+  <th:block id="scripts">
+    <script language="javascript" th:src="@{/js/users-modal.js}"></script>
+  </th:block>
 </layout>

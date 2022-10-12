@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @Tag(name = "Roles")
-@RequestMapping("/api/v1/roles")
+@RequestMapping("/api/roles")
 @SecurityRequirement(name = "token")
 @PreAuthorize("hasAnyAuthority('ADM')")
 public class RolesController {

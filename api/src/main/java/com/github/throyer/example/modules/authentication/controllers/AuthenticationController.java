@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @Tag(name = "Authentication")
-@RequestMapping("/api/v1/authentication")
+@RequestMapping("/api/authentication")
 public class AuthenticationController {
   private final CreateAuthenticationService service;
 
