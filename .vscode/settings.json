@@ -31,5 +31,6 @@
   "coverage-gutters.showRulerCoverage": true,
   "coverage-gutters.coverageFileNames": [
     "jacoco.xml"
-  ]
+  ],
+  "java.compile.nullAnalysis.mode": "automatic"
 }

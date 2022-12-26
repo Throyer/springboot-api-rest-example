@@ -13,7 +13,7 @@ export const useAuthentication = () => {
 
   const login = useCallback(async ({ email, password }: Credentials, redirectTo = '/home'): Promise<LoginResult> => {
     try {
-      const { data } = await api.post<SessionsApiResponse>('v1/authentication', { email, password });
+      const { data } = await api.post<SessionsApiResponse>('authentication', { email, password });
       const { user, ...session } = data;
 
       setSession(session);

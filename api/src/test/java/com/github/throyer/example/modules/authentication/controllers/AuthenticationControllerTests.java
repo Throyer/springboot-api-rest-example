@@ -20,15 +20,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.github.throyer.example.modules.shared.utils.JSON;
 import com.github.throyer.example.modules.users.repositories.UserRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc
 class AuthenticationControllerTests {
