@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Application",
+      "request": "launch",
+      "mainClass": "com.github.throyer.rest.api.Main",
+      "projectName": "rest-example"
+    },
+    {
+      "type": "java",
+      "name": "Debug (Attach Docker)",
+      "projectName": "rest-example",
+      "request": "attach",
+      "hostName": "127.0.0.1",
+      "port": 5000
+    },
+  ]
+}

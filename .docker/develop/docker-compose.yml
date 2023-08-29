@@ -1,0 +1,67 @@
+version: '3'
+services:
+
+  database:
+    image: postgres:13
+    restart: unless-stopped
+    container_name: users-database
+    command:
+      [
+        "postgres",
+        "-c",
+        "log_statement=all",
+        "-c",
+        "log_destination=stderr",
+        "-p",
+        "${DB_PORT}"
+      ]
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: ${TIMEZONE}
+      PGTZ: ${TIMEZONE}
+    volumes:
+      - ~/.volumes/users/database/postgresql:/var/lib/postgresql/data
+    networks:
+      - users-network
+    tty: true
+
+  server:
+    build:
+      context: ../../server
+      dockerfile: ../.docker/develop/Dockerfile
+    image: throyer/users-api/dev:latest
+    container_name: users-api
+    links:
+      - database
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${SERVER_DEBUG_PORT}:${SERVER_DEBUG_PORT}"
+    volumes:
+      - ../../server:/app
+      - ~/.m2:/root/.m2
+    working_dir: /app
+    networks:
+      - users-network
+    tty: true
+    environment:
+      TZ: "${TIMEZONE}"
+    env_file: ".env"
+    entrypoint: [
+      "dockerize",
+      "-wait",
+      "tcp://database:${DB_PORT}",
+      "-timeout",
+      "20s",
+      'mvn',
+      'spring-boot:run',
+      '-Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,address=*:${SERVER_DEBUG_PORT},suspend=n"'
+    ]
+    
+networks:
+  users-network:
+    driver: bridge
+    name: users
