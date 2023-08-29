@@ -3,7 +3,6 @@ package com.github.throyer.example.api.shared.identity;
 import com.github.throyer.example.api.infra.environments.SecurityProperties;
 import com.github.throyer.example.api.shared.identity.erros.IdentityEncoderException;
 import org.hashids.Hashids;
-import org.springframework.stereotype.Component;
 
 import static com.github.throyer.example.api.infra.constants.SecurityConstants.HASH_LENGTH;
 import static java.util.Arrays.stream;

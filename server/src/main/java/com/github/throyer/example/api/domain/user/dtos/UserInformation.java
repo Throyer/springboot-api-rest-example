@@ -32,9 +32,6 @@ public class UserInformation {
     this.name = user.getName();
     this.email = user.getEmail();
     this.active = user.isActive();
-    this.roles = user.getRoles()
-      .stream()
-        .map(Role::getAuthority)
-      .toList();
+    this.roles = user.getAuthorities();
   }
 }

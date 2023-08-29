@@ -12,4 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class SecurityProperties {
   private String hashidSecret;
   private String tokenSecret;
+  private Integer tokenExpirationInHours;
+  private Integer refreshTokenExpirationInDays;
 }

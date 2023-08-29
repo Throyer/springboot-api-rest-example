@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "swagger.username",
+      "type": "java.lang.String",
+      "description": "swagger end-point username."
+    },
+    {
+      "name": "swagger.password",
+      "type": "java.lang.String",
+      "description": "swagger end-point password."
+    },
+    {
+      "name": "security.token-expiration-in-hours",
+      "type": "java.lang.Integer",
+      "description": "json web token expiration in hours."
+    },
+    {
+      "name": "security.refresh-token-expiration-in-days",
+      "type": "java.lang.Integer",
+      "description": "refresh json web token expiration in days."
+    },
+    {
+      "name": "security.token-secret",
+      "type": "java.lang.String",
+      "description": "json web token secret."
+    },
+    {
+      "name": "security.hashid-secret",
+      "type": "java.lang.String",
+      "description": "hashids secret."
+    },
+    {
+      "name": "recovery.minutes-to-expire",
+      "type": "java.lang.Integer",
+      "description": "recovery email minutes to expire."
+    }
+  ]
+}

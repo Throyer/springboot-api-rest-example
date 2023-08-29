@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 @Tag(name = "Roles")
-@RequestMapping("/api/roles")
+@RequestMapping("/roles")
 @SecurityRequirement(name = "token")
 @PreAuthorize("hasAnyAuthority('ADM')")
 public class FindAllRolesController {

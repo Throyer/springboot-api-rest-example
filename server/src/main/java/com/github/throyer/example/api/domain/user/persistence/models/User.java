@@ -29,6 +29,7 @@ import static jakarta.persistence.CascadeType.DETACH;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static java.util.Objects.requireNonNull;
+import static java.util.Optional.ofNullable;
 import static lombok.AccessLevel.NONE;
 
 @Getter
@@ -79,6 +80,15 @@ public class User extends Auditable {
   
   public Boolean hasSameEmail(User other) {
     return this.email.equalsIgnoreCase(requireNonNull(other.getEmail(), "user email is null"));
+  }
+
+  public List<String> getAuthorities() {
+    return ofNullable(roles)
+      .map(roles -> roles
+        .stream()
+        .map(Role::getAuthority)
+        .toList())
+      .orElseGet(List::of);
   }
   
   @PrePersist
