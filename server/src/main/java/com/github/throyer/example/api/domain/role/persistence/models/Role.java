@@ -51,7 +51,8 @@ public class Role extends Auditable implements GrantedAuthority {
     return this.getShortName();
   }
 
-  public Role(String name) {
-    this.name = name;
+  public Role(Long id, String shortName) {
+    this.id = id;
+    this.shortName = shortName;
   }
 }

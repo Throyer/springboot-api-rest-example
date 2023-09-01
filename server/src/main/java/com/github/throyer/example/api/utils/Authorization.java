@@ -1,4 +1,4 @@
-package com.github.throyer.example.api.infra.utils;
+package com.github.throyer.example.api.utils;
 
 import static com.github.throyer.example.api.infra.constants.SecurityConstants.ACCEPTABLE_TOKEN_TYPE;
 import static com.github.throyer.example.api.infra.constants.SecurityConstants.AUTHORIZATION_HEADER;

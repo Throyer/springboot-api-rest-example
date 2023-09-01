@@ -1,6 +1,5 @@
 package com.github.throyer.example.api.domain.user.dtos;
 
-import com.github.throyer.example.api.domain.role.persistence.models.Role;
 import com.github.throyer.example.api.domain.user.persistence.models.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

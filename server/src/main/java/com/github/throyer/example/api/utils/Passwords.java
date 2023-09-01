@@ -1,6 +1,6 @@
 package com.github.throyer.example.api.utils;
 
-import com.github.throyer.example.api.shared.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.requireNonNull;

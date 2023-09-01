@@ -1,14 +1,18 @@
 package com.github.throyer.example.api.infra.configurations;
 
 import com.github.throyer.example.api.infra.environments.SecurityProperties;
+import com.github.throyer.example.api.infra.security.RequestAuthorizer;
+import com.github.throyer.example.api.infra.security.RequestAuthorizerImpl;
 import com.github.throyer.example.api.shared.identity.IdentityEncoder;
 import com.github.throyer.example.api.shared.identity.IdentityEncoderWithHashIds;
 import com.github.throyer.example.api.shared.jwt.JWT;
 import com.github.throyer.example.api.shared.jwt.JsonWebTokenImplementation;
-import com.github.throyer.example.api.shared.password.PasswordEncoder;
-import com.github.throyer.example.api.shared.password.PasswordEncoderWithBCrypt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static com.github.throyer.example.api.infra.constants.SecurityConstants.HASH_LENGTH;
 
 @Configuration
 public class CommonBeans {
@@ -19,11 +23,16 @@ public class CommonBeans {
 
   @Bean
   PasswordEncoder password() {
-    return new PasswordEncoderWithBCrypt();
+    return new BCryptPasswordEncoder(HASH_LENGTH);
   }
   
   @Bean
   JWT jwt() {
     return new JsonWebTokenImplementation();
+  }
+  
+  @Bean
+  RequestAuthorizer requestAuthorizer(JWT jwt, SecurityProperties properties) {
+    return new RequestAuthorizerImpl(jwt, properties);
   }
 }

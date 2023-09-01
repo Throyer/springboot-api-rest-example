@@ -1,6 +1,5 @@
 .vscode/settings.json
-.docker/develop/.env
-.docker/prod/.env
+.docker/.env
 *.DS_Store
 web/.npm/
 /nbproject/

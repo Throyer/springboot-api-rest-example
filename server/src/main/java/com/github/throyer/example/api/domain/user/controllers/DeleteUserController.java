@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,8 @@ public class DeleteUserController {
   
   @DeleteMapping("/{user_id}")
   @ResponseStatus(NO_CONTENT)
-  @SecurityRequirement(name = "token")
+  @SecurityRequirement(name = "jwt")
+  @PreAuthorize("hasAnyAuthority('USER')")
   @Operation(summary = "Delete user")
   public void destroy(@PathVariable("user_id") String id) {
     service.remove(decode(id));

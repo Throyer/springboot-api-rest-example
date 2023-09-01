@@ -4,6 +4,7 @@ import com.github.throyer.example.api.domain.user.persistence.models.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
 @Setter
+@MappedSuperclass
 public abstract class Auditable extends BaseEntity {
   @Column(name = "created_at")
   private LocalDateTime createdAt;

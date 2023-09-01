@@ -13,6 +13,5 @@ public interface UserRepository {
   Optional<User> findOptionalByEmail(String email);
   Boolean existsByEmail(String email);
   Optional<User> findByIdFetchRoles(Long id);  
-  User save(User user);
-  void delete(User user);
+  void save(User user);
 }

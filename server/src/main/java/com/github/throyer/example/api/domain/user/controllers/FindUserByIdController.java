@@ -26,8 +26,8 @@ public class FindUserByIdController {
   private final FindUserByIdService service;
   
   @GetMapping("/{user_id}")
-  @SecurityRequirement(name = "token")
-  @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
+  @SecurityRequirement(name = "jwt")
+  @PreAuthorize("hasAnyAuthority('USER')")
   @Operation(summary = "Show user info")
   public ResponseEntity<UserInformation> show(@PathVariable("user_id") String id) {
     var user = service.find(decode(id));

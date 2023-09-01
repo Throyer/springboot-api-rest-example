@@ -13,12 +13,12 @@ public class ID {
   }
 
   public static String encode(Long id) {
-    return requireNonNull(encoder, "string id encoder is null")
+    return requireNonNull(encoder, "the identity-encoder is null")
       .encode(id);
   }
 
   public static Long decode(String id) {
-    return requireNonNull(encoder, "string id encoder is null")
+    return requireNonNull(encoder, "idethe ntity-encoder is null")
       .decode(id);
   }
 }

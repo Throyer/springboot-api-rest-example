@@ -49,7 +49,7 @@ services:
     tty: true
     environment:
       TZ: "${TIMEZONE}"
-    env_file: ".env"
+    env_file: "../.env"
     entrypoint: [
       "dockerize",
       "-wait",

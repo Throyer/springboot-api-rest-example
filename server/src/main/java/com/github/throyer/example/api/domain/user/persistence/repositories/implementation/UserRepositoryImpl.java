@@ -33,15 +33,10 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User save(User user) {
-    return springDataUserRepository.save(user);
+  public void save(User user) {
+    springDataUserRepository.save(user);
   }
-
-  @Override
-  public void delete(User user) {
-//    springDataUserRepository.softDelete(user);
-  }
-
+  
   @Override
   public Optional<User> findByIdFetchRoles(Long id) {
     return springDataUserRepository.findOptionalById(id);

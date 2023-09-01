@@ -29,8 +29,8 @@ public class UpdateUserController {
   private final UpdateUserService service;
   
   @PutMapping("/{user_id}")
-  @SecurityRequirement(name = "token")
-  @PreAuthorize("hasAnyAuthority('ADM', 'USER')")
+  @SecurityRequirement(name = "jwt")
+  @PreAuthorize("hasAnyAuthority('USER')")
   @Operation(summary = "Update user data")
   public ResponseEntity<UserInformation> update(
     @PathVariable("user_id") String id,

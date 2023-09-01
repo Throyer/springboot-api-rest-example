@@ -96,6 +96,10 @@ public class User extends Auditable {
     this.password = encode(this.password);
   }
 
+  public User(Long id) {
+    this.id = id;
+  }
+
   public User(String name, String email, String password, Role role) {
     this.name = name;
     this.email = email;
@@ -103,5 +107,24 @@ public class User extends Auditable {
     this.active = true;
     this.emailConfirmed = false;
     this.roles = List.of(requireNonNull(role, "role is null"));
+  }
+
+  public User(String name, String email, String password, List<Role> roles) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.active = true;
+    this.emailConfirmed = false;
+    this.roles = roles;
+  }
+
+  public User(Long id, String name, String email, String password, List<Role> roles) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.active = true;
+    this.emailConfirmed = false;
+    this.roles = roles;
   }
 }

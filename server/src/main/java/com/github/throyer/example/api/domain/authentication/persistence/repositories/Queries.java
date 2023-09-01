@@ -10,7 +10,7 @@ public class Queries {
     set
       refresh.available = false
     where
-      refresh.user.id = ?1 and refresh.available = true
+      refresh.user.id = :user_id and refresh.available = true
   """;
 
   //language=sql

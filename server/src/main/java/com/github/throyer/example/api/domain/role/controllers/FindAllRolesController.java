@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Tag(name = "Roles")
 @RequestMapping("/roles")
-@SecurityRequirement(name = "token")
+@SecurityRequirement(name = "jwt")
 @PreAuthorize("hasAnyAuthority('ADM')")
 public class FindAllRolesController {
   private final RoleRepository repository;
