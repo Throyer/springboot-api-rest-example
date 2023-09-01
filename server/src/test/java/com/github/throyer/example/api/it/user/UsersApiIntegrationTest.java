@@ -190,6 +190,6 @@ public class UsersApiIntegrationTest {
     api.perform(request)
       .andExpect(status().isConflict())
       .andExpect(jsonPath("$").isMap())
-      .andExpect(jsonPath("$.message").value("e-mail unavailable."));
+      .andExpect(jsonPath("$.message").value("E-mail unavailable."));
   }
 }

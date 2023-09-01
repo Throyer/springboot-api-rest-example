@@ -28,10 +28,12 @@ public class RemoveUserService {
     
     var user = repository
       .findByIdFetchRoles(id)
-      .orElseThrow(() -> notFound("User not found"));
+        .orElseThrow(() -> notFound("User not found"));
 
+    user.setDeletedEmail(user.getEmail());
     user.setDeletedAt(now());
-    user.setDeletedBy(new User(id));
+    user.setDeletedBy(new User(session.getId()));
+    user.setEmail(null);
     
     repository.save(user);
   }

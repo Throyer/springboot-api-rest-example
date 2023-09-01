@@ -12,17 +12,16 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import java.util.List;
-import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static com.github.throyer.example.api.shared.persistence.repositories.Queries.NON_DELETED_CLAUSE;
+import static com.github.throyer.example.api.shared.rest.Responses.forbidden;
 import static com.github.throyer.example.api.utils.Passwords.encode;
 import static com.github.throyer.example.api.utils.Passwords.matches;
 import static jakarta.persistence.CascadeType.DETACH;
@@ -74,8 +73,12 @@ public class User extends Auditable {
     return active;
   }
 
-  public Boolean validate(String password) {
-    return matches(password, this.password);
+  public Boolean passwordMatches(String rawPassword) {
+    return matches(rawPassword, this.password);
+  }
+  
+  public Boolean emailHasConfirmed() {
+    return emailConfirmed;
   }
   
   public Boolean hasSameEmail(User other) {
@@ -118,13 +121,20 @@ public class User extends Auditable {
     this.roles = roles;
   }
 
-  public User(Long id, String name, String email, String password, List<Role> roles) {
+  public User(
+    Long id,
+    String name,
+    String email,
+    String password,
+    Boolean emailConfirmed,
+    List<Role> roles
+  ) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
+    this.emailConfirmed = emailConfirmed;
     this.active = true;
-    this.emailConfirmed = false;
     this.roles = roles;
   }
 }

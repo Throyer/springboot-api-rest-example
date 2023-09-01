@@ -1,8 +1,8 @@
 package com.github.throyer.example.api.infra.configurations;
 
-import com.github.throyer.example.api.domain.authentication.services.AuthenticationService;
 import com.github.throyer.example.api.infra.environments.SwaggerProperties;
 import com.github.throyer.example.api.infra.middlewares.AuthenticationMiddleware;
+import com.github.throyer.example.api.infra.middlewares.TraceMiddleware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -32,20 +31,21 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-  private final UserDetailsService userDetailsService;
   private final AuthenticationMiddleware authenticationMiddleware;
+  private final TraceMiddleware traceMiddleware;
+  
   private final PasswordEncoder encoder;
   private final SwaggerProperties swaggerProperties;
           
   @Autowired
   public SecurityConfiguration(
-    AuthenticationService authenticationService,
     AuthenticationMiddleware filter,
+    TraceMiddleware traceMiddleware,
     PasswordEncoder encoder,
     SwaggerProperties swaggerProperties
   ) {
-    this.userDetailsService = authenticationService;
     this.authenticationMiddleware = filter;
+    this.traceMiddleware = traceMiddleware;
     this.encoder = encoder;
     this.swaggerProperties = swaggerProperties;
   }
@@ -60,10 +60,6 @@ public class SecurityConfiguration {
         .password(encoder.encode(swaggerProperties.getPassword()))
         .authorities(List.of());
     }
-
-    authentication
-      .userDetailsService(userDetailsService)
-      .passwordEncoder(encoder);
   }
     
   @Bean
@@ -74,12 +70,12 @@ public class SecurityConfiguration {
     .injectOn(http);
   
     http
-    .csrf(AbstractHttpConfigurer::disable)
-    .authorizeHttpRequests(request -> request.anyRequest().authenticated())
-    .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-    .addFilterBefore(authenticationMiddleware, UsernamePasswordAuthenticationFilter.class)
-    .exceptionHandling(handler -> handler.authenticationEntryPoint((request, response, exception) -> forbidden(response)))
-    .cors(configurer -> new CorsConfiguration().applyPermitDefaultValues());
+      .csrf(AbstractHttpConfigurer::disable)
+      .authorizeHttpRequests(request -> request.anyRequest().authenticated())
+      .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+      .addFilterBefore(authenticationMiddleware, UsernamePasswordAuthenticationFilter.class)
+      .exceptionHandling(handler -> handler.authenticationEntryPoint((request, response, exception) -> forbidden(response)))
+      .cors(configurer -> new CorsConfiguration().applyPermitDefaultValues());
     
     return http.build();
   }
@@ -89,15 +85,15 @@ public class SecurityConfiguration {
   public SecurityFilterChain swagger(HttpSecurity http) throws Exception {
     if (noneOfThenNullOrEmpty(swaggerProperties.getPassword(), swaggerProperties.getUsername())) {
       http
-      .securityMatcher("/swagger-ui/**")
-      .csrf(AbstractHttpConfigurer::disable)
-      .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-      .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-      .httpBasic(withDefaults());     
+        .securityMatcher("/swagger-ui/**")
+        .csrf(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+        .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+        .httpBasic(withDefaults());     
     } else {
       http
-      .securityMatcher("/swagger-ui/**")
-      .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+        .securityMatcher("/swagger-ui/**")
+        .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
     }
     
     return http.build();

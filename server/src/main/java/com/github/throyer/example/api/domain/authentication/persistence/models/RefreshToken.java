@@ -42,8 +42,8 @@ public class RefreshToken implements Serializable {
     this.expiresAt = now().plusDays(daysToExpire);
     this.code = randomUUID().toString();
   }
-  
-  public Boolean nonExpired() {
-    return this.expiresAt.isAfter(now());
+
+  public Boolean isExpired() {
+    return this.expiresAt.isBefore(now());
   }
 }

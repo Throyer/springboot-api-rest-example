@@ -34,26 +34,34 @@ public class JsonWebTokenImplementation implements JWT {
     LocalDateTime expiresAt,
     String secret
   ) {
-    return builder()
+    log.info("creating new jwt, id: [{}], roles: [{}].", id, roles.toString());
+    var accessToken = builder()
       .setSubject(id)
       .claim(ROLES_KEY_ON_JWT, join(",", roles))
       .setExpiration(from(expiresAt.atZone(systemDefault()).toInstant()))
       .signWith(secretToKey(secret))
       .compact();
+    
+    log.info("successfully created new jwt, id: [{}], roles: [{}].", id, roles);
+    return accessToken;
   }
   
   private SecretKey secretToKey(String secret) {
+    log.info("creating secret-key.");
     var bytes = secret.getBytes(UTF_8);    
     try {
-      return hmacShaKeyFor(bytes);  
+      var key = hmacShaKeyFor(bytes);      
+      log.info("secret-key successfully created.");
+      return key;
     } catch (WeakKeyException exception) {
-      log.warn(exception.getMessage());
+      log.warn("secret-key created, but it is a weak key, extremely not recommended in productive environments. details:\n{}", exception.getMessage());
       return hmacShaKeyFor(Arrays.copyOf(bytes, 64));
     }
   }
 
   @Override
   public Authorized decode(String token, String secret) {
+    log.info("decoding a jwt");
     var decoded = Jwts
       .parserBuilder()
       .setSigningKey(secretToKey(secret))
@@ -75,6 +83,9 @@ public class JsonWebTokenImplementation implements JWT {
       .map(SimpleGrantedAuthority::new)
         .toList();
 
-    return new Authorized(id, authorities);
+    var auth = new Authorized(id, authorities);
+
+    log.info("successfully decode a jwt, id: [{}], roles: [{}]", id, List.of(roles));
+    return auth;
   }
 }

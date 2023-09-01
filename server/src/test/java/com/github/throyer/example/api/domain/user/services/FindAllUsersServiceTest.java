@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 @Tag("Unit")
 @ExtendWith(MockitoExtension.class)
-public class FindAllUsersServiceTest {
+class FindAllUsersServiceTest {
   @InjectMocks
   private FindAllUsersService service;
 

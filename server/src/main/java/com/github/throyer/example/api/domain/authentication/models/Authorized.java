@@ -13,12 +13,9 @@ import static com.github.throyer.example.api.utils.ID.decode;
 import static java.util.Optional.ofNullable;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
-public class Authorized extends User {
-  
-  @Getter
+@Getter
+public class Authorized extends User {  
   private final Long id;
-  
-  @Getter
   private final String name;
 
   public Authorized(String id, List<SimpleGrantedAuthority> authorities) {

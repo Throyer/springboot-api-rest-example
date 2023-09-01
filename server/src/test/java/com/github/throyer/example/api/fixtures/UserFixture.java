@@ -39,11 +39,15 @@ public class UserFixture {
     return user(List.of(element(roles())));
   }
 
+  public static User user(Boolean emailConfirmed) {
+    return new User(id(), name(), email(), password(), emailConfirmed, List.of(element(roles())));
+  }
+
   public static User user(List<Role> roles) {
-    return new User(id(), name(), email(), password(), roles);
+    return new User(id(), name(), email(), password(), true, roles);
   }
 
   public static User user(Long id, String name, String email, String password, List<Role> roles) {
-    return new User(id, name, email, password, roles);
+    return new User(id, name, email, password, true, roles);
   }
 }

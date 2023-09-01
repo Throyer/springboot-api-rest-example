@@ -47,6 +47,8 @@ public class CreateUserController {
   public ResponseEntity<UserInformation> create(@RequestBody @Valid CreateUserData props) {
     log.info("creating a new user.");
     var user = service.create(props);
+
+    log.info("user successfully created.");
     return created(new UserInformation(user));
   }
 }

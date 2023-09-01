@@ -68,13 +68,13 @@ public class JsonWebTokenIntegrationTest {
       "email", user.getEmail(),
       "password", user.getPassword()
     ));
-
+    
     repository.save(user);
 
     api.perform(post("/authentication")
       .content(body)
-      .header(CONTENT_TYPE, APPLICATION_JSON))
-      .andExpect(status().isOk());
+        .header(CONTENT_TYPE, APPLICATION_JSON))
+          .andExpect(status().isOk());
   }
 
   @Test
@@ -88,8 +88,8 @@ public class JsonWebTokenIntegrationTest {
 
     api.perform(post("/authentication")
       .content(body)
-      .header(CONTENT_TYPE, APPLICATION_JSON))
-      .andExpect(status().isForbidden());
+        .header(CONTENT_TYPE, APPLICATION_JSON))
+          .andExpect(status().isForbidden());
   }
 
   @Test
@@ -102,16 +102,16 @@ public class JsonWebTokenIntegrationTest {
 
     api.perform(post("/authentication")
       .content(body)
-      .header(CONTENT_TYPE, APPLICATION_JSON))
-      .andExpect(status().isForbidden());
+        .header(CONTENT_TYPE, APPLICATION_JSON))
+          .andExpect(status().isForbidden());
   }
 
   @Test
   @DisplayName("não deve aceitar requisições sem o token no cabeçalho quando as rotas forem privadas")
   void should_not_accept_requests_without_token_in_header_when_routes_are_private() throws Exception {
     api.perform(get("/users"))
-    .andExpect(status().isForbidden())
-    .andExpect(jsonPath("$.message").value("Can't find bearer token on Authorization header."));
+      .andExpect(status().isForbidden())
+      .andExpect(jsonPath("$.message").value("Can't find bearer token on Authorization header."));
   }
 
   @Test
@@ -121,8 +121,8 @@ public class JsonWebTokenIntegrationTest {
 
     api.perform(get("/users")
     .header(AUTHORIZATION, expiredToken))
-    .andExpect(status().isForbidden())
-    .andExpect(jsonPath("$.message").value("Token expired or invalid."));
+      .andExpect(status().isForbidden())
+      .andExpect(jsonPath("$.message").value("Token expired or invalid."));
   }
 
   @Test
@@ -132,8 +132,8 @@ public class JsonWebTokenIntegrationTest {
 
     api.perform(get("/users")
     .header(AUTHORIZATION, token))
-    .andExpect(status().isOk())
-    .andExpect(jsonPath("$.content").isArray());
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.content").isArray());
   }
 
   @Test
@@ -143,8 +143,8 @@ public class JsonWebTokenIntegrationTest {
 
     api.perform(get("/users")
     .header(AUTHORIZATION, token))
-    .andExpect(status().isForbidden())
-    .andExpect(jsonPath("$.message").value("Token expired or invalid."));
+      .andExpect(status().isForbidden())
+      .andExpect(jsonPath("$.message").value("Token expired or invalid."));
   }
 
   @Test
@@ -154,8 +154,8 @@ public class JsonWebTokenIntegrationTest {
 
     api.perform(get("/users")
     .header(AUTHORIZATION, token))
-    .andExpect(status().isForbidden())
-    .andExpect(jsonPath("$.message").value("Token expired or invalid."));
+      .andExpect(status().isForbidden())
+      .andExpect(jsonPath("$.message").value("Token expired or invalid."));
   }
 
   @Test
@@ -165,21 +165,22 @@ public class JsonWebTokenIntegrationTest {
 
     api.perform(get("/users")
     .header(AUTHORIZATION, token))
-    .andExpect(status().isUnauthorized())
-    .andExpect(jsonPath("$.message").value("Not authorized."));
+      .andExpect(status().isUnauthorized())
+      .andExpect(jsonPath("$.message").value("Not authorized."));
   }
 
   @Test
   @DisplayName("deve aceitar requisições sem token em rotas publicas")
   void must_accept_requests_without_token_on_public_routes() throws Exception {
     api.perform(get("/"))
-    .andExpect(status().isOk());
+      .andExpect(status().isOk());
   }
 
   @Test
   @DisplayName("deve aceitar requisições sem token em rotas publicas porem com um token invalido no header")
   void must_accept_requests_without_token_on_public_routes_but_with_invalid_token_on_header() throws Exception {
-    api.perform(get("/").header(AUTHORIZATION, token("ADM", "this_is_not_my_token_secret")))
-    .andExpect(status().isOk());
+    api.perform(get("/")
+      .header(AUTHORIZATION, token("ADM", "this_is_not_my_token_secret")))
+        .andExpect(status().isOk());
   }
 }

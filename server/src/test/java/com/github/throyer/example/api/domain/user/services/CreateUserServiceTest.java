@@ -4,6 +4,7 @@ import com.github.throyer.example.api.domain.role.persistence.repositories.RoleR
 import com.github.throyer.example.api.domain.user.dtos.CreateUserData;
 import com.github.throyer.example.api.domain.user.persistence.models.User;
 import com.github.throyer.example.api.domain.user.persistence.repositories.UserRepository;
+import com.github.throyer.example.api.shared.i18n.Internationalization;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,9 @@ public class CreateUserServiceTest {
 
   @Mock
   private RoleRepository roleRepository;
+
+  @Mock
+  private Internationalization i18n;
 
   @Test
   void must_create_user_successfully() {
@@ -72,10 +76,14 @@ public class CreateUserServiceTest {
       password
     );
 
+    when(i18n.message(anyString()))
+      .thenReturn("E-mail unavailable.");
+
     when(userRepository.existsByEmail(anyString())).thenReturn(yes);
 
     var exception = assertThrowsExactly(ResponseStatusException.class, () -> service.create(data));
 
     assertTrue(exception.getStatusCode().isSameCodeAs(CONFLICT));
+    assertEquals("E-mail unavailable.", exception.getReason());
   }
 }
