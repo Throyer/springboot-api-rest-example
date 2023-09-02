@@ -1,27 +1,26 @@
 package com.github.throyer.example.api.shared.jwt;
 
-import com.github.throyer.example.api.domain.authentication.models.Authorized;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.WeakKeyException;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
 import static io.jsonwebtoken.Jwts.builder;
-import static io.jsonwebtoken.SignatureAlgorithm.HS256;
-import static io.jsonwebtoken.io.Decoders.BASE64;
 import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
 import static java.lang.String.join;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.ZoneId.systemDefault;
 import static java.util.Arrays.stream;
 import static java.util.Date.from;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import com.github.throyer.example.api.domain.authentication.models.Authorized;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.WeakKeyException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class JsonWebTokenImplementation implements JWT {

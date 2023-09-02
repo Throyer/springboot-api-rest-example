@@ -1,16 +1,17 @@
 package com.github.throyer.example.api.infra.security;
 
-import com.github.throyer.example.api.infra.environments.SecurityProperties;
-import com.github.throyer.example.api.shared.jwt.JWT;
-import com.github.throyer.example.api.shared.rest.PublicRoutes;
-import com.github.throyer.example.api.utils.Authorization;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import static com.github.throyer.example.api.shared.rest.PublicRoutes.PublicRoutesManager.publicRoutes;
 import static com.github.throyer.example.api.shared.rest.Responses.expired;
 import static java.util.Objects.isNull;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.github.throyer.example.api.infra.environments.SecurityProperties;
+import com.github.throyer.example.api.shared.jwt.JWT;
+import com.github.throyer.example.api.utils.Authorization;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class RequestAuthorizerImpl implements RequestAuthorizer {
   private final JWT jwt;

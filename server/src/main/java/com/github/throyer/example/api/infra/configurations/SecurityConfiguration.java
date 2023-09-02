@@ -1,8 +1,15 @@
 package com.github.throyer.example.api.infra.configurations;
 
-import com.github.throyer.example.api.infra.environments.SwaggerProperties;
-import com.github.throyer.example.api.infra.middlewares.AuthenticationMiddleware;
-import com.github.throyer.example.api.infra.middlewares.TraceMiddleware;
+import static com.github.throyer.example.api.shared.rest.PublicRoutes.PublicRoutesManager.publicRoutes;
+import static com.github.throyer.example.api.shared.rest.Responses.forbidden;
+import static com.github.throyer.example.api.utils.Strings.noneOfThenNullOrEmpty;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.security.config.Customizer.withDefaults;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,27 +24,19 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.util.List;
-
-import static com.github.throyer.example.api.shared.rest.PublicRoutes.PublicRoutesManager.publicRoutes;
-import static com.github.throyer.example.api.shared.rest.Responses.forbidden;
-import static com.github.throyer.example.api.utils.Strings.noneOfThenNullOrEmpty;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import com.github.throyer.example.api.infra.environments.SwaggerProperties;
+import com.github.throyer.example.api.infra.middlewares.AuthenticationMiddleware;
+import com.github.throyer.example.api.infra.middlewares.TraceMiddleware;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
   private final AuthenticationMiddleware authenticationMiddleware;
-  private final TraceMiddleware traceMiddleware;
   
   private final PasswordEncoder encoder;
   private final SwaggerProperties swaggerProperties;
           
-  @Autowired
   public SecurityConfiguration(
     AuthenticationMiddleware filter,
     TraceMiddleware traceMiddleware,
@@ -45,7 +44,6 @@ public class SecurityConfiguration {
     SwaggerProperties swaggerProperties
   ) {
     this.authenticationMiddleware = filter;
-    this.traceMiddleware = traceMiddleware;
     this.encoder = encoder;
     this.swaggerProperties = swaggerProperties;
   }

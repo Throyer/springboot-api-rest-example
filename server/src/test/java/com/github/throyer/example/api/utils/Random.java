@@ -1,20 +1,13 @@
 package com.github.throyer.example.api.utils;
 
-import com.github.javafaker.Faker;
-import com.github.throyer.example.api.domain.role.persistence.models.Role;
-import com.github.throyer.example.api.domain.user.persistence.models.User;
-import com.github.throyer.example.api.infra.environments.SecurityProperties;
-import com.github.throyer.example.api.shared.jwt.JsonWebTokenImplementation;
-import org.springframework.stereotype.Component;
+import static java.lang.String.format;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static java.lang.String.format;
-import static java.time.LocalDateTime.now;
-import static java.util.List.of;
+import org.springframework.stereotype.Component;
+
+import com.github.javafaker.Faker;
 
 @Component
 public class Random {  

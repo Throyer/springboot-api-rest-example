@@ -1,19 +1,18 @@
 package com.github.throyer.example.api.domain.authentication.persistence.repositories;
 
-import com.github.throyer.example.api.domain.authentication.persistence.models.RefreshToken;
+import static com.github.throyer.example.api.domain.authentication.persistence.repositories.Queries.DISABLE_OLD_REFRESH_TOKENS_FROM_USER;
+import static com.github.throyer.example.api.domain.authentication.persistence.repositories.Queries.FIND_REFRESH_TOKEN_BY_CODE_FETCH_USER_AND_ROLES;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import com.github.throyer.example.api.domain.authentication.persistence.models.RefreshToken;
 
-import static com.github.throyer.example.api.domain.authentication.persistence.repositories.Queries.DISABLE_OLD_REFRESH_TOKENS_FROM_USER;
-import static com.github.throyer.example.api.domain.authentication.persistence.repositories.Queries.FIND_REFRESH_TOKEN_BY_CODE_FETCH_USER_AND_ROLES;
-
-@Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
   @Modifying
   @Transactional

@@ -1,8 +1,24 @@
 package com.github.throyer.example.api.domain.user.persistence.models;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static com.github.throyer.example.api.shared.persistence.repositories.Queries.NON_DELETED_CLAUSE;
+import static com.github.throyer.example.api.utils.Passwords.encode;
+import static com.github.throyer.example.api.utils.Passwords.matches;
+import static jakarta.persistence.CascadeType.DETACH;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.util.Objects.requireNonNull;
+import static java.util.Optional.ofNullable;
+import static lombok.AccessLevel.NONE;
+
+import java.util.List;
+
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.throyer.example.api.domain.role.persistence.models.Role;
 import com.github.throyer.example.api.shared.persistence.models.Auditable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,21 +31,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
-
-import java.util.List;
-
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
-import static com.github.throyer.example.api.shared.persistence.repositories.Queries.NON_DELETED_CLAUSE;
-import static com.github.throyer.example.api.shared.rest.Responses.forbidden;
-import static com.github.throyer.example.api.utils.Passwords.encode;
-import static com.github.throyer.example.api.utils.Passwords.matches;
-import static jakarta.persistence.CascadeType.DETACH;
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static java.util.Objects.requireNonNull;
-import static java.util.Optional.ofNullable;
-import static lombok.AccessLevel.NONE;
 
 @Getter
 @Setter

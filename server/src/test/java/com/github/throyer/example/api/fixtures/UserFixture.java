@@ -1,13 +1,15 @@
 package com.github.throyer.example.api.fixtures;
 
-import com.github.throyer.example.api.domain.role.persistence.models.Role;
-import com.github.throyer.example.api.domain.user.persistence.models.User;
+import static com.github.throyer.example.api.fixtures.RoleFixture.roles;
+import static com.github.throyer.example.api.utils.Random.FAKER;
+import static com.github.throyer.example.api.utils.Random.between;
+import static com.github.throyer.example.api.utils.Random.element;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.throyer.example.api.fixtures.RoleFixture.roles;
-import static com.github.throyer.example.api.utils.Random.*;
+import com.github.throyer.example.api.domain.role.persistence.models.Role;
+import com.github.throyer.example.api.domain.user.persistence.models.User;
 
 
 public class UserFixture {

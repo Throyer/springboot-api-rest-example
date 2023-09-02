@@ -1,8 +1,8 @@
 package com.github.throyer.example.api.fixtures;
 
-import com.github.throyer.example.api.domain.role.persistence.models.Role;
-
 import java.util.List;
+
+import com.github.throyer.example.api.domain.role.persistence.models.Role;
 
 public class RoleFixture {
   public static List<Role> roles() {

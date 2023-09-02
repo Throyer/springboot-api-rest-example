@@ -1,17 +1,17 @@
 package com.github.throyer.example.api.fixtures;
 
-import com.github.throyer.example.api.shared.jwt.JWT;
-import com.github.throyer.example.api.shared.jwt.JsonWebTokenImplementation;
-import com.github.throyer.example.api.utils.ID;
-import com.github.throyer.example.api.utils.Random;
-import org.springframework.stereotype.Component;
+import static com.github.throyer.example.api.utils.Random.between;
+import static java.lang.String.format;
+import static java.time.LocalDateTime.now;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.github.throyer.example.api.utils.Random.between;
-import static java.lang.String.format;
-import static java.time.LocalDateTime.now;
+import org.springframework.stereotype.Component;
+
+import com.github.throyer.example.api.shared.jwt.JWT;
+import com.github.throyer.example.api.shared.jwt.JsonWebTokenImplementation;
+import com.github.throyer.example.api.utils.ID;
 
 @Component
 public class TokenFixture {
