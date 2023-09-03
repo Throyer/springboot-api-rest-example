@@ -29,7 +29,32 @@ services:
       - users-network
     tty: true
 
-  server:
+  gateway:
+    build:
+      context: ../nginx
+      dockerfile: Dockerfile
+    image: throyer/users-api-gateway/dev:latest
+    container_name: users-api-gateway
+    ports:
+      - "${API_PORT}:80"
+    links:
+      - api
+    environment:
+      PROXY_PASS_URL: "http://api"
+      PROXY_REQUESTS_PER_SECOND_LIMIT: ${RATE_LIMIT_MAX_REQUESTS_PER_SECOND}
+      PROXY_BURST: 5
+    command: [
+      "dockerize",
+      "-wait",
+      "http://api",
+      "-timeout",
+      "20s",
+      "./entry.sh"
+    ]
+    networks:
+      - users-network
+
+  api:
     build:
       context: ../../server
       dockerfile: ../.docker/develop/Dockerfile
@@ -38,8 +63,7 @@ services:
     links:
       - database
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
-      - "${SERVER_DEBUG_PORT}:${SERVER_DEBUG_PORT}"
+      - "${API_DEBUG_PORT}:${API_DEBUG_PORT}"
     volumes:
       - ../../server:/app
       - ~/.m2:/root/.m2
@@ -49,6 +73,7 @@ services:
     tty: true
     environment:
       TZ: "${TIMEZONE}"
+      SERVER_PORT: 80
     env_file: "../.env"
     entrypoint: [
       "dockerize",
@@ -58,7 +83,7 @@ services:
       "20s",
       'mvn',
       'spring-boot:run',
-      '-Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,address=*:${SERVER_DEBUG_PORT},suspend=n"'
+      '-Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,address=*:${API_DEBUG_PORT},suspend=n"'
     ]
     
 networks:
