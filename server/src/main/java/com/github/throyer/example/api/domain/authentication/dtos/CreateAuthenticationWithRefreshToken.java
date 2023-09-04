@@ -15,6 +15,6 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 @NoArgsConstructor
 public class CreateAuthenticationWithRefreshToken {
   @Schema(example = "1767995b-7865-430f-9181-189704235ae7", requiredMode = REQUIRED)
-  @NotEmpty(message = "${field.refresh.session.refresh-code.required}")
+  @NotEmpty(message = "{field.refresh-token.required}")
   private String refreshToken;
 }

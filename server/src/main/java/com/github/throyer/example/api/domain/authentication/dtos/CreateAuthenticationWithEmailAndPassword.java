@@ -17,11 +17,11 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 @NoArgsConstructor
 public class CreateAuthenticationWithEmailAndPassword {
   @Schema(example = "jubileu@email.com", requiredMode = REQUIRED)
-  @NotBlank(message = "${field.create.session.email.required}")
-  @Email(message = "${field.create.session.email.invalid}")
+  @NotBlank(message = "{field.email.required}")
+  @Email(message = "{field.email.invalid}")
   private String email;
 
   @Schema(example = "veryStrongAndSecurePassword", requiredMode = REQUIRED)
-  @NotBlank(message = "${field.create.session.password.required}")
+  @NotBlank(message = "{field.password.required}")
   private String password;
 }

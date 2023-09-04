@@ -12,8 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static com.github.throyer.example.api.shared.i18n.Internationalization.CREATE_OR_REFRESH_EMAIL_WAS_NOT_CONFIRMED;
-import static com.github.throyer.example.api.shared.i18n.Internationalization.CREATE_REFRESH_CODE_INVALID_OR_EXPIRED_MESSAGE;
+import static com.github.throyer.example.api.infra.constants.MessageConstants.Authentication.EMAIL_WAS_NOT_CONFIRMED_MESSAGE;
+import static com.github.throyer.example.api.infra.constants.MessageConstants.Authentication.RECOVERY_CODE_EXPIRED_OR_INVALID_MESSAGE;
 import static com.github.throyer.example.api.shared.rest.Responses.forbidden;
 import static com.github.throyer.example.api.utils.ID.encode;
 import static java.time.LocalDateTime.now;
@@ -34,19 +34,19 @@ public class CreateAuthenticationWithRefreshTokenService {
     var old = refreshTokenRepository.findOptionalByCodeAndAvailableIsTrue(currentCode)
       .orElseThrow(() -> {
         log.info("could not create session, invalid refresh-token code.");
-        return forbidden(i18n.message(CREATE_REFRESH_CODE_INVALID_OR_EXPIRED_MESSAGE));
+        return forbidden(i18n.message(RECOVERY_CODE_EXPIRED_OR_INVALID_MESSAGE));
       });
     
     if (old.isExpired()) {
       log.info("could not create session, expired refresh-token.");
-      throw forbidden(i18n.message(CREATE_REFRESH_CODE_INVALID_OR_EXPIRED_MESSAGE));
+      throw forbidden(i18n.message(RECOVERY_CODE_EXPIRED_OR_INVALID_MESSAGE));
     }
     
     var user = old.getUser();
 
     if (!user.emailHasConfirmed()) {
       log.info("could not create session, email was not confirmed.");
-      throw forbidden(i18n.message(CREATE_OR_REFRESH_EMAIL_WAS_NOT_CONFIRMED));
+      throw forbidden(i18n.message(EMAIL_WAS_NOT_CONFIRMED_MESSAGE));
     }
     
     var now = now();

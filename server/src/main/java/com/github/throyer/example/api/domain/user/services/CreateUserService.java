@@ -9,11 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import static com.github.throyer.example.api.infra.constants.MessageConstants.Users.EMAIL_UNAVAILABLE_MESSAGE;
 import static com.github.throyer.example.api.infra.constants.SecurityConstants.Roles.USER;
-import static com.github.throyer.example.api.shared.i18n.Internationalization.CREATE_USER_EMAIL_UNAVAILABLE_MESSAGE;
-import static com.github.throyer.example.api.shared.i18n.Internationalization.CREATE_USER_FAIL_ON_QUERY_USER_ROLE;
-import static com.github.throyer.example.api.shared.rest.Responses.InternalServerError;
 import static com.github.throyer.example.api.shared.rest.Responses.conflict;
+import static com.github.throyer.example.api.shared.rest.Responses.internalServerError;
 
 @Slf4j
 @Service
@@ -26,11 +25,11 @@ public class CreateUserService {
   public User create(CreateUserData data) {
     if (userRepository.existsByEmail(data.getEmail())) {
       log.warn("could not create user, e-mail is unavailable.");
-      throw conflict(i18n.message(CREATE_USER_EMAIL_UNAVAILABLE_MESSAGE));
+      throw conflict(i18n.message(EMAIL_UNAVAILABLE_MESSAGE));
     }
 
     var role = roleRepository.findOptionalByShortName(USER)
-      .orElseThrow(() -> InternalServerError(i18n.message(CREATE_USER_FAIL_ON_QUERY_USER_ROLE, "USER")));
+      .orElseThrow(() -> internalServerError("role user not found"));
 
     var user = new User(data.getName(), data.getEmail(), data.getPassword(), role);
 

@@ -27,7 +27,6 @@ import java.util.Map;
 import static com.github.throyer.example.api.fixtures.TokenFixture.token;
 import static com.github.throyer.example.api.fixtures.UserFixture.*;
 import static com.github.throyer.example.api.utils.ID.encode;
-import static com.github.throyer.example.api.utils.Random.FAKER;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -173,8 +172,8 @@ public class UsersApiIntegrationTest {
   void should_return_400_after_save_same_email() throws Exception {
 
     var body = JSON.stringify(Map.of(
-      "name", FAKER.name().fullName(),
-      "email", FAKER.internet().safeEmailAddress(),
+      "name", name(),
+      "email", email(),
       "password", password()
     ));
 

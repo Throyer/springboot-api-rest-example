@@ -102,7 +102,7 @@ public class Responses {
     return new ResponseStatusException(NOT_FOUND, reason);
   }
 
-  public static ResponseStatusException InternalServerError(String reason) {
+  public static ResponseStatusException internalServerError(String reason) {
     return new ResponseStatusException(INTERNAL_SERVER_ERROR, reason);
   }
 

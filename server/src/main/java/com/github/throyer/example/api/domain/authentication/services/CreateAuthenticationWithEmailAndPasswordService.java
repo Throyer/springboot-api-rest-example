@@ -13,8 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static com.github.throyer.example.api.shared.i18n.Internationalization.CREATE_OR_REFRESH_EMAIL_WAS_NOT_CONFIRMED;
-import static com.github.throyer.example.api.shared.i18n.Internationalization.CREATE_SESSION_USERNAME_OR_PASSWORD_MESSAGE;
+import static com.github.throyer.example.api.infra.constants.MessageConstants.Authentication.EMAIL_WAS_NOT_CONFIRMED_MESSAGE;
+import static com.github.throyer.example.api.infra.constants.MessageConstants.Authentication.INVALID_USERNAME_OR_PASSWORD_MESSAGE;
 import static com.github.throyer.example.api.shared.rest.Responses.forbidden;
 import static com.github.throyer.example.api.utils.ID.encode;
 import static java.time.LocalDateTime.now;
@@ -37,17 +37,17 @@ public class CreateAuthenticationWithEmailAndPasswordService {
     var user = userRepository.findOptionalByEmail(email)
         .orElseThrow(() -> {
           log.info("could not create session, user not find.");
-          return forbidden(i18n.message(CREATE_SESSION_USERNAME_OR_PASSWORD_MESSAGE));
+          return forbidden(i18n.message(INVALID_USERNAME_OR_PASSWORD_MESSAGE));
         });
     
     if (!user.passwordMatches(password)) {
       log.info("could not create session, invalid password.");
-      throw forbidden(i18n.message(CREATE_SESSION_USERNAME_OR_PASSWORD_MESSAGE));
+      throw forbidden(i18n.message(INVALID_USERNAME_OR_PASSWORD_MESSAGE));
     }
     
     if (!user.emailHasConfirmed()) {
       log.info("could not create session, email was not confirmed.");
-      throw forbidden(i18n.message(CREATE_OR_REFRESH_EMAIL_WAS_NOT_CONFIRMED));
+      throw forbidden(i18n.message(EMAIL_WAS_NOT_CONFIRMED_MESSAGE));
     }
     
     var now = now();

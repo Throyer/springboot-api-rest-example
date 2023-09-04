@@ -1,15 +1,13 @@
 package com.github.throyer.example.api.fixtures;
 
-import static com.github.throyer.example.api.fixtures.RoleFixture.roles;
-import static com.github.throyer.example.api.utils.Random.FAKER;
-import static com.github.throyer.example.api.utils.Random.between;
-import static com.github.throyer.example.api.utils.Random.element;
+import com.github.throyer.example.api.domain.role.persistence.models.Role;
+import com.github.throyer.example.api.domain.user.persistence.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.throyer.example.api.domain.role.persistence.models.Role;
-import com.github.throyer.example.api.domain.user.persistence.models.User;
+import static com.github.throyer.example.api.fixtures.RoleFixture.roles;
+import static com.github.throyer.example.api.utils.Random.*;
 
 
 public class UserFixture {
@@ -18,15 +16,15 @@ public class UserFixture {
   }
 
   public static String name() {
-    return FAKER.name().fullName();
+    return faker().name().fullName();
   }
 
   public static String email() {
-    return FAKER.internet().safeEmailAddress();
+    return faker().internet().safeEmailAddress();
   }
 
   public static String password() {
-    return FAKER.regexify("[a-z]{5,13}[1-9]{1,5}[A-Z]{1,5}[#?!@$%^&*-]{1,5}");
+    return faker().regexify("[a-z]{5,13}[1-9]{1,5}[A-Z]{1,5}[#?!@$%^&*-]{1,5}");
   }
 
   public static List<User> users(Integer size) {
