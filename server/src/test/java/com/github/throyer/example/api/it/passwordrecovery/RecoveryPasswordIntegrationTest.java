@@ -61,6 +61,7 @@ public class RecoveryPasswordIntegrationTest {
   
   @Container
   @ServiceConnection
+  @SuppressWarnings("resource")
   static PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>(parse("postgres:13"))
     .withDatabaseName("users")
     .withUsername("root")

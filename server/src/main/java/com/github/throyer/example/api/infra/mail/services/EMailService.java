@@ -1,23 +1,24 @@
 package com.github.throyer.example.api.infra.mail.services;
 
-import static com.github.throyer.example.api.infra.constants.MailConstants.*;
+import static com.github.throyer.example.api.infra.constants.MailConstants.CONTENT_IS_HTML;
+import static com.github.throyer.example.api.infra.constants.MailConstants.EMAIL_SUCCESSFULLY_SENT;
+import static com.github.throyer.example.api.infra.constants.MailConstants.ERROR_SENDING_EMAIL_MESSAGE;
+import static com.github.throyer.example.api.infra.constants.MailConstants.ERROR_SMTP_AUTH;
 import static com.github.throyer.example.api.shared.rest.Responses.internalServerError;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
-import com.github.throyer.example.api.shared.mail.models.Email;
-import com.github.throyer.example.api.shared.rest.Responses;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.TemplateEngine;
 
+import com.github.throyer.example.api.shared.mail.models.Email;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

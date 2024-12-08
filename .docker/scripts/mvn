@@ -1,0 +1,8 @@
+#!/bin/bash
+docker run --rm --name maven --privileged \
+ -v /usr/bin/docker:/usr/bin/docker \
+ -v /var/run/docker.sock:/var/run/docker.sock \
+ -v ~/.m2:/root/.m2 \
+ -v $(pwd)/server:/api \
+ -w /api maven:3.8.6-eclipse-temurin-17 \
+ mvn "$@"

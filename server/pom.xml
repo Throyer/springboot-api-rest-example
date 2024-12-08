@@ -186,6 +186,7 @@
                         </executions>
                         <configuration>
                             <skip>false</skip>
+                            <groups>Integration</groups>
                             <includes>
                                 <include>**/*IntegrationTest.java</include>
                             </includes>

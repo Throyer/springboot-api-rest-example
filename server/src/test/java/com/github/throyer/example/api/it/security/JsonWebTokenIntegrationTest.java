@@ -44,6 +44,7 @@ public class JsonWebTokenIntegrationTest {
 
   @Container
   @ServiceConnection
+  @SuppressWarnings("resource")
   static PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>(DockerImageName.parse("postgres:13"))
     .withDatabaseName("users")
     .withUsername("root")

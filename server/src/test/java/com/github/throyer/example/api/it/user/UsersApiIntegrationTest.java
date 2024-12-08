@@ -1,8 +1,27 @@
 package com.github.throyer.example.api.it.user;
 
-import com.github.throyer.example.api.domain.user.persistence.repositories.springdata.SpringDataUserRepository;
-import com.github.throyer.example.api.infra.environments.SecurityProperties;
-import com.github.throyer.example.api.utils.JSON;
+import static com.github.throyer.example.api.fixtures.TokenFixture.token;
+import static com.github.throyer.example.api.fixtures.UserFixture.email;
+import static com.github.throyer.example.api.fixtures.UserFixture.name;
+import static com.github.throyer.example.api.fixtures.UserFixture.password;
+import static com.github.throyer.example.api.fixtures.UserFixture.user;
+import static com.github.throyer.example.api.fixtures.UserFixture.users;
+import static com.github.throyer.example.api.utils.ID.encode;
+import static java.lang.String.format;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Map;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -22,19 +41,9 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import java.util.Map;
-
-import static com.github.throyer.example.api.fixtures.TokenFixture.token;
-import static com.github.throyer.example.api.fixtures.UserFixture.*;
-import static com.github.throyer.example.api.utils.ID.encode;
-import static java.lang.String.format;
-import static org.hamcrest.Matchers.*;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.github.throyer.example.api.domain.user.persistence.repositories.springdata.SpringDataUserRepository;
+import com.github.throyer.example.api.infra.environments.SecurityProperties;
+import com.github.throyer.example.api.utils.JSON;
 
 @Tag("Integration")
 @Transactional
@@ -58,6 +67,7 @@ public class UsersApiIntegrationTest {
   
   @Container
   @ServiceConnection
+  @SuppressWarnings("resource")
   static PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>(DockerImageName.parse("postgres:13"))
     .withDatabaseName("users")
     .withUsername("root")

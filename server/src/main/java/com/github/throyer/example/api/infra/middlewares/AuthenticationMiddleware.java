@@ -19,6 +19,7 @@ public class AuthenticationMiddleware extends OncePerRequestFilter {
   private final RequestAuthorizer authorizer;
   
   @Override
+  @SuppressWarnings("null")
   protected void doFilterInternal(
     HttpServletRequest request,
     HttpServletResponse response,

@@ -26,7 +26,6 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import com.github.throyer.example.api.infra.environments.SwaggerProperties;
 import com.github.throyer.example.api.infra.middlewares.AuthenticationMiddleware;
-import com.github.throyer.example.api.infra.middlewares.TraceMiddleware;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +38,6 @@ public class SecurityConfiguration {
           
   public SecurityConfiguration(
     AuthenticationMiddleware filter,
-    TraceMiddleware traceMiddleware,
     PasswordEncoder encoder,
     SwaggerProperties swaggerProperties
   ) {

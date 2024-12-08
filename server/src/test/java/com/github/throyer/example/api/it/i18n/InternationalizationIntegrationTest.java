@@ -46,6 +46,7 @@ public class InternationalizationIntegrationTest {
 
   @Container
   @ServiceConnection
+  @SuppressWarnings("resource")
   static PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>(DockerImageName.parse("postgres:13"))
     .withDatabaseName("users")
     .withUsername("root")

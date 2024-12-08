@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import static com.github.throyer.example.api.infra.constants.MessageConstants.Authentication.EMAIL_WAS_NOT_CONFIRMED_MESSAGE;
 import static com.github.throyer.example.api.infra.constants.MessageConstants.Authentication.RECOVERY_CODE_EXPIRED_OR_INVALID_MESSAGE;
+import static com.github.throyer.example.api.infra.constants.MessageConstants.Authentication.USER_WAS_NOT_ACTIVE_MESSAGE;
 import static com.github.throyer.example.api.shared.rest.Responses.forbidden;
 import static com.github.throyer.example.api.utils.ID.encode;
 import static java.time.LocalDateTime.now;
@@ -47,6 +48,11 @@ public class CreateAuthenticationWithRefreshTokenService {
     if (!user.emailHasConfirmed()) {
       log.info("could not create session, email was not confirmed.");
       throw forbidden(i18n.message(EMAIL_WAS_NOT_CONFIRMED_MESSAGE));
+    }
+
+    if (!user.isActive()) {
+      log.info("could not create session, email was not active.");
+      throw forbidden(i18n.message(USER_WAS_NOT_ACTIVE_MESSAGE));
     }
     
     var now = now();
