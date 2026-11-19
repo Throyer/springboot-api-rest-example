@@ -1,0 +1,31 @@
+{
+  // https://github.com/halcyon/asdf-java#asdf-java
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-25",
+      "path": "/home/dev/content/projects/backend/.vfox/sdks/java",
+      "default": true
+    },
+  ],
+  "cSpell.words": [
+    "dtos",
+    "fasterxml",
+    "github",
+    "hamcrest",
+    "hashid",
+    "Hashids",
+    "instanceof",
+    "jooq",
+    "jsonwebtoken",
+    "Jwts",
+    "servlet",
+    "Servlet",
+    "springboot",
+    "springframework",
+    "throyer",
+    "zustand"
+  ],
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "explorer.compactFolders": true,
+  "java.compile.nullAnalysis.mode": "disabled"
+}

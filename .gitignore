@@ -33,3 +33,6 @@ server/!**/src/test/**/target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+.vfox.toml
+.vfox
