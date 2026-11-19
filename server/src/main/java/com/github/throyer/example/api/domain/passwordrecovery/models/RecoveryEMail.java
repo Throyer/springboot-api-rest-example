@@ -1,12 +1,19 @@
 package com.github.throyer.example.api.domain.passwordrecovery.models;
 
 import com.github.throyer.example.api.shared.mail.models.Email;
+
+import lombok.Getter;
+
 import org.thymeleaf.TemplateEngine;
 
 public class RecoveryEMail implements Email {
   private final String destination;
   private final String subject;
+
+  @Getter 
   private final String username;
+
+  @Getter 
   private final String code;
     
   public RecoveryEMail(
